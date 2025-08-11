@@ -1,0 +1,1 @@
+from spitogatos_data import spitogatos_data
