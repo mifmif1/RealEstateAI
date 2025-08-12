@@ -1,3 +1,5 @@
+import json
+
 import requests
 import logging
 
@@ -51,7 +53,9 @@ class SpitogatosData:
 
         if response.status_code == 200:
             logger.info(f"Successfully fetched {location}")
-            return response.json()
+            data = json.loads(response.text)['data']
+            result = {{'id': house['id'],'price': house['price'] ,'sqm': house['sq_meters'], 'longitude': house['longitude'], 'latitude': house['latitude'] } for house in data}
+            return result
         logger.error("Error getting data from Spitogatos")
 
 if __name__ == "__main__":
