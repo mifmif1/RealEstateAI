@@ -1,9 +1,11 @@
 import json
+from typing import List
 
 import requests
 import logging
 
-from model.geographical.geographical import Rectangle
+from model.asset.asset import Asset
+from model.geographical.geographical import Rectangle, Point
 
 logger = logging.getLogger(__name__)
 
@@ -28,38 +30,40 @@ class SpitogatosData:
         "Referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search/minliving_area-240?latitudeLow=37.962619&latitudeHigh=37.967592&longitudeLow=23.746815&longitudeHigh=23.753477&zoom=17",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
 
-
     }
 
-
-
     # url = "https://www.spitogatos.gr/n_api/v1/properties/search-results-map?"
-    params = {'listingType':'sale',
-              'category':'residential',
-              'livingAreaLow':'60',
-              'livingAreaHigh':'80',
-              'sortBy':'rankingscore',
-              'sortOrder':'desc',
-              'latitudeLow':'37.966222',
-              'latitudeHigh':'37.967491',
-              'longitudeLow':'23.730367',
-              'longitudeHigh':'23.734229',
-              'zoom':'18',
-              'offset':'0'}
+    params = {'listingType': 'sale',
+              'category': 'residential',
+              'livingAreaLow': '60',
+              'livingAreaHigh': '80',
+              'sortBy': 'rankingscore',
+              'sortOrder': 'desc',
+              'latitudeLow': '37.966222',
+              'latitudeHigh': '37.967491',
+              'longitudeLow': '23.730367',
+              'longitudeHigh': '23.734229',
+              'zoom': '18',
+              'offset': '0'}
 
-
-    def get_by_location(self, location: Rectangle=None, price: int = None, tollerance: int = None) -> dict:
+    def get_by_location(self, location: Rectangle = None, price: int = None, tollerance: int = None) -> List[Asset] | None:
         response = requests.get(self.url, params=self.params, headers=self.headers)
 
         if response.status_code == 200:
             logger.info(f"Successfully fetched {location}")
+
             data = json.loads(response.text)['data']
-            result = {{'id': house['id'],'price': house['price'] ,'sqm': house['sq_meters'], 'longitude': house['longitude'], 'latitude': house['latitude'] } for house in data}
-            return result
+            results = []
+            for asset_raw in data:
+                results.append(Asset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
+                                     sqm=asset_raw['sq_meters'],
+                                     price=asset_raw['price']))
+
+            return results
         logger.error("Error getting data from Spitogatos")
+
 
 if __name__ == "__main__":
     sp = SpitogatosData()
-    sp.get_by_location()
-    print('a')
-
+    a = sp.get_by_location()
+    print(a)

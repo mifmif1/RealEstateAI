@@ -4,7 +4,7 @@ from model.geographical.geographical import Point
 
 
 class Asset(BaseModel):
-    Location: Point
+    location: Point
     sqm: float
     price: float
 
