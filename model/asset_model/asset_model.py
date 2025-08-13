@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from model.geographical.geographical import Point
+from model.geographical_model.geographical_model import Point
 
 
 class Asset(BaseModel):
