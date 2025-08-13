@@ -64,9 +64,3 @@ class SpitogatosData:
 
             return results
         logger.error(f"Error getting data from Spitogatos: {response.status_code}")
-
-
-if __name__ == "__main__":
-    sp = SpitogatosData()
-    a = sp.get_by_location(location=Rectangle(min_lat=37.97018221147667, min_lon=23.707984002793726, max_lat=37.968551330234554, max_lon=23.712238951170136))
-    print(a)
