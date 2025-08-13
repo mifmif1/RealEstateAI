@@ -4,8 +4,8 @@ from typing import List
 
 import requests
 
-from model.asset_model.asset_model import Asset
-from model.geographical_model.geographical_model import Rectangle, Point
+from model.asset_model import Asset
+from model.geographical_model import Rectangle, Point
 from utils.consts.apis import ApisConsts
 
 logger = logging.getLogger(__name__)
