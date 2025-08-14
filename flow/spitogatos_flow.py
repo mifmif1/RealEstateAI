@@ -17,6 +17,7 @@ class SpitogatosFlow:
         df = pd.read_excel(excel_path)
         average_column = []
         median_column = []
+        price_sqm_column = []
 
         for index, row in df.iterrows():
             coords = self._geopy_data_source.get_coords_from_adderss(row["address"])
@@ -27,16 +28,20 @@ class SpitogatosFlow:
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
                                                                   min_area=row["sqm"] - sqm_tolerance,
                                                                   max_area=row["sqm"] + sqm_tolerance)
-            assets_average = statistics.mean([asset.price / asset.sqm for asset in assets])
-            assets_median = statistics.median([asset.price / asset.sqm for asset in assets])
-
+            if assets:
+                assets_average = statistics.mean([asset.price / asset.sqm for asset in assets])
+                assets_median = statistics.median([asset.price / asset.sqm for asset in assets])
+            else:
+                assets_average = pd.NA
+                assets_median = pd.NA
             average_column.append(assets_average)
             median_column.append(assets_median)
 
             sleep(3)  # bot sneaking
+        df['price/sqm'] = df['price'] / df['sqm']
         df['comparison_average'] = average_column
         df['comparison_median'] = median_column
-        df.to_excel(excel_path, index=False)
+        df.to_excel('./new.xlsx', index=False)
 
 
 if __name__ == '__main__':
