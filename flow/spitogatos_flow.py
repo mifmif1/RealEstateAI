@@ -4,7 +4,6 @@ from time import sleep
 import pandas as pd
 
 from data_source.geopy_data import GeopyData
-from model.geographical_model import Rectangle
 from data_source.spitogatos_data import SpitogatosData
 
 
@@ -20,7 +19,8 @@ class SpitogatosFlow:
 
         for index, row in df.iterrows():
             coords = self._geopy_data_source.get_coords_from_adderss(row["address"])
-            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,radius_meters=location_tolerance)
+            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,
+                                                                            radius_meters=location_tolerance)
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
                                                                   min_area=row["sqm"] - sqm_tolerance,
                                                                   max_area=row["sqm"] + sqm_tolerance)
@@ -37,9 +37,9 @@ class SpitogatosFlow:
         df['price/sqm'] = df['price'] / df['sqm']
         df['comparison_average'] = average_column
         df['comparison_median'] = median_column
-        df.to_excel('./new.xlsx', index=False)
+        df.to_excel('./new1.xlsx', index=False)
 
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    s.extend_excel(r"../try.xlsx")
+    s.extend_excel(r"../try.xlsx", location_tolerance=300)
