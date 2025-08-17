@@ -17,14 +17,10 @@ class SpitogatosFlow:
         df = pd.read_excel(excel_path)
         average_column = []
         median_column = []
-        price_sqm_column = []
 
         for index, row in df.iterrows():
             coords = self._geopy_data_source.get_coords_from_adderss(row["address"])
-            search_rectangle = Rectangle(min_lat=coords.lat - location_tolerance / 2000,
-                                         max_lat=coords.lat + location_tolerance / 2000,
-                                         min_lon=coords.lon - location_tolerance / 2000,
-                                         max_lon=coords.lon + location_tolerance / 2000)
+            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,radius_meters=location_tolerance)
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
                                                                   min_area=row["sqm"] - sqm_tolerance,
                                                                   max_area=row["sqm"] + sqm_tolerance)
