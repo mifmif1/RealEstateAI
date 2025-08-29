@@ -17,10 +17,24 @@ class SpitogatosData:
 
     def get_try(self):
         url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
-        data = {"listingType": "sale", "category": "residential", "livingAreaLow": 25, "livingAreaHigh": 35,
-                "sortBy": "rankingscore", "sortOrder": "desc", "offset": 0, "geoPolygons": [
-                [[23.736840738696007, 37.98385854262262], [23.736817460507872, 37.987824136801486],
-                 [23.730424935327076, 37.987807214304055], [23.730403483900318, 37.983813395752165]]]}
+        data = {"listingType": "sale",
+                "category": "residential",
+                "livingAreaLow": 25,
+                "livingAreaHigh": 35,
+                "geoPolygons": [[[23.73684, 37.98386],
+                                 [23.73682, 37.98782],
+                                 [23.73042, 37.98781],
+                                 [23.7304, 37.98381]]],
+                "sortBy": "rankingscore",
+                "sortOrder": "desc",
+                "latitudeLow": 37.983276,
+                "latitudeHigh": 37.98835,
+                "longitudeLow": 23.723195,
+                "longitudeHigh": 23.74403,
+                "zoom": 16,
+                "areaIDs": [],
+                "offset": 0}
+
         headers = {
             "authority": "www.spitogatos.gr",
             "method": "POST",
@@ -29,7 +43,7 @@ class SpitogatosData:
             "accept": "application/json, text/plain, */*",
             "accept-encoding": "gzip, deflate, br, zstd",
             "accept-language": "en",
-            "content-length": 358, #todo
+            "content-length": f"{358}",  # todo
             "content-type": "application/json",
             "cookie": "auth.strategy=laravelJWT; anonymous_user_id=anon_1754902836238_tyeb6e7qz; segment_session=8e619582-20d6-4646-bbbc-faed3485bf09; _cc_id=437ba14c77ee96aa9da159232995b787; _gcl_au=1.1.1331426619.1754902848; _tt_enable_cookie=1; _ttp=01K2C5RSFB2NV5310C5MHC9AGC_.tt.1; _fbp=fb.1.1754902849270.332693119532634740; _ga_LEEXB314YZ=GS2.1.s1754902848$o1$g0$t1754902870$j38$l0$h0; _hjSessionUser_1348694=eyJpZCI6IjlhZDIyYTcwLTNjMmYtNTRmZi05MGZkLWJmMTQyNGY3ZTZmZiIsImNyZWF0ZWQiOjE3NTQ5MDI4NTE1NTEsImV4aXN0aW5nIjp0cnVlfQ==; en_personalizedSearches=true; ajs_anonymous_id=8e619582-20d6-4646-bbbc-faed3485bf09; __gads=ID=07200e69c821b951:T=1754902844:RT=1755020110:S=ALNI_MYoF7r9MwnoG0lsKFi_b_QOWYcBLQ; __gpi=UID=0000124ddbe11618:T=1754902844:RT=1755020110:S=ALNI_Mbey4xIAjtEd-6qiqjWO3Mkwe9EUg; __eoi=ID=c9ccc63c0fa2f2e9:T=1754902844:RT=1755020110:S=AA-AfjYQInjT_bG3L_3aT4sNP8iN; spitogatosS=listingType%3Dsale%26propertyCategory%3Dresidential%26livingAreaLow%3D25%26livingAreaHigh%3D35; sesId=sYyvyIzNWI883Pa6WgeqLRRmvE2FqlOy; reese84=3:Qe/d+8mrYXAMSwB1tL6Csg==:jsPv+SU0birxVzeeGSL9N9wzOcKA2exq8nj7MFhVciwayGw6zNryOCfiqFl92mLYf4gFeXkWOHtFpesJj/GBh80DaaHD3ODXNuP/Pd2dg7vspr8P5xtORsdtoq3BhLnrZFZxxIjRpNgPJqkn5E7FvkKpegCaKSemFeXo06b/AjcnG0NtlmjkIIYKyDoPDicp8dlckIbp5zhKOvjvGjOAE8lRamzZR1I5P+Y5JpsVLqJ8PKDUvc2YvZ/J+dPDetKZEHTOgrvfJ5keX7f1W7DOfJN+4bgHSdS08zBBFb4pNcIuv0PXnW1OwQi8MYedJf+BCIthkn6Mq29HQE3ViAroNCauIcVYFDAsG30swsfbfkoZktfk4AG1wkxDNpjjtu5dD3XoW6LDNQNrDc78GDt051pcVaqIbx+hTL4YQPKUZ/U2X8QVRd9ntjmtCPAHJ7L3OG+guNDf688zyK0sFAHGVg==:/4xLiw/PIRbxShNz6wV0AovTGoMIQfGmSPmNpBf4SZc=; _ga_8HD2LETKWJ=GS2.1.s1756492259$o19$g1$t1756492259$j60$l0$h0; _ga_KT1TCYQ5FH=GS2.1.s1756492260$o19$g0$t1756492260$j60$l0$h0; _ga=GA1.2.1153256482.1754902848; _gid=GA1.2.263229100.1756492261; _gat_UA-3455846-3=1; ttcsid=1756492261420::uCEqwSgqVMrQATacRRu5.15.1756492261420; ttcsid_D0JJKCRC77U9SUC01950=1756492261419::U2-Sro4E7mD1BJ0oehLO.15.1756492261817; _hjSession_1348694=eyJpZCI6ImZlZTBmMzMzLWNkNGMtNDYxYi05NzliLTNmNmNjODliNDEzNiIsImMiOjE3NTY0OTIyNjMxNjIsInMiOjAsInIiOjAsInNiIjowLCJzciI6MCwic2UiOjAsImZzIjowLCJzcCI6MH0=; euconsent-v2=CQW6UcAQW6UcAAKA9AENB6FgAAAAAEPgAAyIAAAXCABMNCogjLIgRCJQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKRswBBQGaLQXgyfRkaYBg-YJklMgyAJgjIyTYhN-Ew8chRCghyE2KAAAAA.YAAAAAAAAAAA; addtl_consent=1~; IABGPP_HDR_GppString=DBABMA~CQW83MzQW83MzAKA9AENB6FgAAAAAEPgAAyIAAAXCABMNCogjLIgRCJQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKRswBBQGaLQXgyfRkaYBg-YJklMgyAJgjIyTYhN-Ew8chRCghyE2KAAAAA.YAAAAAAAAAAA; cto_bundle=q3bV919rR0IlMkZIVXBBcUMxR1laMjBBJTJCNHZPUkIlMkJnRE05MjdUVmRJWUNuVDdOVGplN0QxJTJCJTJGak83STNGZDlqMkE2JTJCUVZvTnFTZGdVclBFUUhoajVJdmQlMkZGN0JFZUwxblZweXAyY3JyaXk2Mm8wJTJCWSUyRkhSZDJNNkxtSUMwbWhnRkZBS3VjU0NGeEpJNE1HdGc5UUNBV0lyZlMlMkJnUnJ5VXBrTW5pd2VXZzRIbHVUTDR4YyUzRA; en_lastSearch=%2Ffor_sale-homes%2Fmap-search%2Fminliving_area-25%2Fmaxliving_area-35%2Fplg-I3NoSzeYOGyis5bKZAuhyiukAP%3FlatitudeLow%3D37.983276%26latitudeHigh%3D37.98835%26longitudeLow%3D23.723195%26longitudeHigh%3D23.74403%26zoom%3D16",
             "referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search/minliving_area-25/maxliving_area-35/plg-I3NoSzeYOGyis5bKZAuhyiukAP",
@@ -41,12 +55,12 @@ class SpitogatosData:
             "sec-fetch-dest": "empty",
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "same-origin",
-            "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
             "x-alsbn": "1",
             "x-locale": "en",
             "x-mdraw": "1",
         }
-        response = self._session.post(url, data=data, headers=headers)
+        response = self._session.post(url, json=data, headers=headers)
         print(response.text)
 
     def get_by_polygon(self, location: Rectangle, min_area: int = None, max_area: int = None) -> List[Asset]:
