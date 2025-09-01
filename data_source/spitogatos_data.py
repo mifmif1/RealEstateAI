@@ -17,7 +17,7 @@ class SpitogatosData:
 
     def _map_screen_by_polygon(self, location: Rectangle) -> Rectangle:
         """
-        spitogatos screen ratio (lat/lon) is 0.36. How to choose the coordinates according to the desired polygon?
+        spitogatos screen ratio (lat/lon) is 0.36 (verify!). How to choose the coordinates according to the desired polygon?
         1. choose the bigger vertice
         2. add a gap of 10 meters (first 2 edges)
         3. calculate the addition you have to have in order to keep the final ratio (final two edges)
@@ -97,4 +97,3 @@ class SpitogatosData:
 
 if __name__ == '__main__':
     my = SpitogatosData()
-    my.get_try()
