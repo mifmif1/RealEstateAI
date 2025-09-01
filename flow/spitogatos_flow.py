@@ -18,7 +18,7 @@ class SpitogatosFlow:
         median_column = []
 
         for index, row in df.iterrows():
-            coords = self._geopy_data_source.get_coords_from_adderss(row["address"])
+            coords = self._geopy_data_source.coords_from_address(row["address"])
             search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,
                                                                             radius_meters=location_tolerance)
             assets = self._spitogatos_data_source.get_by_polygon(location=search_rectangle,
@@ -45,7 +45,7 @@ class SpitogatosFlow:
         median_column = []
 
         for index, row in df.iterrows():
-            coords = self._geopy_data_source.get_coords_from_adderss(row["address"])
+            coords = self._geopy_data_source.coords_from_address(row["address"])
             search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,
                                                                             radius_meters=location_tolerance)
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
