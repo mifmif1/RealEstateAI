@@ -25,7 +25,7 @@ class GeopyData:
     def distance_from_2points(self, point_a: Point, point_b: Point) -> float:
         ...
         #todo
-    
+
     def calculate_zoom_from_bounds(self):
         # todo
         ...
