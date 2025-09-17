@@ -33,7 +33,7 @@ class SpitogatosFlow:
             average_column.append(assets_average)
             median_column.append(assets_median)
 
-            sleep(3)  # bot sneaking
+            sleep(3)  # bot handeling
         df['price/sqm'] = df['price'] / df['sqm']
         df['comparison_average'] = average_column
         df['comparison_median'] = median_column
@@ -43,8 +43,11 @@ class SpitogatosFlow:
         df = pd.read_excel(excel_path)
         average_column = []
         median_column = []
+        std_column = []
+        score_column = []
+        coords_column = []
 
-        for index, row in df.iterrows():
+        for index, row in df.iterrows(): # no batching, short data (around 5000 rows)
             coords = self._geopy_data_source.coords_from_address(row["address"])
             search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,
                                                                             radius_meters=location_tolerance)
@@ -52,18 +55,30 @@ class SpitogatosFlow:
                                                                   min_area=row["sqm"] - sqm_tolerance,
                                                                   max_area=row["sqm"] + sqm_tolerance)
             if assets:
-                assets_average = statistics.mean([asset.price / asset.sqm for asset in assets])
-                assets_median = statistics.median([asset.price / asset.sqm for asset in assets])
+                assets_price_sqm = [asset.price / asset.sqm for asset in assets]
+                assets_average = statistics.mean(assets_price_sqm)
+                assets_median = statistics.median(assets_price_sqm)
+                assets_std = statistics.stdev(assets_price_sqm)
+                score = (row['price']/row['sqm']-assets_average)/assets_std
             else:
                 assets_average = pd.NA
                 assets_median = pd.NA
+                assets_std = pd.NA
+                score = pd.NA
+
+            coords_column.append(coords)
             average_column.append(assets_average)
             median_column.append(assets_median)
+            std_column.append(assets_std)
+            score_column.append(score)
 
             sleep(3)  # bot sneaking
+        df['coords'] = coords_column
         df['price/sqm'] = df['price'] / df['sqm']
         df['comparison_average'] = average_column
         df['comparison_median'] = median_column
+        df['comparison_std'] = std_column
+        df['score'] = score_column
         df.to_excel('./new1.xlsx', index=False)
 
 
