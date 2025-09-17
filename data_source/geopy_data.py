@@ -33,6 +33,6 @@ class GeopyData:
 
 if __name__ == '__main__':
     geopy_data = GeopyData()
-    a_point = geopy_data.coords_from_address("27 Vasileos Konstantinou, athens")
-    a_rect = geopy_data.rectangle_from_point(a_point, radius_meters=100)
-    print(a_point, a_rect)
+    a_rect = geopy_data.rectangle_from_point(Point(lon=37.9306087305015,lat=23.478674285882400), radius_meters=50)
+    print(a_rect)
+    print(f"{a_rect.min_lon}, {a_rect.min_lat}",'\n', a_rect.max_lat, a_rect.max_lon)

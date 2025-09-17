@@ -33,8 +33,8 @@ class SpitogatosData:
             ...
 
 
-    def get_by_location(self, location: Rectangle, min_area: int = None,
-                        max_area: int = None) -> List[Asset] | None:
+    def get_by_location(self, location: Rectangle, min_area: int,
+                        max_area: int) -> List[Asset] | None:
         url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
         params = {
             'listingType': 'sale',
@@ -45,7 +45,7 @@ class SpitogatosData:
             'latitudeHigh': str(location.max_lat)[:9],
             'longitudeLow': str(location.min_lon)[:9],
             'longitudeHigh': str(location.max_lon)[:9],
-            'zoom': '17',
+            'zoom': '18',
             'offset': '0',
         }
         if min_area:

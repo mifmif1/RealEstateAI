@@ -1,3 +1,4 @@
+import datetime
 import statistics
 from time import sleep
 
@@ -40,17 +41,20 @@ class SpitogatosFlow:
         df.to_excel('./new_polygon1.xlsx', index=False)
 
     def extend_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = 10):
+        """
+        price, sqm, coords
+        """
         df = pd.read_excel(excel_path)
         average_column = []
         median_column = []
         std_column = []
         score_column = []
-        coords_column = []
 
         for index, row in df.iterrows(): # no batching, short data (around 5000 rows)
-            coords = self._geopy_data_source.coords_from_address(row["address"])
-            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,
+            # coords = self._geopy_data_source.coords_from_address(row["address"])
+            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=row['coords'],
                                                                             radius_meters=location_tolerance)
+            #todo: check
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
                                                                   min_area=row["sqm"] - sqm_tolerance,
                                                                   max_area=row["sqm"] + sqm_tolerance)
@@ -66,22 +70,20 @@ class SpitogatosFlow:
                 assets_std = pd.NA
                 score = pd.NA
 
-            coords_column.append(coords)
             average_column.append(assets_average)
             median_column.append(assets_median)
             std_column.append(assets_std)
             score_column.append(score)
 
             sleep(3)  # bot sneaking
-        df['coords'] = coords_column
         df['price/sqm'] = df['price'] / df['sqm']
         df['comparison_average'] = average_column
         df['comparison_median'] = median_column
         df['comparison_std'] = std_column
         df['score'] = score_column
-        df.to_excel('./new1.xlsx', index=False)
+        df.to_excel(f'./{excel_path}_spitogatos_comparisson_{datetime.datetime.strftime("%d/%m/%Y-%H:%M")}.xlsx', index=False)
 
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    s.extend_excel_by_polygon(r"../try.xlsx", location_tolerance=300)
+    s.extend_excel(r'AuctionTracker_11092025.xlsb')
