@@ -53,12 +53,8 @@ class SpitogatosFlow:
             df = pd.read_excel(excel_path, engine='pyxlsb')
         elif "xlsx" in excel_path:
             df = pd.read_excel(excel_path)
-        average_column = [pd.Na for _ in range(df.shape[1])]
-        median_column = [pd.Na for _ in range(df.shape[1])]
-        std_column = [pd.Na for _ in range(df.shape[1])]
-        assets_num_column = [pd.Na for _ in range(df.shape[1])]
-        score_column = [pd.Na for _ in range(df.shape[1])]
-        i = 0
+
+        df['price/sqm'] = df['price'] / df['sqm']
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
@@ -73,23 +69,17 @@ class SpitogatosFlow:
 
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
-                    average_column[i] = statistics.mean(assets_price_sqm)
-                    median_column[i] = statistics.median(assets_price_sqm)
-                    assets_num_column[i] = len(assets)
-                    if assets_num_column[i] > 1:
-                        std_column[i] = statistics.stdev(assets_price_sqm)
-                        score_column[i] = (row['price'] / row['sqm'] - average_column[i]) / std_column[i]
+                    df.loc[index, 'comparison_average'] = statistics.mean(assets_price_sqm)
+                    df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
+                    df.loc[index, '#assets'] = len(assets)
+                    if len(assets) > 1:
+                        df.loc[index, 'comparison_std'] = statistics.stdev(assets_price_sqm)
+                        df[index, 'score'] = (row['price'] / row['sqm'] - df.loc[index, 'comparison_average']) / df.loc[index, 'comparison_std']
 
                 sleep(3)  # bot sneaking
         except Exception as e:
             logger.error(f"something faliled. SAVING!: {e}")
         finally:
-            df['price/sqm'] = df['price'] / df['sqm']
-            df['comparison_average'] = average_column
-            df['comparison_median'] = median_column
-            df['comparison_std'] = std_column
-            df['#assets'] = assets_num_column
-            df['score'] = score_column
             df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
                         index=False)
             logger.info("saved successfully")
