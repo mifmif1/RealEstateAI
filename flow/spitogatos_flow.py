@@ -6,6 +6,7 @@ import pandas as pd
 
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
+from model.geographical_model import Point
 
 
 class SpitogatosFlow:
@@ -56,7 +57,7 @@ class SpitogatosFlow:
 
         for index, row in df.iterrows(): # no batching, short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
-            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=row['coords'],
+            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=Point(lat=float(row['coords'].split(',')[0]), lon=float(row['coords'].split(',')[1])),
                                                                             radius_meters=location_tolerance)
             #todo: check
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
@@ -85,9 +86,10 @@ class SpitogatosFlow:
         df['comparison_median'] = median_column
         df['comparison_std'] = std_column
         df['score'] = score_column
-        df.to_excel(f'./{excel_path}_spitogatos_comparisson_{datetime.datetime.strftime("%d/%m/%Y-%H:%M")}.xlsx', index=False)
+        df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx', index=False)
 
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    s.extend_excel(r'AuctionTracker_11092025.xlsb')
+    # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
+    s.extend_excel(r"../auction_1.xlsb")
