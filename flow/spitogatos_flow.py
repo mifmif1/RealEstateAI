@@ -74,7 +74,7 @@ class SpitogatosFlow:
                     df.loc[index, '#assets'] = len(assets)
                     if len(assets) > 1:
                         df.loc[index, 'comparison_std'] = statistics.stdev(assets_price_sqm)
-                        df[index, 'score'] = (row['price/sqm'] - row['comparison_average']) / row['comparison_std']
+                        df.loc[index, 'score'] = (row['price/sqm'] - statistics.mean(assets_price_sqm)) / statistics.stdev(assets_price_sqm)
                 sleep(3)  # bot sneaking
         except Exception as e:
             logger.error(f"something faliled. SAVING!: {e}")
