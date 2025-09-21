@@ -48,17 +48,17 @@ class SpitogatosFlow:
         """
         price, sqm, coords
         """
-        assert "xlsx" in excel_path or "xlsb" in excel_path
-        if "xlsb" in excel_path:
+        assert "xlsx" in excel_path[-5:] or "xlsb" in excel_path[-5:]
+        if "xlsb" in excel_path[-5:]:
             df = pd.read_excel(excel_path, engine='pyxlsb')
-        elif "xlsx" in excel_path:
+        elif "xlsx" in excel_path[-5:]:
             df = pd.read_excel(excel_path)
 
         df['price/sqm'] = df['price'] / df['sqm']
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
-                if row['comparison_average'] != pd.NA:
+                if not pd.isna(row['comparison_average']):
                     continue
 
                 search_rectangle = self._geopy_data_source.rectangle_from_point(
@@ -72,16 +72,16 @@ class SpitogatosFlow:
 
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
-                    df.loc[index, 'comparison_average'] = statistics.mean(assets_price_sqm)
+                    mean =  statistics.mean(assets_price_sqm)
+                    df.loc[index, 'comparison_average'] = mean
                     df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                     df.loc[index, '#assets'] = len(assets)
                     if len(assets) > 1:
-                        df.loc[index, 'comparison_std'] = statistics.stdev(assets_price_sqm)
-                        if statistics.stdev(assets_price_sqm) != 0:
-                            df.loc[index, 'score'] = (row['price/sqm'] - statistics.mean(assets_price_sqm)) / statistics.stdev(assets_price_sqm)
-                        else:
-                            df.loc[index, 'score'] = pd.NA
-                            
+                        std = statistics.stdev(assets_price_sqm)
+                        df.loc[index, 'comparison_std'] = std
+                        if std != 0:
+                            df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
+
                 sleep(3)  # bot sneaking
         except Exception as e:
             logger.error(f"something faliled. SAVING!: {e}")
@@ -95,4 +95,4 @@ if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
-    s.extend_excel("../byhand/real.xlsb")
+    s.extend_excel(r"../byhand/real.xlsb_spitogatos_comparisson_21092025-1740.xlsx")
