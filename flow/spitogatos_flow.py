@@ -53,47 +53,32 @@ class SpitogatosFlow:
             df = pd.read_excel(excel_path, engine='pyxlsb')
         elif "xlsx" in excel_path:
             df = pd.read_excel(excel_path)
-        average_column = []
-        median_column = []
-        std_column = []
-        assets_num_column = []
-        score_column = []
-
+        average_column = [pd.Na for _ in range(df.shape[1])]
+        median_column = [pd.Na for _ in range(df.shape[1])]
+        std_column = [pd.Na for _ in range(df.shape[1])]
+        assets_num_column = [pd.Na for _ in range(df.shape[1])]
+        score_column = [pd.Na for _ in range(df.shape[1])]
+        i = 0
         try:
-            for index, row in df.iterrows():  # no batching, short data (around 5000 rows)
+            for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
                 search_rectangle = self._geopy_data_source.rectangle_from_point(
                     start_point=Point(lat=float(row['coords'].split(',')[0]), lon=float(row['coords'].split(',')[1])),
                     radius_meters=location_tolerance)
-                # todo: check
                 assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                      min_area=row["sqm"] - sqm_tolerance,
+                                                                      min_area=max(0, row["sqm"] - sqm_tolerance),
                                                                       max_area=row["sqm"] + sqm_tolerance)
                 if assets == -1:
                     break
 
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
-                    assets_average = statistics.mean(assets_price_sqm)
-                    assets_median = statistics.median(assets_price_sqm)
-                    assets_num = len(assets)
-                    if assets_num > 1:
-                        assets_std = statistics.stdev(assets_price_sqm)
-                    else:
-                        assets_std = pd.NA
-                    score = (row['price'] / row['sqm'] - assets_average) / assets_std
-                else:
-                    assets_average = pd.NA
-                    assets_median = pd.NA
-                    assets_std = pd.NA
-                    assets_num = pd.NA
-                    score = pd.NA
-
-                average_column.append(assets_average)
-                median_column.append(assets_median)
-                std_column.append(assets_std)
-                assets_num_column.append(assets_num)
-                score_column.append(score)
+                    average_column[i] = statistics.mean(assets_price_sqm)
+                    median_column[i] = statistics.median(assets_price_sqm)
+                    assets_num_column[i] = len(assets)
+                    if assets_num_column[i] > 1:
+                        std_column[i] = statistics.stdev(assets_price_sqm)
+                        score_column[i] = (row['price'] / row['sqm'] - average_column[i]) / std_column[i]
 
                 sleep(3)  # bot sneaking
         except Exception as e:
@@ -108,6 +93,7 @@ class SpitogatosFlow:
             df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
                         index=False)
             logger.info("saved successfully")
+
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
