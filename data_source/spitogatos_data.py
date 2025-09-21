@@ -97,3 +97,4 @@ class SpitogatosData:
 
 if __name__ == '__main__':
     my = SpitogatosData()
+

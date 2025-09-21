@@ -44,7 +44,11 @@ class SpitogatosFlow:
         """
         price, sqm, coords
         """
-        df = pd.read_excel(excel_path)
+        assert "xlsx" in excel_path or "xlsb" in excel_path
+        if "xlsb" in excel_path:
+            df = pd.read_excel(excel_path, engine='pyxlsb')
+        elif "xlsx" in excel_path:
+            df = pd.read_excel(excel_path)
         average_column = []
         median_column = []
         std_column = []
