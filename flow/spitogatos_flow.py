@@ -58,6 +58,9 @@ class SpitogatosFlow:
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
+                if row['comparison_average'] != pd.NA:
+                    continue
+
                 search_rectangle = self._geopy_data_source.rectangle_from_point(
                     start_point=Point(lat=float(row['coords'].split(',')[0]), lon=float(row['coords'].split(',')[1])),
                     radius_meters=location_tolerance)
@@ -74,7 +77,11 @@ class SpitogatosFlow:
                     df.loc[index, '#assets'] = len(assets)
                     if len(assets) > 1:
                         df.loc[index, 'comparison_std'] = statistics.stdev(assets_price_sqm)
-                        df.loc[index, 'score'] = (row['price/sqm'] - statistics.mean(assets_price_sqm)) / statistics.stdev(assets_price_sqm)
+                        if statistics.stdev(assets_price_sqm) != 0:
+                            df.loc[index, 'score'] = (row['price/sqm'] - statistics.mean(assets_price_sqm)) / statistics.stdev(assets_price_sqm)
+                        else:
+                            df.loc[index, 'score'] = pd.NA
+                            
                 sleep(3)  # bot sneaking
         except Exception as e:
             logger.error(f"something faliled. SAVING!: {e}")
