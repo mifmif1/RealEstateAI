@@ -44,7 +44,7 @@ class SpitogatosFlow:
         df['comparison_median'] = median_column
         df.to_excel('./new_polygon1.xlsx', index=False)
 
-    def extend_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = 10):
+    def extend_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = None):
         """
         price, sqm, coords
         """
@@ -58,17 +58,23 @@ class SpitogatosFlow:
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
-                if not pd.isna(row['comparison_average']) or row['sqm'] < 30: #todo check it!
-                    continue # this row is not relevant
+                if not pd.isna(row['comparison_average']) or row['sqm'] < 30:  # todo add 100 percent, residential
+                    continue  # this row is not relevant
 
                 search_rectangle = self._geopy_data_source.rectangle_from_point(
                     start_point=Point(lat=float(row['coords'].split(',')[0]), lon=float(row['coords'].split(',')[1])),
                     radius_meters=location_tolerance)
-                assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                      min_area=max(0, row["sqm"] - sqm_tolerance),
-                                                                      max_area=row["sqm"] + sqm_tolerance)
+                if sqm_tolerance:
+                    assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
+                                                                          min_area=max(0, row["sqm"] - sqm_tolerance),
+                                                                          max_area=row["sqm"] + sqm_tolerance)
+                else:
+                    assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
+                                                                          min_area=30,
+                                                                          max_area=200)
+
                 if assets == -1:
-                    break # probably bot detected
+                    break  # probably bot detected
 
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
@@ -77,21 +83,22 @@ class SpitogatosFlow:
                     df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                     df.loc[index, '#assets'] = len(assets)
                     df.loc[index, 'spitogatos_url'] = assets[0].url
-                        df.loc[index, 'searched_radius'] = location_tolerance
-                    if len(assets) > 1:
-                        std = statistics.stdev(assets_price_sqm)
-                        df.loc[index, 'comparison_std'] = std
-                        if std != 0:
-                            df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
+                    df.loc[index, 'searched_radius'] = location_tolerance
+                if len(assets) > 1:
+                    std = statistics.stdev(assets_price_sqm)
+                    df.loc[index, 'comparison_std'] = std
+                    if std != 0:
+                        df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
 
-                sleep(3)  # bot sneaking
-        except Exception as e:
-            logger.error(f"something faliled. SAVING!: {e}")
-        finally:
-            df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
-                        index=False)
-            logger.info("saved successfully")
+            sleep(3)  # bot sneaking
 
+    except Exception as e:
+    logger.error(f"something faliled. SAVING!: {e}")
+
+finally:
+df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
+            index=False)
+logger.info("saved successfully")
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
