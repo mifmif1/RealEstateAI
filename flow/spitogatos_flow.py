@@ -83,6 +83,26 @@ class SpitogatosFlow:
                 if assets == -1:
                     break  # probably bot detected
 
+                """ugle area..."""
+                if len(assets) < 5:
+                    search_rectangle = self._geopy_data_source.rectangle_from_point(
+                        start_point=Point(lat=float(row['coords'].split(',')[0]),
+                                          lon=float(row['coords'].split(',')[1])),
+                        radius_meters=location_tolerance * 1.5)
+                    if sqm_tolerance:
+                        assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
+                                                                              min_area=max(0,
+                                                                                           row["sqm"] - sqm_tolerance),
+                                                                              max_area=row["sqm"] + sqm_tolerance)
+                    else:
+                        assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
+                                                                              min_area=30,
+                                                                              max_area=200)
+                if assets == -1:
+                    break  # probably bot detected
+
+                """ugly area..."""
+
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
                     mean = statistics.mean(assets_price_sqm)
@@ -90,6 +110,8 @@ class SpitogatosFlow:
                     df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                     df.loc[index, '#assets'] = len(assets)
                     df.loc[index, 'spitogatos_url'] = assets[0].url
+                    df.loc[
+                        index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
                     df.loc[index, 'searched_radius'] = location_tolerance
                     if len(assets) > 1:
                         std = statistics.stdev(assets_price_sqm)
