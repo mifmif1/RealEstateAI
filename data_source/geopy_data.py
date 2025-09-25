@@ -24,7 +24,7 @@ class GeopyData:
 
     def distance_from_2points(self, point_a: Point, point_b: Point) -> float:
         ...
-        #todo
+        # todo
 
     def calculate_zoom_from_bounds(self):
         # todo
@@ -33,6 +33,10 @@ class GeopyData:
 
 if __name__ == '__main__':
     geopy_data = GeopyData()
-    a_rect = geopy_data.rectangle_from_point(Point(lon=37.9306087305015,lat=23.478674285882400), radius_meters=50)
-    print(a_rect)
-    print(f"{a_rect.min_lon}, {a_rect.min_lat}",'\n', a_rect.max_lat, a_rect.max_lon)
+    location = geopy_data.rectangle_from_point(Point(lat=38.01447115, lon=23.736434841), radius_meters=100)
+
+    print("https://www.spitogatos.gr/en/for_sale-homes/map-search" + (
+        f"/minliving_area-30") + (
+        f"/maxliving_area-200") + "?" + f"latitudeLow={str(location.min_lat)[:9]}&latitudeHigh={str(location.max_lat)[:9]}&longitudeLow={str(location.min_lon)[:9]}&longitudeHigh={str(location.max_lon)[:9]}&zoom=18")
+    # print(a_rect)
+    # print(f"{a_rect.min_lon}, {a_rect.min_lat}",'\n', a_rect.max_lat, a_rect.max_lon)
