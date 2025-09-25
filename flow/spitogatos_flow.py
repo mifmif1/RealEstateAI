@@ -60,7 +60,7 @@ class SpitogatosFlow:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
                 if (False or
-                        # not pd.isna(row['comparison_average']) or
+                        not pd.isna(row['comparison_average']) or
                         row['sqm'] < 30 or
                         '%' in row['TitleGR'] or
                         (('Διαμέρισμα' not in row['SubCategoryGR']) and
@@ -135,4 +135,4 @@ if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
-    s.extend_excel(r"../byhand/real.xlsb")
+    s.extend_excel(r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx")
