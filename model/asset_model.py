@@ -8,3 +8,5 @@ class Asset(BaseModel):
     sqm: float
     price: float
     address: str = None
+    url: str = None
+    searched_radius: float = None

@@ -86,7 +86,8 @@ class SpitogatosData:
                 for asset_raw in data:
                     results.append(Asset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
                                          sqm=asset_raw['sq_meters'],
-                                         price=asset_raw['price']))
+                                         price=asset_raw['price'],
+                                         url=headers["Referer"]))
                 logger.info(f"Successfully fetched {location}")
                 print(f"Successfully fetched {location}")
             except Exception as e:

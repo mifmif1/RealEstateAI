@@ -58,8 +58,8 @@ class SpitogatosFlow:
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
-                if not pd.isna(row['comparison_average']):
-                    continue
+                if not pd.isna(row['comparison_average']) or row['sqm'] < 30: #todo check it!
+                    continue # this row is not relevant
 
                 search_rectangle = self._geopy_data_source.rectangle_from_point(
                     start_point=Point(lat=float(row['coords'].split(',')[0]), lon=float(row['coords'].split(',')[1])),
@@ -68,14 +68,16 @@ class SpitogatosFlow:
                                                                       min_area=max(0, row["sqm"] - sqm_tolerance),
                                                                       max_area=row["sqm"] + sqm_tolerance)
                 if assets == -1:
-                    break
+                    break # probably bot detected
 
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
-                    mean =  statistics.mean(assets_price_sqm)
+                    mean = statistics.mean(assets_price_sqm)
                     df.loc[index, 'comparison_average'] = mean
                     df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                     df.loc[index, '#assets'] = len(assets)
+                    df.loc[index, 'spitogatos_url'] = assets[0].url
+                        df.loc[index, 'searched_radius'] = location_tolerance
                     if len(assets) > 1:
                         std = statistics.stdev(assets_price_sqm)
                         df.loc[index, 'comparison_std'] = std
