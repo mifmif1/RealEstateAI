@@ -73,7 +73,7 @@ class SpitogatosData:
             "user-agent": ApisConsts.USER_AGENT,
             "Referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search" + (
                 f"/minliving_area-{min_area}" if min_area else '') + (
-                           f"/maxliving_area-{max_area}" if max_area else '') + "?" + f"latitudeLow={params['latitudeLow']}&latitudeHigh={params['latitudeHigh']}&longitudeLow={params['latitudeLow']}&longitudeHigh={params['latitudeHigh']}&zoom={params['zoom']}"
+                           f"/maxliving_area-{max_area}" if max_area else '') + "?" + f"latitudeLow={params['latitudeLow']}&latitudeHigh={params['latitudeHigh']}&longitudeLow={params['longitudeLow']}&longitudeHigh={params['longitudeHigh']}&zoom={params['zoom']}"
         }
 
         response = self._session.get(url, params=params, headers=headers)
