@@ -1,5 +1,6 @@
 import datetime
 import logging
+import re
 import statistics
 from time import sleep
 
@@ -58,7 +59,13 @@ class SpitogatosFlow:
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
-                if not pd.isna(row['comparison_average']) or row['sqm'] < 30:  # todo add 100 percent, residential
+                if (False or
+                        # not pd.isna(row['comparison_average']) or
+                        row['sqm'] < 30 or
+                        '%' in row['TitleGR'] or
+                        (('Διαμέρισμα' not in row['SubCategoryGR']) and
+                         ('Μεζονέτα' not in row['SubCategoryGR']) and
+                         ('Μονοκατοικία' not in row['SubCategoryGR']))):
                     continue  # this row is not relevant
 
                 search_rectangle = self._geopy_data_source.rectangle_from_point(
@@ -84,24 +91,26 @@ class SpitogatosFlow:
                     df.loc[index, '#assets'] = len(assets)
                     df.loc[index, 'spitogatos_url'] = assets[0].url
                     df.loc[index, 'searched_radius'] = location_tolerance
-                if len(assets) > 1:
-                    std = statistics.stdev(assets_price_sqm)
-                    df.loc[index, 'comparison_std'] = std
-                    if std != 0:
-                        df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
+                    if len(assets) > 1:
+                        std = statistics.stdev(assets_price_sqm)
+                        df.loc[index, 'comparison_std'] = std
+                        if std != 0:
+                            df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
 
-            sleep(3)  # bot sneaking
+                sleep(3)  # bot sneaking
+            logger.info("finished, SAVING!")
 
-    except Exception as e:
-    logger.error(f"something faliled. SAVING!: {e}")
+        except Exception as e:
+            logger.error(f"something faliled. SAVING!: {e}")
 
-finally:
-df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
-            index=False)
-logger.info("saved successfully")
+        finally:
+            df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
+                        index=False)
+            logger.info("saved successfully")
+
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
-    s.extend_excel(r"../byhand/real.xlsb_spitogatos_comparisson_21092025-1740.xlsx")
+    s.extend_excel(r"../byhand/real.xlsb")
