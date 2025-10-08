@@ -1,5 +1,6 @@
 import json
 import logging
+from time import sleep
 from typing import List
 
 import requests
@@ -23,7 +24,7 @@ class SpitogatosData:
         3. calculate the addition you have to have in order to keep the final ratio (final two edges)
         4. return the edges as a rectangle
         """
-        width = location.max_lon - location.min_lon # todo: change to actual distance
+        width = location.max_lon - location.min_lon  # todo: change to actual distance
         height = location.max_lat - location.min_lat  # todo: change to actual distance
 
         if width > height:
@@ -31,7 +32,6 @@ class SpitogatosData:
             east = location.min_lon + 100  # todo: change to actual distance
             screen_width = east - west
             ...
-
 
     def get_by_location(self, location: Rectangle, min_area: int,
                         max_area: int) -> List[Asset] | None:
@@ -46,7 +46,7 @@ class SpitogatosData:
             'latitudeHigh': str(location.max_lat)[:9],
             'longitudeLow': str(location.min_lon)[:9],
             'longitudeHigh': str(location.max_lon)[:9],
-            'zoom': '18', # fits for radius of 100m
+            'zoom': '18',  # fits for radius of 100m
             'offset': '0',
         }
         if min_area:
@@ -67,13 +67,13 @@ class SpitogatosData:
             "x-alsbn": "1",
             "x-locale": "en",
             "x-mdraw": "1",
-            "cookie": "auth.strategy=laravelJWT; segment_session=8e619582-20d6-4646-bbbc-faed3485bf09; _cc_id=437ba14c77ee96aa9da159232995b787; _gcl_au=1.1.1331426619.1754902848; _tt_enable_cookie=1; _ttp=01K2C5RSFB2NV5310C5MHC9AGC_.tt.1; _fbp=fb.1.1754902849270.332693119532634740; _ga_LEEXB314YZ=GS2.1.s1754902848$o1$g0$t1754902870$j38$l0$h0; _hjSessionUser_1348694=eyJpZCI6IjlhZDIyYTcwLTNjMmYtNTRmZi05MGZkLWJmMTQyNGY3ZTZmZiIsImNyZWF0ZWQiOjE3NTQ5MDI4NTE1NTEsImV4aXN0aW5nIjp0cnVlfQ==; ajs_anonymous_id=8e619582-20d6-4646-bbbc-faed3485bf09; euconsent-v2=CQW6UcAQW6UcAAKA9AENB6FgAAAAAEPgAAyIAAAXCABMNCogjLIgRCJQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKRswBBQGaLQXgyfRkaYBg-YJklMgyAJgjIyTYhN-Ew8chRCghyE2KAAAAA.YAAAAAAAAAAA; addtl_consent=1~; IABGPP_HDR_GppString=DBABMA~CQW83MzQW83MzAKA9AENB6FgAAAAAEPgAAyIAAAXCABMNCogjLIgRCJQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKRswBBQGaLQXgyfRkaYBg-YJklMgyAJgjIyTYhN-Ew8chRCghyE2KAAAAA.YAAAAAAAAAAA; PHPSESSID=f59qqrtqssmneei0rbgkmconlh; anonymous_user_id=anon_1757870992380_v7v7sewrv; auth._token.laravelJWT=false; auth._token_expiration.laravelJWT=false; auth._refresh_token.laravelJWT=false; auth._refresh_token_expiration.laravelJWT=false; __gads=ID=07200e69c821b951:T=1754902844:RT=1758810680:S=ALNI_MYoF7r9MwnoG0lsKFi_b_QOWYcBLQ; __gpi=UID=0000124ddbe11618:T=1754902844:RT=1758810680:S=ALNI_Mbey4xIAjtEd-6qiqjWO3Mkwe9EUg; __eoi=ID=c9ccc63c0fa2f2e9:T=1754902844:RT=1758810680:S=AA-AfjYQInjT_bG3L_3aT4sNP8iN; sesId=m0VwnLHkDYyh9Eou4l0ndcC4VZJ4er2t; cto_bundle=ft6Rtl9rR0IlMkZIVXBBcUMxR1laMjBBJTJCNHZPZUI4VVlEV1RuUHBxWjl3MTJVZ3FxWVB1VUdMd0YwbUtWS2JKejJLMnB2anBXNHZMY0l0eUxtQ0slMkZwMGJ4ZGxTUGhtb0VhaVY0YUVpWUdWRURjQmFVdnpLbzNGdG1qbmVtZDFvYk1JUDlNcWtCZ2FsWDhtQTVramQlMkZXR3F5R3JLMXpvUTE3NzNwV0hja3I4MU5lRCUyRlVQQ250SmwwbHkxdVpId0JVelYxMmg1RU5FNDVwU0dOSWtGWG1Yd0VENU5UQSUzRCUzRA; _gid=GA1.2.1717183858.1759921403; spitogatosS=listingType%3Dsale%26propertyCategory%3Dresidential%26livingAreaLow%3D120%26livingAreaHigh%3D148; reese84=3:G92xrabuwMpD8ao+V7AUgQ==:OHkGMOVCgOepvi2WA9J7GNQT21JhdNWgPGMj7dujWbqTEdBSVo6MiipWSdOsDhk1iKjuSWcFuqv3Afe1sYk7YC7QUBP6oOZadwkuP6nxC6zqf2FvYkSMtStnX+OvI6d1K6dsXMJhfnMG/2WV7JnlgD6iNgEtzRyFtdjxgOrL64bQujy4aqAAQ++uP8VahpQsu+2b9tP1xEkvfz2Y0DceOwLxrToByEgSZ6wQhqX0wFSFRD8PqOrHAceFcEy8tneMUQWDWB6x6QSXjH5yReBdLThClgSNjCaW9fmmiIW4f8lpzpx0MO/TkSdrInPj3LVpLeJULBQ92ZJ+8MmqCHnkOO3+f7w41IQJBnTsf1XIBJ0JR2cB5L6VTIF3EJJ5LMB0tAHfUwVtca1hlXAbyRbakZ9t3mUpdRXzTvmidw8gJI/8OgwgNdivlthFp2BC+gcnCK6e2FEOvYFgXjW1hhsMhw==:t2cRdRCSX2EdN2Wc1K6IMYQ/sE6L5EXXMH98o2VS4Ik=; _gat_UA-3455846-3=1; _ga_KT1TCYQ5FH=GS2.1.s1759924571$o35$g0$t1759924571$j60$l0$h0; _ga=GA1.1.1153256482.1754902848; _ga_8HD2LETKWJ=GS2.1.s1759924571$o35$g0$t1759924571$j60$l0$h0; ttcsid=1759924571879::C00zKjNdXK4R4gqbSaBf.31.1759924572223.0; ttcsid_D0JJKCRC77U9SUC01950=1759924571878::CPTbdDy5tMV3Knr5YkDS.31.1759924572224.0; en_lastSearch=%2Ffor_sale-homes%2Fmap-search%2Fminliving_area-120%2Fmaxliving_area-148%3FlatitudeLow%3D38.018975%26latitudeHigh%3D38.020242%26longitudeLow%3D23.74499%26longitudeHigh%3D23.748504%26zoom%3D18",
+            "cookie": "auth.strategy=laravelJWT; segment_session=8e619582-20d6-4646-bbbc-faed3485bf09; _cc_id=437ba14c77ee96aa9da159232995b787; _gcl_au=1.1.1331426619.1754902848; _tt_enable_cookie=1; _ttp=01K2C5RSFB2NV5310C5MHC9AGC_.tt.1; _fbp=fb.1.1754902849270.332693119532634740; _ga_LEEXB314YZ=GS2.1.s1754902848$o1$g0$t1754902870$j38$l0$h0; _hjSessionUser_1348694=eyJpZCI6IjlhZDIyYTcwLTNjMmYtNTRmZi05MGZkLWJmMTQyNGY3ZTZmZiIsImNyZWF0ZWQiOjE3NTQ5MDI4NTE1NTEsImV4aXN0aW5nIjp0cnVlfQ==; ajs_anonymous_id=8e619582-20d6-4646-bbbc-faed3485bf09; euconsent-v2=CQW6UcAQW6UcAAKA9AENB6FgAAAAAEPgAAyIAAAXCABMNCogjLIgRCJQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKRswBBQGaLQXgyfRkaYBg-YJklMgyAJgjIyTYhN-Ew8chRCghyE2KAAAAA.YAAAAAAAAAAA; addtl_consent=1~; IABGPP_HDR_GppString=DBABMA~CQW83MzQW83MzAKA9AENB6FgAAAAAEPgAAyIAAAXCABMNCogjLIgRCJQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKRswBBQGaLQXgyfRkaYBg-YJklMgyAJgjIyTYhN-Ew8chRCghyE2KAAAAA.YAAAAAAAAAAA; PHPSESSID=f59qqrtqssmneei0rbgkmconlh; anonymous_user_id=anon_1757870992380_v7v7sewrv; auth._token.laravelJWT=false; auth._token_expiration.laravelJWT=false; auth._refresh_token.laravelJWT=false; auth._refresh_token_expiration.laravelJWT=false; __gads=ID=07200e69c821b951:T=1754902844:RT=1758810680:S=ALNI_MYoF7r9MwnoG0lsKFi_b_QOWYcBLQ; __gpi=UID=0000124ddbe11618:T=1754902844:RT=1758810680:S=ALNI_Mbey4xIAjtEd-6qiqjWO3Mkwe9EUg; __eoi=ID=c9ccc63c0fa2f2e9:T=1754902844:RT=1758810680:S=AA-AfjYQInjT_bG3L_3aT4sNP8iN; cto_bundle=ft6Rtl9rR0IlMkZIVXBBcUMxR1laMjBBJTJCNHZPZUI4VVlEV1RuUHBxWjl3MTJVZ3FxWVB1VUdMd0YwbUtWS2JKejJLMnB2anBXNHZMY0l0eUxtQ0slMkZwMGJ4ZGxTUGhtb0VhaVY0YUVpWUdWRURjQmFVdnpLbzNGdG1qbmVtZDFvYk1JUDlNcWtCZ2FsWDhtQTVramQlMkZXR3F5R3JLMXpvUTE3NzNwV0hja3I4MU5lRCUyRlVQQ250SmwwbHkxdVpId0JVelYxMmg1RU5FNDVwU0dOSWtGWG1Yd0VENU5UQSUzRCUzRA; _gid=GA1.2.1717183858.1759921403; spitogatosS=listingType%3Dsale%26propertyCategory%3Dresidential%26livingAreaLow%3D120%26livingAreaHigh%3D148; en_lastSearch=%2Ffor_sale-homes%2Fmap-search%2Fminliving_area-120%2Fmaxliving_area-148%3FlatitudeLow%3D38.018975%26latitudeHigh%3D38.020242%26longitudeLow%3D23.74499%26longitudeHigh%3D23.748504%26zoom%3D18; reese84=3:qoMP5SB/bEXNtTbcIBwnGg==:vpJE64cvO5lI6i83mBRCfo2unVafBLh52YCDu/bgcpFbOKWWOGGuRaPI8+w7UbPJXwFUWF6pIFrGPMMNQ99GDsSIT192FJz8gO1Y24DEuXyfLcknlQniCekeQE+fd4OOxVCcrnoQFqILR9fEVg2UhthP0ncdlyPjS33RH/Ne38RQfMLgeFaGiI1BKVAOuRVAAlLMhuHjZ18eCgjAocy5uotQUoXxXZmh1SMyvG/Wxi8qImT751qeNX5xmH/dpXMyuwvNaE2BKCuqzjy7DOiwRhWYg54v2K3A8RHKO+yrFlpZiv+1OaNscqyll9LzLTEBh8I5HRMIWbbKVHGotj28uPByawvJEgYYLGWfSpc8bL4wA71aRcMNBYBTQwEUoAr5l3UcicJ9PICFHLm3ZbrvvhskwK+Zx3gTBWWgeIOZ09jX5ctqGvlQ/8GSji12tpeSVPZmWFJj4nx+VcfZnK6m6Q==:u7b/eserLWcXyoEJyZcFzPKR+5FolbVUeS4B0ZI5z+Q=; sesId=n4HE4FVqofCzvcY2cC9Xt5i5lnzp7h6S; _ga_KT1TCYQ5FH=GS2.1.s1759947356$o36$g0$t1759947356$j60$l0$h0; _ga=GA1.1.1153256482.1754902848; _ga_8HD2LETKWJ=GS2.1.s1759947356$o36$g0$t1759947356$j60$l0$h0; ttcsid=1759947357460::PpRu7DJyL73JvxZjc5FC.32.1759947357759.0; ttcsid_D0JJKCRC77U9SUC01950=1759947357459::zNCPsr4kdriMtJvs4NAZ.32.1759947357759.0; _hjSession_1348694=eyJpZCI6IjJmMjM0MGU5LWVjZGYtNGNiMi04YWM5LWYwMzk5YjY1YzFiZCIsImMiOjE3NTk5NDczNTkzNDQsInMiOjAsInIiOjAsInNiIjowLCJzciI6MCwic2UiOjAsImZzIjowLCJzcCI6MH0=",
             "user-agent": ApisConsts.USER_AGENT,
             "Referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search" + (
                 f"/minliving_area-{min_area}" if min_area else '') + (
                            f"/maxliving_area-{max_area}" if max_area else '') + "?" + f"latitudeLow={params['latitudeLow']}&latitudeHigh={params['latitudeHigh']}&longitudeLow={params['longitudeLow']}&longitudeHigh={params['longitudeHigh']}&zoom={params['zoom']}"
         }
-
+        sleep(3)  # bot sneaking
         response = self._session.get(url, params=params, headers=headers)
 
         is_bot = False
@@ -99,4 +99,3 @@ class SpitogatosData:
 
 if __name__ == '__main__':
     my = SpitogatosData()
-

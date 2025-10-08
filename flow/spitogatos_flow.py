@@ -1,7 +1,6 @@
 import datetime
 import logging
 import statistics
-from time import sleep
 from typing import Callable
 
 import pandas as pd
@@ -41,7 +40,6 @@ class SpitogatosFlow:
             average_column.append(assets_average)
             median_column.append(assets_median)
 
-            sleep(3)  # bot handeling
         df['price/sqm'] = df['price'] / df['sqm']
         df['comparison_average'] = average_column
         df['comparison_median'] = median_column
@@ -111,7 +109,6 @@ class SpitogatosFlow:
                         if std != 0:
                             df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
 
-                sleep(3)  # bot sneaking
             logger.info("finished, SAVING!")
 
         except Exception as e:
