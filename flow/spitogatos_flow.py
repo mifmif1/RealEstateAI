@@ -81,6 +81,7 @@ class SpitogatosFlow:
         assert 'price' in df.columns
         assert 'sqm' in df.columns
         assert 'coords' in df.columns
+
         df['price/sqm'] = df['price'] / df['sqm']
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
@@ -93,6 +94,7 @@ class SpitogatosFlow:
                                                                          sqm_tolerance=sqm_tolerance)
                 if assets == -1:
                     break
+
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
                     mean = statistics.mean(assets_price_sqm)
