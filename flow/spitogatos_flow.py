@@ -48,10 +48,8 @@ class SpitogatosFlow:
         df.to_excel('./new_polygon1.xlsx', index=False)
 
     def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
-        """
-        assume "coords" attribute in row
-        assume "sqm" attribute in row
-        """
+        assert 'coords' in row.keys()
+        assert 'sqm' in row.keys()
 
         i = 0
         assets = []
@@ -79,6 +77,10 @@ class SpitogatosFlow:
             df = pd.read_excel(excel_path, engine='pyxlsb')
         elif "xlsx" in excel_path[-5:]:
             df = pd.read_excel(excel_path)
+
+        assert 'price' in df.columns
+        assert 'sqm' in df.columns
+        assert 'coords' in df.columns
 
         df['price/sqm'] = df['price'] / df['sqm']
         try:
@@ -130,5 +132,7 @@ if __name__ == '__main__':
                                        ('Μονοκατοικία' not in row['SubCategoryGR']))
                                       )
 
-    s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
-                   row_conditions=dovalue_conditions)
+    # s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
+    #                row_conditions=dovalue_conditions)
+    s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx",
+                   row_conditions=lambda row:())
