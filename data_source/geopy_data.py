@@ -1,5 +1,6 @@
 import math
 
+import geopy.point
 from geopy.geocoders import Nominatim
 from geopy.distance import distance
 from model.geographical_model import Point, Rectangle
@@ -30,6 +31,10 @@ class GeopyData:
         # todo
         ...
 
+    def convert_location_to_lon_lat(self, location_str: str) -> Point:
+        pnt = geopy.point.Point(location_str)
+        return Point(lon=pnt.latitude, lat=pnt.longitude)
+
 
 if __name__ == '__main__':
     geopy_data = GeopyData()
@@ -37,6 +42,6 @@ if __name__ == '__main__':
 
     print("https://www.spitogatos.gr/en/for_sale-homes/map-search" + (
         f"/minliving_area-30") + (
-        f"/maxliving_area-200") + "?" + f"latitudeLow={str(location.min_lat)[:9]}&latitudeHigh={str(location.max_lat)[:9]}&longitudeLow={str(location.min_lon)[:9]}&longitudeHigh={str(location.max_lon)[:9]}&zoom=18")
+              f"/maxliving_area-200") + "?" + f"latitudeLow={str(location.min_lat)[:9]}&latitudeHigh={str(location.max_lat)[:9]}&longitudeLow={str(location.min_lon)[:9]}&longitudeHigh={str(location.max_lon)[:9]}&zoom=18")
     # print(a_rect)
     # print(f"{a_rect.min_lon}, {a_rect.min_lat}",'\n', a_rect.max_lat, a_rect.max_lon)

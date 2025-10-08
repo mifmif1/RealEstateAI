@@ -55,10 +55,10 @@ class SpitogatosFlow:
 
         i = 0
         assets = []
+        point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
         while i < 5 and isinstance(assets, list) and len(assets) < 5:
             search_rectangle = self._geopy_data_source.rectangle_from_point(
-                start_point=Point(lat=float(row['coords'].split(',')[0]),
-                                  lon=float(row['coords'].split(',')[1])),
+                start_point=point,
                 radius_meters=location_tolerance)
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
                                                                   min_area=max(0, row[
@@ -69,7 +69,7 @@ class SpitogatosFlow:
             i += 1
         return assets, location_tolerance / 1.5
 
-    def extand_excel(self, excel_path, row_conditions: Callable[[pd.Series], bool], location_tolerance: int = 100,
+    def extend_excel(self, excel_path, row_conditions: Callable[[pd.Series], bool], location_tolerance: int = 100,
                      sqm_tolerance: int = None):
         """
         price, sqm, coords are columns in the Excel
@@ -123,12 +123,12 @@ if __name__ == '__main__':
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
     dovalue_conditions = lambda row: (not pd.isna(row['comparison_average']) or
-                              row['sqm'] < 30 or
-                              '%' in row['TitleGR'] or
-                              (('Διαμέρισμα' not in row['SubCategoryGR']) and
-                               ('Μεζονέτα' not in row['SubCategoryGR']) and
-                               ('Μονοκατοικία' not in row['SubCategoryGR']))
-                              )
+                                      row['sqm'] < 30 or
+                                      '%' in row['TitleGR'] or
+                                      (('Διαμέρισμα' not in row['SubCategoryGR']) and
+                                       ('Μεζονέτα' not in row['SubCategoryGR']) and
+                                       ('Μονοκατοικία' not in row['SubCategoryGR']))
+                                      )
 
-    s.extand_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
+    s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
                    row_conditions=dovalue_conditions)
