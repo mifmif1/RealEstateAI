@@ -19,6 +19,7 @@ class SpitogatosFlow:
         self._spitogatos_data_source = SpitogatosData()
 
     def extend_excel_by_polygon(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = 10):
+        # todo not in use, therefore not checked
         df = pd.read_excel(excel_path)
         average_column = []
         median_column = []
@@ -45,7 +46,7 @@ class SpitogatosFlow:
         df['comparison_median'] = median_column
         df.to_excel('./new_polygon1.xlsx', index=False)
 
-    def extend_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = None):
+    def dovalue_extand_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = None):
         """
         price, sqm, coords
         """
@@ -85,10 +86,11 @@ class SpitogatosFlow:
 
                 """ugle area..."""
                 if len(assets) < 5:
+                    location_tolerance *= 1.5
                     search_rectangle = self._geopy_data_source.rectangle_from_point(
                         start_point=Point(lat=float(row['coords'].split(',')[0]),
                                           lon=float(row['coords'].split(',')[1])),
-                        radius_meters=location_tolerance * 1.5)
+                        radius_meters=location_tolerance)
                     if sqm_tolerance:
                         assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
                                                                               min_area=max(0,
@@ -135,4 +137,4 @@ if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
-    s.extend_excel(r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx")
+    s.dovalue_extand_excel(r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx")
