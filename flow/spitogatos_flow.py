@@ -1,6 +1,5 @@
 import datetime
 import logging
-import re
 import statistics
 from time import sleep
 
@@ -46,9 +45,33 @@ class SpitogatosFlow:
         df['comparison_median'] = median_column
         df.to_excel('./new_polygon1.xlsx', index=False)
 
-    def dovalue_extand_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = None):
+    def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
         """
-        price, sqm, coords
+        assume "coords" attribute in row
+        assume "sqm" attribute in row
+        """
+
+        i = 0
+        assets = []
+        while i < 5 and isinstance(assets, list) and len(assets) < 5:
+            search_rectangle = self._geopy_data_source.rectangle_from_point(
+                start_point=Point(lat=float(row['coords'].split(',')[0]),
+                                  lon=float(row['coords'].split(',')[1])),
+                radius_meters=location_tolerance)
+            assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
+                                                                  min_area=max(0, row[
+                                                                      "sqm"] - sqm_tolerance) if sqm_tolerance else 30,
+                                                                  max_area=(row[
+                                                                                "sqm"] + sqm_tolerance) if sqm_tolerance else 200)
+            location_tolerance *= 1.5
+            i += 1
+        return assets, location_tolerance / 1.5
+
+    def _
+
+    def extand_excel(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = None):
+        """
+        price, sqm, coords are columns in the excel
         """
         assert "xlsx" in excel_path[-5:] or "xlsb" in excel_path[-5:]
         if "xlsb" in excel_path[-5:]:
@@ -69,42 +92,9 @@ class SpitogatosFlow:
                          ('Μονοκατοικία' not in row['SubCategoryGR']))):
                     continue  # this row is not relevant
 
-                search_rectangle = self._geopy_data_source.rectangle_from_point(
-                    start_point=Point(lat=float(row['coords'].split(',')[0]), lon=float(row['coords'].split(',')[1])),
-                    radius_meters=location_tolerance)
-                if sqm_tolerance:
-                    assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                          min_area=max(0, row["sqm"] - sqm_tolerance),
-                                                                          max_area=row["sqm"] + sqm_tolerance)
-                else:
-                    assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                          min_area=30,
-                                                                          max_area=200)
-
-                if assets == -1:
-                    break  # probably bot detected
-
-                """ugle area..."""
-                if len(assets) < 5:
-                    location_tolerance *= 1.5
-                    search_rectangle = self._geopy_data_source.rectangle_from_point(
-                        start_point=Point(lat=float(row['coords'].split(',')[0]),
-                                          lon=float(row['coords'].split(',')[1])),
-                        radius_meters=location_tolerance)
-                    if sqm_tolerance:
-                        assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                              min_area=max(0,
-                                                                                           row["sqm"] - sqm_tolerance),
-                                                                              max_area=row["sqm"] + sqm_tolerance)
-                    else:
-                        assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                              min_area=30,
-                                                                              max_area=200)
-                if assets == -1:
-                    break  # probably bot detected
-
-                """ugly area..."""
-
+                assets, location_tolerance = self._search_assets_for_row(row=row,
+                                                                         location_tolerance=location_tolerance,
+                                                                         sqm_tolerance=sqm_tolerance)
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
                     mean = statistics.mean(assets_price_sqm)
@@ -137,4 +127,4 @@ if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
-    s.dovalue_extand_excel(r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx")
+    s.extand_excel(r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx")
