@@ -75,13 +75,12 @@ class SpitogatosFlow:
         assert "xlsx" in excel_path[-5:] or "xlsb" in excel_path[-5:]
         if "xlsb" in excel_path[-5:]:
             df = pd.read_excel(excel_path, engine='pyxlsb')
-        elif "xlsx" in excel_path[-5:]:
+        else:  # "xlsx" in excel_path[-5:]
             df = pd.read_excel(excel_path)
 
         assert 'price' in df.columns
         assert 'sqm' in df.columns
         assert 'coords' in df.columns
-
         df['price/sqm'] = df['price'] / df['sqm']
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
@@ -92,6 +91,8 @@ class SpitogatosFlow:
                 assets, location_tolerance = self._search_assets_for_row(row=row,
                                                                          location_tolerance=location_tolerance,
                                                                          sqm_tolerance=sqm_tolerance)
+                if assets == -1:
+                    break
                 if assets:
                     assets_price_sqm = [asset.price / asset.sqm for asset in assets]
                     mean = statistics.mean(assets_price_sqm)
@@ -124,15 +125,15 @@ if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
     # s.extend_excel(r"../auction_1.xlsb")
-    dovalue_conditions = lambda row: (not pd.isna(row['comparison_average']) or
-                                      row['sqm'] < 30 or
-                                      '%' in row['TitleGR'] or
-                                      (('Διαμέρισμα' not in row['SubCategoryGR']) and
-                                       ('Μεζονέτα' not in row['SubCategoryGR']) and
-                                       ('Μονοκατοικία' not in row['SubCategoryGR']))
-                                      )
+    # dovalue_conditions = lambda row: (not pd.isna(row['comparison_average']) or
+    #                                   row['sqm'] < 30 or
+    #                                   '%' in row['TitleGR'] or
+    #                                   (('Διαμέρισμα' not in row['SubCategoryGR']) and
+    #                                    ('Μεζονέτα' not in row['SubCategoryGR']) and
+    #                                    ('Μονοκατοικία' not in row['SubCategoryGR']))
+    #                                   )
 
     # s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
     #                row_conditions=dovalue_conditions)
     s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx",
-                   row_conditions=lambda row:())
+                   row_conditions=lambda row: False)
