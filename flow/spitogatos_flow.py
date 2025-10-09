@@ -4,46 +4,18 @@ import statistics
 from typing import Callable
 
 import pandas as pd
-import pandas.compat
 
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
-from model.geographical_model import Point
 
 logger = logging.getLogger(__name__)
+logging.getLogger().addHandler(logging.StreamHandler())
 
 
 class SpitogatosFlow:
     def __init__(self):
         self._geopy_data_source = GeopyData()
         self._spitogatos_data_source = SpitogatosData()
-
-    def extend_excel_by_polygon(self, excel_path, location_tolerance: int = 100, sqm_tolerance: int = 10):
-        # todo not in use, therefore not checked
-        df = pd.read_excel(excel_path)
-        average_column = []
-        median_column = []
-
-        for index, row in df.iterrows():
-            coords = self._geopy_data_source.coords_from_address(row["address"])
-            search_rectangle = self._geopy_data_source.rectangle_from_point(start_point=coords,
-                                                                            radius_meters=location_tolerance)
-            assets = self._spitogatos_data_source.get_by_polygon(location=search_rectangle,
-                                                                 min_area=row["sqm"] - sqm_tolerance,
-                                                                 max_area=row["sqm"] + sqm_tolerance)
-            if assets:
-                assets_average = statistics.mean([asset.price / asset.sqm for asset in assets])
-                assets_median = statistics.median([asset.price / asset.sqm for asset in assets])
-            else:
-                assets_average = pd.NA
-                assets_median = pd.NA
-            average_column.append(assets_average)
-            median_column.append(assets_median)
-
-        df['price/sqm'] = df['price'] / df['sqm']
-        df['comparison_average'] = average_column
-        df['comparison_median'] = median_column
-        df.to_excel('./new_polygon1.xlsx', index=False)
 
     def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
         assert 'coords' in row.keys()
@@ -52,7 +24,8 @@ class SpitogatosFlow:
         i = 0
         assets = []
         point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
-        while i < 5 and isinstance(assets, list) and len(assets) < 5:
+        while i < 1 and isinstance(assets, list) and len(assets) < 5:
+            logger.info(f"it is the {i} time")
             search_rectangle = self._geopy_data_source.rectangle_from_point(
                 start_point=point,
                 radius_meters=location_tolerance)
@@ -135,4 +108,7 @@ if __name__ == '__main__':
     # s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
     #                row_conditions=dovalue_conditions)
     s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx",
-                   row_conditions=lambda row: False)
+                   row_conditions=lambda row: (False and
+                                               # not pd.isna(row['comparison_average'])
+                                               False
+                                               ))
