@@ -34,8 +34,7 @@ class SpitogatosFlow:
         i = 0
         assets = []
         point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
-        while i < 1 and isinstance(assets, list) and len(assets) < 5:
-            logger.info(f"it is the {i} time")
+        while i < 3 and isinstance(assets, list) and len(assets) < 5:
             search_rectangle = self._geopy_data_source.rectangle_from_point(
                 start_point=point,
                 radius_meters=location_tolerance)
@@ -44,7 +43,6 @@ class SpitogatosFlow:
                                                                       "sqm"] - sqm_tolerance) if sqm_tolerance else 30,
                                                                   max_area=(row[
                                                                                 "sqm"] + sqm_tolerance) if sqm_tolerance else 200)
-            logger.info(f"found {len(assets)} assets")
             location_tolerance *= 1.5
             i += 1
         return assets, location_tolerance / 1.5
@@ -69,6 +67,7 @@ class SpitogatosFlow:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
                 logger.info(f"handling {row['AM Portal']}")
+
                 if row_conditions(row):
                     continue
 
@@ -85,15 +84,15 @@ class SpitogatosFlow:
                     df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                     df.loc[index, '#assets'] = len(assets)
                     df.loc[index, 'spitogatos_url'] = assets[0].url
-                    df.loc[
-                        index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
+                    # df.loc[
+                    #     index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
                     df.loc[index, 'searched_radius'] = location_tolerance
                     if len(assets) > 1:
                         std = statistics.stdev(assets_price_sqm)
                         df.loc[index, 'comparison_std'] = std
                         if std != 0:
                             df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-
+                    logger.info(f"fetched {len(assets)} assets")
 
             logger.info("finished, SAVING!")
 
@@ -121,8 +120,8 @@ if __name__ == '__main__':
 
     # s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
     #                row_conditions=dovalue_conditions)
-    s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx",
-                   row_conditions=lambda row: (False and
-                                               # not pd.isna(row['comparison_average']) and
+    s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx_spitogatos_comparisson_09102025-1401.xlsx",
+                   row_conditions=lambda row: (False or
+                                               not pd.isna(row['comparison_average']) or
                                                False
                                                ))
