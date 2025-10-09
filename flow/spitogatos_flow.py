@@ -1,6 +1,7 @@
 import datetime
 import logging
 import statistics
+import sys
 from typing import Callable
 
 import pandas as pd
@@ -9,8 +10,17 @@ from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
 
 logger = logging.getLogger(__name__)
-logging.getLogger().addHandler(logging.StreamHandler())
+# logging.getLogger().addHandler(logging.StreamHandler())
+# logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("debug.log"),
+        logging.StreamHandler()
+    ]
+)
 
 class SpitogatosFlow:
     def __init__(self):
@@ -34,6 +44,7 @@ class SpitogatosFlow:
                                                                       "sqm"] - sqm_tolerance) if sqm_tolerance else 30,
                                                                   max_area=(row[
                                                                                 "sqm"] + sqm_tolerance) if sqm_tolerance else 200)
+            logger.info(f"found {len(assets)} assets")
             location_tolerance *= 1.5
             i += 1
         return assets, location_tolerance / 1.5
@@ -57,6 +68,7 @@ class SpitogatosFlow:
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
                 # coords = self._geopy_data_source.coords_from_address(row["address"])
+                logger.info(f"handling {row['AM Portal']}")
                 if row_conditions(row):
                     continue
 
@@ -82,10 +94,12 @@ class SpitogatosFlow:
                         if std != 0:
                             df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
 
+
             logger.info("finished, SAVING!")
 
         except Exception as e:
-            logger.error(f"something faliled. SAVING!: {e}")
+            logger.error(f"something failed. SAVING!: {e}")
+
 
         finally:
             df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
@@ -109,6 +123,6 @@ if __name__ == '__main__':
     #                row_conditions=dovalue_conditions)
     s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx",
                    row_conditions=lambda row: (False and
-                                               # not pd.isna(row['comparison_average'])
+                                               # not pd.isna(row['comparison_average']) and
                                                False
                                                ))

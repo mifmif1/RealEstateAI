@@ -33,7 +33,7 @@ class GeopyData:
 
     def convert_location_to_lon_lat(self, location_str: str) -> Point:
         pnt = geopy.point.Point(location_str)
-        return Point(lon=pnt.latitude, lat=pnt.longitude)
+        return Point(lon=pnt.longitude, lat=pnt.latitude)
 
 
 if __name__ == '__main__':
