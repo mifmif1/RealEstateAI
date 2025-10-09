@@ -47,6 +47,7 @@ class SpitogatosFlow:
             i += 1
         return assets, location_tolerance / 1.5
 
+
     def extend_excel(self, excel_path, row_conditions: Callable[[pd.Series], bool], location_tolerance: int = 100,
                      sqm_tolerance: int = None):
         """
