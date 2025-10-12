@@ -123,6 +123,6 @@ if __name__ == '__main__':
     #                row_conditions=dovalue_conditions)
     s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx_spitogatos_comparisson_09102025-1401.xlsx",
                    row_conditions=lambda row: (False or
-                                               # not pd.isna(row['comparison_average']) or
+                                               not pd.isna(row['comparison_average']) or
                                                False
                                                ))
