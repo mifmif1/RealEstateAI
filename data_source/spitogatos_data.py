@@ -24,12 +24,12 @@ class SpitogatosData:
         3. calculate the addition you have to have in order to keep the final ratio (final two edges)
         4. return the edges as a rectangle
         """
-        width = location.max_lon - location.min_lon  # todo: change to actual distance
-        height = location.max_lat - location.min_lat  # todo: change to actual distance
+        width = location.max_lon - location.min_lon  # todo: change to actual distance with geopy
+        height = location.max_lat - location.min_lat  # todo: change to actual distance with geopy
 
         if width > height:
-            west = location.min_lon - 100  # todo: change to actual distance
-            east = location.min_lon + 100  # todo: change to actual distance
+            west = location.min_lon - 100  # todo: change to actual distance with geopy
+            east = location.min_lon + 100  # todo: change to actual distance with geopy
             screen_width = east - west
             ...
 

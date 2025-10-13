@@ -1,10 +1,11 @@
-import datetime
 import logging
+import datetime
 import statistics
-from typing import Callable
+from typing import Callable, List
 
 import pandas as pd
 
+from model.asset_model import Asset
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
 
@@ -25,7 +26,19 @@ class SpitogatosFlow:
         self._geopy_data_source = GeopyData()
         self._spitogatos_data_source = SpitogatosData()
 
+    def score_row(self, row):
+        # depends on the std, mean, median, min, max, amount, set the score
+        pass
+
+
+
     def valuation_row(self, row, asset):
+        # normalized average, after considering level, new state (all building(?), just apartment, for both - renovated, new, old), elevator(?)
+        new_assets: List[Asset] = []
+        # todo: for each asset, downgrade/upgrade following by the formula
+        # todo: calculate the mean
+        # todo: take the mean and upgrade/downgrade corresponding to its attributes
+        # todo: this is the final price
         ...
 
     def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
