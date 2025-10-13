@@ -67,7 +67,7 @@ class SpitogatosData:
             "x-alsbn": "1",
             "x-locale": "en",
             "x-mdraw": "1",
-            "cookie": "/g/collect?v=2&tid=G-8HD2LETKWJ&gtm=45je5a80v9100200241z8830851569za200zb830851569zd830851569&_p=1760280405704&_gaz=1&gcs=G111&gcd=13t3t3t3t5l1&npa=0&dma=0&tcfd=10000&cid=1153256482.1754902848&ul=en-us&sr=1536x864&ir=1&uaa=x86&uab=64&uafvl=Chromium%3B140.0.7339.128%7CNot%253DA%253FBrand%3B24.0.0.0%7CGoogle%2520Chrome%3B140.0.7339.128&uamb=0&uam=&uap=Windows&uapv=10.0.0&uaw=0&are=1&frm=0&pscdl=noapi&_eu=EAAAAAQ&_s=1&tag_exp=101509157~103116026~103200004~103233427~104527907~104528501~104573694~104684208~104684211~104948813~115480709~115834636~115834638~115868795~115868797&sid=1760280321&sct=39&seg=1&dl=https%3A%2F%2Fwww.spitogatos.gr%2Fen%2Ffor_sale-homes%2Fmap-search%2Fminliving_area-120%2Fmaxliving_area-148%3FlatitudeLow%3D38.018975%26latitudeHigh%3D38.020242%26longitudeLow%3D23.744749%26longitudeHigh%3D23.748751%26zoom%3D18&dt=Homes%20for%20sale%20with%20map%20search%20%7C%20Spitogatos&en=page_view&ep.content_group=SR%20%7C%20Sale%20%7C%20Residential&ep.page=%2Fen%2Ffor_sale-homes%2Fmap-search%2Fminliving_area-120%2Fmaxliving_area-148%3FlatitudeLow%3D38.018975%26latitudeHigh%3D38.020242%26longitudeLow%3D23.744749%26longitudeHigh%3D23.748751%26zoom%3D18&tfd=3666",
+            "cookie": ApisConsts.SPITOGATOS_COOKIE,
             "user-agent": ApisConsts.USER_AGENT,
             "Referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search" + (
                 f"/minliving_area-{min_area}" if min_area else '') + (
@@ -85,6 +85,8 @@ class SpitogatosData:
                     results.append(Asset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
                                          sqm=asset_raw['sq_meters'],
                                          price=asset_raw['price'],
+                                         level=asset_raw['level'],#todo??????
+                                         new_state=asset_raw['new_state'], #todo??????????
                                          url=headers["Referer"]))
                 logger.info(f"Successfully fetched {location}")
             except Exception as e:

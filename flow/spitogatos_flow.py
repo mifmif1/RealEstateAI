@@ -1,7 +1,6 @@
 import datetime
 import logging
 import statistics
-import sys
 from typing import Callable
 
 import pandas as pd
@@ -10,8 +9,6 @@ from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
 
 logger = logging.getLogger(__name__)
-# logging.getLogger().addHandler(logging.StreamHandler())
-# logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
 logging.basicConfig(
     level=logging.INFO,
@@ -22,10 +19,14 @@ logging.basicConfig(
     ]
 )
 
+
 class SpitogatosFlow:
     def __init__(self):
         self._geopy_data_source = GeopyData()
         self._spitogatos_data_source = SpitogatosData()
+
+    def valuation_row(self, row, asset):
+        ...
 
     def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
         assert 'coords' in row.keys()
@@ -46,7 +47,6 @@ class SpitogatosFlow:
             location_tolerance *= 1.5
             i += 1
         return assets, location_tolerance / 1.5
-
 
     def extend_excel(self, excel_path, row_conditions: Callable[[pd.Series], bool], location_tolerance: int = 100,
                      sqm_tolerance: int = None):
