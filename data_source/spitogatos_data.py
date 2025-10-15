@@ -83,10 +83,10 @@ class SpitogatosData:
                 data = json.loads(response.text)['data']
                 for asset_raw in data:
                     results.append(Asset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
-                                         sqm=asset_raw['sq_meters'],
-                                         price=asset_raw['price'],
+                                         sqm=asset_raw.get('sq_meters'),
+                                         price=asset_raw.get('price'),
                                          level=asset_raw.get('floorNumber'),
-                                         new_state=asset_raw.get('newDevelopment') ,
+                                         new_state={'1':True, '0':False}.get(asset_raw.get('newDevelopment')),
                                          url=headers["Referer"]))
                 logger.info(f"Successfully fetched {location}")
             except Exception as e:
