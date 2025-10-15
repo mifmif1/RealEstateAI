@@ -92,7 +92,7 @@ class SpitogatosFlow:
         return df
 
     def _search_assets_for_row(self, row: pd.Series,
-                               location_tolerance: int = 100,
+                               location_tolerance: float = 100,
                                sqm_tolerance: int = None):
         assert 'coords' in row.keys()
         assert 'sqm' in row.keys()
@@ -111,11 +111,12 @@ class SpitogatosFlow:
                                                                                 "sqm"] + sqm_tolerance) if sqm_tolerance else 200)
             location_tolerance *= 1.5
             i += 1
-        return assets, location_tolerance / 1.5
+        return assets, (location_tolerance / 1.5)
 
     def _add_spitogatos_comparison(self, df: pd.DataFrame,
                                    row_conditions: Callable[[pd.Series], bool] = lambda row: False,
-                                   location_tolerance: int = 100, sqm_tolerance: int = None) -> pd.DataFrame:
+                                   location_tolerance: float = 100,
+                                   sqm_tolerance: int = None) -> pd.DataFrame:
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
             logger.info(f"handling {row['UniqueCode']}")
@@ -123,7 +124,7 @@ class SpitogatosFlow:
             if row_conditions(row):
                 continue
 
-            assets, location_tolerance = self._search_assets_for_row(row=row,
+            assets, actual_location_tolerance = self._search_assets_for_row(row=row,
                                                                      location_tolerance=location_tolerance,
                                                                      sqm_tolerance=sqm_tolerance)
             # todo: do it properly with exceptions
@@ -139,7 +140,7 @@ class SpitogatosFlow:
                 df.loc[index, 'spitogatos_url'] = assets[0].url
                 # df.loc[
                 #     index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
-                df.loc[index, 'searched_radius'] = location_tolerance
+                df.loc[index, 'searched_radius'] = actual_location_tolerance
                 if len(assets) > 1:
                     std = statistics.stdev(assets_price_sqm)
                     df.loc[index, 'comparison_std'] = std
@@ -153,16 +154,19 @@ class SpitogatosFlow:
     def expand_excel__spitogatos_comparison(self, excel_path,
                                             must_columns: List[str],
                                             row_conditions: Callable[[pd.Series], bool] = lambda row: False,
-                                            location_tolerance: int = 100,
+                                            location_tolerance: float = 100,
                                             sqm_tolerance: int = None):
         df = self._open_excel(excel_path=excel_path, must_columns=must_columns)
         df = self._prepare_df(df)
         try:
-            self._add_spitogatos_comparison(df, row_conditions, location_tolerance, sqm_tolerance)
+            self._add_spitogatos_comparison(df=df,
+                                            row_conditions=row_conditions,
+                                            location_tolerance=location_tolerance,
+                                            sqm_tolerance=sqm_tolerance)
         except Exception as e:
             logger.error(f"something failed. SAVING!: {e}")
         finally:
-            df.to_excel(f'{excel_path}_spitogatos_comparisson_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
+            df.to_excel(f'{excel_path}_spitogatos_comparison_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
                         index=False)
             logger.info("saved successfully")
 
@@ -183,5 +187,5 @@ if __name__ == '__main__':
     #                row_conditions=dovalue_conditions)
     s.expand_excel__spitogatos_comparison(
         excel_path=r"../byhand/real.xlsb",
-        must_columns=['sqm', 'price', 'coords', 'level', 'new_state'],)
-        # row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
+        must_columns=['sqm', 'price', 'coords', 'level', 'new_state'],
+        row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
