@@ -83,8 +83,8 @@ class SpitogatosData:
                 data = json.loads(response.text)['data']
                 for asset_raw in data:
                     results.append(Asset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
-                                         sqm=asset_raw.get('sq_meters'),
-                                         price=asset_raw.get('price'),
+                                         sqm=asset_raw['sq_meters'],
+                                         price=asset_raw['price'],
                                          level=asset_raw.get('floorNumber'),
                                          new_state={'1':True, '0':False}.get(asset_raw.get('newDevelopment')),
                                          url=headers["Referer"]))

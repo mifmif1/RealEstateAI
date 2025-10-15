@@ -1,13 +1,13 @@
-import logging
 import datetime
+import logging
 import statistics
 from typing import Callable, List
 
 import pandas as pd
 
-from model.asset_model import Asset
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
+from model.asset_model import Asset
 
 logger = logging.getLogger(__name__)
 
@@ -30,13 +30,32 @@ class SpitogatosFlow:
         # depends on the std, mean, median, min, max, amount, set the score
         pass
 
+    def valuation_row(self, row, assets: List[Asset]):
+        floor_rank = {
+            -1: -0.4,
+            0: -0.1,
+            1: 0,
+            2: 0.05,
+            3: 0.1,
+            4: 0.15,
+            5: 0.20,
+            6: 0.25,
+        }
+        # todo: check in govgr
+        new_rank = {
+            True: 0.2,
+            False: 0,
+        }
+        for asset in assets:
+            asset.revaluated_price_meter = asset.price / asset.sqm
+            # 15% down
+            asset.revaluated_price_meter *= 0.85
+            # level factor
+            asset.revaluated_price_meter *= (1 - floor_rank.get(asset.level, 0.25))  # if level is greater than 6
+            # renewal factor
+            asset.revaluated_price_meter *= (1 - new_rank.get(asset.new_state, 0))
+        mean = statistics.mean([asset.revaluated_price_meter for asset in assets])
 
-
-    def valuation_row(self, row, asset):
-        # normalized average, after considering level, new state (all building(?), just apartment, for both - renovated, new, old), elevator(?)
-        new_assets: List[Asset] = []
-        # todo: for each asset, downgrade/upgrade following by the formula
-        # todo: calculate the mean
         # todo: take the mean and upgrade/downgrade corresponding to its attributes
         # todo: this is the final price
         ...
