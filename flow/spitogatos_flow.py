@@ -30,7 +30,12 @@ class SpitogatosFlow:
         # depends on the std, mean, median, min, max, amount, set the score
         pass
 
-    def valuation_row(self, row, assets: List[Asset]):
+    @staticmethod
+    def _valuation_row(row, assets: List[Asset]):
+        assert 'level' in row.keys()
+        assert 'sqm' in row.keys()
+        assert 'new_state' in row.keys()
+
         floor_rank = {
             -1: -0.4,
             0: -0.1,
@@ -41,7 +46,6 @@ class SpitogatosFlow:
             5: 0.20,
             6: 0.25,
         }
-        # todo: check in govgr
         renew_rank = {
             True: 0.2,
             False: 0,
@@ -49,7 +53,7 @@ class SpitogatosFlow:
         for asset in assets:
             asset.revaluated_price_meter = asset.price / asset.sqm
             # 15% down
-            asset.revaluated_price_meter *= 0.85
+            asset.revaluated_price_meter *= 0.9
             # level factor
             asset.revaluated_price_meter *= (1 - floor_rank.get(asset.level, 0.25))  # if level is greater than 6
             # renewal factor
@@ -60,6 +64,10 @@ class SpitogatosFlow:
         row_new_price *= (1 + renew_rank.get(row['new_state'], 0))
 
         return row_new_price
+
+    def add_avm(self, df: pd.DataFrame, row_conditions: Callable[[pd.DataFrame], bool], location_tolerance: int = 100,
+                sqm_tolerance: int = None):
+        pass
 
     def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
         assert 'coords' in row.keys()
@@ -81,21 +89,27 @@ class SpitogatosFlow:
             i += 1
         return assets, location_tolerance / 1.5
 
-    def extend_excel(self, excel_path, row_conditions: Callable[[pd.Series], bool], location_tolerance: int = 100,
-                     sqm_tolerance: int = None):
+    @staticmethod
+    def _open_excel(excel_path: str, must_columns: List[str] = ['sqm', 'price']) -> pd.DataFrame:
         """
-        price, sqm, coords are columns in the Excel
-        """
+                price, sqm, coords are columns in the Excel
+                """
         assert "xlsx" in excel_path[-5:] or "xlsb" in excel_path[-5:]
         if "xlsb" in excel_path[-5:]:
             df = pd.read_excel(excel_path, engine='pyxlsb')
         else:  # "xlsx" in excel_path[-5:]
             df = pd.read_excel(excel_path)
 
-        assert 'price' in df.columns
-        assert 'sqm' in df.columns
-        assert 'coords' in df.columns
+        #todo replace with any
+        for must_column in must_columns:
+            assert must_column in df.columns
 
+        return df
+
+
+    def add_spitogatos_comparison(self, excel_path, row_conditions: Callable[[pd.Series], bool], location_tolerance: int = 100,
+                                  sqm_tolerance: int = None):
+        df = self._open_excel(excel_path, ['price', 'sqm', 'coords'])
         df['price/sqm'] = df['price'] / df['sqm']
         try:
             for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
@@ -154,8 +168,8 @@ if __name__ == '__main__':
 
     # s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
     #                row_conditions=dovalue_conditions)
-    s.extend_excel(excel_path=r"../byhand/dvg_reo.xlsx_spitogatos_comparisson_09102025-1401.xlsx",
-                   row_conditions=lambda row: (False or
+    s.add_spitogatos_comparison(excel_path=r"../byhand/dvg_reo.xlsx_spitogatos_comparisson_09102025-1401.xlsx",
+                                row_conditions=lambda row: (False or
                                                not pd.isna(row['comparison_average']) or
                                                False
                                                ))
