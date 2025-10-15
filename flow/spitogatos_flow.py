@@ -8,6 +8,7 @@ import pandas as pd
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
 from model.asset_model import Asset
+from utils.consts.greek_tems import floor_level_dict
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +57,7 @@ class SpitogatosFlow:
             asset.revaluated_price_meter *= (1 - renew_rank.get(asset.new_state, 0))
         normalized_mean = statistics.mean([asset.revaluated_price_meter for asset in assets])
         row_new_price = normalized_mean * row['sqm']
-        row_new_price *= (1 + floor_rank.get(row['level'], 0.25))
+        row_new_price *= (1 + floor_rank.get(floor_level_dict.get(row['level']), 0.25))
         row_new_price *= (1 + renew_rank.get(row['new_state'], 0))
 
         return row_new_price
@@ -182,5 +183,5 @@ if __name__ == '__main__':
     #                row_conditions=dovalue_conditions)
     s.expand_excel__spitogatos_comparison(
         excel_path=r"../byhand/real.xlsb",
-        must_columns=['sqm', 'price', 'coords'],
-        row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
+        must_columns=['sqm', 'price', 'coords', 'level', 'new_state'],)
+        # row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
