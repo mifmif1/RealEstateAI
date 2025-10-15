@@ -12,5 +12,5 @@ class Asset(BaseModel):
     url: str = None
     level: int = None
     address: str = None
+    new_state: bool= None
     searched_radius: float = None
-    new_state: str = Union['new', 'old', 'renew']
