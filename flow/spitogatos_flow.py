@@ -42,7 +42,7 @@ class SpitogatosFlow:
             6: 0.25,
         }
         # todo: check in govgr
-        new_rank = {
+        renew_rank = {
             True: 0.2,
             False: 0,
         }
@@ -53,12 +53,13 @@ class SpitogatosFlow:
             # level factor
             asset.revaluated_price_meter *= (1 - floor_rank.get(asset.level, 0.25))  # if level is greater than 6
             # renewal factor
-            asset.revaluated_price_meter *= (1 - new_rank.get(asset.new_state, 0))
-        mean = statistics.mean([asset.revaluated_price_meter for asset in assets])
+            asset.revaluated_price_meter *= (1 - renew_rank.get(asset.new_state, 0))
+        normalized_mean = statistics.mean([asset.revaluated_price_meter for asset in assets])
+        row_new_price = normalized_mean * row['sqm']
+        row_new_price *= (1 + floor_rank.get(row['level'], 0.25))
+        row_new_price *= (1 + renew_rank.get(row['new_state'], 0))
 
-        # todo: take the mean and upgrade/downgrade corresponding to its attributes
-        # todo: this is the final price
-        ...
+        return row_new_price
 
     def _search_assets_for_row(self, row: pd.Series, location_tolerance: int = 100, sqm_tolerance: int = None):
         assert 'coords' in row.keys()
