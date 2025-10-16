@@ -135,6 +135,8 @@ class SpitogatosFlow:
                 assets_price_sqm = [asset.price / asset.sqm for asset in assets]
                 mean = statistics.mean(assets_price_sqm)
                 df.loc[index, 'comparison_average'] = mean
+                df.loc[index, 'comparison_min'] = min(assets_price_sqm)
+                df.loc[index, 'comparison_max'] = max(assets_price_sqm)
                 df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                 df.loc[index, '#assets'] = len(assets)
                 df.loc[index, 'spitogatos_url'] = assets[0].url
@@ -187,5 +189,5 @@ if __name__ == '__main__':
     #                row_conditions=dovalue_conditions)
     s.expand_excel__spitogatos_comparison(
         excel_path=r"../byhand/real.xlsb",
-        must_columns=['sqm', 'price', 'coords', 'level', 'new_state'],
-        row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
+        must_columns=['sqm', 'price', 'coords', 'level', 'new_state'])
+        # row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
