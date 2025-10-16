@@ -1,7 +1,6 @@
 import datetime
 import logging
 import statistics
-from locale import normalize
 from typing import Callable, List
 
 import pandas as pd
@@ -117,16 +116,20 @@ class SpitogatosFlow:
                                    row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                    location_tolerance: float = 100,
                                    sqm_tolerance: int = None) -> pd.DataFrame:
+        checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
+
+            if row_conditions(row) or row['UniqueCode'] in checked_rows:
+                logger.info(f"skipping {row['UniqueCode']}")
+                continue
             logger.info(f"handling {row['UniqueCode']}")
 
-            if row_conditions(row):
-                continue
+            checked_rows.append(row['UniqueCode'])
 
             assets, actual_location_tolerance = self._search_assets_for_row(row=row,
-                                                                     location_tolerance=location_tolerance,
-                                                                     sqm_tolerance=sqm_tolerance)
+                                                                            location_tolerance=location_tolerance,
+                                                                            sqm_tolerance=sqm_tolerance)
             # todo: do it properly with exceptions
             if assets == -1:
                 break
@@ -140,8 +143,7 @@ class SpitogatosFlow:
                 df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                 df.loc[index, '#assets'] = len(assets)
                 df.loc[index, 'spitogatos_url'] = assets[0].url
-                # df.loc[
-                #     index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
+                # df.loc[index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
                 df.loc[index, 'searched_radius'] = actual_location_tolerance
                 if len(assets) > 1:
                     std = statistics.stdev(assets_price_sqm)
@@ -178,19 +180,19 @@ class SpitogatosFlow:
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    # s.extend_excel(r'AuctionTracker_11092025.xlsb')s
-    # s.extend_excel(r"../auction_1.xlsb")
-    # dovalue_conditions = lambda row: (not pd.isna(row['comparison_average']) or
-    #                                   row['sqm'] < 30 or
-    #                                   '%' in row['TitleGR'] or
-    #                                   (('Διαμέρισμα' not in row['SubCategoryGR']) and
-    #                                    ('Μεζονέτα' not in row['SubCategoryGR']) and
-    #                                    ('Μονοκατοικία' not in row['SubCategoryGR']))
-    #                                   )
+    dovalue_conditions = lambda row: (not pd.isna(row['comparison_average']) or
+                                      row['sqm'] < 30 or
+                                      '%' in row['TitleGR'] or
+                                      (('Διαμέρισμα' not in row['SubCategoryGR']) and
+                                       ('Μεζονέτα' not in row['SubCategoryGR']) and
+                                       ('Μονοκατοικία' not in row['SubCategoryGR']))
+                                      )
+    nvg_conditions = lambda row: (row['sqm'] < 30 or
+                                  # not pd.isna(row['comparison_average']) or
+                                  False
+                                  )
 
-    # s.extend_excel(excel_path=r"../byhand/real.xlsb_spitogatos_comparisson_25092025-1551.xlsx",
-    #                row_conditions=dovalue_conditions)
     s.expand_excel__spitogatos_comparison(
-        excel_path=r"../byhand/real.xlsb",
-        must_columns=['sqm', 'price', 'coords', 'level', 'new_state'])
-        # row_conditions=lambda row: (not pd.isna(row['comparison_average'])))
+        excel_path=r"../byhand/dvg_reo.xlsx",
+        must_columns=['sqm', 'price', 'coords', 'level', 'new_state', 'UniqueCode'],
+        row_conditions=nvg_conditions)
