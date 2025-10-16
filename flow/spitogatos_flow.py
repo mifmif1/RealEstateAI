@@ -1,6 +1,7 @@
 import datetime
 import logging
 import statistics
+from locale import normalize
 from typing import Callable, List
 
 import pandas as pd
@@ -28,7 +29,7 @@ class SpitogatosFlow:
         self._spitogatos_data_source = SpitogatosData()
 
     @staticmethod
-    def _get_valuation_row(row, assets: List[Asset]) -> float:
+    def _get_valuation_row(row, assets: List[Asset]) -> (float, float):
         assert 'level' in row.keys()
         assert 'sqm' in row.keys()
         assert 'new_state' in row.keys()
@@ -60,7 +61,7 @@ class SpitogatosFlow:
         row_new_price *= (1 + floor_rank.get(floor_level_dict.get(row['level']), 0.25))
         row_new_price *= (1 + renew_rank.get(row['new_state'], 0))
 
-        return row_new_price
+        return row_new_price, normalized_mean
 
     @staticmethod
     def _open_excel(excel_path: str,
@@ -74,7 +75,6 @@ class SpitogatosFlow:
         else:  # "xlsx" in excel_path[-5:]
             df = pd.read_excel(excel_path)
 
-        # todo replace with any
         for must_column in must_columns:
             assert must_column in df.columns
 
@@ -148,7 +148,10 @@ class SpitogatosFlow:
                     df.loc[index, 'comparison_std'] = std
                     if std != 0:
                         df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-                df.loc[index, 'revaluation'] = self._get_valuation_row(row, assets)
+                new_price, normalized_mean = self._get_valuation_row(row, assets)
+                df.loc[index, 'revaluation'] = new_price
+                df.loc[index, 'normalized_mean'] = normalized_mean
+
                 logger.info(f"fetched {len(assets)} assets")
         logger.info("finished, SAVING!")
         return df
