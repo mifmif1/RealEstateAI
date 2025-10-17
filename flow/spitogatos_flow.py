@@ -148,11 +148,11 @@ class SpitogatosFlow:
                 if len(assets) > 1:
                     std = statistics.stdev(assets_price_sqm)
                     df.loc[index, 'comparison_std'] = std
-                    if std != 0:
-                        df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-                new_price, normalized_mean = self._get_valuation_row(row, assets)
-                df.loc[index, 'revaluation'] = new_price
-                df.loc[index, 'normalized_mean'] = normalized_mean
+                    # if std != 0:
+                    #     df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
+                # new_price, normalized_mean = self._get_valuation_row(row, assets)
+                # df.loc[index, 'revaluation'] = new_price
+                # df.loc[index, 'normalized_mean'] = normalized_mean
 
                 logger.info(f"fetched {len(assets)} assets")
         logger.info("finished, SAVING!")
@@ -187,12 +187,14 @@ if __name__ == '__main__':
                                        ('Μεζονέτα' not in row['SubCategoryGR']) and
                                        ('Μονοκατοικία' not in row['SubCategoryGR']))
                                       )
-    nvg_conditions = lambda row: (row['sqm'] < 30 or
-                                  # not pd.isna(row['comparison_average']) or
+    nbg_conditions = lambda row: (row['sqm'] < 30 or
+                                  not pd.isna(row['comparison_average']) or
                                   False
                                   )
+    columns_valuation = ['sqm', 'price', 'coords', 'level', 'new_state', 'UniqueCode']
+    columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
 
     s.expand_excel__spitogatos_comparison(
-        excel_path=r"../byhand/dvg_reo.xlsx",
-        must_columns=['sqm', 'price', 'coords', 'level', 'new_state', 'UniqueCode'],
-        row_conditions=nvg_conditions)
+        excel_path=r"../byhand/nbg_reo.xlsx_spitogatos_comparison_17102025-1424.xlsx_spitogatos_comparison_17102025-1516.xlsx",
+        must_columns=columns_no_valuation,
+        row_conditions=nbg_conditions)
