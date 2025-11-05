@@ -16,23 +16,6 @@ class SpitogatosData:
     def __init__(self):
         self._session = requests.Session()
 
-    def _map_screen_by_polygon(self, location: Rectangle) -> Rectangle:
-        """
-        spitogatos screen ratio (lat/lon) is 0.36 (verify!). How to choose the coordinates according to the desired polygon?
-        1. choose the bigger vertice
-        2. add a gap of 10 meters (first 2 edges)
-        3. calculate the addition you have to have in order to keep the final ratio (final two edges)
-        4. return the edges as a rectangle
-        """
-        width = location.max_lon - location.min_lon  # todo: change to actual distance with geopy
-        height = location.max_lat - location.min_lat  # todo: change to actual distance with geopy
-
-        if width > height:
-            west = location.min_lon - 100  # todo: change to actual distance with geopy
-            east = location.min_lon + 100  # todo: change to actual distance with geopy
-            screen_width = east - west
-            ...
-
     def get_by_location(self, location: Rectangle, min_area: int,
                         max_area: int) -> List[Asset] | None:
         # todo: caculate zoom by location's rectangle
