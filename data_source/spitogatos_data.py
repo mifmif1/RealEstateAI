@@ -59,7 +59,6 @@ class SpitogatosData:
         sleep(3)  # bot sneaking
         response = self._session.get(url, params=params, headers=headers)
 
-        is_bot = False
         if response.status_code == 200:
             results = []
             try:
@@ -74,9 +73,9 @@ class SpitogatosData:
                 logger.info(f"Successfully fetched {location}")
             except Exception as e:
                 logger.error(f"Failed to fetch {location}: {e}")
-                is_bot = True
-            finally:
-                return results if not is_bot else -1
+                logger.error(f"Probably detected as bot")
+                raise ConnectionAbortedError("Probably detected as bot.")
+            return results
         else:
             logger.error(f"Error getting data from Spitogatos: {response.status_code}, {response.text}")
 

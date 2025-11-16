@@ -15498,3 +15498,45 @@
 2025-11-16 19:57:42,882 [INFO] handling yioiAhqZPs
 2025-11-16 19:57:42,883 [INFO] finished, SAVING!
 2025-11-16 19:57:43,501 [INFO] saved successfully
+2025-11-16 21:05:37,915 [INFO] skipping EY3IDITf1f-001
+2025-11-16 21:05:37,916 [INFO] skipping EY3IDITf1f-002
+2025-11-16 21:05:37,916 [INFO] skipping EY3IDITf1f-003
+2025-11-16 21:05:37,916 [INFO] skipping EY3IDITf1f-004
+2025-11-16 21:05:37,916 [INFO] skipping ikkxa9N5ws
+2025-11-16 21:05:37,916 [INFO] skipping B8MZLE54Qs-001
+2025-11-16 21:05:37,917 [INFO] skipping B8MZLE54Qs-002
+2025-11-16 21:05:37,917 [INFO] skipping cFPd9qQQss-003
+2025-11-16 21:05:37,917 [INFO] skipping cFPd9qQQss-001
+2025-11-16 21:05:37,917 [INFO] skipping cFPd9qQQss-002
+2025-11-16 21:05:37,918 [INFO] skipping mET2JyJHrH
+2025-11-16 21:05:37,919 [INFO] skipping qlWHuvoscE
+2025-11-16 21:05:37,919 [INFO] handling FZgwUaK8Vs
+2025-11-16 21:05:41,573 [INFO] Successfully fetched min_lat=40.68854817697616 min_lon=22.29823147185961 max_lat=40.690349201415714 max_lon=22.300597528177196
+2025-11-16 21:05:45,053 [INFO] Successfully fetched min_lat=40.68809791320202 min_lon=22.297639977686384 max_lat=40.69079944986092 max_lon=22.301189062163676
+2025-11-16 21:05:48,436 [INFO] Successfully fetched min_lat=40.68742251179301 min_lon=22.296752751355452 max_lat=40.691474816779866 max_lon=22.30207637807442
+2025-11-16 21:05:48,440 [ERROR] something failed. SAVING!: 1 validation error for AssetComparison
+main_asset
+  Input should be a valid dictionary or instance of Asset [type=model_type, input_value='FZgwUaK8Vs', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/model_type
+2025-11-16 21:05:50,526 [INFO] saved successfully
+2025-11-16 21:16:43,476 [INFO] skipping EY3IDITf1f-001
+2025-11-16 21:16:43,476 [INFO] skipping EY3IDITf1f-002
+2025-11-16 21:16:43,476 [INFO] skipping EY3IDITf1f-003
+2025-11-16 21:16:43,477 [INFO] skipping EY3IDITf1f-004
+2025-11-16 21:16:43,477 [INFO] skipping ikkxa9N5ws
+2025-11-16 21:16:43,477 [INFO] skipping B8MZLE54Qs-001
+2025-11-16 21:16:43,477 [INFO] skipping B8MZLE54Qs-002
+2025-11-16 21:16:43,477 [INFO] skipping cFPd9qQQss-003
+2025-11-16 21:16:43,477 [INFO] skipping cFPd9qQQss-001
+2025-11-16 21:16:43,478 [INFO] skipping cFPd9qQQss-002
+2025-11-16 21:16:43,478 [INFO] skipping mET2JyJHrH
+2025-11-16 21:16:43,478 [INFO] skipping qlWHuvoscE
+2025-11-16 21:16:43,478 [INFO] handling FZgwUaK8Vs
+2025-11-16 21:16:46,958 [INFO] Successfully fetched min_lat=40.68854817697616 min_lon=22.29823147185961 max_lat=40.690349201415714 max_lon=22.300597528177196
+2025-11-16 21:16:50,338 [INFO] Successfully fetched min_lat=40.68809791320202 min_lon=22.297639977686384 max_lat=40.69079944986092 max_lon=22.301189062163676
+2025-11-16 21:16:53,657 [INFO] Successfully fetched min_lat=40.68742251179301 min_lon=22.296752751355452 max_lat=40.691474816779866 max_lon=22.30207637807442
+2025-11-16 21:16:53,658 [ERROR] error handling row FZgwUaK8Vs. Error: 1 validation error for AssetComparison
+main_asset
+  Input should be a valid dictionary or instance of Asset [type=model_type, input_value='FZgwUaK8Vs', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/model_type
+2025-11-16 21:16:55,810 [INFO] saved successfully

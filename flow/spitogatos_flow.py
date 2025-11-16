@@ -7,6 +7,7 @@ import pandas as pd
 
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
+from model.asset_comparison import AssetComparison
 from model.asset_model import Asset
 from utils.consts.greek_tems import floor_level_dict
 
@@ -99,13 +100,14 @@ class SpitogatosFlow:
     def _search_assets_for_row(self, row: pd.Series,
                                location_tolerance: float = 100,
                                sqm_tolerance: int = None):
-        assert 'coords' in row.keys()
         assert 'sqm' in row.keys()
+        assert 'coords' in row.keys()
+        assert 'UniqueCode' in row.keys()
 
         i = 0
         assets = []
         point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
-        while i < 3 and isinstance(assets, list) and len(assets) < 5:
+        while i < 3 and len(assets) < 5:
             search_rectangle = self._geopy_data_source.rectangle_from_point(
                 start_point=point,
                 radius_meters=location_tolerance)
@@ -116,9 +118,10 @@ class SpitogatosFlow:
                                                                                 "sqm"] + sqm_tolerance) if sqm_tolerance else 200)
             location_tolerance *= 1.5
             i += 1
-        return assets, (location_tolerance / 1.5)
+        asset_comparison = AssetComparison(main_asset=row['UniqueCode'], compared_assets=assets)
+        return asset_comparison, (location_tolerance / 1.5)
 
-    def _save_comparison_assets(self, main_asset: str, assets: List[Asset], excel_path: str) -> None:
+    def _save_comparison_assets(self, asset_comparison: AssetComparison, excel_path: str) -> None:
         try:
             df = self._open_excel(excel_path)
         except FileNotFoundError:
@@ -135,9 +138,8 @@ class SpitogatosFlow:
         except Exception as e:
             logger.error(f"Cannot open {excel_path}. Thus not saving Spitogatos Comaprison.")
             return
-        df_to_append = pd.DataFrame(assets)
+        df_to_append = pd.DataFrame(asset_comparison)
         combined = pd.concat([df, df_to_append], ignore_index=True)
-        combined.to_excel(excel_path, index=False)
         with pd.ExcelWriter(excel_path, engine="openpyxl", mode="w") as writer:
             combined.to_excel(writer, index=False)
         logger.info("Saved Spitogatos Comparison successfully")
@@ -145,7 +147,8 @@ class SpitogatosFlow:
     def _add_spitogatos_comparison(self, df: pd.DataFrame,
                                    row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                    location_tolerance: float = 100,
-                                   sqm_tolerance: int = None) -> pd.DataFrame:
+                                   sqm_tolerance: int = None,
+                                   spitogatos_comparison_excel_path: str = "../spitogatos_comparison.xlsx") -> pd.DataFrame:
         checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
@@ -156,12 +159,16 @@ class SpitogatosFlow:
             logger.info(f"handling {row['UniqueCode']}")
 
             checked_rows.append(row['UniqueCode'])
+            try:
+                asset_comparison, actual_location_tolerance = self._search_assets_for_row(row=row,
+                                                                                          location_tolerance=location_tolerance,
+                                                                                          sqm_tolerance=sqm_tolerance)
+            except Exception as e:
+                logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
+                return df
 
-            assets, actual_location_tolerance = self._search_assets_for_row(row=row,
-                                                                            location_tolerance=location_tolerance,
-                                                                            sqm_tolerance=sqm_tolerance)
-            self._save_comparison_assets(main_asset=row['UniqueCode'], assets=assets)
-
+            self._save_comparison_assets(asset_comparison=asset_comparison, excel_path=spitogatos_comparison_excel_path)
+            assets = asset_comparison.assets
             # todo: do it properly with exceptions
             if assets == -1:
                 break
@@ -236,7 +243,7 @@ if __name__ == '__main__':
     columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
 
     s.expand_excel__spitogatos_comparison(
-        excel_path=r"../byhand/dovalue_clear.xlsx",
+        excel_path=r"../byhand/dovalue_revaluation.xlsx",
         must_columns=columns_valuation,
         row_conditions=dovalue_conditions)
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
