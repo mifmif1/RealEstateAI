@@ -126,6 +126,7 @@ class SpitogatosFlow:
         try:
             df = self._open_excel(excel_path)
         except FileNotFoundError:
+            logger.exception("Spitogatos file not found. Creating a new one.")
             df = pd.DataFrame(columns=["main_asset",
                                        "location",
                                        "sqm",
@@ -137,13 +138,13 @@ class SpitogatosFlow:
                                        "searched_radius",
                                        "revaluated_price_meter"])
         except Exception as e:
-            logger.error(f"Cannot open {excel_path}. Thus not saving Spitogatos Comaprison.")
+            logger.error(f"Cannot open {excel_path} nor to create. Thus not saving Spitogatos Comaprison.")
             return
         # processing
         rows = []
         for asset in asset_comparison.compared_assets:
             asset_dict = asset.model_dump()
-            if isinstance(asset_dict, Point):
+            if isinstance(asset.location, Point):
                 asset_dict['location'] = f"{asset.location.lat}, {asset.location.lon}"
             asset_dict["main_asset"] = asset_comparison.main_asset
             rows.append(asset_dict)
@@ -177,7 +178,7 @@ class SpitogatosFlow:
                 logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
                 return df
             self._save_comparison_assets(asset_comparison=asset_comparison, excel_path=spitogatos_comparison_excel_path)
-            assets = asset_comparison.assets
+            assets = asset_comparison.compared_assets
 
             if assets:
                 assets_price_sqm = [asset.price / asset.sqm for asset in assets]
@@ -226,13 +227,13 @@ class SpitogatosFlow:
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    dovalue_conditions = lambda row: (not pd.isna(row['comparison_average']) or
-                                      row['sqm'] < 30 or
-                                      '%' in row['TitleGR'] or
-                                      (('Διαμέρισμα' not in row['SubCategoryGR']) and
-                                       ('Μεζονέτα' not in row['SubCategoryGR']) and
-                                       ('Μονοκατοικία' not in row['SubCategoryGR']))
-                                      )
+    dovalue_conditions = lambda row: (  # not pd.isna(row['comparison_average']) or
+            row['sqm'] < 30 or
+            '%' in row['TitleGR'] or
+            (('Διαμέρισμα' not in row['SubCategoryGR']) and
+             ('Μεζονέτα' not in row['SubCategoryGR']) and
+             ('Μονοκατοικία' not in row['SubCategoryGR']))
+    )
     dovalue_conditions1 = lambda row: (row['sqm'] > 30 and
                                        '%' not in str(row['TitleGR']) and
                                        (
@@ -249,7 +250,7 @@ if __name__ == '__main__':
     columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
 
     s.expand_excel__spitogatos_comparison(
-        excel_path=r"../byhand/dovalue_revaluation.xlsx",
+        excel_path=r"../byhand/dovalue_clear.xlsx",
         must_columns=columns_valuation,
         row_conditions=dovalue_conditions)
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
