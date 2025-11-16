@@ -15540,3 +15540,80 @@ main_asset
   Input should be a valid dictionary or instance of Asset [type=model_type, input_value='FZgwUaK8Vs', input_type=str]
     For further information visit https://errors.pydantic.dev/2.11/v/model_type
 2025-11-16 21:16:55,810 [INFO] saved successfully
+2025-11-16 21:31:52,881 [INFO] skipping EY3IDITf1f-001
+2025-11-16 21:31:52,882 [INFO] skipping EY3IDITf1f-002
+2025-11-16 21:31:52,882 [INFO] skipping EY3IDITf1f-003
+2025-11-16 21:31:52,882 [INFO] skipping EY3IDITf1f-004
+2025-11-16 21:31:52,882 [INFO] skipping ikkxa9N5ws
+2025-11-16 21:31:52,882 [INFO] skipping B8MZLE54Qs-001
+2025-11-16 21:31:52,882 [INFO] skipping B8MZLE54Qs-002
+2025-11-16 21:31:52,882 [INFO] skipping cFPd9qQQss-003
+2025-11-16 21:31:52,883 [INFO] skipping cFPd9qQQss-001
+2025-11-16 21:31:52,883 [INFO] skipping cFPd9qQQss-002
+2025-11-16 21:31:52,883 [INFO] skipping mET2JyJHrH
+2025-11-16 21:31:52,883 [INFO] skipping qlWHuvoscE
+2025-11-16 21:31:52,883 [INFO] handling FZgwUaK8Vs
+2025-11-16 21:31:56,504 [INFO] Successfully fetched min_lat=40.68854817697616 min_lon=22.29823147185961 max_lat=40.690349201415714 max_lon=22.300597528177196
+2025-11-16 21:31:59,880 [INFO] Successfully fetched min_lat=40.68809791320202 min_lon=22.297639977686384 max_lat=40.69079944986092 max_lon=22.301189062163676
+2025-11-16 21:32:03,461 [INFO] Successfully fetched min_lat=40.68742251179301 min_lon=22.296752751355452 max_lat=40.691474816779866 max_lon=22.30207637807442
+2025-11-16 21:32:03,463 [ERROR] something failed. SAVING!: 1 validation error for AssetComparison
+main_asset
+  Input should be a valid dictionary or instance of Asset [type=model_type, input_value='FZgwUaK8Vs', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/model_type
+2025-11-16 21:32:06,053 [INFO] saved successfully
+2025-11-16 21:32:29,082 [INFO] skipping EY3IDITf1f-001
+2025-11-16 21:32:29,083 [INFO] skipping EY3IDITf1f-002
+2025-11-16 21:32:29,083 [INFO] skipping EY3IDITf1f-003
+2025-11-16 21:32:29,083 [INFO] skipping EY3IDITf1f-004
+2025-11-16 21:32:29,083 [INFO] skipping ikkxa9N5ws
+2025-11-16 21:32:29,083 [INFO] skipping B8MZLE54Qs-001
+2025-11-16 21:32:29,084 [INFO] skipping B8MZLE54Qs-002
+2025-11-16 21:32:29,084 [INFO] skipping cFPd9qQQss-003
+2025-11-16 21:32:29,084 [INFO] skipping cFPd9qQQss-001
+2025-11-16 21:32:29,084 [INFO] skipping cFPd9qQQss-002
+2025-11-16 21:32:29,084 [INFO] skipping mET2JyJHrH
+2025-11-16 21:32:29,086 [INFO] skipping qlWHuvoscE
+2025-11-16 21:32:29,086 [INFO] handling FZgwUaK8Vs
+2025-11-16 21:32:32,753 [INFO] Successfully fetched min_lat=40.68854817697616 min_lon=22.29823147185961 max_lat=40.690349201415714 max_lon=22.300597528177196
+2025-11-16 21:32:36,444 [INFO] Successfully fetched min_lat=40.68809791320202 min_lon=22.297639977686384 max_lat=40.69079944986092 max_lon=22.301189062163676
+2025-11-16 21:32:39,816 [ERROR] Failed to fetch min_lat=40.68742251179301 min_lon=22.296752751355452 max_lat=40.691474816779866 max_lon=22.30207637807442: Expecting value: line 1 column 1 (char 0)
+2025-11-16 21:32:39,816 [ERROR] Probably detected as bot
+2025-11-16 21:32:39,817 [ERROR] error handling row FZgwUaK8Vs. Error: Probably detected as bot.
+2025-11-16 21:32:42,172 [INFO] saved successfully
+2025-11-16 21:34:33,650 [INFO] skipping EY3IDITf1f-001
+2025-11-16 21:34:33,651 [INFO] skipping EY3IDITf1f-002
+2025-11-16 21:34:33,651 [INFO] skipping EY3IDITf1f-003
+2025-11-16 21:34:33,651 [INFO] skipping EY3IDITf1f-004
+2025-11-16 21:34:33,651 [INFO] skipping ikkxa9N5ws
+2025-11-16 21:34:33,651 [INFO] skipping B8MZLE54Qs-001
+2025-11-16 21:34:33,652 [INFO] skipping B8MZLE54Qs-002
+2025-11-16 21:34:33,652 [INFO] skipping cFPd9qQQss-003
+2025-11-16 21:34:33,652 [INFO] skipping cFPd9qQQss-001
+2025-11-16 21:34:33,652 [INFO] skipping cFPd9qQQss-002
+2025-11-16 21:34:33,652 [INFO] skipping mET2JyJHrH
+2025-11-16 21:34:33,652 [INFO] skipping qlWHuvoscE
+2025-11-16 21:34:33,652 [INFO] handling FZgwUaK8Vs
+2025-11-16 21:34:37,070 [ERROR] Failed to fetch min_lat=40.68854817697616 min_lon=22.29823147185961 max_lat=40.690349201415714 max_lon=22.300597528177196: Expecting value: line 1 column 1 (char 0)
+2025-11-16 21:34:37,071 [ERROR] Probably detected as bot
+2025-11-16 21:34:37,071 [ERROR] error handling row FZgwUaK8Vs. Error: Probably detected as bot.
+2025-11-16 21:34:39,379 [INFO] saved successfully
+2025-11-16 21:35:30,388 [INFO] skipping EY3IDITf1f-001
+2025-11-16 21:35:30,388 [INFO] skipping EY3IDITf1f-002
+2025-11-16 21:35:30,389 [INFO] skipping EY3IDITf1f-003
+2025-11-16 21:35:30,389 [INFO] skipping EY3IDITf1f-004
+2025-11-16 21:35:30,389 [INFO] skipping ikkxa9N5ws
+2025-11-16 21:35:30,389 [INFO] skipping B8MZLE54Qs-001
+2025-11-16 21:35:30,389 [INFO] skipping B8MZLE54Qs-002
+2025-11-16 21:35:30,389 [INFO] skipping cFPd9qQQss-003
+2025-11-16 21:35:30,390 [INFO] skipping cFPd9qQQss-001
+2025-11-16 21:35:30,390 [INFO] skipping cFPd9qQQss-002
+2025-11-16 21:35:30,390 [INFO] skipping mET2JyJHrH
+2025-11-16 21:35:30,390 [INFO] skipping qlWHuvoscE
+2025-11-16 21:35:30,390 [INFO] handling FZgwUaK8Vs
+2025-11-16 21:35:34,371 [INFO] Successfully fetched min_lat=40.68854817697616 min_lon=22.29823147185961 max_lat=40.690349201415714 max_lon=22.300597528177196
+2025-11-16 21:35:38,093 [INFO] Successfully fetched min_lat=40.68809791320202 min_lon=22.297639977686384 max_lat=40.69079944986092 max_lon=22.301189062163676
+2025-11-16 21:35:41,779 [INFO] Successfully fetched min_lat=40.68742251179301 min_lon=22.296752751355452 max_lat=40.691474816779866 max_lon=22.30207637807442
+2025-11-16 21:35:41,780 [WARNING] want to save!!!!
+2025-11-16 21:35:41,862 [INFO] Saved Spitogatos Comparison successfully
+2025-11-16 21:35:41,862 [ERROR] something failed. SAVING!: 'AssetComparison' object has no attribute 'assets'
+2025-11-16 21:35:43,966 [INFO] saved successfully

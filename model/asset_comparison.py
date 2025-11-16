@@ -6,7 +6,7 @@ from model.asset_model import Asset
 
 
 class AssetComparison(BaseModel):
-    main_asset: Asset
+    main_asset: str
     compared_assets: List[Asset] = []
 
 

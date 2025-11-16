@@ -9,6 +9,7 @@ from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
 from model.asset_comparison import AssetComparison
 from model.asset_model import Asset
+from model.geographical_model import Point
 from utils.consts.greek_tems import floor_level_dict
 
 logger = logging.getLogger(__name__)
@@ -138,7 +139,16 @@ class SpitogatosFlow:
         except Exception as e:
             logger.error(f"Cannot open {excel_path}. Thus not saving Spitogatos Comaprison.")
             return
-        df_to_append = pd.DataFrame(asset_comparison)
+        # processing
+        rows = []
+        for asset in asset_comparison.compared_assets:
+            asset_dict = asset.model_dump()
+            if isinstance(asset_dict, Point):
+                asset_dict['location'] = f"{asset.location.lat}, {asset.location.lon}"
+            asset_dict["main_asset"] = asset_comparison.main_asset
+            rows.append(asset_dict)
+
+        df_to_append = pd.DataFrame(rows)
         combined = pd.concat([df, df_to_append], ignore_index=True)
         with pd.ExcelWriter(excel_path, engine="openpyxl", mode="w") as writer:
             combined.to_excel(writer, index=False)
@@ -163,15 +173,11 @@ class SpitogatosFlow:
                 asset_comparison, actual_location_tolerance = self._search_assets_for_row(row=row,
                                                                                           location_tolerance=location_tolerance,
                                                                                           sqm_tolerance=sqm_tolerance)
-            except Exception as e:
+            except ConnectionAbortedError as e:
                 logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
                 return df
-
             self._save_comparison_assets(asset_comparison=asset_comparison, excel_path=spitogatos_comparison_excel_path)
             assets = asset_comparison.assets
-            # todo: do it properly with exceptions
-            if assets == -1:
-                break
 
             if assets:
                 assets_price_sqm = [asset.price / asset.sqm for asset in assets]
