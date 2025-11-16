@@ -64,7 +64,7 @@ class SpitogatosFlow:
 
     @staticmethod
     def _open_excel(excel_path: str,
-                    must_columns: List[str]) -> pd.DataFrame:
+                    must_columns: List[str] = []) -> pd.DataFrame:
         """
                 price, sqm, coords are columns in the Excel
                 """
@@ -78,6 +78,12 @@ class SpitogatosFlow:
             assert must_column in df.columns
 
         return df
+
+    def clear_conditions(self, excel_path: str, conditions) -> None:
+        df = self._open_excel(excel_path=excel_path)
+        df = df[df.apply(conditions, axis=1)]
+        df.to_excel(f'{excel_path}_clear_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx', index=False)
+        logger.info("saved successfully")
 
     @staticmethod
     def _prepare_df(df: pd.DataFrame) -> pd.DataFrame:
@@ -112,6 +118,30 @@ class SpitogatosFlow:
             i += 1
         return assets, (location_tolerance / 1.5)
 
+    def _save_comparison_assets(self, main_asset: str, assets: List[Asset], excel_path: str) -> None:
+        try:
+            df = self._open_excel(excel_path)
+        except FileNotFoundError:
+            df = pd.DataFrame(columns=["main_asset",
+                                       "location",
+                                       "sqm",
+                                       "price",
+                                       "url",
+                                       "level",
+                                       "address",
+                                       "new_state",
+                                       "searched_radius",
+                                       "revaluated_price_meter"])
+        except Exception as e:
+            logger.error(f"Cannot open {excel_path}. Thus not saving Spitogatos Comaprison.")
+            return
+        df_to_append = pd.DataFrame(assets)
+        combined = pd.concat([df, df_to_append], ignore_index=True)
+        combined.to_excel(excel_path, index=False)
+        with pd.ExcelWriter(excel_path, engine="openpyxl", mode="w") as writer:
+            combined.to_excel(writer, index=False)
+        logger.info("Saved Spitogatos Comparison successfully")
+
     def _add_spitogatos_comparison(self, df: pd.DataFrame,
                                    row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                    location_tolerance: float = 100,
@@ -130,6 +160,8 @@ class SpitogatosFlow:
             assets, actual_location_tolerance = self._search_assets_for_row(row=row,
                                                                             location_tolerance=location_tolerance,
                                                                             sqm_tolerance=sqm_tolerance)
+            self._save_comparison_assets(main_asset=row['UniqueCode'], assets=assets)
+
             # todo: do it properly with exceptions
             if assets == -1:
                 break
@@ -143,16 +175,17 @@ class SpitogatosFlow:
                 df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
                 df.loc[index, '#assets'] = len(assets)
                 df.loc[index, 'spitogatos_url'] = assets[0].url
-                # df.loc[index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
+                df.loc[
+                    index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
                 df.loc[index, 'searched_radius'] = actual_location_tolerance
                 if len(assets) > 1:
                     std = statistics.stdev(assets_price_sqm)
                     df.loc[index, 'comparison_std'] = std
-                    # if std != 0:
-                    #     df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-                # new_price, normalized_mean = self._get_valuation_row(row, assets)
-                # df.loc[index, 'revaluation'] = new_price
-                # df.loc[index, 'normalized_mean'] = normalized_mean
+                    if std != 0:
+                        df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
+                new_price, normalized_mean = self._get_valuation_row(row, assets)
+                df.loc[index, 'revaluation'] = new_price
+                df.loc[index, 'normalized_mean'] = normalized_mean
 
                 logger.info(f"fetched {len(assets)} assets")
         logger.info("finished, SAVING!")
@@ -187,6 +220,14 @@ if __name__ == '__main__':
                                        ('Μεζονέτα' not in row['SubCategoryGR']) and
                                        ('Μονοκατοικία' not in row['SubCategoryGR']))
                                       )
+    dovalue_conditions1 = lambda row: (row['sqm'] > 30 and
+                                       '%' not in str(row['TitleGR']) and
+                                       (
+                                               'Διαμέρισμα' in str(row['SubCategoryGR']) or
+                                               'Μεζονέτα' in str(row['SubCategoryGR']) or
+                                               'Μονοκατοικία' in str(row['SubCategoryGR'])
+                                       )
+                                       )
     nbg_conditions = lambda row: (row['sqm'] < 30 or
                                   not pd.isna(row['comparison_average']) or
                                   False
@@ -195,6 +236,7 @@ if __name__ == '__main__':
     columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
 
     s.expand_excel__spitogatos_comparison(
-        excel_path=r"../byhand/nbg_reo.xlsx_spitogatos_comparison_17102025-1424.xlsx_spitogatos_comparison_17102025-1516.xlsx",
-        must_columns=columns_no_valuation,
-        row_conditions=nbg_conditions)
+        excel_path=r"../byhand/dovalue_clear.xlsx",
+        must_columns=columns_valuation,
+        row_conditions=dovalue_conditions)
+    # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
