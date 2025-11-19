@@ -8,6 +8,7 @@ import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from dash import Dash, Input, Output, dcc, html
 from dash.dash_table import DataTable
 from dash.dash_table.Format import Format, Group, Scheme, Symbol
@@ -203,10 +204,14 @@ app.layout = dbc.Container(
                         dbc.CardBody(
                             [
                                 html.H5("Geographic concentration", className="mb-3"),
-                                dcc.Graph(id="map-figure", config={"displayModeBar": False}),
+                                dcc.Graph(
+                                    id="map-figure",
+                                    config={"displayModeBar": False},
+                                    style={"height": "420px"},
+                                ),
                             ]
                         ),
-                        className="shadow-sm h-100",
+                        className="shadow-sm",
                     ),
                     md=6,
                 ),
@@ -215,10 +220,14 @@ app.layout = dbc.Container(
                         dbc.CardBody(
                             [
                                 html.H5("Price vs. size", className="mb-3"),
-                                dcc.Graph(id="scatter-figure", config={"displayModeBar": False}),
+                                dcc.Graph(
+                                    id="scatter-figure",
+                                    config={"displayModeBar": False},
+                                    style={"height": "420px"},
+                                ),
                             ]
                         ),
-                        className="shadow-sm h-100",
+                        className="shadow-sm",
                     ),
                     md=6,
                 ),
@@ -232,10 +241,14 @@ app.layout = dbc.Container(
                         dbc.CardBody(
                             [
                                 html.H5("Discount distribution", className="mb-3"),
-                                dcc.Graph(id="hist-figure", config={"displayModeBar": False}),
+                                dcc.Graph(
+                                    id="hist-figure",
+                                    config={"displayModeBar": False},
+                                    style={"height": "380px"},
+                                ),
                             ]
                         ),
-                        className="shadow-sm h-100",
+                        className="shadow-sm",
                     ),
                     md=4,
                 ),
@@ -339,10 +352,27 @@ def update_range_labels(price_range: List[float], score_range: List[float]):
 def update_visuals(portfolios, categories, municipality, price_range, score_range):
     filtered = apply_filters(df, portfolios, categories, municipality, price_range, score_range)
     if filtered.empty:
+        empty_fig = go.Figure().update_layout(
+            xaxis_showgrid=False,
+            yaxis_showgrid=False,
+            xaxis_visible=False,
+            yaxis_visible=False,
+            annotations=[
+                dict(
+                    text="No data for current filters",
+                    x=0.5,
+                    y=0.5,
+                    xref="paper",
+                    yref="paper",
+                    showarrow=False,
+                    font=dict(size=14, color="#6c757d"),
+                )
+            ],
+        )
         return (
-            px.scatter_geo(),
-            px.scatter(),
-            px.histogram(),
+            empty_fig,
+            empty_fig,
+            empty_fig,
             [],
             "0",
             "—",
@@ -427,5 +457,5 @@ def update_visuals(portfolios, categories, municipality, price_range, score_rang
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(debug=True)
 
