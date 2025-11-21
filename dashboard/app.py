@@ -29,15 +29,19 @@ def load_dataset() -> pd.DataFrame:
     df["score"] = pd.to_numeric(df.get("score"), errors="coerce")
     df["sqm"] = pd.to_numeric(df.get("sqm"), errors="coerce")
     df["price"] = pd.to_numeric(df.get("price"), errors="coerce")
+    df["AuctionDate"] = pd.to_datetime(df.get("AuctionDate"), errors="coerce")
+    df["searched_radius"] = pd.to_numeric(df.get("searched_radius"), errors="coerce")
+    df["#assets"] = pd.to_numeric(df.get("#assets"), errors="coerce")
+    df["comparison_min"] = pd.to_numeric(df.get("comparison_min"), errors="coerce")
+    df["comparison_average"] = pd.to_numeric(df.get("comparison_average"), errors="coerce")
+    df["comparison_median"] = pd.to_numeric(df.get("comparison_median"), errors="coerce")
+    df["comparison_max"] = pd.to_numeric(df.get("comparison_max"), errors="coerce")
 
-    df["revaluation-market_discount"] = pd.to_numeric(df.get("revaluation_under_market"), errors="coerce") * 100
     df["price-market_discount"] = pd.to_numeric(df.get("precent_under_market"), errors="coerce") * 100
-    revaluation_amount = pd.to_numeric(df.get("revaluation"), errors="coerce")
-    sqm_safe = df["sqm"].replace({0: pd.NA})
-    df["revaluation_price_per_sqm"] = revaluation_amount.divide(sqm_safe)
-    revaluation_sqm_safe = df["revaluation_price_per_sqm"].replace({0: pd.NA})
-    df["price_revaluation_ratio"] = df["price_per_sqm"].divide(revaluation_sqm_safe)
-    df["price_revaluation_discount"] = (1 - df["price_revaluation_ratio"]) * 100
+    comparison_safe = df["comparison_average"].replace({0: pd.NA})
+    df["price_avg_discount_pct"] = (
+        (comparison_safe - df["price_per_sqm"]) / comparison_safe
+    ) * 100
 
     df["portfolio_label"] = df["Portfolio"].fillna("Unknown")
     df["category_label"] = df["CategoryGR"].fillna("Unspecified")
@@ -53,17 +57,21 @@ def safe_int(value, fallback):
     return int(value) if pd.notna(value) else fallback
 
 
+def safe_float(value, fallback):
+    return float(value) if pd.notna(value) else fallback
+
+
 portfolio_options = [{"label": name, "value": name} for name in sorted(df["portfolio_label"].unique())]
 category_options = [{"label": name, "value": name} for name in sorted(df["category_label"].unique())]
 
 price_min = safe_int(df["price_per_sqm"].min(skipna=True), 0)
 price_max = safe_int(df["price_per_sqm"].max(skipna=True), 1)
-score_min = safe_int(df["score"].min(skipna=True), 0)
-score_max = safe_int(df["score"].max(skipna=True), 1)
+discount_min = safe_float(df["price_avg_discount_pct"].min(skipna=True), -100.0)
+discount_max = safe_float(df["price_avg_discount_pct"].max(skipna=True), 100.0)
 
 app = Dash(
     __name__,
-    title="DoValue Opportunity Explorer",
+    title="VAR Opportunity Explorer",
     external_stylesheets=[dbc.themes.MINTY],
 )
 server = app.server
@@ -141,7 +149,7 @@ PERCENT_FORMAT = Format(
     symbol=Symbol.yes,
     symbol_suffix="%",
 )
-RATIO_FORMAT = Format(precision=2, scheme=Scheme.fixed)
+DECIMAL_FORMAT = Format(precision=1, scheme=Scheme.fixed)
 
 
 def kpi_card(title: str, value_id: str, suffix: str = "") -> dbc.Card:
@@ -234,15 +242,16 @@ app.layout = dbc.Container(
                             ),
                             dbc.Col(
                                 [
-                                    html.Small("Score"),
+                                    html.Small("Discount (%)"),
                                     dcc.RangeSlider(
-                                        id="score-range",
-                                        min=score_min,
-                                        max=score_max,
-                                        value=[score_min, score_max],
+                                        id="discount-range",
+                                        min=discount_min,
+                                        max=discount_max,
+                                        value=[discount_min, discount_max],
                                         tooltip={"placement": "bottom", "always_visible": False},
+                                        step=max(0.5, (discount_max - discount_min) / 20) if discount_max != discount_min else 1,
                                     ),
-                                    html.Div(id="score-range-label", className="small text-muted mt-2"),
+                                    html.Div(id="discount-range-label", className="small text-muted mt-2"),
                                 ],
                                 md=6,
                             ),
@@ -331,17 +340,22 @@ app.layout = dbc.Container(
                                     columns=[
                                         {"name": "Municipality", "id": "municipality_label"},
                                         {"name": "Category", "id": "category_label"},
+                                        {"name": "Auction Date", "id": "auction_date"},
+                                        {"name": "Level", "id": "level"},
+                                        {"name": "Reached radius (km)", "id": "searched_radius", "type": "numeric", "format": DECIMAL_FORMAT},
+                                        {"name": "#assets", "id": "num_assets", "type": "numeric", "format": INTEGER_FORMAT},
                                         {"name": "Links", "id": "links", "presentation": "markdown"},
                                         {"name": "Price (€)", "id": "price", "type": "numeric",
                                          "format": CURRENCY_FORMAT},
                                         {"name": "sqm", "id": "sqm", "type": "numeric", "format": INTEGER_FORMAT},
                                         {"name": "€/sqm", "id": "price_per_sqm", "type": "numeric",
                                          "format": INTEGER_FORMAT},
-                                        {"name": "Reval €/sqm", "id": "revaluation_price_per_sqm", "type": "numeric",
-                                         "format": INTEGER_FORMAT},
-                                        {"name": "Discount %", "id": "price_revaluation_discount", "type": "numeric",
+                                        {"name": "Discount %", "id": "price_avg_discount_pct", "type": "numeric",
                                          "format": PERCENT_FORMAT},
-                                        {"name": "Score", "id": "score", "type": "numeric", "format": RATIO_FORMAT},
+                                        {"name": "Comparison min (€)", "id": "comparison_min", "type": "numeric", "format": CURRENCY_FORMAT},
+                                        {"name": "Comparison avg (€)", "id": "comparison_average", "type": "numeric", "format": CURRENCY_FORMAT},
+                                        {"name": "Comparison median (€)", "id": "comparison_median", "type": "numeric", "format": CURRENCY_FORMAT},
+                                        {"name": "Comparison max (€)", "id": "comparison_max", "type": "numeric", "format": CURRENCY_FORMAT},
                                     ],
                                     data=[],
                                     page_size=10,
@@ -390,7 +404,7 @@ def apply_filters(
         categories: Sequence[str] | None,
         municipality: str | None,
         price_bounds: Sequence[float],
-        score_bounds: Sequence[float],
+        discount_bounds: Sequence[float],
 ) -> pd.DataFrame:
     filtered = dataframe
     if portfolios:
@@ -407,10 +421,10 @@ def apply_filters(
         filtered["price_per_sqm"].between(min_price, max_price, inclusive="both")
     ]
 
-    min_score, max_score = score_bounds
+    min_discount, max_discount = discount_bounds
     filtered = filtered[
-        (filtered["score"].fillna(score_min) >= min_score)
-        & (filtered["score"].fillna(score_max) <= max_score)
+        (filtered["price_avg_discount_pct"].fillna(discount_min) >= min_discount)
+        & (filtered["price_avg_discount_pct"].fillna(discount_max) <= max_discount)
         ]
 
     return filtered
@@ -418,14 +432,14 @@ def apply_filters(
 
 @app.callback(
     Output("price-range-label", "children"),
-    Output("score-range-label", "children"),
+    Output("discount-range-label", "children"),
     Input("price-range", "value"),
-    Input("score-range", "value"),
+    Input("discount-range", "value"),
 )
-def update_range_labels(price_range: List[float], score_range: List[float]):
+def update_range_labels(price_range: List[float], discount_range: List[float]):
     price_text = f"Showing assets between €{price_range[0]:,.0f}/sqm and €{price_range[1]:,.0f}/sqm"
-    score_text = f"Score from {score_range[0]:.1f} to {score_range[1]:.1f}"
-    return price_text, score_text
+    discount_text = f"Discount from {discount_range[0]:.1f}% to {discount_range[1]:.1f}%"
+    return price_text, discount_text
 
 
 @app.callback(
@@ -441,10 +455,10 @@ def update_range_labels(price_range: List[float], score_range: List[float]):
     Input("category-filter", "value"),
     Input("municipality-search", "value"),
     Input("price-range", "value"),
-    Input("score-range", "value"),
+    Input("discount-range", "value"),
 )
-def update_visuals(portfolios, categories, municipality, price_range, score_range):
-    filtered = apply_filters(df, portfolios, categories, municipality, price_range, score_range)
+def update_visuals(portfolios, categories, municipality, price_range, discount_range):
+    filtered = apply_filters(df, portfolios, categories, municipality, price_range, discount_range)
     if filtered.empty:
         empty_fig = go.Figure().update_layout(
             xaxis_showgrid=False,
@@ -543,27 +557,40 @@ def update_visuals(portfolios, categories, municipality, price_range, score_rang
                 if link
             ),
             axis=1,
-        )
+        ),
+        auction_date=filtered["AuctionDate"].dt.strftime("%Y-%m-%d"),
+        num_assets=filtered["#assets"],
     )[
         [
             "municipality_label",
             "category_label",
+            "auction_date",
+            "level",
+            "searched_radius",
+            "num_assets",
             "links",
             "price",
             "sqm",
             "price_per_sqm",
-            "revaluation_price_per_sqm",
-            "price_revaluation_discount",
-            "score",
+            "price_avg_discount_pct",
+            "comparison_min",
+            "comparison_average",
+            "comparison_median",
+            "comparison_max",
         ]
     ]
     table_data = (
-        table_data.fillna({"price_revaluation_discount": 0})
+        table_data.fillna({"price_avg_discount_pct": 0})
         .round(
             {
                 "price_per_sqm": 0,
-                "revaluation_price_per_sqm": 0,
-                "price_revaluation_discount": 1,
+                "searched_radius": 1,
+                "num_assets": 0,
+                "price_avg_discount_pct": 1,
+                "comparison_min": 0,
+                "comparison_average": 0,
+                "comparison_median": 0,
+                "comparison_max": 0,
             }
         )
         .to_dict("records")
