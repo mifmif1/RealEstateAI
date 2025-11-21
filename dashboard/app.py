@@ -403,6 +403,10 @@ app.layout = dbc.Container(
                                     },
                                     style_data_conditional=[
                                         {
+                                            "if": {"filter_query": "{price_per_sqm} < {comparison_min}"},
+                                            "backgroundColor": "#e0f5e9",
+                                        },
+                                        {
                                             "if": {"row_index": "odd"},
                                             "backgroundColor": "#f2f6fb",
                                         }
