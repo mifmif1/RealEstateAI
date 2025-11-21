@@ -282,7 +282,11 @@ app.layout = dbc.Container(
                                 html.H5("Geographic concentration", className="mb-3"),
                                 dcc.Graph(
                                     id="map-figure",
-                                    config={"displayModeBar": False},
+                                    config={
+                                        "displayModeBar": True,
+                                        "modeBarButtonsToAdd": ["zoomInMapbox", "zoomOutMapbox"],
+                                        "displaylogo": False,
+                                    },
                                     style={"height": "420px"},
                                 ),
                             ]
@@ -488,7 +492,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         )
 
     map_df = filtered.dropna(subset=["lat", "lon"])
-    map_fig = px.scatter_geo(
+    map_fig = px.scatter_mapbox(
         map_df,
         lat="lat",
         lon="lon",
@@ -503,13 +507,22 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         },
         size="price",
         color_continuous_scale=COLOR_SCALE,
+        zoom=5,
+        height=400,
     )
     map_fig.update_layout(
+        mapbox_style="carto-positron",
         margin=dict(l=0, r=0, t=0, b=0),
-        geo=dict(showland=True, showcountries=True, landcolor="#e6f0f2"),
         paper_bgcolor=CARD_BG,
-        plot_bgcolor=CARD_BG,
         font=dict(color="#1d1d1f"),
+    )
+    map_fig.update_coloraxes(
+        colorbar=dict(
+            title="Discount vs market (%)",
+            yanchor="top",
+            y=0.95,
+            x=0.98,
+        )
     )
 
     scatter_df = (
@@ -539,11 +552,12 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         legend_title="Municipality",
     )
 
+    price_bins = pd.qcut(filtered["price"], q=min(5, len(filtered)), duplicates="drop")
     hist_fig = px.histogram(
-        filtered,
+        filtered.assign(price_bucket=price_bins),
         x="price-market_discount",
         nbins=30,
-        color="portfolio_label",
+        color="price_bucket",
         barmode="overlay",
         color_discrete_sequence=COLOR_SEQUENCE,
     )
