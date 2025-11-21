@@ -3,6 +3,7 @@ from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
 from typing import List, Sequence
+import re
 
 import dash_bootstrap_components as dbc
 import pandas as pd
@@ -12,7 +13,142 @@ from dash import Dash, Input, Output, dcc, html
 from dash.dash_table import DataTable
 from dash.dash_table.Format import Format, Group, Scheme, Symbol
 
-DATA_PATH = Path(__file__).resolve().parents[1] / "byhand" / "dovalue_clear.xlsx"
+try:
+    from googletrans import Translator
+except ImportError:  # pragma: no cover
+    Translator = None
+
+DATA_PATH = Path(__file__).resolve().parents[1] / "byhand" / "all_assets.xlsx"
+
+
+COORD_DMS_PATTERN = re.compile(
+    r'(\d+(?:\.\d+)?)°\s*(\d+(?:\.\d+)?)\'\s*(\d+(?:\.\d+)?)"?\s*([NSEW])',
+    re.IGNORECASE,
+)
+GREEK_CHAR_PATTERN = re.compile(r"[\u0370-\u03ff\u1f00-\u1fff]")
+translator = Translator() if Translator is not None else None
+
+GREEK_TRANSLIT_MAP = {
+    "Α": "A",
+    "Β": "V",
+    "Γ": "G",
+    "Δ": "D",
+    "Ε": "E",
+    "Ζ": "Z",
+    "Η": "I",
+    "Θ": "Th",
+    "Ι": "I",
+    "Κ": "K",
+    "Λ": "L",
+    "Μ": "M",
+    "Ν": "N",
+    "Ξ": "X",
+    "Ο": "O",
+    "Π": "P",
+    "Ρ": "R",
+    "Σ": "S",
+    "Τ": "T",
+    "Υ": "Y",
+    "Φ": "F",
+    "Χ": "Ch",
+    "Ψ": "Ps",
+    "Ω": "O",
+    "ά": "a",
+    "έ": "e",
+    "ί": "i",
+    "ή": "i",
+    "ώ": "o",
+    "ό": "o",
+    "ύ": "y",
+    "ϊ": "i",
+    "ΐ": "i",
+    "ϋ": "y",
+    "ΰ": "y",
+    "α": "a",
+    "β": "v",
+    "γ": "g",
+    "δ": "d",
+    "ε": "e",
+    "ζ": "z",
+    "η": "i",
+    "θ": "th",
+    "ι": "i",
+    "κ": "k",
+    "λ": "l",
+    "μ": "m",
+    "ν": "n",
+    "ξ": "x",
+    "ο": "o",
+    "π": "p",
+    "ρ": "r",
+    "σ": "s",
+    "ς": "s",
+    "τ": "t",
+    "υ": "y",
+    "φ": "f",
+    "χ": "ch",
+    "ψ": "ps",
+    "ω": "o",
+}
+
+
+def dms_to_decimal(degrees: float, minutes: float, seconds: float, direction: str) -> float:
+    decimal = degrees + minutes / 60 + seconds / 3600
+    if direction.upper() in {"S", "W"}:
+        decimal *= -1
+    return decimal
+
+
+def parse_coordinate_pair(value: str):
+    if not isinstance(value, str):
+        return (None, None)
+    text = value.strip()
+    if not text:
+        return (None, None)
+
+    dms_matches = list(COORD_DMS_PATTERN.finditer(text))
+    if len(dms_matches) >= 2:
+        lat_match, lon_match = dms_matches[:2]
+        lat = dms_to_decimal(
+            float(lat_match.group(1)),
+            float(lat_match.group(2)),
+            float(lat_match.group(3)),
+            lat_match.group(4),
+        )
+        lon = dms_to_decimal(
+            float(lon_match.group(1)),
+            float(lon_match.group(2)),
+            float(lon_match.group(3)),
+            lon_match.group(4),
+        )
+        return (lat, lon)
+
+    if "," in text:
+        parts = text.split(",")
+        if len(parts) >= 2:
+            return (
+                pd.to_numeric(parts[0], errors="coerce"),
+                pd.to_numeric(parts[1], errors="coerce"),
+            )
+
+    return (None, None)
+
+
+@lru_cache(maxsize=4096)
+def translate_text(value: str) -> str:
+    if not isinstance(value, str):
+        return value
+    trimmed = value.strip()
+    if not trimmed:
+        return value
+    transliterated = "".join(GREEK_TRANSLIT_MAP.get(ch, ch) for ch in trimmed)
+    if translator is None or not GREEK_CHAR_PATTERN.search(trimmed):
+        return transliterated or trimmed
+    try:
+        translated = translator.translate(trimmed, dest="en").text
+        return translated or transliterated or trimmed
+    except Exception:
+        return transliterated or trimmed
 
 
 @lru_cache(maxsize=1)
@@ -20,9 +156,9 @@ def load_dataset() -> pd.DataFrame:
     df = pd.read_excel(DATA_PATH)
     df = df.copy()
 
-    coord_parts = df["coords"].astype(str).str.split(",", expand=True)
-    df["lat"] = pd.to_numeric(coord_parts[0], errors="coerce")
-    df["lon"] = pd.to_numeric(coord_parts[1], errors="coerce")
+    coord_pairs = df["coords"].apply(parse_coordinate_pair)
+    df["lat"] = coord_pairs.apply(lambda pair: pair[0])
+    df["lon"] = coord_pairs.apply(lambda pair: pair[1])
 
     df["price_per_sqm"] = pd.to_numeric(df.get("price/sqm"), errors="coerce")
     df["comparison_average"] = pd.to_numeric(df.get("comparison_average"), errors="coerce")
@@ -43,9 +179,11 @@ def load_dataset() -> pd.DataFrame:
         (comparison_safe - df["price_per_sqm"]) / comparison_safe
     ) * 100
 
-    df["portfolio_label"] = df["Portfolio"].fillna("Unknown")
-    df["category_label"] = df["CategoryGR"].fillna("Unspecified")
-    df["municipality_label"] = df["Municipality"].fillna("—")
+    df["portfolio_label"] = df["Portfolio"].fillna("Unknown").apply(translate_text)
+    df["category_label"] = df["CategoryGR"].fillna("Unspecified").apply(translate_text)
+    df["municipality_label"] = df["Municipality"].fillna("—").apply(translate_text)
+    df["title_display"] = df["TitleGR"].fillna("").apply(translate_text)
+    df["description"] = df.get("description", "").fillna("").apply(translate_text)
 
     return df
 
@@ -368,7 +506,7 @@ app.layout = dbc.Container(
                                         {"name": "Municipality", "id": "municipality_label"},
                                         {"name": "Category", "id": "category_label"},
                                         {"name": "Auction Date", "id": "auction_date"},
-                                        {"name": "Level", "id": "level"},
+                                         {"name": "Level", "id": "level"},
                                         {"name": "Reached radius (km)", "id": "searched_radius", "type": "numeric", "format": DECIMAL_FORMAT},
                                         {"name": "#assets", "id": "num_assets", "type": "numeric", "format": INTEGER_FORMAT},
                                         {"name": "Links", "id": "links", "presentation": "markdown"},
@@ -383,6 +521,7 @@ app.layout = dbc.Container(
                                         {"name": "Comparison avg (€)", "id": "comparison_average", "type": "numeric", "format": CURRENCY_FORMAT},
                                         {"name": "Comparison median (€)", "id": "comparison_median", "type": "numeric", "format": CURRENCY_FORMAT},
                                         {"name": "Comparison max (€)", "id": "comparison_max", "type": "numeric", "format": CURRENCY_FORMAT},
+                                        {"name": "Description", "id": "description"},
                                     ],
                                     data=[],
                                     page_size=10,
@@ -525,10 +664,10 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         lat="lat",
         lon="lon",
         color="price-market_discount",
-        hover_name="TitleGR",
+        hover_name="title_display",
         hover_data={
-            "Portfolio": True,
-            "Municipality": True,
+            "portfolio_label": True,
+            "municipality_label": True,
             "price": ":,.0f",
             "price_per_sqm": ":,.0f",
             "price-market_discount": ":.1f",
@@ -554,13 +693,13 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
     )
 
     scatter_df = (
-        filtered.groupby("Municipality", as_index=False)
+        filtered.groupby("municipality_label", as_index=False)
         .agg(
             sqm=("sqm", "sum"),
             price=("price", "sum"),
             price_per_sqm=("price_per_sqm", "mean"),
         )
-        .rename(columns={"Municipality": "municipality_name"})
+        .rename(columns={"municipality_label": "municipality_name"})
     )
     scatter_fig = px.scatter(
         scatter_df,
@@ -600,7 +739,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
     municipality_hist = px.histogram(
         filtered,
         x="price-market_discount",
-        color="Municipality",
+        color="municipality_label",
         nbins=30,
         barmode="overlay",
         color_discrete_sequence=COLOR_SEQUENCE,
@@ -621,6 +760,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
                 for link in [
                     make_link_button("Spitogatos", row.get("spitogatos_url")),
                     make_link_button("eAuction", row.get("eauctions_url"), variant="secondary"),
+                    make_link_button("Reonline", row.get("reonline_url"), variant="secondary"),
                 ]
                 if link
             ),
@@ -628,6 +768,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         ),
         auction_date=filtered["AuctionDate"].dt.strftime("%Y-%m-%d"),
         num_assets=filtered["#assets"],
+        description=filtered.get("description", ""),
     )[
         [
             "municipality_label",
@@ -637,6 +778,8 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
             "searched_radius",
             "num_assets",
             "links",
+            "description",
+            "description",
             "price",
             "sqm",
             "price_per_sqm",
@@ -645,6 +788,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
             "comparison_average",
             "comparison_median",
             "comparison_max",
+            "description",
         ]
     ]
     table_data = (
