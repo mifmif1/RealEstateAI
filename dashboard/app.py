@@ -569,7 +569,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         font=dict(color="#1d1d1f"),
     )
 
-    table_data = filtered.assign(
+    table_data = filtered[filtered["#assets"] >= 10].assign(
         links=filtered.apply(
             lambda row: " ".join(
                 link
