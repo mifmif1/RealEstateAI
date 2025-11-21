@@ -322,7 +322,7 @@ app.layout = dbc.Container(
                     dbc.Card(
                         dbc.CardBody(
                             [
-                                html.H5("Discount distribution", className="mb-3"),
+                                html.H5("Discount distribution by price buckets", className="mb-3"),
                                 dcc.Graph(
                                     id="hist-figure",
                                     config={"displayModeBar": False},
@@ -333,8 +333,30 @@ app.layout = dbc.Container(
                         className="shadow-sm border-0",
                         style={"background": CARD_BG},
                     ),
-                    md=4,
+                    md=6,
                 ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H5("Discount distribution by municipality", className="mb-3"),
+                                dcc.Graph(
+                                    id="municipality-hist",
+                                    config={"displayModeBar": False},
+                                    style={"height": "380px"},
+                                ),
+                            ]
+                        ),
+                        className="shadow-sm border-0",
+                        style={"background": CARD_BG},
+                    ),
+                    md=6,
+                ),
+            ],
+            className="g-3 mb-4",
+        ),
+        dbc.Row(
+            [
                 dbc.Col(
                     dbc.Card(
                         dbc.CardBody(
@@ -391,7 +413,7 @@ app.layout = dbc.Container(
                         className="shadow-sm h-100 border-0",
                         style={"background": CARD_BG},
                     ),
-                    md=8,
+                    md=12,
                 ),
             ],
             className="g-3 mb-5",
@@ -449,6 +471,7 @@ def update_range_labels(price_range: List[float], discount_range: List[float]):
     Output("map-figure", "figure"),
     Output("scatter-figure", "figure"),
     Output("hist-figure", "figure"),
+    Output("municipality-hist", "figure"),
     Output("asset-table", "data"),
     Output("kpi-assets", "children"),
     Output("kpi-avg-price", "children"),
@@ -481,6 +504,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
             ],
         )
         return (
+            empty_fig,
             empty_fig,
             empty_fig,
             empty_fig,
@@ -569,6 +593,23 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         font=dict(color="#1d1d1f"),
     )
 
+    municipality_hist = px.histogram(
+        filtered,
+        x="price-market_discount",
+        color="Municipality",
+        nbins=30,
+        barmode="overlay",
+        color_discrete_sequence=COLOR_SEQUENCE,
+    )
+    municipality_hist.update_layout(
+        xaxis_title="Discount vs market (%)",
+        yaxis_title="Count",
+        paper_bgcolor=CARD_BG,
+        plot_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        legend_title="Municipality",
+    )
+
     table_data = filtered[filtered["#assets"] >= 10].assign(
         links=filtered.apply(
             lambda row: " ".join(
@@ -628,6 +669,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
         map_fig,
         scatter_fig,
         hist_fig,
+        municipality_hist,
         table_data,
         total_assets,
         avg_price,
