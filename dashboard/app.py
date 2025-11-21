@@ -63,6 +63,7 @@ def safe_float(value, fallback):
 
 portfolio_options = [{"label": name, "value": name} for name in sorted(df["portfolio_label"].unique())]
 category_options = [{"label": name, "value": name} for name in sorted(df["category_label"].unique())]
+municipality_options = [{"label": name, "value": name} for name in sorted(df["municipality_label"].unique())]
 
 price_min = safe_int(df["price_per_sqm"].min(skipna=True), 0)
 price_max = safe_int(df["price_per_sqm"].max(skipna=True), 1)
@@ -210,12 +211,12 @@ app.layout = dbc.Container(
                             ),
                             dbc.Col(
                                 [
-                                    html.Small("Search Municipality"),
-                                    dcc.Input(
+                                    html.Small("Municipalities"),
+                                    dcc.Dropdown(
                                         id="municipality-search",
-                                        type="text",
-                                        placeholder="e.g. Athens",
-                                        className="form-control",
+                                        options=municipality_options,
+                                        multi=True,
+                                        placeholder="Select municipalities",
                                     ),
                                 ],
                                 md=4,
@@ -402,7 +403,7 @@ def apply_filters(
         dataframe: pd.DataFrame,
         portfolios: Sequence[str] | None,
         categories: Sequence[str] | None,
-        municipality: str | None,
+        municipalities: Sequence[str] | None,
         price_bounds: Sequence[float],
         discount_bounds: Sequence[float],
 ) -> pd.DataFrame:
@@ -411,10 +412,8 @@ def apply_filters(
         filtered = filtered[filtered["portfolio_label"].isin(portfolios)]
     if categories:
         filtered = filtered[filtered["category_label"].isin(categories)]
-    if municipality:
-        filtered = filtered[
-            filtered["municipality_label"].str.contains(municipality, case=False, na=False)
-        ]
+    if municipalities:
+        filtered = filtered[filtered["municipality_label"].isin(municipalities)]
 
     min_price, max_price = price_bounds
     filtered = filtered[
@@ -457,8 +456,8 @@ def update_range_labels(price_range: List[float], discount_range: List[float]):
     Input("price-range", "value"),
     Input("discount-range", "value"),
 )
-def update_visuals(portfolios, categories, municipality, price_range, discount_range):
-    filtered = apply_filters(df, portfolios, categories, municipality, price_range, discount_range)
+def update_visuals(portfolios, categories, municipalities, price_range, discount_range):
+    filtered = apply_filters(df, portfolios, categories, municipalities, price_range, discount_range)
     if filtered.empty:
         empty_fig = go.Figure().update_layout(
             xaxis_showgrid=False,
@@ -513,21 +512,31 @@ def update_visuals(portfolios, categories, municipality, price_range, discount_r
         font=dict(color="#1d1d1f"),
     )
 
+    scatter_df = (
+        filtered.groupby("Municipality", as_index=False)
+        .agg(
+            sqm=("sqm", "sum"),
+            price=("price", "sum"),
+            price_per_sqm=("price_per_sqm", "mean"),
+        )
+        .rename(columns={"Municipality": "municipality_name"})
+    )
     scatter_fig = px.scatter(
-        filtered,
+        scatter_df,
         x="sqm",
         y="price",
-        color="portfolio_label",
+        color="municipality_name",
         size="price_per_sqm",
-        hover_data=["TitleGR", "Municipality", "price_per_sqm", "score"],
+        hover_data=["price_per_sqm"],
         color_discrete_sequence=COLOR_SEQUENCE,
     )
     scatter_fig.update_layout(
-        xaxis_title="Size (sqm)",
-        yaxis_title="Price (€)",
+        xaxis_title="Total size (sqm)",
+        yaxis_title="Total price (€)",
         paper_bgcolor=CARD_BG,
         plot_bgcolor=CARD_BG,
         font=dict(color="#1d1d1f"),
+        legend_title="Municipality",
     )
 
     hist_fig = px.histogram(
