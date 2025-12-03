@@ -191,7 +191,7 @@ class LandeaData:
                 classes = attr.get("class", [])
                 text_val = li.get_text(" ", strip=True)
                 if "SRFSQM" in classes:
-                    sqm = self._parse_number(text_val)
+                    sqm = self._parse_decimal(text_val)
                 elif "CSTRYR" in classes:
                     y = self._parse_number(text_val)
                     year = int(y) if y is not None else None
@@ -293,8 +293,8 @@ class LandeaData:
                     coord_str = q_vals[0]
                     parts = coord_str.split(",")
                     if len(parts) >= 2:
-                        lat = self._parse_number(parts[0])
-                        lon = self._parse_number(parts[1])
+                        lat = self._parse_decimal(parts[0])
+                        lon = self._parse_decimal(parts[1])
                         if lat is not None and lon is not None:
                             return lat, lon
             except Exception:  # pragma: no cover - very defensive
@@ -332,10 +332,54 @@ class LandeaData:
             .replace("m²", "")
             .replace("€", "")
         )
-        # remove thousands separators and normalize decimal comma to dot
-        cleaned = cleaned.replace(".", "").replace(",", ".")
+        # Legacy behaviour: treat dot/comma as thousands separators for prices,
+        # we don't care about decimals there (e.g. "8.073€" -> 8073).
+        cleaned = cleaned.replace(".", "").replace(",", "")
         try:
             return float(cleaned)
+        except ValueError:
+            return None
+
+    @staticmethod
+    def _parse_decimal(value: Optional[str]) -> Optional[float]:
+        """
+        Parse numbers where the decimal part is important (e.g. sqm, lat/lon).
+
+        Handles both comma and dot as decimal separators and tries to preserve
+        the decimal point instead of stripping it as thousands separator.
+        """
+        if not value:
+            return None
+        text = value.replace("\xa0", "").strip()
+        text = (
+            text.replace("m2", "")
+            .replace("sqm", "")
+            .replace("m²", "")
+            .replace("€", "")
+        )
+        # keep only digits, dot, comma
+        filtered = "".join(ch for ch in text if ch.isdigit() or ch in {".", ","})
+        if not filtered:
+            return None
+
+        # Decide how to treat '.' and ','
+        if "." in filtered and "," in filtered:
+            # If comma appears after dot -> assume comma is decimal separator
+            last_dot = filtered.rfind(".")
+            last_comma = filtered.rfind(",")
+            if last_comma > last_dot:
+                # thousands '.' + decimal ','  -> remove dots, comma -> '.'
+                filtered = filtered.replace(".", "").replace(",", ".")
+            else:
+                # thousands ',' + decimal '.'  -> remove commas
+                filtered = filtered.replace(",", "")
+        elif "," in filtered:
+            # Only comma present -> treat as decimal separator
+            filtered = filtered.replace(",", ".")
+        # elif only '.' present -> already in desired form
+
+        try:
+            return float(filtered)
         except ValueError:
             return None
 
