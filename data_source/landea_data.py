@@ -18,6 +18,9 @@ class LandeaAsset:
     price: Optional[float]
     sqm: Optional[float]
     url: Optional[str]
+    year: Optional[int] = None
+    floor: Optional[str] = None
+    auction_date: Optional[str] = None
 
 
 class LandeaData:
@@ -38,12 +41,40 @@ class LandeaData:
         self._session = requests.Session()
         self._session.headers.update(
             {
+                # Headers adapted from your real browser request
                 "User-Agent": (
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                     "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/119.0 Safari/537.36"
+                    "Chrome/142.0.0.0 Safari/537.36"
                 ),
-                "Accept-Language": "en,en-US;q=0.9",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                "Accept-Language": "en-US,en;q=0.9",
+                "Upgrade-Insecure-Requests": "1",
+                "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"Windows\"",
+                "Sec-Fetch-Dest": "document",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-Site": "none",
+                "Sec-Fetch-User": "?1",
+                "Referer": "https://www.landea.gr/",
+                # IMPORTANT: this Cookie string was copied from your cURL.
+                # It will expire – refresh it from DevTools if you start
+                # getting 403 responses again.
+                "Cookie": (
+                    "usprivacy=1---; _ga=GA1.1.2022824196.1754911724; "
+                    "_gcl_au=1.1.1093558425.1763314712; _fbp=fb.1.1763314724299.465332959634591455; "
+                    "ASP.NET_SessionId=1l15uvc5vj00xrhcl23c1lxb; "
+                    "__RequestVerificationToken=S1ghbB46TVmTdYVYua47bp53pZizIvrORB51nfMdQGSqC_YBkHghfph-YiGrkVRhrx_Xe46sxpgVoSQqlpeUje_Nd_MXlyAQR3AGP2o_dGc1; "
+                    "ARRAffinity=6f95561cfe194ab785bf0104a6428524416b6cd132e814ef578926274e96c4be; "
+                    "ARRAffinitySameSite=6f95561cfe194ab785bf0104a6428524416b6cd132e814ef578926274e96c4be; "
+                    "euconsent-v2=CQb2ucAQb2ucAAKA6AELCHFgAAAAAEPgAAyIAAAXmgDAR6AuwBdqC7oLwAXkAvMAAAAA.YAAAAAAAAAAA; "
+                    "addtl_consent=1~; "
+                    "IABGPP_HDR_GppString=DBABMA~CQb2ucAQb2ucAAKA6AELCHFgAAAAAEPgAAyIAAAXmgDAR6AuwBdqC7oLwAXkAvMAAAAA.YAAAAAAAAAAA; "
+                    'g_state={"i_l":0,"i_ll":1764757625957,"i_b":"1//HWOPmFpM28xic1ToryrQY4+xD6dtCJct1j0wRBNw"}; '
+                    "_ga_DPPHWR0D9R=GS2.1.s1764754489$o3$g1$t1764757626$j60$l0$h2048086048; "
+                    "__eoi=ID=2390809e17b1a39d:T=1754911728:RT=1764757627:S=AA-AfjZxpHgYwIsLjwNx56OG4hsT"
+                ),
             }
         )
 
@@ -56,17 +87,16 @@ class LandeaData:
         """
         Fetch all residential assets in Athens and Thessaloniki.
 
+        Uses Landea's multi-city URL pattern:
+
+            https://www.landea.gr/en/SearchResults/Residential/All/Athens~Thessaloniki
+
         Args:
             max_pages_per_city: Safety limit on pagination per city.
         """
-        cities = ["Athens", "Thessaloniki"]
-        all_assets: List[LandeaAsset] = []
-        for city in cities:
-            logger.info("Fetching Landea assets for city=%s", city)
-            city_assets = self._fetch_city(city, max_pages=max_pages_per_city)
-            logger.info("Fetched %d assets for %s", len(city_assets), city)
-            all_assets.extend(city_assets)
-        return all_assets
+        city_segment = "Athens~Thessaloniki"
+        logger.info("Fetching Landea assets for cities=%s", city_segment)
+        return self._fetch_city(city_segment, max_pages=max_pages_per_city)
 
     def fetch_to_excel(
         self,
@@ -96,12 +126,13 @@ class LandeaData:
         """
         Paginate over one city using the Landea SearchResults pattern:
 
-            https://www.landea.gr/en/SearchResults/Residential/All/Athens?page=1
+            https://www.landea.gr/en/SearchResults/Residential/All/Athens~Thessaloniki?page=2
         """
+
         results: List[LandeaAsset] = []
         for page in range(1, max_pages + 1):
             url = f"{self._base_url}/SearchResults/Residential/All/{city}"
-            resp = self._session.get(url, params={"page": page}, timeout=20)
+            resp = self._session.get(url, params={"page":page}, timeout=20)
             if resp.status_code != 200:
                 logger.warning("Landea page %s for %s returned %s", page, city, resp.status_code)
                 break
@@ -129,21 +160,52 @@ class LandeaData:
         """
         soup = BeautifulSoup(html, "html.parser")
 
-        # TODO: adjust to match real card container
-        cards = soup.select(".asset-card")
+        # Cards are the main result blocks under #allProperties
+        cards = soup.select("#allProperties .propertycard")
         assets: List[LandeaAsset] = []
         for card in cards:
-            title = self._text(card.select_one(".asset-title"))
-            address = self._text(card.select_one(".asset-address"))
-            price_raw = self._text(card.select_one(".asset-price"))
-            sqm_raw = self._text(card.select_one(".asset-sqm"))
-            link_el = card.select_one("a.asset-link")
-            href = link_el["href"].strip() if link_el and link_el.has_attr("href") else None
-            if href and href.startswith("/"):
-                href = f"{self._base_url}{href}"
+            # title / details
+            title = self._text(card.select_one(".firstRow .title span"))
 
-            price = self._parse_number(price_raw)
-            sqm = self._parse_number(sqm_raw)
+            # full location/address text (includes city + area)
+            address_raw = self._text(card.select_one(".property-address.mapadress"))
+            # Remove "No map" prefix if present
+            address = address_raw.replace("No map", "").strip() if address_raw else None
+
+            # sqm, year, floor from facilities list
+            sqm = None
+            year = None
+            floor = None
+            for li in card.select(".property-facilities li"):
+                attr = li.select_one(".attribute")
+                if not attr:
+                    continue
+                classes = attr.get("class", [])
+                text_val = li.get_text(" ", strip=True)
+                if "SRFSQM" in classes:
+                    sqm = self._parse_number(text_val)
+                elif "CSTRYR" in classes:
+                    y = self._parse_number(text_val)
+                    year = int(y) if y is not None else None
+                elif "FLR" in classes:
+                    floor = text_val
+
+            # Starting bid and auction date from property-right
+            right = card.select_one(".property-right")
+            price = None
+            auction_date: Optional[str] = None
+            if right:
+                price_els = right.select(".secondCardline")
+                if price_els:
+                    price = self._parse_number(self._text(price_els[0]))
+                if len(price_els) > 1:
+                    auction_date = self._text(price_els[1])
+
+            # Link is on the wrapping anchor around the card
+            anchor = card.find_parent("a", class_="property-anchor")
+            href = anchor["href"].strip() if anchor and anchor.has_attr("href") else None
+            if href and href.startswith("/"):
+                href = f"{self._base_url}{href.lstrip('/')}"
 
             assets.append(
                 LandeaAsset(
@@ -153,6 +215,9 @@ class LandeaData:
                     price=price,
                     sqm=sqm,
                     url=href,
+                    year=year,
+                    floor=floor,
+                    auction_date=auction_date,
                 )
             )
         return assets
@@ -165,10 +230,16 @@ class LandeaData:
     def _parse_number(value: Optional[str]) -> Optional[float]:
         if not value:
             return None
-        # normalize common thousand/decimal separators
-        cleaned = value.replace(".", "").replace("\xa0", "").replace(" ", "")
-        cleaned = cleaned.replace("€", "").replace("m2", "").replace("sqm", "")
-        cleaned = cleaned.replace(",", ".")
+        # normalize common thousand/decimal separators and units
+        cleaned = value.replace("\xa0", "").replace(" ", "")
+        cleaned = (
+            cleaned.replace("m2", "")
+            .replace("sqm", "")
+            .replace("m²", "")
+            .replace("€", "")
+        )
+        # remove thousands separators and normalize decimal comma to dot
+        cleaned = cleaned.replace(".", "").replace(",", ".")
         try:
             return float(cleaned)
         except ValueError:
