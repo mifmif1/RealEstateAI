@@ -2,6 +2,7 @@ import logging
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import List, Optional
+from urllib.parse import urlparse, parse_qs
 
 import pandas as pd
 import requests
@@ -21,6 +22,8 @@ class LandeaAsset:
     year: Optional[int] = None
     floor: Optional[str] = None
     auction_date: Optional[str] = None
+    lat: Optional[float] = None
+    lon: Optional[float] = None
 
 
 class LandeaData:
@@ -113,7 +116,12 @@ class LandeaData:
         assets = self.fetch_residential_athens_thessaloniki(max_pages_per_city)
         if not assets:
             logger.warning("No Landea assets fetched; not writing Excel.")
-        df = pd.DataFrame([asdict(a) for a in assets])
+            df = pd.DataFrame([asdict(a) for a in assets])
+        else:
+            # Optional post-processing: enrich assets with coordinates from
+            # their individual detail pages before persisting to Excel.
+            self.enrich_with_coordinates(assets)
+            df = pd.DataFrame([asdict(a) for a in assets])
         out_path = Path(output_path)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         df.to_excel(out_path, index=False)
@@ -221,6 +229,92 @@ class LandeaData:
                 )
             )
         return assets
+
+    # --------------- coordinate enrichment (detail pages) ---------------
+
+    def enrich_with_coordinates(self, assets: List[LandeaAsset]) -> None:
+        """
+        Given a list of LandeaAsset instances, visit each asset's detail URL
+        (if available) and try to extract latitude/longitude coordinates.
+
+        This does NOT change the main scraping flow; call it as an optional
+        post-processing step, e.g.:
+
+            assets = scraper.fetch_residential_athens_thessaloniki()
+            scraper.enrich_with_coordinates(assets)
+        """
+        for asset in assets:
+            if not asset.url:
+                continue
+
+            try:
+                resp = self._session.get(asset.url, timeout=20)
+            except requests.RequestException as exc:  # pragma: no cover - network
+                logger.warning("Error fetching detail page for %s: %s", asset.url, exc)
+                continue
+
+            if resp.status_code != 200:
+                logger.warning(
+                    "Detail page for %s returned %s", asset.url, resp.status_code
+                )
+                continue
+
+            lat, lon = self._parse_coordinates_from_detail(resp.text)
+            asset.lat = lat
+            asset.lon = lon
+
+    def _parse_coordinates_from_detail(
+        self, html: str
+    ) -> tuple[Optional[float], Optional[float]]:
+        """
+        Try to extract (lat, lon) from a property detail page.
+
+        The exact Landea markup may evolve; this method uses a couple of
+        generic patterns that are common on map-enabled pages:
+
+        - An element with data-lat / data-lng attributes
+        - An element with data-latitude / data-longitude attributes
+
+        If nothing is found, (None, None) is returned.
+        """
+        soup = BeautifulSoup(html, "html.parser")
+
+        # Pattern 1: explicit Google Maps link with ?q=lat,lon
+        # Example:
+        #   <a href="https://www.google.com/maps/?q=37.9994,23.7262">
+        link = soup.select_one('.recordlocation a[href*="google.com/maps"]')
+        if link and link.has_attr("href"):
+            href = link["href"]
+            try:
+                parsed = urlparse(href)
+                qs = parse_qs(parsed.query or "")
+                q_vals = qs.get("q") or qs.get("query")
+                if q_vals:
+                    coord_str = q_vals[0]
+                    parts = coord_str.split(",")
+                    if len(parts) >= 2:
+                        lat = self._parse_number(parts[0])
+                        lon = self._parse_number(parts[1])
+                        if lat is not None and lon is not None:
+                            return lat, lon
+            except Exception:  # pragma: no cover - very defensive
+                pass
+
+        # Pattern 2: data-lat / data-lng
+        el = soup.select_one("[data-lat][data-lng]")
+        if el is not None:
+            lat = self._parse_number(el.get("data-lat"))
+            lon = self._parse_number(el.get("data-lng"))
+            return lat, lon
+
+        # Pattern 3: data-latitude / data-longitude
+        el = soup.select_one("[data-latitude][data-longitude]")
+        if el is not None:
+            lat = self._parse_number(el.get("data-latitude"))
+            lon = self._parse_number(el.get("data-longitude"))
+            return lat, lon
+
+        return None, None
 
     @staticmethod
     def _text(el) -> Optional[str]:
