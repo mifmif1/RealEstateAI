@@ -94,23 +94,14 @@ class LandeaData:
 
     def _fetch_city(self, city: str, max_pages: int) -> List[LandeaAsset]:
         """
-        Paginate over one city.
+        Paginate over one city using the Landea SearchResults pattern:
 
-        This assumes Landea supports typical query-string pagination, e.g.:
-            https://www.landea.gr/en/search?city=Athens&category=residential&page=1
-
-        You will likely need to tweak `params` to match the real URL
-        structure (path segments or POST form).
+            https://www.landea.gr/en/SearchResults/Residential/All/Athens?page=1
         """
         results: List[LandeaAsset] = []
         for page in range(1, max_pages + 1):
-            params = {
-                "city": city,
-                "category": "residential",
-                "page": page,
-            }
-            url = f"{self._base_url}/search"
-            resp = self._session.get(url, params=params, timeout=20)
+            url = f"{self._base_url}/SearchResults/Residential/All/{city}"
+            resp = self._session.get(url, params={"page": page}, timeout=20)
             if resp.status_code != 200:
                 logger.warning("Landea page %s for %s returned %s", page, city, resp.status_code)
                 break
