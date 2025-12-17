@@ -13,85 +13,13 @@ from dash import Dash, Input, Output, dcc, html
 from dash.dash_table import DataTable
 from dash.dash_table.Format import Format, Group, Scheme, Symbol
 
-try:
-    from googletrans import Translator
-except ImportError:  # pragma: no cover
-    Translator = None
-
-DATA_PATH = Path(__file__).resolve().parents[1] / "byhand" / "all_assets.xlsx"
+DATA_PATH = Path(__file__).resolve().parents[1] / "excel_db" / "all_assets.xlsx"
 
 
 COORD_DMS_PATTERN = re.compile(
     r'(\d+(?:\.\d+)?)°\s*(\d+(?:\.\d+)?)\'\s*(\d+(?:\.\d+)?)"?\s*([NSEW])',
     re.IGNORECASE,
 )
-GREEK_CHAR_PATTERN = re.compile(r"[\u0370-\u03ff\u1f00-\u1fff]")
-translator = Translator() if Translator is not None else None
-
-GREEK_TRANSLIT_MAP = {
-    "Α": "A",
-    "Β": "V",
-    "Γ": "G",
-    "Δ": "D",
-    "Ε": "E",
-    "Ζ": "Z",
-    "Η": "I",
-    "Θ": "Th",
-    "Ι": "I",
-    "Κ": "K",
-    "Λ": "L",
-    "Μ": "M",
-    "Ν": "N",
-    "Ξ": "X",
-    "Ο": "O",
-    "Π": "P",
-    "Ρ": "R",
-    "Σ": "S",
-    "Τ": "T",
-    "Υ": "Y",
-    "Φ": "F",
-    "Χ": "Ch",
-    "Ψ": "Ps",
-    "Ω": "O",
-    "ά": "a",
-    "έ": "e",
-    "ί": "i",
-    "ή": "i",
-    "ώ": "o",
-    "ό": "o",
-    "ύ": "y",
-    "ϊ": "i",
-    "ΐ": "i",
-    "ϋ": "y",
-    "ΰ": "y",
-    "α": "a",
-    "β": "v",
-    "γ": "g",
-    "δ": "d",
-    "ε": "e",
-    "ζ": "z",
-    "η": "i",
-    "θ": "th",
-    "ι": "i",
-    "κ": "k",
-    "λ": "l",
-    "μ": "m",
-    "ν": "n",
-    "ξ": "x",
-    "ο": "o",
-    "π": "p",
-    "ρ": "r",
-    "σ": "s",
-    "ς": "s",
-    "τ": "t",
-    "υ": "y",
-    "φ": "f",
-    "χ": "ch",
-    "ψ": "ps",
-    "ω": "o",
-}
-
-
 def dms_to_decimal(degrees: float, minutes: float, seconds: float, direction: str) -> float:
     decimal = degrees + minutes / 60 + seconds / 3600
     if direction.upper() in {"S", "W"}:
@@ -134,23 +62,6 @@ def parse_coordinate_pair(value: str):
     return (None, None)
 
 
-@lru_cache(maxsize=4096)
-def translate_text(value: str) -> str:
-    if not isinstance(value, str):
-        return value
-    trimmed = value.strip()
-    if not trimmed:
-        return value
-    transliterated = "".join(GREEK_TRANSLIT_MAP.get(ch, ch) for ch in trimmed)
-    if translator is None or not GREEK_CHAR_PATTERN.search(trimmed):
-        return transliterated or trimmed
-    try:
-        translated = translator.translate(trimmed, dest="en").text
-        return translated or transliterated or trimmed
-    except Exception:
-        return transliterated or trimmed
-
-
 @lru_cache(maxsize=1)
 def load_dataset() -> pd.DataFrame:
     df = pd.read_excel(DATA_PATH)
@@ -164,7 +75,7 @@ def load_dataset() -> pd.DataFrame:
     df["comparison_average"] = pd.to_numeric(df.get("comparison_average"), errors="coerce")
     df["score"] = pd.to_numeric(df.get("score"), errors="coerce")
     df["sqm"] = pd.to_numeric(df.get("sqm"), errors="coerce")
-    df["price"] = pd.to_numeric(df.get("price"), errors="coerce")
+    df["price"] = pd.to_numeric(df.get("Price"), errors="coerce")
     df["AuctionDate"] = pd.to_datetime(df.get("AuctionDate"), errors="coerce")
     df["searched_radius"] = pd.to_numeric(df.get("searched_radius"), errors="coerce")
     df["#assets"] = pd.to_numeric(df.get("#assets"), errors="coerce")
@@ -179,11 +90,12 @@ def load_dataset() -> pd.DataFrame:
         (comparison_safe - df["price_per_sqm"]) / comparison_safe
     ) * 100
 
-    df["portfolio_label"] = df["Portfolio"].fillna("Unknown").apply(translate_text)
-    df["category_label"] = df["CategoryGR"].fillna("Unspecified").apply(translate_text)
-    df["municipality_label"] = df["Municipality"].fillna("—").apply(translate_text)
-    df["title_display"] = df["TitleGR"].fillna("").apply(translate_text)
-    df["description"] = df.get("description", "").fillna("").apply(translate_text)
+    # Use already translated columns from the Excel file; no further translation or parsing.
+    df["portfolio_label"] = df["Portfolio"].fillna("Unknown")
+    df["category_label"] = df["Category"].fillna("Unspecified")
+    df["municipality_label"] = df["Municipality"].fillna("—")
+    df["title_display"] = df["Title"].fillna("")
+    df["description"] = df.get("description", "").fillna("")
 
     return df
 
@@ -200,7 +112,14 @@ def safe_float(value, fallback):
 
 
 portfolio_options = [{"label": name, "value": name} for name in sorted(df["portfolio_label"].unique())]
-category_options = [{"label": name, "value": name} for name in sorted(df["category_label"].unique())]
+
+# Detect source column name once (prefer lowercase 'source', then 'Source')
+SOURCE_COLUMN = "source" if "source" in df.columns else ("Source" if "Source" in df.columns else None)
+if SOURCE_COLUMN is not None:
+    source_options = [{"label": name, "value": name} for name in sorted(df[SOURCE_COLUMN].dropna().unique())]
+else:
+    source_options = []
+
 municipality_options = [{"label": name, "value": name} for name in sorted(df["municipality_label"].unique())]
 
 price_min = safe_int(df["price_per_sqm"].min(skipna=True), 0)
@@ -337,12 +256,12 @@ app.layout = dbc.Container(
                             ),
                             dbc.Col(
                                 [
-                                    html.Small("Categories"),
+                                    html.Small("Source"),
                                     dcc.Dropdown(
-                                        id="category-filter",
-                                        options=category_options,
+                                        id="source-filter",
+                                        options=source_options,
                                         multi=True,
-                                        placeholder="Select asset categories",
+                                        placeholder="Select data sources",
                                     ),
                                 ],
                                 md=4,
@@ -571,7 +490,7 @@ app.layout = dbc.Container(
 def apply_filters(
         dataframe: pd.DataFrame,
         portfolios: Sequence[str] | None,
-        categories: Sequence[str] | None,
+        sources: Sequence[str] | None,
         municipalities: Sequence[str] | None,
         price_bounds: Sequence[float],
         discount_bounds: Sequence[float],
@@ -579,8 +498,8 @@ def apply_filters(
     filtered = dataframe
     if portfolios:
         filtered = filtered[filtered["portfolio_label"].isin(portfolios)]
-    if categories:
-        filtered = filtered[filtered["category_label"].isin(categories)]
+    if sources and SOURCE_COLUMN is not None:
+        filtered = filtered[filtered[SOURCE_COLUMN].isin(sources)]
     if municipalities:
         filtered = filtered[filtered["municipality_label"].isin(municipalities)]
 
@@ -621,13 +540,13 @@ def update_range_labels(price_range: List[float], discount_range: List[float]):
     Output("kpi-median-sqm", "children"),
     Output("kpi-discount", "children"),
     Input("portfolio-filter", "value"),
-    Input("category-filter", "value"),
+    Input("source-filter", "value"),
     Input("municipality-search", "value"),
     Input("price-range", "value"),
     Input("discount-range", "value"),
 )
-def update_visuals(portfolios, categories, municipalities, price_range, discount_range):
-    filtered = apply_filters(df, portfolios, categories, municipalities, price_range, discount_range)
+def update_visuals(portfolios, sources, municipalities, price_range, discount_range):
+    filtered = apply_filters(df, portfolios, sources, municipalities, price_range, discount_range)
     if filtered.empty:
         empty_fig = go.Figure().update_layout(
             xaxis_showgrid=False,
@@ -658,7 +577,9 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
             "—",
         )
 
-    map_df = filtered.dropna(subset=["lat", "lon"])
+    map_df = filtered.dropna(subset=["lat", "lon"]).copy()
+    # Ensure marker size has valid numeric values (no NaNs) for Plotly
+    map_df["marker_size"] = map_df["price_per_sqm"].fillna(1)
     map_fig = px.scatter_mapbox(
         map_df,
         lat="lat",
@@ -672,7 +593,7 @@ def update_visuals(portfolios, categories, municipalities, price_range, discount
             "price_per_sqm": ":,.0f",
             "price-market_discount": ":.1f",
         },
-        size="price",
+        size="marker_size",
         color_continuous_scale=COLOR_SCALE,
         zoom=5,
         height=400,

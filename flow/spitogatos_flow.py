@@ -159,7 +159,7 @@ class SpitogatosFlow:
                                    row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                    location_tolerance: float = 100,
                                    sqm_tolerance: int = None,
-                                   spitogatos_comparison_excel_path: str = "../spitogatos_comparison.xlsx") -> pd.DataFrame:
+                                   spitogatos_comparison_excel_path: str = "../excel_db/spitogatos_comparison.xlsx") -> pd.DataFrame:
         checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
@@ -249,8 +249,12 @@ if __name__ == '__main__':
     columns_valuation = ['sqm', 'price', 'coords', 'level', 'new_state', 'UniqueCode']
     columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
 
-    s.expand_excel__spitogatos_comparison(
-        excel_path=r"../byhand/dovalue_clear.xlsx",
-        must_columns=columns_valuation,
-        row_conditions=dovalue_conditions)
+    assets_path = f"../excel_db/all_assets.xlsx"
+    spitogatos_comparison_path = f"../excel_db/spitogatos_comparison.xlsx"
+
+
+    # s.expand_excel__spitogatos_comparison(
+    #     excel_path=r"../byhand/dovalue_clear.xlsx",
+    #     must_columns=columns_valuation,
+    #     row_conditions=dovalue_conditions)
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
