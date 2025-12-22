@@ -1,32 +1,16 @@
-"""
-Database configuration for PostGIS connection
-"""
+"""Database configuration."""
 import os
-from typing import Optional
-from dataclasses import dataclass
+from pathlib import Path
 
+# Database file path
+DATABASE_DIR = Path(__file__).parent.parent / "database"
+DATABASE_DIR.mkdir(exist_ok=True)
 
-@dataclass
-class DatabaseConfig:
-    """Database configuration settings"""
-    host: str = os.getenv('DB_HOST', 'localhost')
-    port: int = int(os.getenv('DB_PORT', '5432'))
-    database: str = os.getenv('DB_NAME', 'realestate_ai')
-    user: str = os.getenv('DB_USER', 'postgres')
-    password: str = os.getenv('DB_PASSWORD', 'postgres')
-    
-    @property
-    def connection_string(self) -> str:
-        """Get PostgreSQL connection string"""
-        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
-    
-    @property
-    def psycopg2_connection_string(self) -> str:
-        """Get connection string for psycopg2"""
-        return f"host={self.host} port={self.port} dbname={self.database} user={self.user} password={self.password}"
+DATABASE_FILE = DATABASE_DIR / "realestateai.db"
+DATABASE_URL = f"sqlite:///{DATABASE_FILE}"
 
-
-def get_db_config() -> DatabaseConfig:
-    """Get database configuration from environment variables or defaults"""
-    return DatabaseConfig()
+# Database settings
+ECHO_SQL = os.getenv("DB_ECHO_SQL", "False").lower() == "true"
+POOL_SIZE = int(os.getenv("DB_POOL_SIZE", "5"))
+MAX_OVERFLOW = int(os.getenv("DB_MAX_OVERFLOW", "10"))
 
