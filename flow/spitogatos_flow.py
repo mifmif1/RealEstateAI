@@ -92,6 +92,15 @@ class SpitogatosFlow:
         df['price/sqm'] = df['price'] / df['sqm']
         return df
 
+    def changes_in_excel(self, df: pd.DataFrame) -> pd.DataFrame:
+        for index, row in df.iterrows():
+            coords = row['coords']
+            if (coords):
+                point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
+                row['lon'] = point.lon
+                row['lat'] = point.lat
+        return df
+
     @staticmethod
     def _add_score(df: pd.DataFrame) -> pd.DataFrame:
         # depends on the std, mean, median, min, max, amount, set the score
@@ -122,13 +131,15 @@ class SpitogatosFlow:
         asset_comparison = AssetComparison(main_asset=row['UniqueCode'], compared_assets=assets)
         return asset_comparison, (location_tolerance / 1.5)
 
-    def _save_comparison_assets(self, asset_comparison: AssetComparison, excel_path: str) -> None:
+    def _save_comparison_assets(self, asset_comparison: AssetComparison, excel_path: str, source: str) -> None:
         try:
             df = self._open_excel(excel_path)
         except FileNotFoundError:
             logger.exception("Spitogatos file not found. Creating a new one.")
-            df = pd.DataFrame(columns=["main_asset",
-                                       "location",
+            df = pd.DataFrame(columns=["source",
+                                       "main_asset",
+                                       "lon",
+                                       "lat",
                                        "sqm",
                                        "price",
                                        "url",
@@ -145,8 +156,10 @@ class SpitogatosFlow:
         for asset in asset_comparison.compared_assets:
             asset_dict = asset.model_dump()
             if isinstance(asset.location, Point):
-                asset_dict['location'] = f"{asset.location.lat}, {asset.location.lon}"
+                asset_dict['lon'] = asset.location.lon
+                asset_dict['lat'] = asset.location.lat
             asset_dict["main_asset"] = asset_comparison.main_asset
+            asset_dict["source"] = source
             rows.append(asset_dict)
 
         df_to_append = pd.DataFrame(rows)
@@ -159,7 +172,7 @@ class SpitogatosFlow:
                                    row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                    location_tolerance: float = 100,
                                    sqm_tolerance: int = None,
-                                   spitogatos_comparison_excel_path: str = "../excel_db/spitogatos_comparison.xlsx") -> pd.DataFrame:
+                                   spitogatos_comparison_assets_excel_path: str = "../excel_db/spitogatos_comparison_assets.xlsx") -> pd.DataFrame:
         checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
@@ -177,7 +190,8 @@ class SpitogatosFlow:
             except ConnectionAbortedError as e:
                 logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
                 return df
-            self._save_comparison_assets(asset_comparison=asset_comparison, excel_path=spitogatos_comparison_excel_path)
+            self._save_comparison_assets(asset_comparison=asset_comparison,
+                                         excel_path=spitogatos_comparison_assets_excel_path)
             assets = asset_comparison.compared_assets
 
             if assets:
@@ -250,8 +264,7 @@ if __name__ == '__main__':
     columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
 
     assets_path = f"../excel_db/all_assets.xlsx"
-    spitogatos_comparison_path = f"../excel_db/spitogatos_comparison.xlsx"
-
+    spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
 
     # s.expand_excel__spitogatos_comparison(
     #     excel_path=r"../byhand/dovalue_clear.xlsx",
