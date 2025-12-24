@@ -30,7 +30,7 @@ class SpitogatosFlow:
         self._spitogatos_data_source = SpitogatosData()
 
     @staticmethod
-    def _get_valuation_row(row, assets: List[Asset]) -> (float, float):
+    def _get_valuation_for_row(row, assets: List[Asset]) -> (float, float):
         assert 'level' in row.keys()
         assert 'sqm' in row.keys()
         assert 'new_state' in row.keys()
@@ -82,6 +82,9 @@ class SpitogatosFlow:
         return df
 
     def clear_conditions(self, excel_path: str, conditions) -> None:
+        """
+        apply conditions. not used in any real term.
+        """
         df = self._open_excel(excel_path=excel_path)
         df = df[df.apply(conditions, axis=1)]
         df.to_excel(f'{excel_path}_clear_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx', index=False)
@@ -92,14 +95,26 @@ class SpitogatosFlow:
         df['price/sqm'] = df['price'] / df['sqm']
         return df
 
-    def changes_in_excel(self, df: pd.DataFrame) -> pd.DataFrame:
-        for index, row in df.iterrows():
-            coords = row['coords']
-            if (coords):
-                point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
-                row['lon'] = point.lon
-                row['lat'] = point.lat
-        return df
+    def changes_in_excel(self, excel_path) -> None:
+        """
+        used to make any parsing changes. not used in any "real" term
+        """
+        df = self._open_excel(excel_path=excel_path)
+
+        # changes
+        # df['lon'] = df['coords'].apply(lambda pnt_str: self._geopy_data_source.convert_location_to_lon_lat(pnt_str).lon if pd.notna(pnt_str) else pnt_str)
+        # df['lat'] = df['coords'].apply(lambda pnt_str: self._geopy_data_source.convert_location_to_lon_lat(pnt_str).lat if pd.notna(pnt_str) else pnt_str)
+        # df['Area']=df['Area'].apply(lambda x: x.title() if pd.notna(x) else x)
+        # df['Title'] = df['Title'].apply(lambda x: x.title() if pd.notna(x) else x)
+        # df['District']=df['District'].apply(lambda x: x.title() if pd.notna(x) else x)
+        # df['Prefecture']=df['Prefecture'].apply(lambda x: x.title() if pd.notna(x) else x)
+        # df['Municipality']=df['Municipality'].apply(lambda x: x.title() if pd.notna(x) else x)
+
+        #
+        with pd.ExcelWriter(f'{excel_path}_changed_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
+                            engine="openpyxl", mode="w") as writer:
+            df.to_excel(writer, index=False)
+        print("SAVED successfully")
 
     @staticmethod
     def _add_score(df: pd.DataFrame) -> pd.DataFrame:
@@ -111,12 +126,13 @@ class SpitogatosFlow:
                                location_tolerance: float = 100,
                                sqm_tolerance: int = None):
         assert 'sqm' in row.keys()
-        assert 'coords' in row.keys()
+        assert 'lon' in row.keys()
+        assert 'lat' in row.keys()
         assert 'UniqueCode' in row.keys()
 
         i = 0
         assets = []
-        point = self._geopy_data_source.convert_location_to_lon_lat(row['coords'])
+        point = self._geopy_data_source.convert_location_to_lon_lat(f"{row['lat']}, {row['lon']}")
         while i < 3 and len(assets) < 5:
             search_rectangle = self._geopy_data_source.rectangle_from_point(
                 start_point=point,
@@ -131,7 +147,9 @@ class SpitogatosFlow:
         asset_comparison = AssetComparison(main_asset=row['UniqueCode'], compared_assets=assets)
         return asset_comparison, (location_tolerance / 1.5)
 
-    def _save_comparison_assets(self, asset_comparison: AssetComparison, excel_path: str, source: str) -> None:
+    def _save_comparison_assets(self, asset_comparison: AssetComparison,
+                                excel_path: str,
+                                source: str) -> None:
         try:
             df = self._open_excel(excel_path)
         except FileNotFoundError:
@@ -147,7 +165,8 @@ class SpitogatosFlow:
                                        "address",
                                        "new_state",
                                        "searched_radius",
-                                       "revaluated_price_meter"])
+                                       "revaluated_price_meter",
+                                       "fetched_time"])
         except Exception as e:
             logger.error(f"Cannot open {excel_path} nor to create. Thus not saving Spitogatos Comaprison.")
             return
@@ -160,6 +179,7 @@ class SpitogatosFlow:
                 asset_dict['lat'] = asset.location.lat
             asset_dict["main_asset"] = asset_comparison.main_asset
             asset_dict["source"] = source
+            asset_dict["fetched_time"] = f"{datetime.datetime.now().strftime("%d%m%Y-%H%M")}"
             rows.append(asset_dict)
 
         df_to_append = pd.DataFrame(rows)
@@ -169,7 +189,6 @@ class SpitogatosFlow:
         logger.info("Saved Spitogatos Comparison successfully")
 
     def _add_spitogatos_comparison(self, df: pd.DataFrame,
-                                   row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                    location_tolerance: float = 100,
                                    sqm_tolerance: int = None,
                                    spitogatos_comparison_assets_excel_path: str = "../excel_db/spitogatos_comparison_assets.xlsx") -> pd.DataFrame:
@@ -177,7 +196,7 @@ class SpitogatosFlow:
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
 
-            if row_conditions(row) or row['UniqueCode'] in checked_rows:
+            if row['UniqueCode'] in checked_rows:
                 logger.info(f"skipping {row['UniqueCode']}")
                 continue
             logger.info(f"handling {row['UniqueCode']}")
@@ -191,7 +210,8 @@ class SpitogatosFlow:
                 logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
                 return df
             self._save_comparison_assets(asset_comparison=asset_comparison,
-                                         excel_path=spitogatos_comparison_assets_excel_path)
+                                         excel_path=spitogatos_comparison_assets_excel_path,
+                                         source=row['source'])
             assets = asset_comparison.compared_assets
 
             if assets:
@@ -211,60 +231,52 @@ class SpitogatosFlow:
                     df.loc[index, 'comparison_std'] = std
                     if std != 0:
                         df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-                new_price, normalized_mean = self._get_valuation_row(row, assets)
+                new_price, normalized_mean = self._get_valuation_for_row(row, assets)
                 df.loc[index, 'revaluation'] = new_price
                 df.loc[index, 'normalized_mean'] = normalized_mean
 
                 logger.info(f"fetched {len(assets)} assets")
+            df.loc[index, 'enriched_time'] = datetime.datetime.now().strftime('%d%m%Y-%H%M')
+
         logger.info("finished, SAVING!")
         return df
 
     def expand_excel__spitogatos_comparison(self, excel_path,
                                             must_columns: List[str],
-                                            row_conditions: Callable[[pd.Series], bool] = lambda row: False,
                                             location_tolerance: float = 100,
                                             sqm_tolerance: int = None):
         df = self._open_excel(excel_path=excel_path, must_columns=must_columns)
         df = self._prepare_df(df)
         try:
             self._add_spitogatos_comparison(df=df,
-                                            row_conditions=row_conditions,
                                             location_tolerance=location_tolerance,
                                             sqm_tolerance=sqm_tolerance)
         except Exception as e:
             logger.error(f"something failed. SAVING!: {e}")
         finally:
-            df.to_excel(f'{excel_path}_spitogatos_comparison_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
-                        index=False)
+            df.to_excel(
+                f'{excel_path}_spitogatos_comparison_added_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
+                index=False)
             logger.info("saved successfully")
 
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    dovalue_conditions = lambda row: (  # not pd.isna(row['comparison_average']) or
+    dovalue_conditions_to_eject1 = lambda row: (  # not pd.isna(row['comparison_average']) or
             row['sqm'] < 30 or
             '%' in row['TitleGR'] or
             (('Διαμέρισμα' not in row['SubCategoryGR']) and
              ('Μεζονέτα' not in row['SubCategoryGR']) and
              ('Μονοκατοικία' not in row['SubCategoryGR']))
     )
-    dovalue_conditions1 = lambda row: (row['sqm'] > 30 and
-                                       '%' not in str(row['TitleGR']) and
-                                       (
-                                               'Διαμέρισμα' in str(row['SubCategoryGR']) or
-                                               'Μεζονέτα' in str(row['SubCategoryGR']) or
-                                               'Μονοκατοικία' in str(row['SubCategoryGR'])
-                                       )
-                                       )
-    nbg_conditions = lambda row: (row['sqm'] < 30 or
-                                  not pd.isna(row['comparison_average']) or
-                                  False
-                                  )
-    columns_valuation = ['sqm', 'price', 'coords', 'level', 'new_state', 'UniqueCode']
-    columns_no_valuation = ['sqm', 'price', 'coords', 'UniqueCode']
+
+    columns_no_valuation = ['sqm', 'price', 'lon', 'lat', 'UniqueCode', 'source']
+    columns_valuation = columns_no_valuation.extend(['level', 'new_state'])
 
     assets_path = f"../excel_db/all_assets.xlsx"
     spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
+
+    # s.changes_in_excel(assets_path)
 
     # s.expand_excel__spitogatos_comparison(
     #     excel_path=r"../byhand/dovalue_clear.xlsx",
