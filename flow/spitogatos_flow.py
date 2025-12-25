@@ -206,7 +206,7 @@ class SpitogatosFlow:
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
 
-            if row['UniqueCode'] in checked_rows or row['source'] == 'DoValue': #todo dovalue is temporary row, remove if needed
+            if row['UniqueCode'] in checked_rows or row['source'] == 'DoValue' or pd.notna(row['enriched_time']): #todo dovalue is temporary row, remove if needed. Time -- check if new rather then if exists att all
                 logger.info(f"skipping {row['source']}:{row['UniqueCode']}")
                 continue
             logger.info(f"handling {row['source']}:{row['UniqueCode']}")
