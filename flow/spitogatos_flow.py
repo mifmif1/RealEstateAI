@@ -34,6 +34,9 @@ class SpitogatosFlow:
         assert 'level' in row.keys()
         assert 'sqm' in row.keys()
         assert 'new_state' in row.keys()
+        assert pd.notna('level')
+        assert pd.notna('sqm')
+        assert pd.notna('new_state')
 
         floor_rank = {
             -1: -0.4,
@@ -92,6 +95,9 @@ class SpitogatosFlow:
 
     @staticmethod
     def _prepare_df(df: pd.DataFrame) -> pd.DataFrame:
+        # Convert price and sqm to numeric, coercing errors to NaN
+        df['price'] = pd.to_numeric(df['price'], errors='coerce')
+        df['sqm'] = pd.to_numeric(df['sqm'], errors='coerce')
         df['price/sqm'] = df['price'] / df['sqm']
         return df
 
@@ -129,6 +135,10 @@ class SpitogatosFlow:
         assert 'lon' in row.keys()
         assert 'lat' in row.keys()
         assert 'UniqueCode' in row.keys()
+        assert pd.notna(row['sqm'])
+        assert pd.notna(row['lat'])
+        assert pd.notna(row['lon'])
+        assert pd.notna(row['UniqueCode'])
 
         i = 0
         assets = []
@@ -138,10 +148,10 @@ class SpitogatosFlow:
                 start_point=point,
                 radius_meters=location_tolerance)
             assets = self._spitogatos_data_source.get_by_location(location=search_rectangle,
-                                                                  min_area=max(0, row[
-                                                                      "sqm"] - sqm_tolerance) if sqm_tolerance else 30,
-                                                                  max_area=(row[
-                                                                                "sqm"] + sqm_tolerance) if sqm_tolerance else 200)
+                                                                  min_area=max(0, row["sqm"] -
+                                                                               sqm_tolerance) if sqm_tolerance else 30,
+                                                                  max_area=(row["sqm"] +
+                                                                            sqm_tolerance) if sqm_tolerance else 200)
             location_tolerance *= 1.5
             i += 1
         asset_comparison = AssetComparison(main_asset=row['UniqueCode'], compared_assets=assets)
@@ -177,12 +187,12 @@ class SpitogatosFlow:
             if isinstance(asset.location, Point):
                 asset_dict['lon'] = asset.location.lon
                 asset_dict['lat'] = asset.location.lat
-            asset_dict["main_asset"] = asset_comparison.main_asset
-            asset_dict["source"] = source
-            asset_dict["fetched_time"] = f"{datetime.datetime.now().strftime("%d%m%Y-%H%M")}"
             rows.append(asset_dict)
 
         df_to_append = pd.DataFrame(rows)
+        df_to_append['source'] = source
+        df_to_append['main_asset'] = asset_comparison.main_asset
+        df_to_append["fetched_time"] = f"{datetime.datetime.now().strftime("%d%m%Y-%H%M")}"
         combined = pd.concat([df, df_to_append], ignore_index=True)
         with pd.ExcelWriter(excel_path, engine="openpyxl", mode="w") as writer:
             combined.to_excel(writer, index=False)
@@ -196,46 +206,48 @@ class SpitogatosFlow:
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
 
-            if row['UniqueCode'] in checked_rows:
+            if row['UniqueCode'] in checked_rows or row['DoValue']: #todo dovalue is temporary row, remove if needed
                 logger.info(f"skipping {row['UniqueCode']}")
                 continue
             logger.info(f"handling {row['UniqueCode']}")
 
             checked_rows.append(row['UniqueCode'])
-            try:
-                asset_comparison, actual_location_tolerance = self._search_assets_for_row(row=row,
-                                                                                          location_tolerance=location_tolerance,
-                                                                                          sqm_tolerance=sqm_tolerance)
-            except ConnectionAbortedError as e:
-                logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
-                return df
-            self._save_comparison_assets(asset_comparison=asset_comparison,
-                                         excel_path=spitogatos_comparison_assets_excel_path,
-                                         source=row['source'])
-            assets = asset_comparison.compared_assets
+            if pd.notna(row["sqm"]) or  pd.notna(row["lon"]) or pd.notna(row["lat"]):
+                try:
+                    asset_comparison, actual_location_tolerance = self._search_assets_for_row(row=row,
+                                                                                              location_tolerance=location_tolerance,
+                                                                                              sqm_tolerance=sqm_tolerance)
+                except ConnectionAbortedError as e:
+                    logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
+                    return df
+                self._save_comparison_assets(asset_comparison=asset_comparison,
+                                             excel_path=spitogatos_comparison_assets_excel_path,
+                                             source=row['source'])
+                assets = asset_comparison.compared_assets
 
-            if assets:
-                assets_price_sqm = [asset.price / asset.sqm for asset in assets]
-                mean = statistics.mean(assets_price_sqm)
-                df.loc[index, 'comparison_average'] = mean
-                df.loc[index, 'comparison_min'] = min(assets_price_sqm)
-                df.loc[index, 'comparison_max'] = max(assets_price_sqm)
-                df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
-                df.loc[index, '#assets'] = len(assets)
-                df.loc[index, 'spitogatos_url'] = assets[0].url
-                df.loc[
-                    index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
-                df.loc[index, 'searched_radius'] = actual_location_tolerance
-                if len(assets) > 1:
-                    std = statistics.stdev(assets_price_sqm)
-                    df.loc[index, 'comparison_std'] = std
-                    if std != 0:
-                        df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-                new_price, normalized_mean = self._get_valuation_for_row(row, assets)
-                df.loc[index, 'revaluation'] = new_price
-                df.loc[index, 'normalized_mean'] = normalized_mean
+                if assets:
+                    assets_price_sqm = [asset.price / asset.sqm for asset in assets]
+                    mean = statistics.mean(assets_price_sqm)
+                    df.loc[index, 'comparison_average'] = mean
+                    df.loc[index, 'comparison_min'] = min(assets_price_sqm)
+                    df.loc[index, 'comparison_max'] = max(assets_price_sqm)
+                    df.loc[index, 'comparison_median'] = statistics.median(assets_price_sqm)
+                    df.loc[index, '#assets'] = len(assets)
+                    df.loc[index, 'spitogatos_url'] = assets[0].url
+                    df.loc[
+                        index, 'eauctions_url'] = f"https://www.eauction.gr/Home/HlektronikoiPleistiriasmoi?code={row['UniqueCode']}&sortAsc=true&sortId=1&conductedSubTypeId=1&page=1"
+                    df.loc[index, 'searched_radius'] = actual_location_tolerance
+                    if len(assets) > 1:
+                        std = statistics.stdev(assets_price_sqm)
+                        df.loc[index, 'comparison_std'] = std
+                        if std != 0:
+                            df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
 
-                logger.info(f"fetched {len(assets)} assets")
+                    new_price, normalized_mean = self._get_valuation_for_row(row, assets)
+                    df.loc[index, 'revaluation'] = new_price
+                    df.loc[index, 'normalized_mean'] = normalized_mean
+
+                    logger.info(f"fetched {len(assets)} assets")
             df.loc[index, 'enriched_time'] = datetime.datetime.now().strftime('%d%m%Y-%H%M')
 
         logger.info("finished, SAVING!")
@@ -262,7 +274,7 @@ class SpitogatosFlow:
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    dovalue_conditions_to_eject1 = lambda row: (  # not pd.isna(row['comparison_average']) or
+    dovalue_conditions_to_eject = lambda row: (  # not pd.isna(row['comparison_average']) or
             row['sqm'] < 30 or
             '%' in row['TitleGR'] or
             (('Διαμέρισμα' not in row['SubCategoryGR']) and
@@ -271,15 +283,15 @@ if __name__ == '__main__':
     )
 
     columns_no_valuation = ['sqm', 'price', 'lon', 'lat', 'UniqueCode', 'source']
-    columns_valuation = columns_no_valuation.extend(['level', 'new_state'])
+    columns_valuation = columns_no_valuation + ['level', 'new_state']
 
     assets_path = f"../excel_db/all_assets.xlsx"
     spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
 
     # s.changes_in_excel(assets_path)
 
-    # s.expand_excel__spitogatos_comparison(
-    #     excel_path=r"../byhand/dovalue_clear.xlsx",
-    #     must_columns=columns_valuation,
-    #     row_conditions=dovalue_conditions)
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
+
+    s.expand_excel__spitogatos_comparison(
+        excel_path=assets_path,
+        must_columns=columns_valuation)
