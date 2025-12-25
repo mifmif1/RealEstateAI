@@ -196,20 +196,20 @@ class SpitogatosFlow:
         combined = pd.concat([df, df_to_append], ignore_index=True)
         with pd.ExcelWriter(excel_path, engine="openpyxl", mode="w") as writer:
             combined.to_excel(writer, index=False)
-        logger.info("Saved Spitogatos Comparison successfully")
+        logger.info(f"{source}:{asset_comparison.main_asset}\tSaved Spitogatos Comparison successfully")
 
     def _add_spitogatos_comparison(self, df: pd.DataFrame,
+                                   spitogatos_comparison_assets_excel_path,
                                    location_tolerance: float = 100,
-                                   sqm_tolerance: int = None,
-                                   spitogatos_comparison_assets_excel_path: str = "../excel_db/spitogatos_comparison_assets.xlsx") -> pd.DataFrame:
+                                   sqm_tolerance: int = None) -> pd.DataFrame:
         checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
 
-            if row['UniqueCode'] in checked_rows or row['DoValue']: #todo dovalue is temporary row, remove if needed
-                logger.info(f"skipping {row['UniqueCode']}")
+            if row['UniqueCode'] in checked_rows or row['source'] == 'DoValue': #todo dovalue is temporary row, remove if needed
+                logger.info(f"skipping {row['source']}:{row['UniqueCode']}")
                 continue
-            logger.info(f"handling {row['UniqueCode']}")
+            logger.info(f"handling {row['source']}:{row['UniqueCode']}")
 
             checked_rows.append(row['UniqueCode'])
             if pd.notna(row["sqm"]) or  pd.notna(row["lon"]) or pd.notna(row["lat"]):
@@ -254,6 +254,7 @@ class SpitogatosFlow:
         return df
 
     def expand_excel__spitogatos_comparison(self, excel_path,
+                                            spitogatos_comparison_assets_excel_path,
                                             must_columns: List[str],
                                             location_tolerance: float = 100,
                                             sqm_tolerance: int = None):
@@ -262,7 +263,8 @@ class SpitogatosFlow:
         try:
             self._add_spitogatos_comparison(df=df,
                                             location_tolerance=location_tolerance,
-                                            sqm_tolerance=sqm_tolerance)
+                                            sqm_tolerance=sqm_tolerance,
+                                            spitogatos_comparison_assets_excel_path=spitogatos_comparison_assets_excel_path)
         except Exception as e:
             logger.error(f"something failed. SAVING!: {e}")
         finally:
@@ -294,4 +296,5 @@ if __name__ == '__main__':
 
     s.expand_excel__spitogatos_comparison(
         excel_path=assets_path,
+        spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
         must_columns=columns_valuation)
