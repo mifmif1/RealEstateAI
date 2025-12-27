@@ -212,7 +212,7 @@ class SpitogatosFlow:
             logger.info(f"handling {row['source']}:{row['UniqueCode']}")
 
             checked_rows.append(row['UniqueCode'])
-            if pd.notna(row["sqm"]) or  pd.notna(row["lon"]) or pd.notna(row["lat"]):
+            if pd.notna(row["sqm"]) and  pd.notna(row["lon"]) and pd.notna(row["lat"]):
                 try:
                     asset_comparison, actual_location_tolerance = self._search_assets_for_row(row=row,
                                                                                               location_tolerance=location_tolerance,
