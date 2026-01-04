@@ -439,20 +439,68 @@ class AltamiraData:
         )
 
     def _extract_coordinates(self, soup: BeautifulSoup, html: str, listing_id: str = None) -> Tuple[Optional[float], Optional[float]]:
-        """Extract latitude and longitude from the page."""
+        """
+        Extract latitude and longitude from the page.
+        Collects all coordinate candidates and filters out default/map center coordinates.
+        """
+        listing_id_str = str(listing_id) if listing_id else ""
+        
+        # Common default coordinates for Greece/Athens area (to filter out)
+        # These are typical map center coordinates that appear on all pages
+        default_coords = [
+            (37.9838, 23.7275),  # Athens center
+            (37.9755, 23.7348),  # Athens alternative
+            (38.0, 23.7),        # Approximate center
+        ]
+        
+        def is_default_coord(lat: float, lon: float) -> bool:
+            """Check if coordinates match a known default/map center."""
+            for d_lat, d_lon in default_coords:
+                if abs(lat - d_lat) < 0.01 and abs(lon - d_lon) < 0.01:
+                    return True
+            return False
+        
+        def is_valid_coord(lat: float, lon: float) -> bool:
+            """Check if coordinates are valid and not a default."""
+            if lat is None or lon is None:
+                return False
+            if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+                return False
+            if is_default_coord(lat, lon):
+                return False
+            return True
+        
+        # Collect all coordinate candidates with their priority
+        candidates = []  # List of (lat, lon, priority, source)
+        
+        # Method 0: Look for coordinates in patterns that include the listing ID (highest priority)
+        if listing_id_str:
+            listing_coord_patterns = [
+                rf'"id"\s*:\s*["\']?{re.escape(listing_id_str)}["\']?\s*[,:][^}}]*?(?:lat|latitude)["\']?\s*:\s*(-?\d+\.?\d*)[^}}]*?(?:lon|lng|longitude)["\']?\s*:\s*(-?\d+\.?\d*)',
+                rf'"listingId"\s*:\s*["\']?{re.escape(listing_id_str)}["\']?\s*[,:][^}}]*?(?:lat|latitude)["\']?\s*:\s*(-?\d+\.?\d*)[^}}]*?(?:lon|lng|longitude)["\']?\s*:\s*(-?\d+\.?\d*)',
+            ]
+            for pattern in listing_coord_patterns:
+                match = re.search(pattern, html, re.IGNORECASE | re.DOTALL)
+                if match:
+                    try:
+                        lat = float(match.group(1))
+                        lon = float(match.group(2))
+                        if is_valid_coord(lat, lon):
+                            candidates.append((lat, lon, 10, "listing_id_pattern"))
+                    except (ValueError, IndexError):
+                        pass
+        
         # Method 1: Look for map marker IDs (format: id="m-39.940506-23.663466")
         marker_ids = soup.find_all(id=re.compile(r'^m-[\d\.-]+$'))
         for marker in marker_ids:
             marker_id = marker.get("id", "")
-            # Extract coordinates from id like "m-39.940506-23.663466"
             coords_match = re.search(r'm-(-?\d+\.?\d*)-(-?\d+\.?\d*)', marker_id)
             if coords_match:
                 try:
                     lat = float(coords_match.group(1))
                     lon = float(coords_match.group(2))
-                    if -90 <= lat <= 90 and -180 <= lon <= 180:
-                        logger.debug(f"Found coordinates from map marker: {lat}, {lon}")
-                        return lat, lon
+                    if is_valid_coord(lat, lon):
+                        candidates.append((lat, lon, 9, "map_marker"))
                 except ValueError:
                     pass
         
@@ -460,15 +508,13 @@ class AltamiraData:
         map_links = soup.select('a[href*="google.com/maps"], a[href*="maps.google"], a[href*="maps"]')
         for link in map_links:
             href = link.get("href", "")
-            # Extract coordinates from ll=lat,lon or ?q=lat,lon or @lat,lon or /@lat,lon
             coords_match = re.search(r'(?:ll=|q=|/@)(-?\d+\.?\d*),(-?\d+\.?\d*)', href)
             if coords_match:
                 try:
                     lat = float(coords_match.group(1))
                     lon = float(coords_match.group(2))
-                    if -90 <= lat <= 90 and -180 <= lon <= 180:
-                        logger.debug(f"Found coordinates from Google Maps link: {lat}, {lon}")
-                        return lat, lon
+                    if is_valid_coord(lat, lon):
+                        candidates.append((lat, lon, 8, "google_maps_link"))
                 except ValueError:
                     pass
         
@@ -477,17 +523,18 @@ class AltamiraData:
         if lat_elem:
             lat = self._parse_decimal(lat_elem.get("data-lat") or lat_elem.get("data-latitude"))
             lon = self._parse_decimal(lat_elem.get("data-lng") or lat_elem.get("data-longitude"))
-            if lat and lon:
-                logger.debug(f"Found coordinates from data attributes: {lat}, {lon}")
-                return lat, lon
+            if is_valid_coord(lat, lon):
+                candidates.append((lat, lon, 7, "data_attributes"))
         
-        # Method 4: Extract JSON data and search for coordinates
+        # Method 4: Extract JSON data and search for coordinates (prioritize listing-specific)
         json_data = self._extract_json_data(soup, html, listing_id)
         if json_data:
-            coords = self._find_coords_in_json(json_data)
-            if coords:
-                logger.debug(f"Found coordinates from JSON data: {coords[0]}, {coords[1]}")
-                return coords
+            # Get all coordinate candidates from JSON
+            json_coords = self._find_all_coords_in_json(json_data, listing_id=listing_id)
+            for lat, lon, is_listing_specific in json_coords:
+                if is_valid_coord(lat, lon):
+                    priority = 6 if is_listing_specific else 3  # Lower priority for non-listing coords
+                    candidates.append((lat, lon, priority, "json_data"))
         
         # Method 5: Look for coordinates in script tags (JSON data)
         scripts = soup.find_all("script", type=re.compile(r'application/json|application/ld\+json'))
@@ -496,21 +543,19 @@ class AltamiraData:
                 import json
                 if script.string:
                     data = json.loads(script.string)
-                    # Recursively search for lat/lon in JSON
-                    coords = self._find_coords_in_json(data)
-                    if coords:
-                        logger.debug(f"Found coordinates from script tag JSON: {coords[0]}, {coords[1]}")
-                        return coords
+                    script_coords = self._find_all_coords_in_json(data, listing_id=listing_id)
+                    for lat, lon, is_listing_specific in script_coords:
+                        if is_valid_coord(lat, lon):
+                            priority = 5 if is_listing_specific else 2
+                            candidates.append((lat, lon, priority, "script_json"))
             except (json.JSONDecodeError, AttributeError):
                 continue
         
-        # Method 6: Look for coordinates in inline JavaScript (more patterns)
+        # Method 6: Look for coordinates in inline JavaScript (lower priority, likely defaults)
         coord_patterns = [
             r'(?:lat|latitude)[\s:=]+(-?\d+\.?\d*)[\s,;]+(?:lon|lng|longitude)[\s:=]+(-?\d+\.?\d*)',
             r'center["\']?\s*[:=]\s*\{[^}]*lat["\']?\s*[:=]\s*(-?\d+\.?\d*)[^}]*lng["\']?\s*[:=]\s*(-?\d+\.?\d*)',
             r'position["\']?\s*[:=]\s*\{[^}]*lat["\']?\s*[:=]\s*(-?\d+\.?\d*)[^}]*lng["\']?\s*[:=]\s*(-?\d+\.?\d*)',
-            r'\[(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)\][\s,;]*//\s*(?:lat|lon|coord)',
-            r'new\s+google\.maps\.LatLng\((-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)\)',
         ]
         for pattern in coord_patterns:
             match = re.search(pattern, html, re.IGNORECASE | re.DOTALL)
@@ -518,9 +563,8 @@ class AltamiraData:
                 try:
                     lat = float(match.group(1))
                     lon = float(match.group(2))
-                    if -90 <= lat <= 90 and -180 <= lon <= 180:
-                        logger.debug(f"Found coordinates from JavaScript pattern: {lat}, {lon}")
-                        return lat, lon
+                    if is_valid_coord(lat, lon):
+                        candidates.append((lat, lon, 1, "javascript_pattern"))  # Low priority
                 except (ValueError, IndexError):
                     pass
         
@@ -535,46 +579,217 @@ class AltamiraData:
                 lat_meta = self._parse_decimal(content)
             elif "longitude" in prop.lower() or "lon" in prop.lower() or "lng" in prop.lower():
                 lon_meta = self._parse_decimal(content)
-        if lat_meta and lon_meta:
-            logger.debug(f"Found coordinates from meta tags: {lat_meta}, {lon_meta}")
-            return lat_meta, lon_meta
+        if lat_meta and lon_meta and is_valid_coord(lat_meta, lon_meta):
+            candidates.append((lat_meta, lon_meta, 4, "meta_tags"))
+        
+        # Sort candidates by priority (highest first) and return the best one
+        if candidates:
+            candidates.sort(key=lambda x: x[2], reverse=True)
+            best_lat, best_lon, priority, source = candidates[0]
+            logger.debug(f"Found coordinates for listing {listing_id} from {source} (priority {priority}): {best_lat}, {best_lon}")
+            return best_lat, best_lon
         
         return None, None
 
-    def _find_coords_in_json(self, data, depth=0):
-        """Recursively search for coordinates in JSON data."""
+    def _find_all_coords_in_json(self, data, depth=0, listing_id: str = None):
+        """
+        Recursively search for ALL coordinates in JSON data.
+        Returns list of (lat, lon, is_listing_specific) tuples.
+        """
+        results = []
+        if depth > 10:  # Prevent infinite recursion
+            return results
+        
+        if isinstance(data, dict):
+            # Check if this object has coordinates
+            coords = None
+            # Check direct coordinate fields
+            if "latitude" in data and "longitude" in data:
+                try:
+                    coords = (float(data["latitude"]), float(data["longitude"]))
+                except (ValueError, TypeError):
+                    pass
+            elif "lat" in data and "lon" in data:
+                try:
+                    coords = (float(data["lat"]), float(data["lon"]))
+                except (ValueError, TypeError):
+                    pass
+            elif "lat" in data and "lng" in data:
+                try:
+                    coords = (float(data["lat"]), float(data["lng"]))
+                except (ValueError, TypeError):
+                    pass
+            # Check nested location/geometry objects
+            elif "location" in data and isinstance(data["location"], dict):
+                loc = data["location"]
+                if "lat" in loc and ("lon" in loc or "lng" in loc):
+                    try:
+                        coords = (float(loc["lat"]), float(loc.get("lon") or loc.get("lng")))
+                    except (ValueError, TypeError):
+                        pass
+                elif "latitude" in loc and "longitude" in loc:
+                    try:
+                        coords = (float(loc["latitude"]), float(loc["longitude"]))
+                    except (ValueError, TypeError):
+                        pass
+            elif "geometry" in data and isinstance(data["geometry"], dict):
+                geom = data["geometry"]
+                if "coordinates" in geom and isinstance(geom["coordinates"], list) and len(geom["coordinates"]) >= 2:
+                    try:
+                        # GeoJSON format: [lon, lat]
+                        coords = (float(geom["coordinates"][1]), float(geom["coordinates"][0]))
+                    except (ValueError, TypeError, IndexError):
+                        pass
+                elif "lat" in geom and ("lon" in geom or "lng" in geom):
+                    try:
+                        coords = (float(geom["lat"]), float(geom.get("lon") or geom.get("lng")))
+                    except (ValueError, TypeError):
+                        pass
+            
+            # If we found coordinates, check if this object looks like listing-specific data
+            if coords:
+                listing_fields = ["id", "listingId", "price", "sqm", "area", "title", "address", "description"]
+                has_listing_data = any(key in data for key in listing_fields)
+                
+                matches_listing_id = False
+                if listing_id:
+                    obj_id = str(data.get("id", "")) or str(data.get("listingId", ""))
+                    if str(listing_id) in obj_id:
+                        matches_listing_id = True
+                
+                is_listing_specific = has_listing_data or matches_listing_id
+                results.append((coords[0], coords[1], is_listing_specific))
+            
+            # Recursively search in nested structures
+            for key, value in data.items():
+                if isinstance(value, (dict, list)):
+                    nested_results = self._find_all_coords_in_json(value, depth + 1, listing_id)
+                    results.extend(nested_results)
+        
+        elif isinstance(data, list):
+            for item in data:
+                nested_results = self._find_all_coords_in_json(item, depth + 1, listing_id)
+                results.extend(nested_results)
+        
+        return results
+
+    def _find_coords_in_json(self, data, depth=0, listing_id: str = None):
+        """
+        Recursively search for coordinates in JSON data.
+        Prioritizes coordinates in objects that contain listing-specific data.
+        """
         if depth > 10:  # Prevent infinite recursion
             return None
         
         if isinstance(data, dict):
-            # Check for common coordinate keys
+            # Check if this object has coordinates
+            coords = None
+            # Check direct coordinate fields
             if "latitude" in data and "longitude" in data:
                 try:
-                    return float(data["latitude"]), float(data["longitude"])
+                    coords = (float(data["latitude"]), float(data["longitude"]))
                 except (ValueError, TypeError):
                     pass
-            if "lat" in data and "lon" in data:
+            elif "lat" in data and "lon" in data:
                 try:
-                    return float(data["lat"]), float(data["lon"])
+                    coords = (float(data["lat"]), float(data["lon"]))
                 except (ValueError, TypeError):
                     pass
-            if "lat" in data and "lng" in data:
+            elif "lat" in data and "lng" in data:
                 try:
-                    return float(data["lat"]), float(data["lng"])
+                    coords = (float(data["lat"]), float(data["lng"]))
                 except (ValueError, TypeError):
                     pass
+            # Check nested location/geometry objects
+            elif "location" in data and isinstance(data["location"], dict):
+                loc = data["location"]
+                if "lat" in loc and ("lon" in loc or "lng" in loc):
+                    try:
+                        coords = (float(loc["lat"]), float(loc.get("lon") or loc.get("lng")))
+                    except (ValueError, TypeError):
+                        pass
+                elif "latitude" in loc and "longitude" in loc:
+                    try:
+                        coords = (float(loc["latitude"]), float(loc["longitude"]))
+                    except (ValueError, TypeError):
+                        pass
+            elif "geometry" in data and isinstance(data["geometry"], dict):
+                geom = data["geometry"]
+                if "coordinates" in geom and isinstance(geom["coordinates"], list) and len(geom["coordinates"]) >= 2:
+                    try:
+                        # GeoJSON format: [lon, lat]
+                        coords = (float(geom["coordinates"][1]), float(geom["coordinates"][0]))
+                    except (ValueError, TypeError, IndexError):
+                        pass
+                elif "lat" in geom and ("lon" in geom or "lng" in geom):
+                    try:
+                        coords = (float(geom["lat"]), float(geom.get("lon") or geom.get("lng")))
+                    except (ValueError, TypeError):
+                        pass
+            
+            # If we found coordinates, check if this object looks like listing-specific data
+            if coords:
+                # Check if this object contains listing-specific fields (high priority)
+                listing_fields = ["id", "listingId", "price", "sqm", "area", "title", "address", "description"]
+                has_listing_data = any(key in data for key in listing_fields)
+                
+                # Also check if listing_id matches
+                matches_listing_id = False
+                if listing_id:
+                    obj_id = str(data.get("id", "")) or str(data.get("listingId", ""))
+                    if str(listing_id) in obj_id:
+                        matches_listing_id = True
+                
+                # Prioritize coordinates from listing-specific objects
+                if has_listing_data or matches_listing_id:
+                    logger.debug(f"Found coordinates in listing-specific object: {coords}")
+                    return coords
+                # Otherwise, store it as a fallback but continue searching
+                # We'll return it only if we don't find listing-specific coordinates
             
             # Recursively search in nested structures
-            for value in data.values():
-                result = self._find_coords_in_json(value, depth + 1)
-                if result:
-                    return result
+            # First, try to find listing-specific coordinates
+            listing_specific_coords = None
+            fallback_coords = coords  # Store the first coordinates we found as fallback
+            
+            for key, value in data.items():
+                # Prioritize searching in objects that might contain listing data
+                if isinstance(value, (dict, list)):
+                    result = self._find_coords_in_json(value, depth + 1, listing_id)
+                    if result:
+                        # Check if this result came from a listing-specific context
+                        # (we can't easily tell from here, so we'll prefer it over fallback)
+                        if not listing_specific_coords:
+                            listing_specific_coords = result
+            
+            # Return listing-specific coordinates if found, otherwise fallback
+            if listing_specific_coords:
+                return listing_specific_coords
+            if fallback_coords:
+                return fallback_coords
         
         elif isinstance(data, list):
+            # Search through list items
+            listing_specific_coords = None
+            fallback_coords = None
+            
             for item in data:
-                result = self._find_coords_in_json(item, depth + 1)
+                result = self._find_coords_in_json(item, depth + 1, listing_id)
                 if result:
-                    return result
+                    # If this is a dict item, check if it has listing data
+                    if isinstance(item, dict):
+                        listing_fields = ["id", "listingId", "price", "sqm", "area", "title"]
+                        if any(key in item for key in listing_fields):
+                            if not listing_specific_coords:
+                                listing_specific_coords = result
+                        else:
+                            if not fallback_coords:
+                                fallback_coords = result
+                    else:
+                        if not fallback_coords:
+                            fallback_coords = result
+            
+            return listing_specific_coords or fallback_coords
         
         return None
 
@@ -913,13 +1128,8 @@ if __name__ == "__main__":
     scraper = AltamiraData()
     
     # List of listing IDs to scrape
-    listing_ids = [
-        7996, 10066, 11296, 17071, 15837, 17902, 14215, 14216, 15836, 6609,
-        15385, 298, 17877, 16130, 18781, 19437, 4648, 19082, 17898, 17972,
-        19347, 18264, 6044, 18576, 15683, 17702, 16259, 3173, 2525, 15131,
-        5354, 693, 16696, 7, 5307
-    ]
-    
+    listing_ids = [7996, 10066, 11296, 17071,15837,17902,14215,14216,15836,6609,15385,298,17877,16130,18781,19437,4648,19082,17898,17972,19347,18264,6044,18576,15683,17702,16259,3173,2525,15131,5354,693,16696,7,5307]
+
     # Scrape all listings
     assets = []
     scraped_ids = []
