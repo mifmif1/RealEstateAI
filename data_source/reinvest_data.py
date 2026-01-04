@@ -3,10 +3,17 @@ import logging
 from pathlib import Path
 from typing import Optional, Tuple, List
 import re
+import time
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
 from model.asset_model import Asset
 from model.geographical_model import Point
@@ -50,10 +57,73 @@ class ReinvestData:
                 "Sec-Fetch-User": "?1",
             }
         )
+        self._driver = None  # Selenium WebDriver (lazy initialization)
+
+    def _get_selenium_driver(self):
+        """Get or create Selenium WebDriver instance."""
+        if self._driver is None:
+            chrome_options = Options()
+            chrome_options.add_argument("--headless")  # Run in background
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--disable-gpu")
+            chrome_options.add_argument("--window-size=1920,1080")
+            chrome_options.add_argument(
+                "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+            )
+            try:
+                self._driver = webdriver.Chrome(options=chrome_options)
+            except WebDriverException as e:
+                logger.error(f"Failed to initialize Chrome WebDriver: {e}")
+                logger.error("Make sure ChromeDriver is installed and in PATH")
+                raise
+        return self._driver
+    
+    def _close_selenium_driver(self):
+        """Close Selenium WebDriver if it exists."""
+        if self._driver is not None:
+            try:
+                self._driver.quit()
+            except Exception as e:
+                logger.warning(f"Error closing WebDriver: {e}")
+            finally:
+                self._driver = None
+    
+    def _save_ids_to_json(self, ids: List[str], filename: str = "reinvest_ids_backup.json"):
+        """
+        Save property IDs to a JSON file as a backup.
+        
+        Args:
+            ids: List of property IDs to save
+            filename: Name of the JSON file to save to
+        """
+        try:
+            # Save to the excel_db folder (same location as Excel files)
+            output_dir = Path("excel_db")
+            output_dir.mkdir(exist_ok=True)
+            json_path = output_dir / filename
+            
+            # Prepare data to save
+            data = {
+                "total_ids": len(ids),
+                "ids": sorted(ids, key=lambda x: int(x) if x.isdigit() else 0),
+                "saved_at": time.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            
+            # Write to JSON file
+            with open(json_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            
+            logger.info(f"Saved {len(ids)} IDs to backup file: {json_path}")
+        except Exception as e:
+            logger.error(f"Failed to save IDs to JSON backup file: {e}")
 
     def get_all_listing_ids(self, listing_url: str = None, max_pages: int = None) -> List[str]:
         """
         Extract all property IDs from the listing page(s).
+        Uses Selenium to render JavaScript-rendered content.
+        
+        If an error occurs, all IDs found so far will be saved to a JSON backup file.
         
         Args:
             listing_url: URL of the listing page. If None, uses default search URL.
@@ -67,83 +137,150 @@ class ReinvestData:
         
         all_ids = set()  # Use set to avoid duplicates
         
-        # First, get the first page to determine total pages
-        logger.info(f"Fetching listing page: {listing_url}")
         try:
-            resp = self._session.get(listing_url, timeout=20)
-            resp.raise_for_status()
-            html = resp.text
-        except requests.RequestException as e:
-            logger.error(f"Error fetching listing page: {e}")
-            return []
-        
-        # Extract IDs from first page
-        page_ids = self._extract_ids_from_listing_page(html)
-        all_ids.update(page_ids)
-        logger.info(f"Found {len(page_ids)} IDs on page 1 (total so far: {len(all_ids)})")
-        
-        # Determine total number of pages
-        total_pages = self._get_total_pages(html)
-        if max_pages is not None:
-            total_pages = min(total_pages, max_pages)
-        
-        logger.info(f"Total pages to scrape: {total_pages}")
-        
-        # Scrape remaining pages
-        previous_page_ids = set(page_ids)  # Track IDs from previous page to detect duplicates
-        consecutive_duplicates = 0
-        
-        for page_num in range(2, total_pages + 1):
-            # Try different pagination parameter formats
-            if "?" in listing_url:
-                page_url = f"{listing_url}&page={page_num}"
-            else:
-                page_url = f"{listing_url}?page={page_num}"
+            driver = self._get_selenium_driver()
             
-            logger.info(f"Fetching page {page_num}/{total_pages}: {page_url}")
-            
+            # Load the first page
+            logger.info(f"Loading listing page with Selenium: {listing_url}")
             try:
-                resp = self._session.get(page_url, timeout=20)
-                if resp.status_code != 200:
-                    logger.warning(f"Page {page_num} returned status {resp.status_code}, stopping pagination")
-                    break
-                
-                resp.raise_for_status()
-                html = resp.text
+                driver.get(listing_url)
+            except Exception as e:
+                logger.error(f"Error loading page: {e}")
+                # Save any IDs we have (even if empty)
+                self._save_ids_to_json(list(all_ids))
+                raise
+            
+            # Wait for properties to load (wait for property links to appear)
+            try:
+                # Wait for the properties list container to have content
+                WebDriverWait(driver, 30).until(
+                    EC.presence_of_element_located((By.ID, "propertiesList"))
+                )
+                # Wait a bit more for links to be rendered
+                time.sleep(3)
+            except TimeoutException:
+                logger.warning("Timeout waiting for properties to load")
+            
+            # Get the rendered HTML
+            try:
+                html = driver.page_source
+            except Exception as e:
+                logger.error(f"Error getting page source: {e}")
+                self._save_ids_to_json(list(all_ids))
+                raise
+            
+            # Extract IDs from first page
+            try:
                 page_ids = self._extract_ids_from_listing_page(html)
-                
-                if not page_ids:
-                    logger.info(f"No IDs found on page {page_num}, stopping pagination")
-                    break
-                
-                # Check if this page has the same IDs as the previous page (duplicate page)
-                current_page_ids = set(page_ids)
-                if current_page_ids == previous_page_ids:
-                    consecutive_duplicates += 1
-                    logger.warning(f"Page {page_num} has the same IDs as previous page (duplicate detected, count: {consecutive_duplicates})")
-                    if consecutive_duplicates >= 2:
-                        logger.warning("Multiple consecutive duplicate pages detected. Stopping pagination.")
-                        break
-                else:
-                    consecutive_duplicates = 0
-                    previous_page_ids = current_page_ids
-                
-                # Count new IDs
-                new_ids = current_page_ids - all_ids
                 all_ids.update(page_ids)
-                logger.info(f"Found {len(page_ids)} IDs on page {page_num} ({len(new_ids)} new, total so far: {len(all_ids)})")
+                logger.info(f"Found {len(page_ids)} IDs on page 1 (total so far: {len(all_ids)})")
                 
-            except requests.RequestException as e:
-                logger.warning(f"Error fetching page {page_num}: {e}, stopping pagination")
-                break
+                # Save backup after first page
+                if page_ids:
+                    self._save_ids_to_json(list(all_ids), "reinvest_ids_backup.json")
+            except Exception as e:
+                logger.error(f"Error extracting IDs from page 1: {e}")
+                self._save_ids_to_json(list(all_ids))
+                raise
+            
+            # Determine total number of pages
+            try:
+                total_pages = self._get_total_pages(html)
+                if max_pages is not None:
+                    total_pages = min(total_pages, max_pages)
+                
+                logger.info(f"Total pages to scrape: {total_pages}")
+            except Exception as e:
+                logger.warning(f"Error determining total pages: {e}, continuing with page 1 only")
+                total_pages = 1
+            
+            # Scrape remaining pages
+            previous_page_ids = set(page_ids)  # Track IDs from previous page to detect duplicates
+            consecutive_duplicates = 0
+            
+            for page_num in range(2, total_pages + 1):
+                # Try different pagination parameter formats
+                if "?" in listing_url:
+                    page_url = f"{listing_url}&page={page_num}"
+                else:
+                    page_url = f"{listing_url}?page={page_num}"
+                
+                logger.info(f"Loading page {page_num}/{total_pages}: {page_url}")
+                
+                try:
+                    driver.get(page_url)
+                    
+                    # Wait for properties to load
+                    try:
+                        WebDriverWait(driver, 30).until(
+                            EC.presence_of_element_located((By.ID, "propertiesList"))
+                        )
+                        time.sleep(3)
+                    except TimeoutException:
+                        logger.warning(f"Timeout waiting for properties on page {page_num}")
+                    
+                    html = driver.page_source
+                    page_ids = self._extract_ids_from_listing_page(html)
+                    
+                    if not page_ids:
+                        logger.info(f"No IDs found on page {page_num}, stopping pagination")
+                        # Save backup before stopping
+                        self._save_ids_to_json(list(all_ids), "reinvest_ids_backup.json")
+                        break
+                    
+                    # Check if this page has the same IDs as the previous page (duplicate page)
+                    current_page_ids = set(page_ids)
+                    if current_page_ids == previous_page_ids:
+                        consecutive_duplicates += 1
+                        logger.warning(f"Page {page_num} has the same IDs as previous page (duplicate detected, count: {consecutive_duplicates})")
+                        if consecutive_duplicates >= 2:
+                            logger.warning("Multiple consecutive duplicate pages detected. Stopping pagination.")
+                            # Save backup before stopping
+                            self._save_ids_to_json(list(all_ids), "reinvest_ids_backup.json")
+                            break
+                    else:
+                        consecutive_duplicates = 0
+                        previous_page_ids = current_page_ids
+                    
+                    # Count new IDs
+                    new_ids = current_page_ids - all_ids
+                    all_ids.update(page_ids)
+                    logger.info(f"Found {len(page_ids)} IDs on page {page_num} ({len(new_ids)} new, total so far: {len(all_ids)})")
+                    
+                    # Save backup every 5 pages or every 100 IDs
+                    if page_num % 5 == 0 or len(all_ids) % 100 == 0:
+                        self._save_ids_to_json(list(all_ids), "reinvest_ids_backup.json")
+                    
+                except Exception as e:
+                    logger.error(f"Error loading page {page_num}: {e}")
+                    # Save all IDs found so far before re-raising
+                    self._save_ids_to_json(list(all_ids), "reinvest_ids_backup.json")
+                    raise
+        
+        except Exception as e:
+            # Catch any other unexpected errors and save IDs
+            logger.error(f"Unexpected error in get_all_listing_ids: {e}")
+            logger.error("Saving all IDs found so far to backup file...")
+            self._save_ids_to_json(list(all_ids), "reinvest_ids_backup.json")
+            raise
+        
+        finally:
+            # Don't close driver here - keep it for potential reuse
+            pass
         
         result = sorted(list(all_ids), key=lambda x: int(x) if x.isdigit() else 0)
         logger.info(f"Total unique IDs found: {len(result)}")
+        
+        # Final backup save on successful completion
+        if result:
+            self._save_ids_to_json(result, "reinvest_ids_backup.json")
+        
         return result
 
     def _extract_ids_from_listing_page(self, html: str) -> List[str]:
         """
         Extract property IDs from a listing page HTML.
+        Links are in format: href="properties/{ID}" (relative path)
         
         Args:
             html: HTML content of the listing page
@@ -154,23 +291,45 @@ class ReinvestData:
         soup = BeautifulSoup(html, "html.parser")
         ids = set()
         
-        # Method 1: Find all links to property detail pages
-        # Pattern: /en/properties/{ID}
-        all_links = soup.find_all("a", href=re.compile(r'/en/properties/\d+'))
+        # First, identify navigation/menu areas to exclude
+        nav_ids = set()
+        nav_elements = soup.find_all(['nav', 'header', 'footer'])
+        for nav_elem in nav_elements:
+            nav_links = nav_elem.find_all("a", href=re.compile(r'properties/\d+'))
+            for link in nav_links:
+                href = link.get("href", "")
+                match = re.search(r'properties/(\d+)', href)
+                if match:
+                    nav_ids.add(match.group(1))
+        
+        # Method 1: Find all links with href="properties/{ID}" pattern
+        # Example: <a class="tolt" href="properties/1417324">
+        all_links = soup.find_all("a", href=re.compile(r'properties/\d+'))
         for link in all_links:
             href = link.get("href", "")
-            match = re.search(r'/en/properties/(\d+)', href)
+            # Match pattern: properties/{ID} (relative or absolute)
+            match = re.search(r'properties/(\d+)', href)
             if match:
                 prop_id = match.group(1)
                 # Skip if it's in navigation
-                parent = link.find_parent(['nav', 'header', 'footer', 'menu'])
-                if not parent:
-                    ids.add(prop_id)
+                if prop_id not in nav_ids:
+                    # Additional check: make sure it's not in a navigation-like context
+                    parent = link.find_parent(['nav', 'header', 'footer', 'menu'])
+                    if not parent:
+                        ids.add(prop_id)
         
-        # Method 2: Also search in raw HTML for all property links
-        all_matches = re.findall(r'/en/properties/(\d+)', html)
+        # Method 2: Also search in raw HTML for all property links (most comprehensive)
+        # Match pattern: href="properties/{ID}" or href="/en/properties/{ID}"
+        all_matches = re.findall(r'href=["\']?properties/(\d+)', html, re.I)
         for prop_id in all_matches:
-            ids.add(prop_id)
+            if prop_id not in nav_ids:
+                ids.add(prop_id)
+        
+        # Method 3: Also search for just "properties/{ID}" pattern in HTML
+        all_matches2 = re.findall(r'properties/(\d+)', html)
+        for prop_id in all_matches2:
+            if prop_id not in nav_ids:
+                ids.add(prop_id)
         
         return list(ids)
 
@@ -688,8 +847,17 @@ class ReinvestData:
             Path to the saved Excel file
         """
         # Get all listing IDs
-        logger.info("Starting to extract all listing IDs...")
-        listing_ids = self.get_all_listing_ids(listing_url, max_pages)
+        listing_ids = []
+        try:
+            logger.info("Starting to extract all listing IDs...")
+            listing_ids = self.get_all_listing_ids(listing_url, max_pages)
+        except Exception as e:
+            logger.error(f"Error getting listing IDs: {e}")
+            # Save IDs found so far (if any)
+            if listing_ids:
+                logger.info("Saving IDs found so far to backup file...")
+                self._save_ids_to_json(listing_ids, "reinvest_ids_backup.json")
+            raise
         
         if not listing_ids:
             logger.warning("No listing IDs found")
@@ -712,22 +880,40 @@ class ReinvestData:
         scraped_ids = []
         total = len(listing_ids)
         
-        for idx, listing_id in enumerate(listing_ids, 1):
-            logger.info(f"Scraping listing {listing_id} ({idx}/{total})")
-            result = self.scrape_listing(listing_id)
-            if result:
-                assets_data.append(result)
-                scraped_ids.append(listing_id)
-                logger.info(f"Successfully scraped listing {listing_id}")
-            else:
-                logger.warning(f"Failed to scrape listing {listing_id} (skipped)")
-        
-        # Save all assets to Excel
-        if assets_data:
-            output_path = self.save_to_excel(assets_data, listing_ids=scraped_ids, output_path=output_path)
-            logger.info(f"Successfully saved {len(assets_data)} assets to {output_path}")
-            print(f"\nScraped {len(assets_data)} out of {total} listings")
-            print(f"Results saved to: {output_path}")
+        try:
+            for idx, listing_id in enumerate(listing_ids, 1):
+                try:
+                    logger.info(f"Scraping listing {listing_id} ({idx}/{total})")
+                    result = self.scrape_listing(listing_id)
+                    if result:
+                        assets_data.append(result)
+                        scraped_ids.append(listing_id)
+                        logger.info(f"Successfully scraped listing {listing_id}")
+                    else:
+                        logger.warning(f"Failed to scrape listing {listing_id} (skipped)")
+                        scraped_ids.append(listing_id)  # Track as attempted
+                except Exception as e:
+                    logger.error(f"Error scraping listing {listing_id}: {e}")
+                    scraped_ids.append(listing_id)  # Track as attempted
+                    # Continue with next listing instead of stopping
+                    continue
+            
+            # Save all assets to Excel
+            if assets_data:
+                output_path = self.save_to_excel(assets_data, listing_ids=scraped_ids, output_path=output_path)
+                logger.info(f"Successfully saved {len(assets_data)} assets to {output_path}")
+                print(f"\nScraped {len(assets_data)} out of {total} listings")
+                print(f"Results saved to: {output_path}")
+        except Exception as e:
+            logger.error(f"Error during scraping process: {e}")
+            # Save all IDs (both scraped and not scraped) to backup
+            remaining_ids = [lid for lid in listing_ids if lid not in scraped_ids]
+            if remaining_ids:
+                logger.info(f"Saving {len(remaining_ids)} unscraped IDs to backup file...")
+                self._save_ids_to_json(remaining_ids, "reinvest_ids_unscraped_backup.json")
+            # Also save all IDs
+            self._save_ids_to_json(listing_ids, "reinvest_ids_backup.json")
+            raise
             return output_path
         else:
             logger.error("No assets were successfully scraped")
