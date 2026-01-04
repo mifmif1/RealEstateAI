@@ -128,6 +128,18 @@ class SpitogatosFlow:
         df['score'] = (df['price/sqm'] - df['comparison_average']) / df['comparison_std']
         return df
 
+    @staticmethod
+    def _add_deltas(self, df: pd.DataFrame) -> pd.DataFrame:
+        df['price_under_market'] = (1 - df['price/sqm'] / df['comparison_average'])
+        df['revaluation_under_market'] = (1 - (df['revaluation'] / df['sqm']) / df['comparison_average'])
+        return df
+
+    @staticmethod
+    def _add_interesting(self, df: pd.DataFrame) -> pd.DataFrame:
+        #todo this is the concept, do it
+        df['interesting'] = df['#assets'] > 25 and df['price_under_market'] > 0.3
+        return df
+
     def _search_assets_for_row(self, row: pd.Series,
                                location_tolerance: float = 100,
                                sqm_tolerance: int = None):
@@ -205,14 +217,21 @@ class SpitogatosFlow:
         checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
+            if f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}" in checked_rows or row['Portfolio'] != 'scraping_4/1/26' or pd.notna(row[
+                                                                                               'enriched_time']):  # todo dovalue is temporary row, remove if needed. Time -- check if new rather then if exists att all
+                logger.info(f"skipping {row['source']}:{row['Portfolio']}:{row['UniqueCode']}")
+                # if f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}" in checked_rows:
+                #     logger.info(f"Already done")
+                # if row['Portfolio'] != 'scraping_4/1/26':
+                #     logger.info(f"not curr protfolio")
+                # if pd.notna(row['enriched_time']):
+                #     logger.info(f"already done in earlier run")
 
-            if row['UniqueCode'] in checked_rows or row['source'] == 'DoValue' or pd.notna(row['enriched_time']): #todo dovalue is temporary row, remove if needed. Time -- check if new rather then if exists att all
-                logger.info(f"skipping {row['source']}:{row['UniqueCode']}")
                 continue
-            logger.info(f"handling {row['source']}:{row['UniqueCode']}")
+            logger.info(f"handling {row['source']}:{row['Portfolio']}:{row['UniqueCode']}")
 
-            checked_rows.append(row['UniqueCode'])
-            if pd.notna(row["sqm"]) and  pd.notna(row["lon"]) and pd.notna(row["lat"]):
+            checked_rows.append(f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}")
+            if pd.notna(row["sqm"]) and pd.notna(row["lon"]) and pd.notna(row["lat"]):
                 try:
                     asset_comparison, actual_location_tolerance = self._search_assets_for_row(row=row,
                                                                                               location_tolerance=location_tolerance,
@@ -265,6 +284,10 @@ class SpitogatosFlow:
                                             location_tolerance=location_tolerance,
                                             sqm_tolerance=sqm_tolerance,
                                             spitogatos_comparison_assets_excel_path=spitogatos_comparison_assets_excel_path)
+            # self._add_score(df=df)
+            # self._add_deltas(df=df)
+            # self._add_interesting(df=df)
+
         except Exception as e:
             logger.error(f"something failed. SAVING!: {e}")
         finally:
