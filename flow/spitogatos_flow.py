@@ -228,6 +228,7 @@ class SpitogatosFlow:
             if (f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}" in checked_rows or
                     row['Portfolio'] != 'scraping_4/1/26' or
                     row['source'] != 'ReInvest' or
+                    #todo add query to handle only if in athen/thessaloniky rectangles!
                     pd.notna(row['enriched_time'])):  # todo dovalue is temporary row, remove if needed. Time -- check if new rather then if exists att all
                 logger.info(f"skipping {row['source']}:{row['Portfolio']}:{row['UniqueCode']}")
                 # if f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}" in checked_rows:
@@ -323,11 +324,11 @@ if __name__ == '__main__':
     assets_path = f"../excel_db/all_assets.xlsx"
     spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
 
-    s.changes_in_excel(assets_path)
+    # s.changes_in_excel(assets_path)
 
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
 
-    # s.expand_excel__spitogatos_comparison(
-    #     excel_path=assets_path,
-    #     spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
-    #     must_columns=columns_valuation)
+    s.expand_excel__spitogatos_comparison(
+        excel_path=assets_path,
+        spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
+        must_columns=columns_valuation)
