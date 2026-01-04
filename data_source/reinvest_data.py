@@ -99,9 +99,10 @@ class ReinvestData:
         """
         try:
             # Save to the excel_db folder (same location as Excel files)
-            output_dir = Path("excel_db")
-            output_dir.mkdir(exist_ok=True)
-            json_path = output_dir / filename
+            # Use absolute path to match scrape_from_backup_json
+            base_path = Path(__file__).parent.parent / "excel_db"
+            base_path.mkdir(parents=True, exist_ok=True)
+            json_path = base_path / filename
             
             # Prepare data to save
             data = {
@@ -593,13 +594,14 @@ class ReinvestData:
         
         # Extract year built
         construction_year = None
-        # Look for "Year Built" label
-        year_label = soup.find(string=re.compile(r'Year Built|Year|Built', re.I))
+        # Look for "Year Built" label - it's in an h6, and the year is in the next sibling p tag
+        year_label = soup.find(string=re.compile(r'Year Built', re.I))
         if year_label:
             parent = year_label.find_parent()
             if parent:
+                # First try to find year in the same parent
                 year_text = self._text(parent)
-                year_match = re.search(r'(?:Year Built|Year|Built)[:\s]*(\d{4})', year_text, re.I)
+                year_match = re.search(r'Year Built[:\s]*(\d{4})', year_text, re.I)
                 if year_match:
                     try:
                         year = int(year_match.group(1))
@@ -607,15 +609,45 @@ class ReinvestData:
                             construction_year = year
                     except ValueError:
                         pass
+                
+                # If not found, check the next sibling (often a <p> tag)
+                if not construction_year:
+                    next_sibling = parent.find_next_sibling()
+                    if next_sibling:
+                        sibling_text = self._text(next_sibling)
+                        year_match = re.search(r'(\d{4})', sibling_text)
+                        if year_match:
+                            try:
+                                year = int(year_match.group(1))
+                                if 1900 <= year <= 2100:
+                                    construction_year = year
+                            except ValueError:
+                                pass
+                
+                # Also check the parent's next siblings more broadly
+                if not construction_year:
+                    for sibling in parent.find_next_siblings(limit=3):
+                        sibling_text = self._text(sibling)
+                        year_match = re.search(r'(\d{4})', sibling_text)
+                        if year_match:
+                            try:
+                                year = int(year_match.group(1))
+                                if 1900 <= year <= 2100:
+                                    construction_year = year
+                                    break
+                            except ValueError:
+                                pass
         
-        # Also search in HTML for year patterns
+        # Also search in HTML for year patterns (more comprehensive)
         if not construction_year:
             year_patterns = [
+                r'Year Built[^<]*?(\d{4})',  # Year Built followed by year (possibly with tags in between)
+                r'<h6[^>]*>Year Built</h6>\s*<p[^>]*>(\d{4})</p>',  # Specific structure: h6 followed by p
                 r'Year Built[:\s]*(\d{4})',
                 r'Built[:\s]*(\d{4})',
             ]
             for pattern in year_patterns:
-                match = re.search(pattern, html, re.I)
+                match = re.search(pattern, html, re.I | re.DOTALL)
                 if match:
                     try:
                         year = int(match.group(1))
@@ -680,6 +712,31 @@ class ReinvestData:
         
         # Extract coordinates
         lat, lon = self._extract_coordinates(soup, html, listing_id)
+        
+        # If coordinates not found, try additional methods
+        if lat is None or lon is None:
+            # Method: Check for meta tags with coordinates
+            meta_lat = soup.find("meta", attrs={"property": re.compile(r"latitude|lat", re.I)})
+            meta_lon = soup.find("meta", attrs={"property": re.compile(r"longitude|lon|lng", re.I)})
+            if meta_lat and meta_lon:
+                try:
+                    lat = float(meta_lat.get("content", ""))
+                    lon = float(meta_lon.get("content", ""))
+                    if -90 <= lat <= 90 and -180 <= lon <= 180:
+                        logger.debug(f"Found coordinates from meta tags: {lat}, {lon}")
+                except (ValueError, TypeError):
+                    pass
+        
+        # If still not found and driver is available, try Selenium (but this is slow, so only as last resort)
+        if (lat is None or lon is None) and self._driver is not None:
+            logger.debug(f"Coordinates not found in static HTML for listing {listing_id}, trying Selenium...")
+            try:
+                selenium_lat, selenium_lon = self._extract_coordinates_with_selenium(url, listing_id)
+                if selenium_lat is not None and selenium_lon is not None:
+                    lat, lon = selenium_lat, selenium_lon
+                    logger.debug(f"Found coordinates using Selenium: {lat}, {lon}")
+            except Exception as e:
+                logger.debug(f"Error extracting coordinates with Selenium: {e}")
         
         # Log what we found for debugging
         logger.debug(f"Listing {listing_id} - Title: {title}, Price: {price}, SQM: {sqm}, Level: {level}, Year: {construction_year}, Code: {code}")
@@ -759,25 +816,133 @@ class ReinvestData:
             except (json.JSONDecodeError, AttributeError):
                 continue
         
-        # Method 4: Look for coordinates in inline JavaScript
-        coord_patterns = [
-            r'(?:lat|latitude)[\s:=]+(-?\d+\.?\d*)[\s,;]+(?:lon|lng|longitude)[\s:=]+(-?\d+\.?\d*)',
-            r'center["\']?\s*[:=]\s*\{[^}]*lat["\']?\s*[:=]\s*(-?\d+\.?\d*)[^}]*lng["\']?\s*[:=]\s*(-?\d+\.?\d*)',
-            r'position["\']?\s*[:=]\s*\{[^}]*lat["\']?\s*[:=]\s*(-?\d+\.?\d*)[^}]*lng["\']?\s*[:=]\s*(-?\d+\.?\d*)',
+        # Method 4: Look for const lat/lon declarations (common in REInvest)
+        const_lat_match = re.search(r'const\s+lat\s*=\s*(-?\d+\.?\d*)\s*;', html, re.I)
+        const_lon_match = re.search(r'const\s+(?:lon|lng)\s*=\s*(-?\d+\.?\d*)\s*;', html, re.I)
+        if const_lat_match and const_lon_match:
+            try:
+                lat = float(const_lat_match.group(1))
+                lon = float(const_lon_match.group(1))
+                if -90 <= lat <= 90 and -180 <= lon <= 180:
+                    logger.debug(f"Found coordinates from const declarations: {lat}, {lon}")
+                    return lat, lon
+            except (ValueError, IndexError):
+                pass
+        
+        # Method 5: Look for var lat/lon declarations
+        var_lat_match = re.search(r'var\s+lat\s*=\s*(-?\d+\.?\d*)\s*;', html, re.I)
+        var_lon_match = re.search(r'var\s+(?:lon|lng)\s*=\s*(-?\d+\.?\d*)\s*;', html, re.I)
+        if var_lat_match and var_lon_match:
+            try:
+                lat = float(var_lat_match.group(1))
+                lon = float(var_lon_match.group(1))
+                if -90 <= lat <= 90 and -180 <= lon <= 180:
+                    logger.debug(f"Found coordinates from var declarations: {lat}, {lon}")
+                    return lat, lon
+            except (ValueError, IndexError):
+                pass
+        
+        # Method 6: Look for Leaflet map initialization (common in property sites)
+        leaflet_patterns = [
+            r'L\.map\([^)]*\)\.setView\(\[(-?\d+\.?\d*),\s*(-?\d+\.?\d*)\]',
+            r'setView\(\[(-?\d+\.?\d*),\s*(-?\d+\.?\d*)\]',
+            r'marker\(\[(-?\d+\.?\d*),\s*(-?\d+\.?\d*)\]',
+            r'L\.marker\(\[(-?\d+\.?\d*),\s*(-?\d+\.?\d*)\]',
+            r'new L\.LatLng\((-?\d+\.?\d*),\s*(-?\d+\.?\d*)\)',
+            r'LatLng\((-?\d+\.?\d*),\s*(-?\d+\.?\d*)\)',
         ]
-        for pattern in coord_patterns:
+        for pattern in leaflet_patterns:
             match = re.search(pattern, html, re.IGNORECASE | re.DOTALL)
             if match:
                 try:
                     lat = float(match.group(1))
                     lon = float(match.group(2))
                     if -90 <= lat <= 90 and -180 <= lon <= 180:
+                        logger.debug(f"Found coordinates from Leaflet map: {lat}, {lon}")
+                        return lat, lon
+                except (ValueError, IndexError):
+                    pass
+        
+        # Method 7: Look for coordinates in inline JavaScript (various formats)
+        coord_patterns = [
+            r'(?:lat|latitude)[\s:=]+(-?\d+\.?\d*)[\s,;]+(?:lon|lng|longitude)[\s:=]+(-?\d+\.?\d*)',
+            r'center["\']?\s*[:=]\s*\{[^}]*lat["\']?\s*[:=]\s*(-?\d+\.?\d*)[^}]*lng["\']?\s*[:=]\s*(-?\d+\.?\d*)',
+            r'position["\']?\s*[:=]\s*\{[^}]*lat["\']?\s*[:=]\s*(-?\d+\.?\d*)[^}]*lng["\']?\s*[:=]\s*(-?\d+\.?\d*)',
+            r'coordinates["\']?\s*[:=]\s*\[(-?\d+\.?\d*),\s*(-?\d+\.?\d*)\]',  # GeoJSON format [lon, lat]
+            r'\[(-?\d+\.?\d*),\s*(-?\d+\.?\d*)\][^}]*map',  # Array format near "map"
+        ]
+        for pattern in coord_patterns:
+            match = re.search(pattern, html, re.IGNORECASE | re.DOTALL)
+            if match:
+                try:
+                    # For GeoJSON format, first is lon, second is lat
+                    if 'coordinates' in pattern or r'\[.*\]' in pattern:
+                        lon = float(match.group(1))
+                        lat = float(match.group(2))
+                    else:
+                        lat = float(match.group(1))
+                        lon = float(match.group(2))
+                    if -90 <= lat <= 90 and -180 <= lon <= 180:
                         logger.debug(f"Found coordinates from JavaScript: {lat}, {lon}")
                         return lat, lon
                 except (ValueError, IndexError):
                     pass
         
+        # Method 8: Look for coordinates in script tags (not just JSON)
+        scripts = soup.find_all("script")
+        for script in scripts:
+            if script.string:
+                script_content = script.string
+                # Try Leaflet patterns in script
+                for pattern in leaflet_patterns:
+                    match = re.search(pattern, script_content, re.IGNORECASE | re.DOTALL)
+                    if match:
+                        try:
+                            lat = float(match.group(1))
+                            lon = float(match.group(2))
+                            if -90 <= lat <= 90 and -180 <= lon <= 180:
+                                logger.debug(f"Found coordinates from script tag: {lat}, {lon}")
+                                return lat, lon
+                        except (ValueError, IndexError):
+                            pass
+        
         return None, None
+    
+    def _extract_coordinates_with_selenium(self, url: str, listing_id: str) -> Tuple[Optional[float], Optional[float]]:
+        """
+        Extract coordinates using Selenium to render JavaScript-loaded content.
+        
+        Args:
+            url: URL of the listing page
+            listing_id: Listing ID for logging
+            
+        Returns:
+            Tuple of (lat, lon) or (None, None) if not found
+        """
+        try:
+            driver = self._get_selenium_driver()
+            driver.get(url)
+            
+            # Wait for map to load
+            try:
+                WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "[id*='map'], [class*='map'], .leaflet-container"))
+                )
+                time.sleep(2)  # Give map time to initialize
+            except TimeoutException:
+                logger.debug(f"Map element not found for listing {listing_id}")
+            
+            # Get rendered HTML
+            html = driver.page_source
+            soup = BeautifulSoup(html, "html.parser")
+            
+            # Try to extract coordinates from rendered page
+            lat, lon = self._extract_coordinates(soup, html, listing_id)
+            return lat, lon
+            
+        except Exception as e:
+            logger.debug(f"Error in Selenium coordinate extraction: {e}")
+            return None, None
 
     def _find_coords_in_json(self, data, depth=0):
         """Recursively search for coordinates in JSON data."""
@@ -1159,6 +1324,166 @@ class ReinvestData:
             return float(filtered)
         except ValueError:
             return None
+    
+    def scrape_from_backup_json(self, backup_file: str | Path = None, output_path: str | Path = None, 
+                                start_from: int = 0, max_listings: int = None, 
+                                auto_create_backup: bool = True) -> Path:
+        """
+        Scrape listings from a backup JSON file containing property IDs.
+        
+        This function reads IDs from the backup JSON file (created when errors occur)
+        and scrapes each listing, saving results to Excel.
+        
+        Args:
+            backup_file: Path to the backup JSON file. Defaults to excel_db/reinvest_ids_backup.json
+            output_path: Path to save the Excel file. Defaults to excel_db/reinvest_assets.xlsx
+            start_from: Index to start scraping from (useful for resuming). Defaults to 0
+            max_listings: Maximum number of listings to scrape. If None, scrapes all. Defaults to None
+            auto_create_backup: If True and backup file doesn't exist, automatically create it by calling get_all_listing_ids(). Defaults to True
+            
+        Returns:
+            Path to the saved Excel file
+        """
+        # Determine backup file path
+        if backup_file is None:
+            base_path = Path(__file__).parent.parent / "excel_db"
+            backup_file = base_path / "reinvest_ids_backup.json"
+        else:
+            backup_file = Path(backup_file)
+        
+        # Check if backup file exists, create it if it doesn't and auto_create_backup is True
+        if not backup_file.exists():
+            if auto_create_backup:
+                logger.info(f"Backup file not found: {backup_file}")
+                logger.info("Automatically creating backup file by fetching all listing IDs...")
+                try:
+                    # Create the backup file by getting all listing IDs
+                    listing_ids = self.get_all_listing_ids()
+                    if listing_ids:
+                        logger.info(f"Successfully created backup file with {len(listing_ids)} IDs")
+                    else:
+                        logger.warning("No listing IDs found. Backup file will be empty.")
+                except Exception as e:
+                    logger.error(f"Error creating backup file: {e}")
+                    raise RuntimeError(f"Failed to automatically create backup file: {e}")
+            else:
+                logger.error(f"Backup file not found: {backup_file}")
+                logger.info("Hint: Run get_all_listing_ids() first to create the backup file, or set auto_create_backup=True.")
+                raise FileNotFoundError(f"Backup file not found: {backup_file}. Please run get_all_listing_ids() first to create it, or set auto_create_backup=True.")
+        
+        # Load IDs from JSON
+        logger.info(f"Loading IDs from backup file: {backup_file}")
+        try:
+            with open(backup_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            
+            if isinstance(data, dict):
+                listing_ids = data.get("ids", [])
+                if not listing_ids and "total_ids" in data:
+                    logger.warning("Backup file has 'total_ids' but no 'ids' list. File structure may be different.")
+            elif isinstance(data, list):
+                listing_ids = data
+            else:
+                raise ValueError(f"Unexpected JSON structure in backup file: {type(data)}")
+            
+            logger.info(f"Loaded {len(listing_ids)} IDs from backup file")
+            
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON in backup file: {e}")
+        except Exception as e:
+            raise RuntimeError(f"Error reading backup file: {e}")
+        
+        if not listing_ids:
+            logger.warning("No IDs found in backup file")
+            if output_path is None:
+                base_path = Path(__file__).parent.parent / "excel_db"
+                output_path = base_path / "reinvest_assets.xlsx"
+            else:
+                output_path = Path(output_path)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            # Create empty Excel file
+            df = pd.DataFrame(columns=["id", "code", "title", "price", "sqm", "url", "level", "address", "description",
+                                     "construction_year", "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
+            df.to_excel(output_path, index=False, engine='openpyxl')
+            return output_path
+        
+        # Apply start_from and max_listings filters
+        if start_from > 0:
+            listing_ids = listing_ids[start_from:]
+            logger.info(f"Starting from index {start_from}, {len(listing_ids)} IDs remaining")
+        
+        if max_listings is not None:
+            listing_ids = listing_ids[:max_listings]
+            logger.info(f"Limiting to {max_listings} listings")
+        
+        logger.info(f"Scraping {len(listing_ids)} listings from backup file...")
+        
+        # Scrape each listing
+        assets_data = []
+        scraped_ids = []
+        failed_ids = []
+        
+        try:
+            for idx, listing_id in enumerate(listing_ids, 1):
+                try:
+                    logger.info(f"Scraping listing {listing_id} ({idx}/{len(listing_ids)})")
+                    result = self.scrape_listing(listing_id)
+                    
+                    if result is not None:
+                        asset, title, description, code = result
+                        assets_data.append((asset, title, description, code))
+                        scraped_ids.append(listing_id)
+                        logger.info(f"Successfully scraped listing {listing_id}")
+                    else:
+                        logger.warning(f"Failed to scrape listing {listing_id} (returned None)")
+                        failed_ids.append(listing_id)
+                        scraped_ids.append(listing_id)  # Track as attempted
+                
+                except Exception as e:
+                    logger.error(f"Error scraping listing {listing_id}: {e}")
+                    failed_ids.append(listing_id)
+                    scraped_ids.append(listing_id)  # Track as attempted
+                    # Continue with next listing instead of stopping
+                    continue
+            
+            # Save to Excel
+            if assets_data:
+                logger.info(f"Scraped {len(assets_data)} assets. Saving to Excel...")
+                output_path = self.save_to_excel(assets_data, listing_ids=scraped_ids, output_path=output_path)
+                logger.info(f"Successfully saved {len(assets_data)} assets to {output_path}")
+                print(f"\nScraped {len(assets_data)} out of {len(listing_ids)} listings")
+                print(f"Results saved to: {output_path}")
+                
+                if failed_ids:
+                    logger.warning(f"{len(failed_ids)} listings failed to scrape: {failed_ids[:10]}{'...' if len(failed_ids) > 10 else ''}")
+                    print(f"Failed listings: {len(failed_ids)}")
+            else:
+                logger.error("No assets were successfully scraped")
+                if output_path is None:
+                    base_path = Path(__file__).parent.parent / "excel_db"
+                    output_path = base_path / "reinvest_assets.xlsx"
+                else:
+                    output_path = Path(output_path)
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                # Create empty Excel file
+                df = pd.DataFrame(columns=["id", "code", "title", "price", "sqm", "url", "level", "address", "description",
+                                         "construction_year", "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
+                df.to_excel(output_path, index=False, engine='openpyxl')
+            
+            return output_path
+        
+        except Exception as e:
+            logger.error(f"Error during scraping process: {e}")
+            # Save all IDs (both scraped and not scraped) to backup
+            remaining_ids = [lid for lid in listing_ids if lid not in scraped_ids]
+            if remaining_ids:
+                logger.info(f"Saving {len(remaining_ids)} unscraped IDs to backup file...")
+                self._save_ids_to_json(remaining_ids, "reinvest_ids_unscraped_backup.json")
+            # Also save failed IDs
+            if failed_ids:
+                logger.info(f"Saving {len(failed_ids)} failed IDs to backup file...")
+                self._save_ids_to_json(failed_ids, "reinvest_ids_failed_backup.json")
+            raise
 
 
 if __name__ == "__main__":
@@ -1170,9 +1495,9 @@ if __name__ == "__main__":
     scraper = ReinvestData()
     
     # Option 1: Scrape all listings from the listing page
-    print("Scraping all listings from REInvest Greece...")
-    output_path = scraper.scrape_all_listings()
-    print(f"\nAll results saved to: {output_path}")
+    # print("Scraping all listings from REInvest Greece...")
+    # output_path = scraper.scrape_all_listings()
+    # print(f"\nAll results saved to: {output_path}")
     
     # Option 2: Scrape a single listing (uncomment to use)
     # listing_id = "1417602"
@@ -1193,4 +1518,12 @@ if __name__ == "__main__":
     # else:
     #     logger.error(f"Failed to scrape listing {listing_id}")
     #     print(f"Failed to scrape listing {listing_id}")
-
+    
+    # Option 3: Scrape from backup JSON file (uncomment to use)
+    print("Scraping listings from backup JSON file...")
+    output_path = scraper.scrape_from_backup_json()
+    print(f"\nAll results saved to: {output_path}")
+    
+    # Option 3 with options: Resume from index 100, limit to 50 listings
+    # output_path = scraper.scrape_from_backup_json(start_from=100, max_listings=50)
+#
