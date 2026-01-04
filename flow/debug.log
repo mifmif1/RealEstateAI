@@ -47397,3 +47397,1525 @@ FileNotFoundError: [Errno 2] No such file or directory: '../excel_db/spitogatos_
 2026-01-04 23:26:18,690 [ERROR] Probably detected as bot
 2026-01-04 23:26:18,690 [ERROR] error handling row 1298988. Error: Probably detected as bot.
 2026-01-04 23:26:22,068 [INFO] saved successfully
+2026-01-04 23:33:47,906 [INFO] Refreshing Spitogatos cookies...
+2026-01-04 23:33:48,601 [WARNING] Failed to refresh cookies: status 404
+2026-01-04 23:33:49,588 [INFO] skipping DoValue:Frontier - Retail:iwub1jJVC5
+2026-01-04 23:33:49,588 [INFO] skipping DoValue:Mexico Retail:h6i51e5oDp
+2026-01-04 23:33:49,588 [INFO] skipping DoValue:Mexico Retail:rvfo1DBWpu
+2026-01-04 23:33:49,588 [INFO] skipping DoValue:Cairo 2:VkTwij7YCV
+2026-01-04 23:33:49,588 [INFO] skipping DoValue:Mexico Retail:Mdm6Zdf8Gh-001
+2026-01-04 23:33:49,589 [INFO] skipping DoValue:Cairo 2:9My7HbWvGn
+2026-01-04 23:33:49,589 [INFO] skipping DoValue:Frontier - Retail:cr87FxCVR3
+2026-01-04 23:33:49,589 [INFO] skipping DoValue:Cairo 3:OuYsWwy5Wq
+2026-01-04 23:33:49,589 [INFO] skipping DoValue:Frontier II - Retail:CPvuDYnXj6-001
+2026-01-04 23:33:49,589 [INFO] skipping DoValue:Cairo 2:CSQRXyUhg1
+2026-01-04 23:33:49,589 [INFO] skipping DoValue:Cairo 1:Qk0UUpNR61
+2026-01-04 23:33:49,590 [INFO] skipping DoValue:Cairo 2:H9IIjQGtMu
+2026-01-04 23:33:49,590 [INFO] skipping DoValue:Gemini A - Retail:3TkgxiPfGL
+2026-01-04 23:33:49,590 [INFO] skipping DoValue:Frontier - Retail:16gDxoDY3B
+2026-01-04 23:33:49,590 [INFO] skipping DoValue:Frontier - Retail:Nd1NiXiYrN
+2026-01-04 23:33:49,590 [INFO] skipping DoValue:Frontier - Retail:6ZrkVPv9U5-001
+2026-01-04 23:33:49,590 [INFO] skipping DoValue:Frontier II - Retail:9pfMxBF97l
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Gemini A - Retail:3EOQMkfGt1-003
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Leon Retail:pUCSSBJAe5
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Frontier - Retail:GKr6npj5NB-002
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Cairo 1:p2BFjqUt9G
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Mexico Retail:pNY0Kyrao0
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Heliopolis I - Retail:4LHxI7qebe
+2026-01-04 23:33:49,591 [INFO] skipping DoValue:Frontier - Retail:Ce0cTpvfuP
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Cairo 1:rL6LGWv1M1
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Gemini A - Retail:XivHrZ7f36
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Mexico Retail:6YbddDxfxc
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Frontier II - Retail:kvJ6g3N8MZ
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Frontier - Retail:QnjwsHIQQi
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Leon Retail:em70MsAB3N
+2026-01-04 23:33:49,592 [INFO] skipping DoValue:Frontier II - Retail:qQQ8SB2A5r
+2026-01-04 23:33:49,593 [INFO] skipping DoValue:Frontier - Retail:gMBWjXKfLZ
+2026-01-04 23:33:49,593 [INFO] skipping DoValue:Leon Retail:9dLhNRFyN2
+2026-01-04 23:33:49,593 [INFO] skipping DoValue:Cairo 2:RIBCrn6dxK
+2026-01-04 23:33:49,593 [INFO] skipping DoValue:Mexico Retail:LesdpU8nt1
+2026-01-04 23:33:49,593 [INFO] skipping DoValue:Frontier - Retail:DNRmaaTVBo
+2026-01-04 23:33:49,593 [INFO] skipping DoValue:Frontier - Retail:qv15j8HsIV
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Leon Retail:TXALsi5T8T
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Cairo 1:bCp1cESqIy
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Frontier - Retail:JCsIIUDyVH-007
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Frontier II - Retail:DlCUfw9ikC
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Cairo 2:MqREiDRANd
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Frontier - Retail:yVvmsTqcHh
+2026-01-04 23:33:49,594 [INFO] skipping DoValue:Frontier - Retail:HuSr4XekTE
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Frontier - Retail:qin4amIjDT
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Mexico Retail:G2jEe4Hmlo
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Leon Retail:bD5TwRUb7n
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Frontier - Retail:7vWknkoin7
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Mexico Retail:TbmKDfGFVv-002
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Frontier II - Retail:PbbRODBTwT
+2026-01-04 23:33:49,595 [INFO] skipping DoValue:Mexico Retail:ANEk8biHT5
+2026-01-04 23:33:49,596 [INFO] skipping DoValue:Frontier - Retail:erKQ7iEQxd
+2026-01-04 23:33:49,596 [INFO] skipping DoValue:Frontier II - Retail:O16FOyX51c
+2026-01-04 23:33:49,596 [INFO] skipping DoValue:Cairo 2:VxDwuvUAR8-001
+2026-01-04 23:33:49,596 [INFO] skipping DoValue:Cairo 2:aypcZ5yJej
+2026-01-04 23:33:49,596 [INFO] skipping DoValue:Mexico Retail:9D4SfINIhn
+2026-01-04 23:33:49,596 [INFO] skipping DoValue:Frontier - Retail:JCsIIUDyVH-008
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Leon Retail:LwORSPdIv5
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Frontier II - Retail:TymkeAESrA-001
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Frontier - Retail:ScXw9jt3ld
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Leon Retail:9Nbrv36pB1
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Mexico Retail:g5LF3dPvBX
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Frontier - Retail:m6EQxYc258
+2026-01-04 23:33:49,597 [INFO] skipping DoValue:Cairo 2:7HMMnbWBXt
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:Frontier - Retail:VarkmRHHV2
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:Frontier II - Retail:e7eDWULY3N
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:Frontier - Retail:DrLQJBBaAv
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:ERB Retail:Hn091C4dyI-001
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:Frontier - Retail:LYGonkdpQO
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:Frontier II - Retail:iN9Q6Fe4KN
+2026-01-04 23:33:49,598 [INFO] skipping DoValue:Frontier - Retail:N17ihhOv9c
+2026-01-04 23:33:49,599 [INFO] skipping DoValue:Cairo 2:4D1wL5rmM7
+2026-01-04 23:33:49,599 [INFO] skipping DoValue:Leon Retail:geHW0xFnhP
+2026-01-04 23:33:49,599 [INFO] skipping DoValue:Leon Retail:wb7XjxyCsV
+2026-01-04 23:33:49,599 [INFO] skipping DoValue:Frontier - Retail:S92X4Fivmp
+2026-01-04 23:33:49,599 [INFO] skipping DoValue:Leon Retail:Q4SOTy8GJx
+2026-01-04 23:33:49,599 [INFO] skipping DoValue:Frontier II - Retail:376pCOO437
+2026-01-04 23:33:49,600 [INFO] skipping DoValue:Leon Retail:nA6qFm5G6Q
+2026-01-04 23:33:49,600 [INFO] skipping DoValue:Frontier - Retail:sCafgH4big
+2026-01-04 23:33:49,600 [INFO] skipping DoValue:Mexico Retail:LK04DLhXRi
+2026-01-04 23:33:49,600 [INFO] skipping DoValue:Mexico Retail:GkVYCnfp5a
+2026-01-04 23:33:49,600 [INFO] skipping DoValue:Leon Retail:AfhJqKQLBb
+2026-01-04 23:33:49,600 [INFO] skipping DoValue:Frontier - Retail:Q7gEKZb6Eh
+2026-01-04 23:33:49,601 [INFO] skipping DoValue:Mexico Retail:QrrwAddwlC
+2026-01-04 23:33:49,601 [INFO] skipping DoValue:Cairo 1:EQ8VXnXQGq
+2026-01-04 23:33:49,601 [INFO] skipping DoValue:Mexico Retail:gNvuGPu4si
+2026-01-04 23:33:49,601 [INFO] skipping DoValue:Cairo 2:abXLEckARA-001
+2026-01-04 23:33:49,601 [INFO] skipping DoValue:ERB Retail:Yt3DqT54fU
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:ERB Retail:HZUN4ewlbj-001
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-001
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:Frontier - Retail:JcdCR0l9iv-002
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-008
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:Leon Retail:U54MIOC83Y
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:Leon Retail:8kC0lraBfC
+2026-01-04 23:33:49,602 [INFO] skipping DoValue:Leon Retail:ySdInSaPXN
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Frontier - Retail:re4flC1kbB-004
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Frontier - Retail:re4flC1kbB-003
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Heliopolis I - Retail:egt61juk0X
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Gemini A - Retail:X8cmApCdCA
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Mexico Retail:ml3aE7qI7X
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Frontier - Retail:6MLer6xx7c-003
+2026-01-04 23:33:49,603 [INFO] skipping DoValue:Frontier - Retail:nrTYnuIVdP-005
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Cairo 1:TxCw0BpaHT
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Leon Retail:cBDjOlSHSU
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Frontier - Retail:34PtYRHT1l
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Cairo 1:MWBRFJUgLf
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Frontier - Retail:s72Oe6tnar
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-003
+2026-01-04 23:33:49,604 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-004
+2026-01-04 23:33:49,605 [INFO] skipping DoValue:Frontier - Retail:cLewLhHAGy
+2026-01-04 23:33:49,605 [INFO] skipping DoValue:ERB Retail:YMsETtXlAJ
+2026-01-04 23:33:49,605 [INFO] skipping DoValue:Leon Retail:a9sUqB6hRY
+2026-01-04 23:33:49,605 [INFO] skipping DoValue:Heliopolis II - Retail:lvGKrDQmyb
+2026-01-04 23:33:49,605 [INFO] skipping DoValue:Cairo 2:TfPfidHAL3-002
+2026-01-04 23:33:49,605 [INFO] skipping DoValue:Cairo 2:lgxZNGXSJv
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Mexico Retail:aekYJWhHHr
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-001
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Frontier - Retail:ZmBoWpAJSl
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Heliopolis I - Retail:gtfr153EPG
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Gemini A - Retail:NLI3fgCp53
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Leon Retail:g0vQXbFZIQ
+2026-01-04 23:33:49,606 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-002
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Leon Retail:J9yMaYcDA4
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Leon Retail:yAcQx9IIt1
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-002
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-009
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-005
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-003
+2026-01-04 23:33:49,607 [INFO] skipping DoValue:Frontier II - Retail:qmViOvZk5P
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Leon Retail:F08fEJqUAo
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Mexico Retail:XRKEqWEGOi-002
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Mexico Retail:UUiJ4wRrOo-001
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Leon Retail:nGwxy1fs6u
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Leon Retail:d3mMMyjx3c
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Leon Retail:DNVT5nindi
+2026-01-04 23:33:49,608 [INFO] skipping DoValue:Frontier - Retail:dnXLDxDvMc
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Frontier II - Retail:mjOEQZtECU
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Mexico Retail:cdqncyuMJk
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Frontier - Retail:nrTYnuIVdP-006
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Heliopolis I - Retail:3G1VYToA2H
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Frontier - Retail:gMI9f0kK2d
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Frontier II - Retail:tgXGYhqwgM
+2026-01-04 23:33:49,609 [INFO] skipping DoValue:Heliopolis I - Retail:mRuuZ5okkh-001
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Cairo 1:nUaGKZ2nRP-003
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Mexico Retail:arX4YQXeo5-001
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Cairo 2:YrncSMIw1y
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Frontier - Retail:WKu1toQtNW
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Mexico Retail:bLE8M7SFfU
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Leon Retail:4dbS6NawOO
+2026-01-04 23:33:49,610 [INFO] skipping DoValue:Mexico Retail:d0lOlyhdmN
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Frontier II - Retail:6a73Sl7eF0
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Leon Retail:eeSUwsP6PH
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Frontier - Retail:Sjj6qe9yG0
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Leon Retail:mAT3maNEXY
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Mexico Retail:XQMiwHGExP
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Leon Retail:3bCgdbI6tx
+2026-01-04 23:33:49,611 [INFO] skipping DoValue:Leon Retail:J6r75yNll0
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Frontier II - Retail:QZfSP0hKeR
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Frontier - Retail:6v1yOZadNR
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Cairo 2:4to1NZ2wAx
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Frontier - Retail:pMoGXgycjY
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Cairo 1:nUaGKZ2nRP-001
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Cairo 1:nUaGKZ2nRP-002
+2026-01-04 23:33:49,612 [INFO] skipping DoValue:Cairo 2:81jS6Phpuk
+2026-01-04 23:33:49,613 [INFO] skipping DoValue:Frontier - Retail:yuH7HOZ7xD
+2026-01-04 23:33:49,613 [INFO] skipping DoValue:Frontier - Retail:40dLx2Yh45-003
+2026-01-04 23:33:49,613 [INFO] skipping DoValue:Mexico Retail:ruLeCAIEA8
+2026-01-04 23:33:49,613 [INFO] skipping DoValue:Cairo 1:IKg0K3Z9aa
+2026-01-04 23:33:49,613 [INFO] skipping DoValue:Leon Retail:VI3vvOOxSV
+2026-01-04 23:33:49,613 [INFO] skipping DoValue:Frontier - Corporate:YMjVK9sRUe-002
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Frontier - Retail:7sUybKTlBe
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Cairo 2:OqlFR1XQsS
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Leon Retail:xi7MeBogDd
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Leon Retail:ptaKa4Bcsh
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-003
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Frontier - Retail:oy2ZBcK2rL
+2026-01-04 23:33:49,614 [INFO] skipping DoValue:Mexico Retail:CYq9JIAHcY
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Heliopolis I - Retail:rgK9bAi9MA-002
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Leon Retail:3yURvu6kos
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Leon Retail:uywMNGDUvu
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Leon Retail:23DwQKMsgT
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Frontier - Retail:ETibcfolUV-001
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Cairo 1:hvOrTe5UIV
+2026-01-04 23:33:49,615 [INFO] skipping DoValue:Leon Retail:rUBBsLvxog
+2026-01-04 23:33:49,616 [INFO] skipping DoValue:Leon Retail:ZOKR7ILaYK
+2026-01-04 23:33:49,616 [INFO] skipping DoValue:Mexico Retail:VPKrNKrLXw
+2026-01-04 23:33:49,616 [INFO] skipping DoValue:Leon Retail:gWDlK6Vojv
+2026-01-04 23:33:49,616 [INFO] skipping DoValue:Frontier II - Retail:Gu1lmKTtOw
+2026-01-04 23:33:49,616 [INFO] skipping DoValue:Leon Retail:DliK4Fyby5
+2026-01-04 23:33:49,616 [INFO] skipping DoValue:Frontier - Retail:wuiOF8ynWa
+2026-01-04 23:33:49,617 [INFO] skipping DoValue:Cairo 2:pWdR57E3UI
+2026-01-04 23:33:49,617 [INFO] skipping DoValue:Leon Retail:IiFnqiVuGI
+2026-01-04 23:33:49,617 [INFO] skipping DoValue:Leon Retail:tZmDjUVD9V
+2026-01-04 23:33:49,617 [INFO] skipping DoValue:Frontier II - Retail:4jVbb2LueW
+2026-01-04 23:33:49,617 [INFO] skipping DoValue:Frontier II - Retail:NU3xojqSZS
+2026-01-04 23:33:49,617 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-006
+2026-01-04 23:33:49,618 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-010
+2026-01-04 23:33:49,618 [INFO] skipping DoValue:Frontier - Retail:AgoVE2wrBQ
+2026-01-04 23:33:49,618 [INFO] skipping DoValue:Frontier - Retail:E0AoMsOMOp-001
+2026-01-04 23:33:49,618 [INFO] skipping DoValue:Mexico Retail:kntSpP8rfc
+2026-01-04 23:33:49,618 [INFO] skipping DoValue:Frontier II - Retail:FBQh0bO0lC
+2026-01-04 23:33:49,618 [INFO] skipping DoValue:Leon Retail:dlm9pCm5AT
+2026-01-04 23:33:49,619 [INFO] skipping DoValue:Leon Retail:VR49L6aHaX
+2026-01-04 23:33:49,619 [INFO] skipping DoValue:Leon Retail:lANhcsdQHB-001
+2026-01-04 23:33:49,619 [INFO] skipping DoValue:Leon Retail:t1YH3DfOcy
+2026-01-04 23:33:49,619 [INFO] skipping DoValue:Frontier - Retail:JcdCR0l9iv-001
+2026-01-04 23:33:49,619 [INFO] skipping DoValue:Leon Retail:VSeLk00pmH
+2026-01-04 23:33:49,619 [INFO] skipping DoValue:Leon Retail:VqQNOmaIJQ
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Mexico Retail:di8puavNZW
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Frontier - Retail:5Aky1CokpK
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Frontier - Retail:9XyVZmBgKZ
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Mexico Retail:pAkksV8Zpr
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Frontier - Retail:HpnJbdOWLC
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Gemini A - Retail:3GCCGE7p2E-002
+2026-01-04 23:33:49,620 [INFO] skipping DoValue:Frontier - Retail:bGtN2n67DV
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Mexico Retail:yhFRU4ObXf-001
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Frontier - Retail:JaXJ6A8B7t
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Leon Retail:XX8lsapdxL
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Cairo 1:AcEdPWwknu
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Mexico Retail:Gs6qrplqUG
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Mexico Retail:l3y0voyTyi-001
+2026-01-04 23:33:49,621 [INFO] skipping DoValue:Heliopolis I - Retail:OKpr0uf5Cw
+2026-01-04 23:33:49,622 [INFO] skipping DoValue:Cairo 1:Nm7kRsZsPp
+2026-01-04 23:33:49,622 [INFO] skipping DoValue:Cairo 2:o33odi2YML
+2026-01-04 23:33:49,622 [INFO] skipping DoValue:Leon Retail:4OMhuVwQsu
+2026-01-04 23:33:49,622 [INFO] skipping DoValue:Frontier - Retail:5pBWkYg6Hd
+2026-01-04 23:33:49,622 [INFO] skipping DoValue:Heliopolis I - Retail:ueSLDWUivt
+2026-01-04 23:33:49,622 [INFO] skipping DoValue:Cairo 2:MD86Dpc0RB
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Leon Retail:R4F5Lni4Qn
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Leon Retail:CiiSIcWtLT
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Mexico Retail:VtjqgQdZFD
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Frontier - Retail:tjLEfa1VkH-001
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Leon Retail:siKcQwuqQF
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Mexico Retail:Afu9b1VNqD
+2026-01-04 23:33:49,623 [INFO] skipping DoValue:Leon Retail:9Y5AwIpVPi
+2026-01-04 23:33:49,624 [INFO] skipping DoValue:Leon Retail:4nbbK0WGrV
+2026-01-04 23:33:49,624 [INFO] skipping DoValue:Mexico Corporate:dGNCWgP0c3-003
+2026-01-04 23:33:49,624 [INFO] skipping DoValue:Cairo 2:vDmvf0DmBa
+2026-01-04 23:33:49,624 [INFO] skipping DoValue:Leon Retail:513DpRScG1-001
+2026-01-04 23:33:49,624 [INFO] skipping DoValue:Mexico Retail:9SXkwRZq36-001
+2026-01-04 23:33:49,624 [INFO] skipping DoValue:Mexico Retail:SC2RsjZiru
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Leon Retail:TI8DONFFQs
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Frontier II - Retail:AVXfqvbb3r
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Frontier - Retail:T2fxDyeFlj
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Cairo 3:MDwiTkag49
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Mexico Retail:7o9hvTdyFG
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Leon Retail:T8sOCstTHN
+2026-01-04 23:33:49,625 [INFO] skipping DoValue:Heliopolis I - Retail:rgK9bAi9MA-001
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier II - Retail:XeJ6BugcvL
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier - Retail:BK24r9wXW0
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier - Retail:6owd49aYUO
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier II - Retail:uohWjrTYNQ
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier - Retail:USatqHEkYJ
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier - Retail:P7dwoJ87I6
+2026-01-04 23:33:49,626 [INFO] skipping DoValue:Frontier II - Retail:8iH8KjjXFr
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:Cairo 1:KgQIiMjaPq-001
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:Leon Retail:xIeMWJVgy5
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:Leon Retail:apZl3vu57e
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:Leon Retail:aG6xgX8wDT
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:ERB Retail:HZUN4ewlbj-002
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:Frontier II - Retail:4gBqP19jHP
+2026-01-04 23:33:49,627 [INFO] skipping DoValue:Mexico Retail:bX0a5qcFGb
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:Frontier - Retail:YqSVkYQuSS
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:Frontier - Retail:AEOieYtYwK
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:Cairo 2:LPBleQ3R8m
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:Mexico Retail:RwcNXkE8et
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:ERB Retail:YMsETtXlAJ
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:Frontier - Retail:26oYmScDRD
+2026-01-04 23:33:49,628 [INFO] skipping DoValue:Frontier II - Retail:iuZTixc0Mg
+2026-01-04 23:33:49,629 [INFO] skipping DoValue:Leon Retail:9UAe4OB719
+2026-01-04 23:33:49,629 [INFO] skipping DoValue:Cairo 1:t83OnRwY6W-001
+2026-01-04 23:33:49,629 [INFO] skipping DoValue:Cairo 1:t83OnRwY6W-002
+2026-01-04 23:33:49,629 [INFO] skipping DoValue:Heliopolis I - Retail:Q0JI6OjvO9
+2026-01-04 23:33:49,629 [INFO] skipping DoValue:Cairo 2:l3ThKYkaWw
+2026-01-04 23:33:49,629 [INFO] skipping DoValue:Leon Retail:6OTBerwVNa
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Leon Retail:SgMUX4bWx8
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Leon Retail:jWXgEgpiX5
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Leon Retail:E0kTXXWMJC
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Frontier - Retail:5nGpaMnSTq
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Mexico Retail:DrX3aBNiDv-001
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Frontier - Retail:HJtuVetlXK
+2026-01-04 23:33:49,630 [INFO] skipping DoValue:Cairo 2:P7WI24jkfq
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Cairo 1:0qvmNsd9fk
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Frontier - Retail:AsxYQ0h2BF
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Cairo 3:OuYsWwy5Wq
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Cairo 2:1vBXwiG5aY
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Frontier - Retail:SxLkm8T8kd
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Frontier - Retail:qinvoKGnmh
+2026-01-04 23:33:49,631 [INFO] skipping DoValue:Cairo 1:IKg0K3Z9aa
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Mexico Retail:V5iRqwxHHV
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Mexico Retail:V5iRqwxHHV
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Frontier - Retail:q2jFxK2PbQ
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Gemini A - Retail:4GZImLrI6I
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Gemini A - Retail:4GZImLrI6I
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Gemini A - Retail:CnkdjUOhU1
+2026-01-04 23:33:49,632 [INFO] skipping DoValue:Suez - Retail:8Qd8lGMZaZ
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Frontier - Retail:qR8Dg6PjRS-002
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Frontier - Retail:0QJ7L7u8Lm
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Heliopolis I - Retail:tQn1yalqUT-001
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Cairo 2:nYpDg8cuX1
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Leon Retail:VI3vvOOxSV
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Frontier II - Retail:fABoREPEqM
+2026-01-04 23:33:49,633 [INFO] skipping DoValue:Cairo 2:XC02NqWb6f
+2026-01-04 23:33:49,634 [INFO] skipping DoValue:Frontier - Retail:igjTyVJNOr
+2026-01-04 23:33:49,634 [INFO] skipping DoValue:Cairo 2:Co52GeQWhW
+2026-01-04 23:33:49,634 [INFO] skipping DoValue:Gemini A - Retail:Nkn3X8ONVK
+2026-01-04 23:33:49,634 [INFO] skipping DoValue:Frontier - Retail:oNDQaYXES2
+2026-01-04 23:33:49,634 [INFO] skipping DoValue:Leon Retail:8aYtKmaPwB
+2026-01-04 23:33:49,635 [INFO] skipping DoValue:Mexico Retail:foWyTCUwcM-001
+2026-01-04 23:33:49,635 [INFO] skipping DoValue:Cairo 1:PkpOUjhXAc
+2026-01-04 23:33:49,635 [INFO] skipping DoValue:Leon Retail:QfSfRHmJge
+2026-01-04 23:33:49,635 [INFO] skipping DoValue:Mexico Retail:bHSeZqDgG1
+2026-01-04 23:33:49,635 [INFO] skipping DoValue:Mexico Retail:HCT8TwRkrj
+2026-01-04 23:33:49,635 [INFO] skipping DoValue:Frontier II - Retail:4HDkBinwC7
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:Frontier - Retail:lU5bWmgPYJ
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:Mexico Retail:quw280f6yN
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:Cairo 1:9RC2W949YP
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:Leon Retail:5JbiagGLj6
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:ERB Retail:wyUa2Omtwb
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:Cairo 1:Vh1SxEdVjV
+2026-01-04 23:33:49,636 [INFO] skipping DoValue:Mexico Retail:8yZrpndUGT
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Cairo 2:QTnJj2WhO2
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Frontier - Retail:mYWxnX7EiQ
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Frontier - Retail:mYWxnX7EiQ
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Frontier - Retail:ubTcdlSJRV
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Cairo 1:4CWUOPFkck
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Cairo 2:TfPfidHAL3
+2026-01-04 23:33:49,637 [INFO] skipping DoValue:Cairo 2:TfPfidHAL3-001
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Frontier - Retail:rhOFX1UG8Z
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Cairo 1:CggdQprxGd
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Frontier - Retail:yTZ9eZYrX8
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Cairo 2:stgJLB11KZ
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Leon Retail:xwHifDJrtK
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Frontier II - Retail:DZkRFdDWgu
+2026-01-04 23:33:49,638 [INFO] skipping DoValue:Frontier - Retail:EsPrrQKrXm
+2026-01-04 23:33:49,639 [INFO] skipping DoValue:Heliopolis I - Retail:wRwx2SKiZH
+2026-01-04 23:33:49,639 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-005
+2026-01-04 23:33:49,639 [INFO] skipping DoValue:Leon Retail:JfLGirUGiu
+2026-01-04 23:33:49,639 [INFO] skipping DoValue:Leon Retail:MJpRprkdqu
+2026-01-04 23:33:49,639 [INFO] skipping DoValue:Leon Retail:0jxarXDee6
+2026-01-04 23:33:49,639 [INFO] skipping DoValue:Leon Retail:N8dvXPiV7N-001
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Cairo 1:HbCSwH1MUU
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Frontier - Retail:A7pSSkTb7b-001
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Frontier - Retail:L6t22qFEYL
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Frontier - Retail:jR8vt5sQ18
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Frontier II - Retail:yhDLSgQcEW
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Frontier - Retail:nrTYnuIVdP-007
+2026-01-04 23:33:49,640 [INFO] skipping DoValue:Frontier - Retail:Y3QZSAHqLw
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Mexico Retail:RSeEUv3Yeo
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Frontier II - Retail:S56Q9Ndmtc
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Frontier - Retail:kxWNYBL3fN
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Gemini A - Retail:M5RGwALPAd
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Mexico Retail:mocgwSBf8o
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Frontier - Retail:TumWMZu7W8
+2026-01-04 23:33:49,641 [INFO] skipping DoValue:Leon Retail:fnw6YeVBSf
+2026-01-04 23:33:49,642 [INFO] skipping DoValue:Frontier - Retail:6owd49aYUO
+2026-01-04 23:33:49,642 [INFO] skipping DoValue:Gemini A - Retail:DJe70BlVPw-001
+2026-01-04 23:33:49,642 [INFO] skipping DoValue:Cairo 2:5FlxEPdKSH
+2026-01-04 23:33:49,642 [INFO] skipping DoValue:Frontier - Retail:QfV3WrCusK
+2026-01-04 23:33:49,642 [INFO] skipping DoValue:Frontier - Retail:OK5aki7ypR
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Gemini A - Retail:bl3Fih6qIt
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Cairo 2:t0nSNDbroD
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Frontier II - Retail:tgXGYhqwgM
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Frontier - Retail:XEg7mQKnpE
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Cairo 1:nHmnngChL7
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Gemini A - Retail:ameZAZbspv
+2026-01-04 23:33:49,643 [INFO] skipping DoValue:Leon Retail:WtGBvqCaSZ
+2026-01-04 23:33:49,644 [INFO] skipping DoValue:Frontier - Retail:ZkPXbNbqft
+2026-01-04 23:33:49,644 [INFO] skipping DoValue:Mexico Retail:vyhNe4TIxS
+2026-01-04 23:33:49,644 [INFO] skipping DoValue:Cairo 1:198sSAJPyU
+2026-01-04 23:33:49,644 [INFO] skipping DoValue:Frontier - Retail:0GTZlNUS8K
+2026-01-04 23:33:49,644 [INFO] skipping DoValue:Leon Retail:tYnpMAKnqw
+2026-01-04 23:33:49,644 [INFO] skipping DoValue:Gemini A - Retail:J5PNWKgG6U-001
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Frontier - Retail:lKr1ZBXSkJ
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Frontier - Retail:aG6x9Z3cDD
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Frontier - Retail:pFEb9HlrDH
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Leon Retail:0YdqnlHm6G
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Leon Retail:3ZEf3NkLWi
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Cairo 2:NxnRl6OD5G
+2026-01-04 23:33:49,645 [INFO] skipping DoValue:Frontier - Retail:7CUODihKPJ
+2026-01-04 23:33:49,646 [INFO] skipping DoValue:Mexico Retail:VdHUKZDJcZ
+2026-01-04 23:33:49,646 [INFO] skipping DoValue:Leon Retail:I7K9XxGmgM
+2026-01-04 23:33:49,646 [INFO] skipping DoValue:Leon Retail:gXnvMcFWJ5
+2026-01-04 23:33:49,646 [INFO] skipping DoValue:Frontier II - Retail:HUuWkA8MTD
+2026-01-04 23:33:49,646 [INFO] skipping DoValue:Mexico Retail:0C4pjdnKmy
+2026-01-04 23:33:49,646 [INFO] skipping DoValue:Frontier - Retail:vEDNtuZwgx
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Frontier - Retail:u63kENriFg
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Cairo 2:6Ec1UF0br0
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Cairo 2:qkchaYBy6i
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Cairo 2:8yApgKlTwZ
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Frontier II - Retail:f1YjsrubKH
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Mexico Retail:jVskBed4Hc
+2026-01-04 23:33:49,647 [INFO] skipping DoValue:Leon Retail:1WuqQxhN6x
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Gemini A - Retail:DeTEPdxW1b
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Frontier - Retail:ZmBoWpAJSl
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Mexico Retail:T1mN4R5gWu
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Cairo 2:kMPDQU9sv4
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Cairo 2:nYeEntgJLJ
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Frontier - Retail:vLxX7EiZxr
+2026-01-04 23:33:49,648 [INFO] skipping DoValue:Mexico Retail:iu9YyT5xSv
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:ERB Retail:AoSFcD4AP8
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:Frontier - Retail:BVZXn7Q4sd
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:Frontier II - Retail:0tomlnyNRv
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:Leon Retail:LcEILw9Xa6
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-003
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:Frontier - Retail:vVcxUfy1R4
+2026-01-04 23:33:49,649 [INFO] skipping DoValue:Leon Retail:nYtTVh3kZW
+2026-01-04 23:33:49,650 [INFO] skipping DoValue:Frontier - Retail:jL9JEQDgws
+2026-01-04 23:33:49,650 [INFO] skipping DoValue:Leon Retail:iRDHQ3weVD
+2026-01-04 23:33:49,650 [INFO] skipping DoValue:Frontier - Retail:1Hpli0IEAR-001
+2026-01-04 23:33:49,650 [INFO] skipping DoValue:Cairo 1:0Pl1uI2P9L
+2026-01-04 23:33:49,650 [INFO] skipping DoValue:Frontier - Retail:pQxFWm8n7y
+2026-01-04 23:33:49,650 [INFO] skipping DoValue:Leon Retail:of1VbG0oA1
+2026-01-04 23:33:49,651 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-004
+2026-01-04 23:33:49,651 [INFO] skipping DoValue:Leon Retail:cBDjOlSHSU
+2026-01-04 23:33:49,651 [INFO] skipping DoValue:Mexico Retail:EZJYpG4GCX
+2026-01-04 23:33:49,651 [INFO] skipping DoValue:Frontier - Retail:A7pSSkTb7b-002
+2026-01-04 23:33:49,651 [INFO] skipping DoValue:Heliopolis I - Retail:SQxe78KSlF
+2026-01-04 23:33:49,651 [INFO] skipping DoValue:Frontier - Retail:KYE6CIheCd
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Frontier - Retail:5HqCB7HIVp
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Heliopolis I - Retail:WuIrmWA0J2
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Mexico Corporate:dGNCWgP0c3-001
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Frontier - Retail:YwoxgFbfWy
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Frontier II - Retail:ZGrNUd3hcV
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Cairo 2:XaINkCUnts-001
+2026-01-04 23:33:49,652 [INFO] skipping DoValue:Leon Retail:EXUYaiKWuo
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:Leon Retail:dlpOkwCmom
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:Cairo 1:G0WejJrFH3
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:ERB Retail:nrYZ1gA767
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:Frontier - Retail:oKT6dilsP2
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:Leon Retail:JlnkxFnCox
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:Frontier - Retail:bkasacsCDl
+2026-01-04 23:33:49,653 [INFO] skipping DoValue:Mexico Retail:6LwbXkR7mv
+2026-01-04 23:33:49,654 [INFO] skipping DoValue:Gemini A - Retail:3p6SYgwhEs
+2026-01-04 23:33:49,654 [INFO] skipping DoValue:Cairo 2:Vec3dur6mZ
+2026-01-04 23:33:49,654 [INFO] skipping DoValue:Frontier II - Retail:rSTaueVAgK
+2026-01-04 23:33:49,654 [INFO] skipping DoValue:Frontier II - Retail:50BQ9ojSuj
+2026-01-04 23:33:49,654 [INFO] skipping DoValue:Mexico Retail:QFkmbUZxA0
+2026-01-04 23:33:49,654 [INFO] skipping DoValue:Cairo 1:MM1Vsf214s-001
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Mexico Retail:ClE8y7AEah
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Gemini A - Retail:E49C0AoaK4
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Leon Retail:St0MYVMLTB
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Leon Retail:fujpLsCTc1
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Frontier - Retail:ZTdcDvMCfl
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Frontier - Retail:MvuodjZX7Q
+2026-01-04 23:33:49,655 [INFO] skipping DoValue:Frontier - Retail:XQL0HkTphi
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Mexico Retail:V8VaiUmudk
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Frontier II - Retail:VW6wtUG4rj
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Frontier - Retail:qZAeMLpBMG
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Frontier - Retail:ABWoRN7w0j
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Mexico Retail:L3ONtNh27U
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Frontier - Retail:nPXKvRYdtR
+2026-01-04 23:33:49,656 [INFO] skipping DoValue:Leon Retail:X0vhM0Z2mU
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Mexico Retail:LgmPkOMWTc
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Heliopolis II - Retail:TAqtIurCQZ
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Gemini A - Retail:RAvJepTV6X-001
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Mexico Retail:5xMgIYGfxE
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Frontier - Retail:nkIetmHnje
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Frontier II - Retail:uWPytAmeDX
+2026-01-04 23:33:49,657 [INFO] skipping DoValue:Leon Retail:fiFSwfxla1-001
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Leon Retail:0QDxTAHtE6
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Cairo 2:1nMqHYsjMG
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Mexico Retail:bNmIKCyPFV
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Frontier II - Retail:l6DOrYYEYl
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Frontier - Retail:CODdwLpmfK
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Mexico Retail:Yi8itKwxva
+2026-01-04 23:33:49,658 [INFO] skipping DoValue:Cairo 2:BJD433vX4E-012
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Leon Retail:UHEi8akKhF
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Frontier - Retail:nejriC7XCg
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Cairo 1:IxcPrNy0HQ
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-004
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-005
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Frontier - Retail:ii7AH0xa5K
+2026-01-04 23:33:49,659 [INFO] skipping DoValue:Frontier - Corporate:YMjVK9sRUe-001
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Cairo 2:hN5dksh8bA
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Leon Retail:H5m3I19PTL
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Frontier - Retail:tbgnwOci8d
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Leon Retail:g0nv52REvq
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-004
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-005
+2026-01-04 23:33:49,660 [INFO] skipping DoValue:Frontier II - Retail:eG6VixWTxc
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:Frontier - Retail:7LVgKV9Xq6
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:Cairo 1:bV1sLlHVGt
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:Mexico Retail:SEHyjbVSqV
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:Cairo 2:ut6rQHQOSE
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:Cairo 1:qWeB0KHe1M
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:Cairo 2:volYO4sdiT
+2026-01-04 23:33:49,661 [INFO] skipping DoValue:ERB Retail:IBVVlD8RZ8
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Frontier - Retail:gOY88lEfS7
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Cairo 2:pCAZMqNQts
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Leon Retail:9uKNF5OFfI
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Mexico Retail:gbylbB9snM
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Frontier - Retail:wrtj4ddeCq
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Frontier II - Retail:Z2u6O8ByGf
+2026-01-04 23:33:49,662 [INFO] skipping DoValue:Mexico Retail:FRKUK92Zsk
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Cairo 2:wXI2lE94KS
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Cairo 2:3la35AgrEo
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Frontier - Retail:sRXCtfX3YV
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Frontier II - Retail:M5V3dgYiwU
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Frontier II - Retail:gGJegPXHWB
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Frontier - Retail:ohYTjhq99v
+2026-01-04 23:33:49,663 [INFO] skipping DoValue:Cairo 1:wkHnxCfUN7
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Leon Retail:D0U6M4jDfb
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Leon Retail:vxwCZhMRpv
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Mexico Retail:UPgbXL9dO6
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Frontier - Retail:gcZT0XtWhL
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Cairo 2:NVQ2sb5WUb
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 23:33:49,664 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 23:33:49,665 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 23:33:49,665 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 23:33:49,665 [INFO] skipping DoValue:Leon Retail:tx46k0jUIJ
+2026-01-04 23:33:49,665 [INFO] skipping DoValue:Leon Retail:1U5tuHPCr7
+2026-01-04 23:33:49,665 [INFO] skipping DoValue:Frontier - Retail:dATv4FDkad
+2026-01-04 23:33:49,665 [INFO] skipping DoValue:Cairo 1:m9cYAxMEDa
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Gemini A - Retail:cj5VhTIROC-001
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Frontier - Retail:16WYDYR8ZW
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Cairo 1:MM1Vsf214s-002
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Frontier - Retail:40dLx2Yh45-005
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Cairo 1:3sI6XZuAvp
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Leon Retail:v0yXcgnR6I
+2026-01-04 23:33:49,666 [INFO] skipping DoValue:Frontier - Retail:o80IcHWA12
+2026-01-04 23:33:49,667 [INFO] skipping DoValue:Leon Retail:8SFKFnCjQ0
+2026-01-04 23:33:49,667 [INFO] skipping DoValue:Frontier - Retail:7a0rjaQonT
+2026-01-04 23:33:49,667 [INFO] skipping DoValue:Frontier - Retail:dZZEnpMWfn
+2026-01-04 23:33:49,667 [INFO] skipping DoValue:Frontier - Retail:aimNiJ0Pgd
+2026-01-04 23:33:49,667 [INFO] skipping DoValue:Frontier - Retail:fvv6ZAPA92
+2026-01-04 23:33:49,668 [INFO] skipping DoValue:Leon Retail:n5jWVxaSHh
+2026-01-04 23:33:49,668 [INFO] skipping DoValue:Cairo 2:2hZ8n6TiOj
+2026-01-04 23:33:49,668 [INFO] skipping DoValue:Leon Retail:68uwR55xZ6
+2026-01-04 23:33:49,668 [INFO] skipping DoValue:Frontier - Retail:9WLfuK8Awp
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:Frontier - Retail:xFH4avv144
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:Frontier - Retail:CGLSxNdiaI
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:ERB Retail:hYl0Ew1vuC
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:ERB Retail:hYl0Ew1vuC
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-007
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-006
+2026-01-04 23:33:49,669 [INFO] skipping DoValue:Leon Retail:RHiwP0jH2j
+2026-01-04 23:33:49,670 [INFO] skipping DoValue:Frontier II - Retail:8nUOe2HLOe-001
+2026-01-04 23:33:49,670 [INFO] skipping DoValue:Cairo 2:qwW59yv3ar
+2026-01-04 23:33:49,670 [INFO] skipping DoValue:Mexico Retail:vk9w0eOKgU
+2026-01-04 23:33:49,670 [INFO] skipping DoValue:Frontier II - Retail:fJU57gUYGB
+2026-01-04 23:33:49,670 [INFO] skipping DoValue:Frontier - Retail:7PvL3xonkU
+2026-01-04 23:33:49,670 [INFO] skipping DoValue:Leon Retail:6Vdwa5wNBR
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:Leon Retail:TgCrd045sG
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:Frontier - Retail:WOX3IPIpwG
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:Frontier - Retail:otUhV6xZ2g
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:Cairo 2:jju1ragqU2
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:ERB Retail:vZbsMn6bIE
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:Frontier - Retail:GbfccRYfSU
+2026-01-04 23:33:49,671 [INFO] skipping DoValue:Mexico Retail:7o9hvTdyFG
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Gemini A - Retail:9MntgjswCF
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Mexico Retail:5nsARAU9NC
+2026-01-04 23:33:49,672 [INFO] skipping DoValue:Leon Retail:AkytK3JAms
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Mexico Retail:hfAFlfN8d0-001
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Heliopolis I - Retail:SVeLQNZCZn
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Mexico Retail:ZCNXpy8OtB
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Cairo 2:VVJqmidafN
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Cairo 2:0GGtVQ9lWE-001
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Cairo 2:XUMtIYKuWZ
+2026-01-04 23:33:49,673 [INFO] skipping DoValue:Frontier - Retail:ETibcfolUV-002
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Frontier - Retail:4rAVB14uyn
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Cairo 2:cBpJo8K9N3-002
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Leon Retail:RjZxRN5sVN-001
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Cairo 2:XaINkCUnts-002
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Leon Retail:pN1UNZecuA
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Cairo 1:8sTyRYsY5l
+2026-01-04 23:33:49,674 [INFO] skipping DoValue:Frontier II - Retail:GELPraPTDw
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Mexico Retail:2n7s5vo28R
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Frontier - Retail:bWeirptPTS
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Leon Retail:m7LFrp47ia
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Frontier II - Retail:e8xUNwqcKn
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Frontier - Retail:FY47dAQ7VC
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-007
+2026-01-04 23:33:49,675 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-009
+2026-01-04 23:33:49,676 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-008
+2026-01-04 23:33:49,676 [INFO] skipping DoValue:Leon Retail:SktVhJvn8x
+2026-01-04 23:33:49,676 [INFO] skipping DoValue:Frontier - Retail:UkwC27Z2BI
+2026-01-04 23:33:49,676 [INFO] skipping DoValue:ERB Retail:Hn091C4dyI-002
+2026-01-04 23:33:49,676 [INFO] skipping DoValue:Leon Retail:GFtNFQlOS7
+2026-01-04 23:33:49,676 [INFO] skipping DoValue:Frontier - Retail:XISVg4Z2TE
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Frontier - Retail:8T0R9A5uNF
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Gemini A - Retail:hBfpJLh4Gj
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Frontier II - Retail:xkeRfu9OZ2
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Leon Retail:3l98812PKN
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Frontier - Retail:3q9l8SHEm4
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Leon Retail:7LX3kHXxQU
+2026-01-04 23:33:49,677 [INFO] skipping DoValue:Frontier - Retail:LkvUVcDBYF
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Frontier - Retail:nKZUOkJtrE
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Heliopolis I - Retail:uLiZEcbOaJ
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Frontier - Retail:o7WSgrhJfN
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Frontier - Retail:jNofFcaXaw
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Leon Retail:fiFSwfxla1-002
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Gemini A - Retail:L1JJktgCwJ
+2026-01-04 23:33:49,678 [INFO] skipping DoValue:Cairo 1:Mp8VnkqqI1-002
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Frontier - Retail:GtZL5v756n
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Mexico Retail:a6GYvqQLY9
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Mexico Retail:51dUb5NhLX
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Cairo 2:kVknnUMMgh
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Frontier - Retail:UMvwwQ5Row
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-007
+2026-01-04 23:33:49,679 [INFO] skipping DoValue:Frontier - Retail:HgwYdJTNnP
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Gemini A - Retail:7VdJFp1Rge
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-005
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Leon Retail:RRZIpeHolV
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Leon Retail:5J42wTg4yh
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Frontier - Retail:tjLEfa1VkH-002
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Frontier - Retail:AZHVcjlidQ
+2026-01-04 23:33:49,680 [INFO] skipping DoValue:Leon Retail:ySdInSaPXN
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Frontier - Retail:UE8GgR6p6I
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Frontier - Retail:iWN99RXFfd
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Leon Retail:k4Lhwe1xLK
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Cairo 1:XxiFSNRbtA-001
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Frontier - Retail:ADSFZ8OpMW-002
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Cairo 2:xW6Pe60Fpg
+2026-01-04 23:33:49,681 [INFO] skipping DoValue:Gemini A - Retail:OuPntGybPq
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Gemini A - Retail:OuPntGybPq
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Leon Retail:MiFEAB9qpa
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Frontier - Retail:8wtJfn1Z1O
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Frontier II - Retail:eToysUulls
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Frontier - Retail:Msr6WpTet2
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Frontier - Retail:4OvZb0YjrK
+2026-01-04 23:33:49,682 [INFO] skipping DoValue:Frontier - Retail:uAhDht12kB
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Frontier - Retail:nl95YI2toG
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Frontier - Retail:vTwhWFd81j
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Gemini A - Retail:8c9giopBLx
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Frontier II - Retail:8nUOe2HLOe-002
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Heliopolis II - Retail:JHw8McKp5C
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Cairo 2:cBpJo8K9N3-003
+2026-01-04 23:33:49,683 [INFO] skipping DoValue:Mexico Retail:KqJPZDQuF1
+2026-01-04 23:33:49,684 [INFO] skipping DoValue:Cairo 1:j6MxFh2cT1
+2026-01-04 23:33:49,684 [INFO] skipping DoValue:Leon Retail:NEaPkan1Ow
+2026-01-04 23:33:49,684 [INFO] skipping DoValue:Frontier - Retail:I6grVHxdk6
+2026-01-04 23:33:49,684 [INFO] skipping DoValue:Frontier - Retail:ndnZf19DX2
+2026-01-04 23:33:49,684 [INFO] skipping DoValue:Frontier - Retail:LQWEr5gXfw
+2026-01-04 23:33:49,684 [INFO] skipping DoValue:Frontier - Retail:V5TkM50X9a
+2026-01-04 23:33:49,685 [INFO] skipping DoValue:Frontier - Retail:2eBmdm1iCj
+2026-01-04 23:33:49,685 [INFO] skipping DoValue:Cairo 1:8hkdho5U3K-001
+2026-01-04 23:33:49,685 [INFO] skipping DoValue:Cairo 1:8hkdho5U3K-002
+2026-01-04 23:33:49,685 [INFO] skipping DoValue:Frontier - Retail:jAM1AhpWns
+2026-01-04 23:33:49,685 [INFO] skipping DoValue:Mexico Retail:eYetL9vTqI
+2026-01-04 23:33:49,685 [INFO] skipping DoValue:Frontier - Retail:sYvxyEVMUY
+2026-01-04 23:33:49,686 [INFO] skipping DoValue:Leon Retail:GWxtHutnZW
+2026-01-04 23:33:49,686 [INFO] skipping DoValue:Cairo 2:evhbueqXHO
+2026-01-04 23:33:49,686 [INFO] skipping DoValue:Leon Retail:xmnbwkYTaE
+2026-01-04 23:33:49,686 [INFO] skipping DoValue:Mexico Retail:XRKEqWEGOi-001
+2026-01-04 23:33:49,686 [INFO] skipping DoValue:Frontier II - Retail:uohWjrTYNQ
+2026-01-04 23:33:49,686 [INFO] skipping DoValue:Leon Retail:5frs8Wd4Mg
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Mexico Retail:2Is1CsvvrF
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Frontier - Retail:mNUBWgKSTd
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Frontier - Retail:LVhW8qsEw7
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Cairo 2:yt3RQHPAV3
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Frontier - Retail:EAa2OnrOxI
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Heliopolis I - Retail:EXl2TLGDuV
+2026-01-04 23:33:49,687 [INFO] skipping DoValue:Mexico Retail:yioiAhqZPs
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:35139_2
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:33788_0
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:34834_0
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:33724_0
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:33970_0
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:33136_0
+2026-01-04 23:33:49,688 [INFO] skipping NBG:nbg-reo:33747_0
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:33547_1
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:35311_0
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:33687_0
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:34340_0
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:33810_0
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:33700_0
+2026-01-04 23:33:49,689 [INFO] skipping NBG:nbg-reo:34880_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:32554_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:34408_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:33520_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:35225_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:34410_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:32805_0
+2026-01-04 23:33:49,690 [INFO] skipping NBG:nbg-reo:34913_0
+2026-01-04 23:33:49,691 [INFO] skipping NBG:nbg-reo:34512_0
+2026-01-04 23:33:49,691 [INFO] skipping NBG:nbg-reo:34304_0
+2026-01-04 23:33:49,691 [INFO] skipping NBG:nbg-reo:34879_0
+2026-01-04 23:33:49,691 [INFO] skipping NBG:nbg-reo:34760_0
+2026-01-04 23:33:49,691 [INFO] skipping NBG:nbg-reo:35209_0
+2026-01-04 23:33:49,691 [INFO] skipping NBG:nbg-reo:34664_0
+2026-01-04 23:33:49,692 [INFO] skipping NBG:nbg-reo:33119_2
+2026-01-04 23:33:49,692 [INFO] skipping NBG:nbg-reo:34412_0
+2026-01-04 23:33:49,692 [INFO] skipping NBG:nbg-reo:34358_1
+2026-01-04 23:33:49,692 [INFO] skipping NBG:nbg-reo:34811_0
+2026-01-04 23:33:49,692 [INFO] skipping NBG:nbg-reo:33119_1
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:34391_0
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:33547_2
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:35005_0
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:33692_0
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:34991_0
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:33541_0
+2026-01-04 23:33:49,693 [INFO] skipping NBG:nbg-reo:33946_0
+2026-01-04 23:33:49,694 [INFO] skipping NBG:nbg-reo:34130_0
+2026-01-04 23:33:49,694 [INFO] skipping NBG:nbg-reo:34821_0
+2026-01-04 23:33:49,694 [INFO] skipping NBG:nbg-reo:35298_0
+2026-01-04 23:33:49,694 [INFO] skipping NBG:nbg-reo:33369_0
+2026-01-04 23:33:49,694 [INFO] skipping NBG:nbg-reo:34688_0
+2026-01-04 23:33:49,694 [INFO] skipping NBG:nbg-reo:33749_1
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:34709_0
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:35124_0
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:33779_0
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:34445_0
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:33506_3
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:34748_0
+2026-01-04 23:33:49,695 [INFO] skipping NBG:nbg-reo:33414_0
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:34787_0
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:33877_1
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:34017_0
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:34497_0
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:33418_0
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:33333_0
+2026-01-04 23:33:49,696 [INFO] skipping NBG:nbg-reo:32682_1
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:35362_1
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:34595_0
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:33984_0
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:35129_0
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:34514_0
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:34356_1
+2026-01-04 23:33:49,697 [INFO] skipping NBG:nbg-reo:35258_1
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:35068_0
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:33085_0
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:33357_0
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:34274_0
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:33996_1
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:35234_1
+2026-01-04 23:33:49,698 [INFO] skipping NBG:nbg-reo:34705_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:35044_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:35028_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:33121_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:34694_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:34949_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:34328_0
+2026-01-04 23:33:49,699 [INFO] skipping NBG:nbg-reo:90016_0
+2026-01-04 23:33:49,700 [INFO] skipping NBG:nbg-reo:34837_0
+2026-01-04 23:33:49,700 [INFO] skipping NBG:nbg-reo:34282_0
+2026-01-04 23:33:49,700 [INFO] skipping NBG:nbg-reo:34768_0
+2026-01-04 23:33:49,700 [INFO] skipping NBG:nbg-reo:32520_0
+2026-01-04 23:33:49,700 [INFO] skipping NBG:nbg-reo:33921_0
+2026-01-04 23:33:49,700 [INFO] skipping NBG:nbg-reo:33960_0
+2026-01-04 23:33:49,701 [INFO] skipping NBG:nbg-reo:33665_1
+2026-01-04 23:33:49,701 [INFO] skipping NBG:nbg-reo:34530_0
+2026-01-04 23:33:49,701 [INFO] skipping NBG:nbg-reo:34848_0
+2026-01-04 23:33:49,701 [INFO] skipping NBG:nbg-reo:35090_0
+2026-01-04 23:33:49,702 [INFO] skipping NBG:nbg-reo:34541_0
+2026-01-04 23:33:49,702 [INFO] skipping NBG:nbg-reo:33938_0
+2026-01-04 23:33:49,702 [INFO] skipping NBG:nbg-reo:34218_0
+2026-01-04 23:33:49,702 [INFO] skipping NBG:nbg-reo:33762_0
+2026-01-04 23:33:49,703 [INFO] skipping NBG:nbg-reo:70155_0
+2026-01-04 23:33:49,703 [INFO] skipping NBG:nbg-reo:34087_1
+2026-01-04 23:33:49,703 [INFO] skipping NBG:nbg-reo:34191_1
+2026-01-04 23:33:49,703 [INFO] skipping NBG:nbg-reo:34537_0
+2026-01-04 23:33:49,703 [INFO] skipping NBG:nbg-reo:35058_0
+2026-01-04 23:33:49,703 [INFO] skipping NBG:nbg-reo:71030_1
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:33738_3
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:34437_0
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:34740_0
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:34300_0
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:33634_0
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:33738_1
+2026-01-04 23:33:49,704 [INFO] skipping NBG:nbg-reo:33097_0
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:33112_0
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:71030_2
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:34487_0
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:34166_3
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:35162_0
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:34601_0
+2026-01-04 23:33:49,705 [INFO] skipping NBG:nbg-reo:35334_0
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:33800_4
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:33465_0
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:33800_6
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:33800_5
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:34867_0
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:34367_0
+2026-01-04 23:33:49,706 [INFO] skipping NBG:nbg-reo:33890_0
+2026-01-04 23:33:49,707 [INFO] skipping NBG:nbg-reo:34786_0
+2026-01-04 23:33:49,707 [INFO] skipping NBG:nbg-reo:32684_0
+2026-01-04 23:33:49,707 [INFO] skipping NBG:nbg-reo:32993_0
+2026-01-04 23:33:49,707 [INFO] skipping DoValue:DVG_28.11:RA271342
+2026-01-04 23:33:49,707 [INFO] skipping DoValue:DVG_28.11:RA145594
+2026-01-04 23:33:49,707 [INFO] skipping DoValue:DVG_28.11:RA587220
+2026-01-04 23:33:49,707 [INFO] skipping DoValue:DVG_28.11:RA206359
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA221128
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA520489
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA157871
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA203750
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA409856
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA585850
+2026-01-04 23:33:49,708 [INFO] skipping DoValue:DVG_28.11:RA178854
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA501803
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA587256
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA506309
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA568152
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA175587
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA565869
+2026-01-04 23:33:49,709 [INFO] skipping DoValue:DVG_28.11:RA100954
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:RA592536
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:RA215031
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:RA183906
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:RA187069
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:RA587753
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:RA206679
+2026-01-04 23:33:49,710 [INFO] skipping DoValue:DVG_28.11:83763
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:98174
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:116268
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:104880
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:86153
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:90407
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:90257
+2026-01-04 23:33:49,711 [INFO] skipping DoValue:DVG_28.11:116647
+2026-01-04 23:33:49,712 [INFO] skipping DoValue:DVG_28.11:126241
+2026-01-04 23:33:49,712 [INFO] skipping DoValue:DVG_28.11:90221
+2026-01-04 23:33:49,712 [INFO] skipping DoValue:DVG_28.11:145919
+2026-01-04 23:33:49,712 [INFO] skipping ERB:ERB_attica_thessaloniki:E-08330
+2026-01-04 23:33:49,712 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10010-10198-10199-10200-10201
+2026-01-04 23:33:49,712 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10043
+2026-01-04 23:33:49,712 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10130
+2026-01-04 23:33:49,713 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10189
+2026-01-04 23:33:49,713 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10261- 10311-10312
+2026-01-04 23:33:49,713 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10263
+2026-01-04 23:33:49,713 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10403
+2026-01-04 23:33:49,713 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10441
+2026-01-04 23:33:49,713 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10524
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10576-10577
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10677
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10678
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10679
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10711
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10818
+2026-01-04 23:33:49,714 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10820
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10984
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11200
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11214
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11525
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11526
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11873-11876-11877-11879-11880
+2026-01-04 23:33:49,715 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11874-11875-11878
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12139
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12250
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12253
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12277
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12388
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12421-12423
+2026-01-04 23:33:49,716 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12422
+2026-01-04 23:33:49,717 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12424-26-14877
+2026-01-04 23:33:49,717 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12546-12547
+2026-01-04 23:33:49,717 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12548-12549
+2026-01-04 23:33:49,717 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12559
+2026-01-04 23:33:49,717 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12561
+2026-01-04 23:33:49,717 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12563
+2026-01-04 23:33:49,718 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12583
+2026-01-04 23:33:49,718 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12584
+2026-01-04 23:33:49,718 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12585
+2026-01-04 23:33:49,718 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12586
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12587
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12588
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12589
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12590
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12621
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12622
+2026-01-04 23:33:49,719 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12623
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12656
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12657
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12709
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12881
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12947
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14008
+2026-01-04 23:33:49,720 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14067
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14117
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14137
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14189
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14243
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14286
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14297-14298-14299-14300
+2026-01-04 23:33:49,721 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14312
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14352
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14353
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14353-14354
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14354
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14356
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14372
+2026-01-04 23:33:49,722 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14457
+2026-01-04 23:33:49,723 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14593-95
+2026-01-04 23:33:49,723 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14644
+2026-01-04 23:33:49,723 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14645
+2026-01-04 23:33:49,723 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14726
+2026-01-04 23:33:49,723 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14744
+2026-01-04 23:33:49,723 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14746
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14753
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14757-14758-14759
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14775
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14776
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14809
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14867
+2026-01-04 23:33:49,724 [INFO] skipping ERB:ERB_attica_thessaloniki:E-7698
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-80147-80148
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-80333
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8347
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8393
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8747
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8936
+2026-01-04 23:33:49,725 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9166
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9167
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9179
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9365
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9424
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9425
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9542
+2026-01-04 23:33:49,726 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9581
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:E-8976
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:E-10677
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:2-11574
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:A-6012
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:E-10310-10313-10314
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:2-12725
+2026-01-04 23:33:49,727 [INFO] skipping CRVD:Residental_assets_var:E-14289-14290-14291
+2026-01-04 23:33:49,728 [INFO] skipping CRVD:Residental_assets_var:E-14776
+2026-01-04 23:33:49,728 [INFO] skipping CRVD:Residental_assets_var:CPR-130
+2026-01-04 23:33:49,728 [INFO] skipping CRVD:Residental_assets_var:CPR-191
+2026-01-04 23:33:49,728 [INFO] skipping CRVD:Residental_assets_var:I-00152
+2026-01-04 23:33:49,728 [INFO] skipping CRVD:Residental_assets_var:E-9179
+2026-01-04 23:33:49,728 [INFO] skipping CRVD:Residental_assets_var:CPR-159
+2026-01-04 23:33:49,731 [INFO] skipping CRVD:Residental_assets_var:CPR-152
+2026-01-04 23:33:49,732 [INFO] skipping CRVD:Residental_assets_var:CPR-151
+2026-01-04 23:33:49,732 [INFO] skipping CRVD:Residental_assets_var:E-10308-10303-10304
+2026-01-04 23:33:49,732 [INFO] skipping CRVD:Residental_assets_var:CPR-278
+2026-01-04 23:33:49,732 [INFO] skipping CRVD:Residental_assets_var:E-14571-14572
+2026-01-04 23:33:49,732 [INFO] skipping CRVD:Residental_assets_var:E-14754
+2026-01-04 23:33:49,732 [INFO] skipping CRVD:Residental_assets_var:H-528
+2026-01-04 23:33:49,733 [INFO] skipping CRVD:Residental_assets_var:E-10261- 10311-10312
+2026-01-04 23:33:49,733 [INFO] skipping CRVD:Residental_assets_var:E-14008
+2026-01-04 23:33:49,733 [INFO] skipping CRVD:Residental_assets_var:T-606
+2026-01-04 23:33:49,733 [INFO] skipping CRVD:Residental_assets_var:E-12561
+2026-01-04 23:33:49,734 [INFO] skipping CRVD:Residental_assets_var:E-14189
+2026-01-04 23:33:49,734 [INFO] skipping CRVD:Residental_assets_var:T-5740
+2026-01-04 23:33:49,734 [INFO] skipping CRVD:Residental_assets_var:T-8145
+2026-01-04 23:33:49,734 [INFO] skipping CRVD:Residental_assets_var:CPR-187
+2026-01-04 23:33:49,734 [INFO] skipping CRVD:Residental_assets_var:CPR-188
+2026-01-04 23:33:49,734 [INFO] skipping CRVD:Residental_assets_var:T-555
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:Residental_assets_var:E-12947
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:Residental_assets_var:T-1270
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:Residental_assets_var:T-1412
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:Residental_assets_var:T-925
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:Residental_assets_var:H-815
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:Residental_assets_var:CPR-235
+2026-01-04 23:33:49,735 [INFO] skipping CRVD:scraping_4/1/26:107
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:155
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:168
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:195
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:227
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:262
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:373
+2026-01-04 23:33:49,736 [INFO] skipping CRVD:scraping_4/1/26:404
+2026-01-04 23:33:49,737 [INFO] skipping CRVD:scraping_4/1/26:431
+2026-01-04 23:33:49,737 [INFO] skipping CRVD:scraping_4/1/26:465
+2026-01-04 23:33:49,737 [INFO] skipping CRVD:scraping_4/1/26:1025
+2026-01-04 23:33:49,737 [INFO] skipping CRVD:scraping_4/1/26:1026
+2026-01-04 23:33:49,737 [INFO] skipping CRVD:scraping_4/1/26:1030
+2026-01-04 23:33:49,737 [INFO] skipping CRVD:scraping_4/1/26:1318
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1328
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1466
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1473
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1495
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1498
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1637
+2026-01-04 23:33:49,738 [INFO] skipping CRVD:scraping_4/1/26:1640
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1641
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1700
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1757
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1765
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1766
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1777
+2026-01-04 23:33:49,739 [INFO] skipping CRVD:scraping_4/1/26:1785
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:1924
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:1929
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:1930
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:1935
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:1962
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:2001
+2026-01-04 23:33:49,740 [INFO] skipping CRVD:scraping_4/1/26:3386
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6068
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6069
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6070
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6072
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6113
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6152
+2026-01-04 23:33:49,741 [INFO] skipping CRVD:scraping_4/1/26:6157
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6197
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6201
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6218
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6240
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6243
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6259
+2026-01-04 23:33:49,742 [INFO] skipping CRVD:scraping_4/1/26:6305
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6334
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6347
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6348
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6403
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6404
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6509
+2026-01-04 23:33:49,743 [INFO] skipping CRVD:scraping_4/1/26:6575
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6576
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6577
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6578
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6580
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6604
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6641
+2026-01-04 23:33:49,744 [INFO] skipping CRVD:scraping_4/1/26:6715
+2026-01-04 23:33:49,745 [INFO] skipping CRVD:scraping_4/1/26:6717
+2026-01-04 23:33:49,745 [INFO] skipping CRVD:scraping_4/1/26:6794
+2026-01-04 23:33:49,745 [INFO] skipping CRVD:scraping_4/1/26:6806
+2026-01-04 23:33:49,745 [INFO] skipping CRVD:scraping_4/1/26:6835
+2026-01-04 23:33:49,745 [INFO] skipping CRVD:scraping_4/1/26:6837
+2026-01-04 23:33:49,745 [INFO] skipping CRVD:scraping_4/1/26:6838
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:6840
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:6893
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:6898
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:6901
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:6934
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:7061
+2026-01-04 23:33:49,746 [INFO] skipping CRVD:scraping_4/1/26:7064
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7071
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7084
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7090
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7093
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7095
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7100
+2026-01-04 23:33:49,747 [INFO] skipping CRVD:scraping_4/1/26:7110
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7136
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7159
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7188
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7224
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7291
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7302
+2026-01-04 23:33:49,748 [INFO] skipping CRVD:scraping_4/1/26:7303
+2026-01-04 23:33:49,749 [INFO] skipping CRVD:scraping_4/1/26:7307
+2026-01-04 23:33:49,749 [INFO] skipping CRVD:scraping_4/1/26:7327
+2026-01-04 23:33:49,749 [INFO] skipping CRVD:scraping_4/1/26:7351
+2026-01-04 23:33:49,749 [INFO] skipping CRVD:scraping_4/1/26:7361
+2026-01-04 23:33:49,749 [INFO] skipping CRVD:scraping_4/1/26:7364
+2026-01-04 23:33:49,749 [INFO] skipping CRVD:scraping_4/1/26:7392
+2026-01-04 23:33:49,750 [INFO] skipping CRVD:scraping_4/1/26:7404
+2026-01-04 23:33:49,750 [INFO] skipping CRVD:scraping_4/1/26:7417
+2026-01-04 23:33:49,750 [INFO] skipping CRVD:scraping_4/1/26:7418
+2026-01-04 23:33:49,750 [INFO] skipping CRVD:scraping_4/1/26:7430
+2026-01-04 23:33:49,750 [INFO] skipping CRVD:scraping_4/1/26:7431
+2026-01-04 23:33:49,750 [INFO] skipping CRVD:scraping_4/1/26:7432
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7452
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7510
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7513
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7530
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7541
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7542
+2026-01-04 23:33:49,751 [INFO] skipping CRVD:scraping_4/1/26:7543
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7544
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7579
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7588
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7603
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7608
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7636
+2026-01-04 23:33:49,752 [INFO] skipping CRVD:scraping_4/1/26:7654
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7661
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7664
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7666
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7679
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7680
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7713
+2026-01-04 23:33:49,753 [INFO] skipping CRVD:scraping_4/1/26:7720
+2026-01-04 23:33:49,754 [INFO] skipping CRVD:scraping_4/1/26:7749
+2026-01-04 23:33:49,754 [INFO] skipping CRVD:scraping_4/1/26:7756
+2026-01-04 23:33:49,754 [INFO] skipping CRVD:scraping_4/1/26:7762
+2026-01-04 23:33:49,754 [INFO] skipping CRVD:scraping_4/1/26:7799
+2026-01-04 23:33:49,754 [INFO] skipping CRVD:scraping_4/1/26:7807
+2026-01-04 23:33:49,754 [INFO] skipping CRVD:scraping_4/1/26:7808
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7809
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7810
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7825
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7830
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7832
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7859
+2026-01-04 23:33:49,755 [INFO] skipping CRVD:scraping_4/1/26:7870
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7875
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7894
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7895
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7907
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7920
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7930
+2026-01-04 23:33:49,756 [INFO] skipping CRVD:scraping_4/1/26:7966
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7968
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7969
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7970
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7971
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7972
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7983
+2026-01-04 23:33:49,757 [INFO] skipping CRVD:scraping_4/1/26:7993
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:7994
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:7996
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:8000
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:8009
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:8010
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:8013
+2026-01-04 23:33:49,758 [INFO] skipping CRVD:scraping_4/1/26:8020
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8022
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8024
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8025
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8026
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8031
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8032
+2026-01-04 23:33:49,759 [INFO] skipping CRVD:scraping_4/1/26:8035
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8042
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8048
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8049
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8050
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8051
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8057
+2026-01-04 23:33:49,760 [INFO] skipping CRVD:scraping_4/1/26:8063
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8065
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8074
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8080
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8086
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8088
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8094
+2026-01-04 23:33:49,761 [INFO] skipping CRVD:scraping_4/1/26:8095
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8096
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8098
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8109
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8117
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8122
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8124
+2026-01-04 23:33:49,762 [INFO] skipping CRVD:scraping_4/1/26:8128
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8129
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8132
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8134
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8141
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8145
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8146
+2026-01-04 23:33:49,763 [INFO] skipping CRVD:scraping_4/1/26:8149
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8152
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8157
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8161
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8163
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8164
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8177
+2026-01-04 23:33:49,764 [INFO] skipping CRVD:scraping_4/1/26:8179
+2026-01-04 23:33:49,765 [INFO] skipping CRVD:scraping_4/1/26:8181
+2026-01-04 23:33:49,765 [INFO] skipping CRVD:scraping_4/1/26:8183
+2026-01-04 23:33:49,765 [INFO] skipping CRVD:scraping_4/1/26:8189
+2026-01-04 23:33:49,765 [INFO] skipping CRVD:scraping_4/1/26:8200
+2026-01-04 23:33:49,765 [INFO] skipping CRVD:scraping_4/1/26:8201
+2026-01-04 23:33:49,765 [INFO] skipping CRVD:scraping_4/1/26:8205
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8206
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8212
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8215
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8217
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8219
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8222
+2026-01-04 23:33:49,766 [INFO] skipping CRVD:scraping_4/1/26:8228
+2026-01-04 23:33:49,767 [INFO] skipping CRVD:scraping_4/1/26:8245
+2026-01-04 23:33:49,767 [INFO] skipping CRVD:scraping_4/1/26:8254
+2026-01-04 23:33:49,767 [INFO] skipping CRVD:scraping_4/1/26:8262
+2026-01-04 23:33:49,767 [INFO] skipping CRVD:scraping_4/1/26:8268
+2026-01-04 23:33:49,767 [INFO] skipping CRVD:scraping_4/1/26:8275
+2026-01-04 23:33:49,767 [INFO] skipping CRVD:scraping_4/1/26:8277
+2026-01-04 23:33:49,768 [INFO] skipping CRVD:scraping_4/1/26:8287
+2026-01-04 23:33:49,768 [INFO] skipping CRVD:scraping_4/1/26:8288
+2026-01-04 23:33:49,768 [INFO] skipping CRVD:scraping_4/1/26:8291
+2026-01-04 23:33:49,768 [INFO] skipping CRVD:scraping_4/1/26:8295
+2026-01-04 23:33:49,768 [INFO] skipping CRVD:scraping_4/1/26:8306
+2026-01-04 23:33:49,768 [INFO] skipping CRVD:scraping_4/1/26:8320
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8324
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8325
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8332
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8333
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8334
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8335
+2026-01-04 23:33:49,769 [INFO] skipping CRVD:scraping_4/1/26:8336
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8337
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8338
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8339
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8343
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8349
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8351
+2026-01-04 23:33:49,770 [INFO] skipping CRVD:scraping_4/1/26:8352
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8361
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8362
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8371
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8373
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8377
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8383
+2026-01-04 23:33:49,771 [INFO] skipping CRVD:scraping_4/1/26:8387
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8390
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8399
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8401
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8404
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8405
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8407
+2026-01-04 23:33:49,772 [INFO] skipping CRVD:scraping_4/1/26:8410
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8411
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8412
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8413
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8415
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8416
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8417
+2026-01-04 23:33:49,773 [INFO] skipping CRVD:scraping_4/1/26:8418
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8419
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8421
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8422
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8424
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8425
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8426
+2026-01-04 23:33:49,774 [INFO] skipping CRVD:scraping_4/1/26:8427
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8428
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8429
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8430
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8431
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8432
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8433
+2026-01-04 23:33:49,775 [INFO] skipping CRVD:scraping_4/1/26:8434
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8435
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8436
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8437
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8438
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8439
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8440
+2026-01-04 23:33:49,776 [INFO] skipping CRVD:scraping_4/1/26:8441
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8442
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8443
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8444
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8445
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8446
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8447
+2026-01-04 23:33:49,777 [INFO] skipping CRVD:scraping_4/1/26:8448
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8449
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8450
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8451
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8452
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8453
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8457
+2026-01-04 23:33:49,778 [INFO] skipping CRVD:scraping_4/1/26:8460
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8461
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8462
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8463
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8464
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8465
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8466
+2026-01-04 23:33:49,779 [INFO] skipping CRVD:scraping_4/1/26:8467
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8468
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8469
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8470
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8471
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8472
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8473
+2026-01-04 23:33:49,780 [INFO] skipping CRVD:scraping_4/1/26:8474
+2026-01-04 23:33:49,781 [INFO] skipping CRVD:scraping_4/1/26:8475
+2026-01-04 23:33:49,781 [INFO] skipping CRVD:scraping_4/1/26:8476
+2026-01-04 23:33:49,781 [INFO] skipping CRVD:scraping_4/1/26:8477
+2026-01-04 23:33:49,781 [INFO] skipping CRVD:scraping_4/1/26:8478
+2026-01-04 23:33:49,781 [INFO] skipping CRVD:scraping_4/1/26:8482
+2026-01-04 23:33:49,782 [INFO] skipping CRVD:scraping_4/1/26:8485
+2026-01-04 23:33:49,782 [INFO] skipping CRVD:scraping_4/1/26:8486
+2026-01-04 23:33:49,782 [INFO] skipping CRVD:scraping_4/1/26:8488
+2026-01-04 23:33:49,782 [INFO] skipping CRVD:scraping_4/1/26:8489
+2026-01-04 23:33:49,782 [INFO] skipping CRVD:scraping_4/1/26:8490
+2026-01-04 23:33:49,782 [INFO] skipping CRVD:scraping_4/1/26:8491
+2026-01-04 23:33:49,783 [INFO] skipping CRVD:scraping_4/1/26:8493
+2026-01-04 23:33:49,783 [INFO] skipping CRVD:scraping_4/1/26:8495
+2026-01-04 23:33:49,783 [INFO] skipping CRVD:scraping_4/1/26:8498
+2026-01-04 23:33:49,783 [INFO] skipping CRVD:scraping_4/1/26:8499
+2026-01-04 23:33:49,783 [INFO] skipping CRVD:scraping_4/1/26:8500
+2026-01-04 23:33:49,783 [INFO] skipping CRVD:scraping_4/1/26:8501
+2026-01-04 23:33:49,784 [INFO] skipping CRVD:scraping_4/1/26:8502
+2026-01-04 23:33:49,784 [INFO] skipping CRVD:scraping_4/1/26:8503
+2026-01-04 23:33:49,784 [INFO] skipping CRVD:scraping_4/1/26:8504
+2026-01-04 23:33:49,784 [INFO] skipping CRVD:scraping_4/1/26:8505
+2026-01-04 23:33:49,784 [INFO] skipping CRVD:scraping_4/1/26:8506
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8507
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8508
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8509
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8510
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8511
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8512
+2026-01-04 23:33:49,785 [INFO] skipping CRVD:scraping_4/1/26:8513
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8514
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8515
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8519
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8521
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8522
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8523
+2026-01-04 23:33:49,786 [INFO] skipping CRVD:scraping_4/1/26:8524
+2026-01-04 23:33:49,787 [INFO] skipping CRVD:scraping_4/1/26:8525
+2026-01-04 23:33:49,787 [INFO] skipping CRVD:scraping_4/1/26:8526
+2026-01-04 23:33:49,787 [INFO] skipping CRVD:scraping_4/1/26:8527
+2026-01-04 23:33:49,787 [INFO] skipping CRVD:scraping_4/1/26:8534
+2026-01-04 23:33:49,787 [INFO] skipping CRVD:scraping_4/1/26:8535
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8536
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8538
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8539
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8544
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8545
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8559
+2026-01-04 23:33:49,788 [INFO] skipping CRVD:scraping_4/1/26:8565
+2026-01-04 23:33:49,789 [INFO] skipping CRVD:scraping_4/1/26:8566
+2026-01-04 23:33:49,789 [INFO] skipping CRVD:scraping_4/1/26:8567
+2026-01-04 23:33:49,789 [INFO] skipping CRVD:scraping_4/1/26:8568
+2026-01-04 23:33:49,789 [INFO] skipping CRVD:scraping_4/1/26:8569
+2026-01-04 23:33:49,789 [INFO] skipping CRVD:scraping_4/1/26:8585
+2026-01-04 23:33:49,789 [INFO] skipping CRVD:scraping_4/1/26:8588
+2026-01-04 23:33:49,790 [INFO] skipping CRVD:scraping_4/1/26:8589
+2026-01-04 23:33:49,790 [INFO] skipping CRVD:scraping_4/1/26:8590
+2026-01-04 23:33:49,790 [INFO] skipping CRVD:scraping_4/1/26:8591
+2026-01-04 23:33:49,790 [INFO] skipping CRVD:scraping_4/1/26:8592
+2026-01-04 23:33:49,790 [INFO] skipping CRVD:scraping_4/1/26:8593
+2026-01-04 23:33:49,790 [INFO] skipping CRVD:scraping_4/1/26:8594
+2026-01-04 23:33:49,791 [INFO] skipping CRVD:scraping_4/1/26:8595
+2026-01-04 23:33:49,791 [INFO] skipping CRVD:scraping_4/1/26:8597
+2026-01-04 23:33:49,791 [INFO] skipping CRVD:scraping_4/1/26:8598
+2026-01-04 23:33:49,791 [INFO] skipping CRVD:scraping_4/1/26:8601
+2026-01-04 23:33:49,791 [INFO] skipping CRVD:scraping_4/1/26:8602
+2026-01-04 23:33:49,791 [INFO] skipping CRVD:scraping_4/1/26:8605
+2026-01-04 23:33:49,792 [INFO] skipping CRVD:scraping_4/1/26:8608
+2026-01-04 23:33:49,792 [INFO] skipping CRVD:scraping_4/1/26:8609
+2026-01-04 23:33:49,792 [INFO] skipping CRVD:scraping_4/1/26:8612
+2026-01-04 23:33:49,792 [INFO] skipping CRVD:scraping_4/1/26:8615
+2026-01-04 23:33:49,792 [INFO] skipping CRVD:scraping_4/1/26:8621
+2026-01-04 23:33:49,792 [INFO] skipping CRVD:scraping_4/1/26:8623
+2026-01-04 23:33:49,793 [INFO] skipping CRVD:scraping_4/1/26:8624
+2026-01-04 23:33:49,793 [INFO] skipping CRVD:scraping_4/1/26:8625
+2026-01-04 23:33:49,793 [INFO] skipping CRVD:scraping_4/1/26:8626
+2026-01-04 23:33:49,793 [INFO] skipping CRVD:scraping_4/1/26:8627
+2026-01-04 23:33:49,793 [INFO] skipping CRVD:scraping_4/1/26:8628
+2026-01-04 23:33:49,793 [INFO] skipping CRVD:scraping_4/1/26:8633
+2026-01-04 23:33:49,794 [INFO] skipping CRVD:scraping_4/1/26:8643
+2026-01-04 23:33:49,794 [INFO] skipping CRVD:scraping_4/1/26:8655
+2026-01-04 23:33:49,794 [INFO] skipping CRVD:scraping_4/1/26:8657
+2026-01-04 23:33:49,794 [INFO] skipping CRVD:scraping_4/1/26:8658
+2026-01-04 23:33:49,794 [INFO] skipping CRVD:scraping_4/1/26:8664
+2026-01-04 23:33:49,794 [INFO] skipping CRVD:scraping_4/1/26:8671
+2026-01-04 23:33:49,795 [INFO] skipping CRVD:scraping_4/1/26:8672
+2026-01-04 23:33:49,795 [INFO] skipping CRVD:scraping_4/1/26:8676
+2026-01-04 23:33:49,795 [INFO] skipping CRVD:scraping_4/1/26:8679
+2026-01-04 23:33:49,795 [INFO] skipping CRVD:scraping_4/1/26:8682
+2026-01-04 23:33:49,795 [INFO] skipping CRVD:scraping_4/1/26:8683
+2026-01-04 23:33:49,795 [INFO] skipping CRVD:scraping_4/1/26:8684
+2026-01-04 23:33:49,796 [INFO] skipping CRVD:scraping_4/1/26:8686
+2026-01-04 23:33:49,796 [INFO] skipping CRVD:scraping_4/1/26:8688
+2026-01-04 23:33:49,796 [INFO] skipping CRVD:scraping_4/1/26:8693
+2026-01-04 23:33:49,798 [INFO] skipping CRVD:scraping_4/1/26:8694
+2026-01-04 23:33:49,798 [INFO] skipping CRVD:scraping_4/1/26:8695
+2026-01-04 23:33:49,798 [INFO] skipping CRVD:scraping_4/1/26:8696
+2026-01-04 23:33:49,798 [INFO] skipping CRVD:scraping_4/1/26:8697
+2026-01-04 23:33:49,799 [INFO] skipping CRVD:scraping_4/1/26:8698
+2026-01-04 23:33:49,799 [INFO] skipping CRVD:scraping_4/1/26:8699
+2026-01-04 23:33:49,799 [INFO] skipping CRVD:scraping_4/1/26:8702
+2026-01-04 23:33:49,800 [INFO] skipping CRVD:scraping_4/1/26:8703
+2026-01-04 23:33:49,800 [INFO] skipping CRVD:scraping_4/1/26:8704
+2026-01-04 23:33:49,800 [INFO] skipping CRVD:scraping_4/1/26:8707
+2026-01-04 23:33:49,801 [INFO] skipping CRVD:scraping_4/1/26:8708
+2026-01-04 23:33:49,801 [INFO] skipping CRVD:scraping_4/1/26:8720
+2026-01-04 23:33:49,801 [INFO] skipping CRVD:scraping_4/1/26:8724
+2026-01-04 23:33:49,801 [INFO] skipping CRVD:scraping_4/1/26:8725
+2026-01-04 23:33:49,801 [INFO] skipping CRVD:scraping_4/1/26:8729
+2026-01-04 23:33:49,802 [INFO] skipping CRVD:scraping_4/1/26:8730
+2026-01-04 23:33:49,802 [INFO] skipping CRVD:scraping_4/1/26:8731
+2026-01-04 23:33:49,802 [INFO] skipping CRVD:scraping_4/1/26:8733
+2026-01-04 23:33:49,802 [INFO] skipping CRVD:scraping_4/1/26:8734
+2026-01-04 23:33:49,802 [INFO] skipping CRVD:scraping_4/1/26:8735
+2026-01-04 23:33:49,802 [INFO] skipping CRVD:scraping_4/1/26:8736
+2026-01-04 23:33:49,803 [INFO] skipping CRVD:scraping_4/1/26:8737
+2026-01-04 23:33:49,803 [INFO] skipping CRVD:scraping_4/1/26:8738
+2026-01-04 23:33:49,803 [INFO] skipping CRVD:scraping_4/1/26:8740
+2026-01-04 23:33:49,803 [INFO] skipping CRVD:scraping_4/1/26:8741
+2026-01-04 23:33:49,803 [INFO] skipping CRVD:scraping_4/1/26:8746
+2026-01-04 23:33:49,803 [INFO] skipping CRVD:scraping_4/1/26:8747
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8751
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8753
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8761
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8762
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8764
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8767
+2026-01-04 23:33:49,804 [INFO] skipping CRVD:scraping_4/1/26:8768
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8770
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8772
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8773
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8774
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8775
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8779
+2026-01-04 23:33:49,805 [INFO] skipping CRVD:scraping_4/1/26:8783
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8784
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8785
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8786
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8787
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8791
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8792
+2026-01-04 23:33:49,806 [INFO] skipping CRVD:scraping_4/1/26:8793
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8794
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8795
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8800
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8801
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8803
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8805
+2026-01-04 23:33:49,807 [INFO] skipping CRVD:scraping_4/1/26:8807
+2026-01-04 23:33:49,808 [INFO] skipping CRVD:scraping_4/1/26:8811
+2026-01-04 23:33:49,808 [INFO] skipping CRVD:scraping_4/1/26:8813
+2026-01-04 23:33:49,808 [INFO] skipping CRVD:scraping_4/1/26:8814
+2026-01-04 23:33:49,808 [INFO] skipping CRVD:scraping_4/1/26:8815
+2026-01-04 23:33:49,808 [INFO] skipping CRVD:scraping_4/1/26:8816
+2026-01-04 23:33:49,808 [INFO] skipping CRVD:scraping_4/1/26:8817
+2026-01-04 23:33:49,809 [INFO] skipping CRVD:scraping_4/1/26:8818
+2026-01-04 23:33:49,809 [INFO] skipping CRVD:scraping_4/1/26:8828
+2026-01-04 23:33:49,809 [INFO] skipping CRVD:scraping_4/1/26:8830
+2026-01-04 23:33:49,809 [INFO] skipping CRVD:scraping_4/1/26:8832
+2026-01-04 23:33:49,809 [INFO] skipping CRVD:scraping_4/1/26:8834
+2026-01-04 23:33:49,810 [INFO] skipping CRVD:scraping_4/1/26:8836
+2026-01-04 23:33:49,810 [INFO] skipping CRVD:scraping_4/1/26:8837
+2026-01-04 23:33:49,810 [INFO] skipping CRVD:scraping_4/1/26:8838
+2026-01-04 23:33:49,810 [INFO] skipping CRVD:scraping_4/1/26:8840
+2026-01-04 23:33:49,810 [INFO] skipping CRVD:scraping_4/1/26:8841
+2026-01-04 23:33:49,811 [INFO] skipping CRVD:scraping_4/1/26:8844
+2026-01-04 23:33:49,811 [INFO] skipping CRVD:scraping_4/1/26:8849
+2026-01-04 23:33:49,811 [INFO] skipping CRVD:scraping_4/1/26:8851
+2026-01-04 23:33:49,811 [INFO] skipping CRVD:scraping_4/1/26:8856
+2026-01-04 23:33:49,811 [INFO] skipping CRVD:scraping_4/1/26:8857
+2026-01-04 23:33:49,811 [INFO] skipping CRVD:scraping_4/1/26:8858
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8859
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8860
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8862
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8864
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8868
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8870
+2026-01-04 23:33:49,812 [INFO] skipping CRVD:scraping_4/1/26:8871
+2026-01-04 23:33:49,813 [INFO] skipping CRVD:scraping_4/1/26:8872
+2026-01-04 23:33:49,813 [INFO] skipping CRVD:scraping_4/1/26:8873
+2026-01-04 23:33:49,813 [INFO] skipping CRVD:scraping_4/1/26:8876
+2026-01-04 23:33:49,813 [INFO] skipping CRVD:scraping_4/1/26:8878
+2026-01-04 23:33:49,813 [INFO] skipping CRVD:scraping_4/1/26:8879
+2026-01-04 23:33:49,814 [INFO] skipping CRVD:scraping_4/1/26:8880
+2026-01-04 23:33:49,814 [INFO] skipping CRVD:scraping_4/1/26:8881
+2026-01-04 23:33:49,814 [INFO] skipping CRVD:scraping_4/1/26:8882
+2026-01-04 23:33:49,814 [INFO] skipping CRVD:scraping_4/1/26:8884
+2026-01-04 23:33:49,814 [INFO] skipping CRVD:scraping_4/1/26:8885
+2026-01-04 23:33:49,815 [INFO] skipping CRVD:scraping_4/1/26:8887
+2026-01-04 23:33:49,815 [INFO] skipping CRVD:scraping_4/1/26:8888
+2026-01-04 23:33:49,815 [INFO] skipping CRVD:scraping_4/1/26:8889
+2026-01-04 23:33:49,815 [INFO] skipping CRVD:scraping_4/1/26:8890
+2026-01-04 23:33:49,815 [INFO] skipping CRVD:scraping_4/1/26:8893
+2026-01-04 23:33:49,816 [INFO] skipping CRVD:scraping_4/1/26:8894
+2026-01-04 23:33:49,816 [INFO] skipping CRVD:scraping_4/1/26:8895
+2026-01-04 23:33:49,816 [INFO] skipping CRVD:scraping_4/1/26:8896
+2026-01-04 23:33:49,816 [INFO] skipping CRVD:scraping_4/1/26:8897
+2026-01-04 23:33:49,816 [INFO] skipping CRVD:scraping_4/1/26:8907
+2026-01-04 23:33:49,817 [INFO] skipping CRVD:scraping_4/1/26:8908
+2026-01-04 23:33:49,817 [INFO] skipping CRVD:scraping_4/1/26:8909
+2026-01-04 23:33:49,818 [INFO] skipping CRVD:scraping_4/1/26:8910
+2026-01-04 23:33:49,818 [INFO] skipping CRVD:scraping_4/1/26:8911
+2026-01-04 23:33:49,819 [INFO] skipping CRVD:scraping_4/1/26:8912
+2026-01-04 23:33:49,819 [INFO] skipping CRVD:scraping_4/1/26:8913
+2026-01-04 23:33:49,819 [INFO] skipping CRVD:scraping_4/1/26:8920
+2026-01-04 23:33:49,819 [INFO] skipping CRVD:scraping_4/1/26:8921
+2026-01-04 23:33:49,819 [INFO] skipping CRVD:scraping_4/1/26:8924
+2026-01-04 23:33:49,819 [INFO] skipping CRVD:scraping_4/1/26:8927
+2026-01-04 23:33:49,820 [INFO] skipping CRVD:scraping_4/1/26:8928
+2026-01-04 23:33:49,820 [INFO] skipping CRVD:scraping_4/1/26:8929
+2026-01-04 23:33:49,820 [INFO] skipping CRVD:scraping_4/1/26:8930
+2026-01-04 23:33:49,820 [INFO] skipping CRVD:scraping_4/1/26:8931
+2026-01-04 23:33:49,821 [INFO] skipping CRVD:scraping_4/1/26:8932
+2026-01-04 23:33:49,821 [INFO] skipping CRVD:scraping_4/1/26:8933
+2026-01-04 23:33:49,821 [INFO] skipping CRVD:scraping_4/1/26:8934
+2026-01-04 23:33:49,822 [INFO] skipping CRVD:scraping_4/1/26:8935
+2026-01-04 23:33:49,822 [INFO] skipping CRVD:scraping_4/1/26:8942
+2026-01-04 23:33:49,822 [INFO] skipping CRVD:scraping_4/1/26:8943
+2026-01-04 23:33:49,822 [INFO] skipping CRVD:scraping_4/1/26:8944
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8945
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8947
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8949
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8950
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8951
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8955
+2026-01-04 23:33:49,823 [INFO] skipping CRVD:scraping_4/1/26:8959
+2026-01-04 23:33:49,824 [INFO] skipping CRVD:scraping_4/1/26:8960
+2026-01-04 23:33:49,824 [INFO] skipping CRVD:scraping_4/1/26:8962
+2026-01-04 23:33:49,824 [INFO] skipping CRVD:scraping_4/1/26:8964
+2026-01-04 23:33:49,824 [INFO] skipping CRVD:scraping_4/1/26:8966
+2026-01-04 23:33:49,824 [INFO] skipping CRVD:scraping_4/1/26:8967
+2026-01-04 23:33:49,825 [INFO] skipping CRVD:scraping_4/1/26:8968
+2026-01-04 23:33:49,825 [INFO] skipping CRVD:scraping_4/1/26:8971
+2026-01-04 23:33:49,825 [INFO] skipping CRVD:scraping_4/1/26:8972
+2026-01-04 23:33:49,826 [INFO] skipping CRVD:scraping_4/1/26:8973
+2026-01-04 23:33:49,826 [INFO] skipping CRVD:scraping_4/1/26:8974
+2026-01-04 23:33:49,826 [INFO] skipping CRVD:scraping_4/1/26:8975
+2026-01-04 23:33:49,827 [INFO] skipping CRVD:scraping_4/1/26:8976
+2026-01-04 23:33:49,827 [INFO] skipping CRVD:scraping_4/1/26:8979
+2026-01-04 23:33:49,827 [INFO] skipping CRVD:scraping_4/1/26:8980
+2026-01-04 23:33:49,827 [INFO] skipping CRVD:scraping_4/1/26:8986
+2026-01-04 23:33:49,827 [INFO] skipping CRVD:scraping_4/1/26:8989
+2026-01-04 23:33:49,827 [INFO] skipping CRVD:scraping_4/1/26:8990
+2026-01-04 23:33:49,828 [INFO] skipping CRVD:scraping_4/1/26:8991
+2026-01-04 23:33:49,828 [INFO] skipping CRVD:scraping_4/1/26:8992
+2026-01-04 23:33:49,828 [INFO] skipping CRVD:scraping_4/1/26:8993
+2026-01-04 23:33:49,828 [INFO] skipping CRVD:scraping_4/1/26:8994
+2026-01-04 23:33:49,828 [INFO] skipping CRVD:scraping_4/1/26:8995
+2026-01-04 23:33:49,828 [INFO] skipping CRVD:scraping_4/1/26:8996
+2026-01-04 23:33:49,829 [INFO] skipping CRVD:scraping_4/1/26:9002
+2026-01-04 23:33:49,829 [INFO] skipping CRVD:scraping_4/1/26:9003
+2026-01-04 23:33:49,829 [INFO] skipping CRVD:scraping_4/1/26:9004
+2026-01-04 23:33:49,830 [INFO] skipping CRVD:scraping_4/1/26:9005
+2026-01-04 23:33:49,830 [INFO] handling ReInvest:scraping_4/1/26:1298661
+2026-01-04 23:33:53,011 [WARNING] Cookies appear to be expired (attempt 1/3). Refreshing...
+2026-01-04 23:33:53,011 [INFO] Refreshing Spitogatos cookies...
+2026-01-04 23:33:53,176 [INFO] Successfully refreshed cookies
+2026-01-04 23:33:58,349 [WARNING] Cookies appear to be expired (attempt 2/3). Refreshing...
+2026-01-04 23:33:58,350 [INFO] Refreshing Spitogatos cookies...
+2026-01-04 23:33:58,531 [INFO] Successfully refreshed cookies
+2026-01-04 23:34:03,717 [ERROR] Cookies expired and refresh failed after 2 attempts
+2026-01-04 23:34:03,717 [ERROR] something failed. SAVING!: object of type 'NoneType' has no len()
+2026-01-04 23:34:06,613 [INFO] saved successfully
