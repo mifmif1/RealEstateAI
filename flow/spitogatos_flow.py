@@ -3,6 +3,7 @@ import logging
 import statistics
 from typing import Callable, List
 
+import numpy as np
 import pandas as pd
 
 from data_source.geopy_data import GeopyData
@@ -115,7 +116,10 @@ class SpitogatosFlow:
         # df['District']=df['District'].apply(lambda x: x.title() if pd.notna(x) else x)
         # df['Prefecture']=df['Prefecture'].apply(lambda x: x.title() if pd.notna(x) else x)
         # df['Municipality']=df['Municipality'].apply(lambda x: x.title() if pd.notna(x) else x)
-
+        # self._add_deltas(df=df)
+        # self._add_interesting(df=df)
+        self._add_max_buy_price(df=df)
+        self._add_score(df=df)
         #
         with pd.ExcelWriter(f'{excel_path}_changed_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
                             engine="openpyxl", mode="w") as writer:
@@ -124,21 +128,25 @@ class SpitogatosFlow:
 
     @staticmethod
     def _add_score(df: pd.DataFrame) -> pd.DataFrame:
-        # depends on the std, mean, median, min, max, amount, set the score
-        df['score'] = (df['price/sqm'] - df['comparison_average']) / df['comparison_std']
+        df['score'] = df['max_buy_price'] - df['price']
         return df
 
     @staticmethod
-    def _add_deltas(self, df: pd.DataFrame) -> pd.DataFrame:
-        df['price_under_market'] = (1 - df['price/sqm'] / df['comparison_average'])
-        df['revaluation_under_market'] = (1 - (df['revaluation'] / df['sqm']) / df['comparison_average'])
+    def _add_deltas(df: pd.DataFrame) -> pd.DataFrame:
+        df['price_under_market'] = (df['price/sqm'] - df['comparison_average']) / df['comparison_average']
+        df['revaluation_under_market'] = ((df['revaluation'] / df['sqm']) -df['comparison_average'])/ df['comparison_average']
         return df
 
     @staticmethod
-    def _add_interesting(self, df: pd.DataFrame) -> pd.DataFrame:
-        #todo this is the concept, do it
-        df['interesting'] = df['#assets'] > 25 and df['price_under_market'] > 0.3
+    def _add_interesting(df: pd.DataFrame) -> pd.DataFrame:
+        df['is_interesting'] = np.where((df['#assets'] > 25) & (df['price_under_market'] < -0.3), True, False)
         return df
+
+    @staticmethod
+    def _add_max_buy_price(df: pd.DataFrame) -> pd.DataFrame:
+        df['max_buy_price'] = 0.7*df['revaluation']
+        return df
+
 
     def _search_assets_for_row(self, row: pd.Series,
                                location_tolerance: float = 100,
@@ -313,11 +321,11 @@ if __name__ == '__main__':
     assets_path = f"../excel_db/all_assets.xlsx"
     spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
 
-    # s.changes_in_excel(assets_path)
+    s.changes_in_excel(assets_path)
 
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
 
-    s.expand_excel__spitogatos_comparison(
-        excel_path=assets_path,
-        spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
-        must_columns=columns_valuation)
+    # s.expand_excel__spitogatos_comparison(
+    #     excel_path=assets_path,
+    #     spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
+    #     must_columns=columns_valuation)

@@ -44044,3 +44044,1830 @@ FileNotFoundError: [Errno 2] No such file or directory: '../excel_db/spitogatos_
 2026-01-04 19:10:03,142 [ERROR] Probably detected as bot
 2026-01-04 19:10:03,142 [ERROR] error handling row 8857. Error: Probably detected as bot.
 2026-01-04 19:10:04,943 [INFO] saved successfully
+2026-01-04 19:13:10,781 [INFO] skipping DoValue:Frontier - Retail:iwub1jJVC5
+2026-01-04 19:13:10,782 [INFO] skipping DoValue:Mexico Retail:h6i51e5oDp
+2026-01-04 19:13:10,782 [INFO] skipping DoValue:Mexico Retail:rvfo1DBWpu
+2026-01-04 19:13:10,782 [INFO] skipping DoValue:Cairo 2:VkTwij7YCV
+2026-01-04 19:13:10,782 [INFO] skipping DoValue:Mexico Retail:Mdm6Zdf8Gh-001
+2026-01-04 19:13:10,782 [INFO] skipping DoValue:Cairo 2:9My7HbWvGn
+2026-01-04 19:13:10,783 [INFO] skipping DoValue:Frontier - Retail:cr87FxCVR3
+2026-01-04 19:13:10,783 [INFO] skipping DoValue:Cairo 3:OuYsWwy5Wq
+2026-01-04 19:13:10,783 [INFO] skipping DoValue:Frontier II - Retail:CPvuDYnXj6-001
+2026-01-04 19:13:10,783 [INFO] skipping DoValue:Cairo 2:CSQRXyUhg1
+2026-01-04 19:13:10,783 [INFO] skipping DoValue:Cairo 1:Qk0UUpNR61
+2026-01-04 19:13:10,783 [INFO] skipping DoValue:Cairo 2:H9IIjQGtMu
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Gemini A - Retail:3TkgxiPfGL
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Frontier - Retail:16gDxoDY3B
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Frontier - Retail:Nd1NiXiYrN
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Frontier - Retail:6ZrkVPv9U5-001
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Frontier II - Retail:9pfMxBF97l
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Gemini A - Retail:3EOQMkfGt1-003
+2026-01-04 19:13:10,784 [INFO] skipping DoValue:Leon Retail:pUCSSBJAe5
+2026-01-04 19:13:10,785 [INFO] skipping DoValue:Frontier - Retail:GKr6npj5NB-002
+2026-01-04 19:13:10,785 [INFO] skipping DoValue:Cairo 1:p2BFjqUt9G
+2026-01-04 19:13:10,785 [INFO] skipping DoValue:Mexico Retail:pNY0Kyrao0
+2026-01-04 19:13:10,785 [INFO] skipping DoValue:Heliopolis I - Retail:4LHxI7qebe
+2026-01-04 19:13:10,785 [INFO] skipping DoValue:Frontier - Retail:Ce0cTpvfuP
+2026-01-04 19:13:10,785 [INFO] skipping DoValue:Cairo 1:rL6LGWv1M1
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Gemini A - Retail:XivHrZ7f36
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Mexico Retail:6YbddDxfxc
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Frontier II - Retail:kvJ6g3N8MZ
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Frontier - Retail:QnjwsHIQQi
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Leon Retail:em70MsAB3N
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Frontier II - Retail:qQQ8SB2A5r
+2026-01-04 19:13:10,786 [INFO] skipping DoValue:Frontier - Retail:gMBWjXKfLZ
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Leon Retail:9dLhNRFyN2
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Cairo 2:RIBCrn6dxK
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Mexico Retail:LesdpU8nt1
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Frontier - Retail:DNRmaaTVBo
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Frontier - Retail:qv15j8HsIV
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Leon Retail:TXALsi5T8T
+2026-01-04 19:13:10,787 [INFO] skipping DoValue:Cairo 1:bCp1cESqIy
+2026-01-04 19:13:10,788 [INFO] skipping DoValue:Frontier - Retail:JCsIIUDyVH-007
+2026-01-04 19:13:10,788 [INFO] skipping DoValue:Frontier II - Retail:DlCUfw9ikC
+2026-01-04 19:13:10,788 [INFO] skipping DoValue:Cairo 2:MqREiDRANd
+2026-01-04 19:13:10,788 [INFO] skipping DoValue:Frontier - Retail:yVvmsTqcHh
+2026-01-04 19:13:10,788 [INFO] skipping DoValue:Frontier - Retail:HuSr4XekTE
+2026-01-04 19:13:10,788 [INFO] skipping DoValue:Frontier - Retail:qin4amIjDT
+2026-01-04 19:13:10,789 [INFO] skipping DoValue:Mexico Retail:G2jEe4Hmlo
+2026-01-04 19:13:10,789 [INFO] skipping DoValue:Leon Retail:bD5TwRUb7n
+2026-01-04 19:13:10,789 [INFO] skipping DoValue:Frontier - Retail:7vWknkoin7
+2026-01-04 19:13:10,790 [INFO] skipping DoValue:Mexico Retail:TbmKDfGFVv-002
+2026-01-04 19:13:10,790 [INFO] skipping DoValue:Frontier II - Retail:PbbRODBTwT
+2026-01-04 19:13:10,790 [INFO] skipping DoValue:Mexico Retail:ANEk8biHT5
+2026-01-04 19:13:10,790 [INFO] skipping DoValue:Frontier - Retail:erKQ7iEQxd
+2026-01-04 19:13:10,790 [INFO] skipping DoValue:Frontier II - Retail:O16FOyX51c
+2026-01-04 19:13:10,791 [INFO] skipping DoValue:Cairo 2:VxDwuvUAR8-001
+2026-01-04 19:13:10,791 [INFO] skipping DoValue:Cairo 2:aypcZ5yJej
+2026-01-04 19:13:10,791 [INFO] skipping DoValue:Mexico Retail:9D4SfINIhn
+2026-01-04 19:13:10,791 [INFO] skipping DoValue:Frontier - Retail:JCsIIUDyVH-008
+2026-01-04 19:13:10,791 [INFO] skipping DoValue:Leon Retail:LwORSPdIv5
+2026-01-04 19:13:10,791 [INFO] skipping DoValue:Frontier II - Retail:TymkeAESrA-001
+2026-01-04 19:13:10,792 [INFO] skipping DoValue:Frontier - Retail:ScXw9jt3ld
+2026-01-04 19:13:10,792 [INFO] skipping DoValue:Leon Retail:9Nbrv36pB1
+2026-01-04 19:13:10,792 [INFO] skipping DoValue:Mexico Retail:g5LF3dPvBX
+2026-01-04 19:13:10,792 [INFO] skipping DoValue:Frontier - Retail:m6EQxYc258
+2026-01-04 19:13:10,792 [INFO] skipping DoValue:Cairo 2:7HMMnbWBXt
+2026-01-04 19:13:10,792 [INFO] skipping DoValue:Frontier - Retail:VarkmRHHV2
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:Frontier II - Retail:e7eDWULY3N
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:Frontier - Retail:DrLQJBBaAv
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:ERB Retail:Hn091C4dyI-001
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:Frontier - Retail:LYGonkdpQO
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:Frontier II - Retail:iN9Q6Fe4KN
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:Frontier - Retail:N17ihhOv9c
+2026-01-04 19:13:10,793 [INFO] skipping DoValue:Cairo 2:4D1wL5rmM7
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Leon Retail:geHW0xFnhP
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Leon Retail:wb7XjxyCsV
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Frontier - Retail:S92X4Fivmp
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Leon Retail:Q4SOTy8GJx
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Frontier II - Retail:376pCOO437
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Leon Retail:nA6qFm5G6Q
+2026-01-04 19:13:10,794 [INFO] skipping DoValue:Frontier - Retail:sCafgH4big
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Mexico Retail:LK04DLhXRi
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Mexico Retail:GkVYCnfp5a
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Leon Retail:AfhJqKQLBb
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Frontier - Retail:Q7gEKZb6Eh
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Mexico Retail:QrrwAddwlC
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Cairo 1:EQ8VXnXQGq
+2026-01-04 19:13:10,795 [INFO] skipping DoValue:Mexico Retail:gNvuGPu4si
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:Cairo 2:abXLEckARA-001
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:ERB Retail:Yt3DqT54fU
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:ERB Retail:HZUN4ewlbj-001
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-001
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:Frontier - Retail:JcdCR0l9iv-002
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-008
+2026-01-04 19:13:10,796 [INFO] skipping DoValue:Leon Retail:U54MIOC83Y
+2026-01-04 19:13:10,797 [INFO] skipping DoValue:Leon Retail:8kC0lraBfC
+2026-01-04 19:13:10,797 [INFO] skipping DoValue:Leon Retail:ySdInSaPXN
+2026-01-04 19:13:10,797 [INFO] skipping DoValue:Frontier - Retail:re4flC1kbB-004
+2026-01-04 19:13:10,797 [INFO] skipping DoValue:Frontier - Retail:re4flC1kbB-003
+2026-01-04 19:13:10,797 [INFO] skipping DoValue:Heliopolis I - Retail:egt61juk0X
+2026-01-04 19:13:10,797 [INFO] skipping DoValue:Gemini A - Retail:X8cmApCdCA
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Mexico Retail:ml3aE7qI7X
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Frontier - Retail:6MLer6xx7c-003
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Frontier - Retail:nrTYnuIVdP-005
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Cairo 1:TxCw0BpaHT
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Leon Retail:cBDjOlSHSU
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Frontier - Retail:34PtYRHT1l
+2026-01-04 19:13:10,798 [INFO] skipping DoValue:Cairo 1:MWBRFJUgLf
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:Frontier - Retail:s72Oe6tnar
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-003
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-004
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:Frontier - Retail:cLewLhHAGy
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:ERB Retail:YMsETtXlAJ
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:Leon Retail:a9sUqB6hRY
+2026-01-04 19:13:10,799 [INFO] skipping DoValue:Heliopolis II - Retail:lvGKrDQmyb
+2026-01-04 19:13:10,800 [INFO] skipping DoValue:Cairo 2:TfPfidHAL3-002
+2026-01-04 19:13:10,800 [INFO] skipping DoValue:Cairo 2:lgxZNGXSJv
+2026-01-04 19:13:10,800 [INFO] skipping DoValue:Mexico Retail:aekYJWhHHr
+2026-01-04 19:13:10,800 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-001
+2026-01-04 19:13:10,800 [INFO] skipping DoValue:Frontier - Retail:ZmBoWpAJSl
+2026-01-04 19:13:10,800 [INFO] skipping DoValue:Heliopolis I - Retail:gtfr153EPG
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Gemini A - Retail:NLI3fgCp53
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Leon Retail:g0vQXbFZIQ
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-002
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Leon Retail:J9yMaYcDA4
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Leon Retail:yAcQx9IIt1
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-002
+2026-01-04 19:13:10,801 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-009
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-005
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Frontier - Retail:R2DYwMiufc-003
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Frontier II - Retail:qmViOvZk5P
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Leon Retail:F08fEJqUAo
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Mexico Retail:XRKEqWEGOi-002
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Mexico Retail:UUiJ4wRrOo-001
+2026-01-04 19:13:10,802 [INFO] skipping DoValue:Leon Retail:nGwxy1fs6u
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Leon Retail:d3mMMyjx3c
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Leon Retail:DNVT5nindi
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Frontier - Retail:dnXLDxDvMc
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Frontier II - Retail:mjOEQZtECU
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Mexico Retail:cdqncyuMJk
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Frontier - Retail:nrTYnuIVdP-006
+2026-01-04 19:13:10,803 [INFO] skipping DoValue:Heliopolis I - Retail:3G1VYToA2H
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Frontier - Retail:gMI9f0kK2d
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Frontier II - Retail:tgXGYhqwgM
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Heliopolis I - Retail:mRuuZ5okkh-001
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Cairo 1:nUaGKZ2nRP-003
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Mexico Retail:arX4YQXeo5-001
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Cairo 2:YrncSMIw1y
+2026-01-04 19:13:10,804 [INFO] skipping DoValue:Frontier - Retail:WKu1toQtNW
+2026-01-04 19:13:10,805 [INFO] skipping DoValue:Mexico Retail:bLE8M7SFfU
+2026-01-04 19:13:10,805 [INFO] skipping DoValue:Leon Retail:4dbS6NawOO
+2026-01-04 19:13:10,805 [INFO] skipping DoValue:Mexico Retail:d0lOlyhdmN
+2026-01-04 19:13:10,805 [INFO] skipping DoValue:Frontier II - Retail:6a73Sl7eF0
+2026-01-04 19:13:10,806 [INFO] skipping DoValue:Leon Retail:eeSUwsP6PH
+2026-01-04 19:13:10,806 [INFO] skipping DoValue:Frontier - Retail:Sjj6qe9yG0
+2026-01-04 19:13:10,806 [INFO] skipping DoValue:Leon Retail:mAT3maNEXY
+2026-01-04 19:13:10,807 [INFO] skipping DoValue:Mexico Retail:XQMiwHGExP
+2026-01-04 19:13:10,807 [INFO] skipping DoValue:Leon Retail:3bCgdbI6tx
+2026-01-04 19:13:10,807 [INFO] skipping DoValue:Leon Retail:J6r75yNll0
+2026-01-04 19:13:10,807 [INFO] skipping DoValue:Frontier II - Retail:QZfSP0hKeR
+2026-01-04 19:13:10,807 [INFO] skipping DoValue:Frontier - Retail:6v1yOZadNR
+2026-01-04 19:13:10,807 [INFO] skipping DoValue:Cairo 2:4to1NZ2wAx
+2026-01-04 19:13:10,808 [INFO] skipping DoValue:Frontier - Retail:pMoGXgycjY
+2026-01-04 19:13:10,808 [INFO] skipping DoValue:Cairo 1:nUaGKZ2nRP-001
+2026-01-04 19:13:10,808 [INFO] skipping DoValue:Cairo 1:nUaGKZ2nRP-002
+2026-01-04 19:13:10,809 [INFO] skipping DoValue:Cairo 2:81jS6Phpuk
+2026-01-04 19:13:10,809 [INFO] skipping DoValue:Frontier - Retail:yuH7HOZ7xD
+2026-01-04 19:13:10,809 [INFO] skipping DoValue:Frontier - Retail:40dLx2Yh45-003
+2026-01-04 19:13:10,809 [INFO] skipping DoValue:Mexico Retail:ruLeCAIEA8
+2026-01-04 19:13:10,809 [INFO] skipping DoValue:Cairo 1:IKg0K3Z9aa
+2026-01-04 19:13:10,809 [INFO] skipping DoValue:Leon Retail:VI3vvOOxSV
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Frontier - Corporate:YMjVK9sRUe-002
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Frontier - Retail:7sUybKTlBe
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Cairo 2:OqlFR1XQsS
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Leon Retail:xi7MeBogDd
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Leon Retail:ptaKa4Bcsh
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-003
+2026-01-04 19:13:10,810 [INFO] skipping DoValue:Frontier - Retail:oy2ZBcK2rL
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Mexico Retail:CYq9JIAHcY
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Heliopolis I - Retail:rgK9bAi9MA-002
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Leon Retail:3yURvu6kos
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Leon Retail:uywMNGDUvu
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Leon Retail:23DwQKMsgT
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Frontier - Retail:ETibcfolUV-001
+2026-01-04 19:13:10,811 [INFO] skipping DoValue:Cairo 1:hvOrTe5UIV
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Leon Retail:rUBBsLvxog
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Leon Retail:ZOKR7ILaYK
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Mexico Retail:VPKrNKrLXw
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Leon Retail:gWDlK6Vojv
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Frontier II - Retail:Gu1lmKTtOw
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Leon Retail:DliK4Fyby5
+2026-01-04 19:13:10,812 [INFO] skipping DoValue:Frontier - Retail:wuiOF8ynWa
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Cairo 2:pWdR57E3UI
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Leon Retail:IiFnqiVuGI
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Leon Retail:tZmDjUVD9V
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Frontier II - Retail:4jVbb2LueW
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Frontier II - Retail:NU3xojqSZS
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-006
+2026-01-04 19:13:10,813 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-010
+2026-01-04 19:13:10,814 [INFO] skipping DoValue:Frontier - Retail:AgoVE2wrBQ
+2026-01-04 19:13:10,814 [INFO] skipping DoValue:Frontier - Retail:E0AoMsOMOp-001
+2026-01-04 19:13:10,814 [INFO] skipping DoValue:Mexico Retail:kntSpP8rfc
+2026-01-04 19:13:10,814 [INFO] skipping DoValue:Frontier II - Retail:FBQh0bO0lC
+2026-01-04 19:13:10,814 [INFO] skipping DoValue:Leon Retail:dlm9pCm5AT
+2026-01-04 19:13:10,814 [INFO] skipping DoValue:Leon Retail:VR49L6aHaX
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Leon Retail:lANhcsdQHB-001
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Leon Retail:t1YH3DfOcy
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Frontier - Retail:JcdCR0l9iv-001
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Leon Retail:VSeLk00pmH
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Leon Retail:VqQNOmaIJQ
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Mexico Retail:di8puavNZW
+2026-01-04 19:13:10,815 [INFO] skipping DoValue:Frontier - Retail:5Aky1CokpK
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Frontier - Retail:9XyVZmBgKZ
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Mexico Retail:pAkksV8Zpr
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Frontier - Retail:HpnJbdOWLC
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Gemini A - Retail:3GCCGE7p2E-002
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Frontier - Retail:bGtN2n67DV
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Mexico Retail:yhFRU4ObXf-001
+2026-01-04 19:13:10,816 [INFO] skipping DoValue:Frontier - Retail:JaXJ6A8B7t
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Leon Retail:XX8lsapdxL
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Cairo 1:AcEdPWwknu
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Mexico Retail:Gs6qrplqUG
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Mexico Retail:l3y0voyTyi-001
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Heliopolis I - Retail:OKpr0uf5Cw
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Cairo 1:Nm7kRsZsPp
+2026-01-04 19:13:10,817 [INFO] skipping DoValue:Cairo 2:o33odi2YML
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Leon Retail:4OMhuVwQsu
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Frontier - Retail:5pBWkYg6Hd
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Heliopolis I - Retail:ueSLDWUivt
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Cairo 2:MD86Dpc0RB
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Leon Retail:R4F5Lni4Qn
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Leon Retail:CiiSIcWtLT
+2026-01-04 19:13:10,818 [INFO] skipping DoValue:Mexico Retail:VtjqgQdZFD
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Frontier - Retail:tjLEfa1VkH-001
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Leon Retail:siKcQwuqQF
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Mexico Retail:Afu9b1VNqD
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Leon Retail:9Y5AwIpVPi
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Leon Retail:4nbbK0WGrV
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Mexico Corporate:dGNCWgP0c3-003
+2026-01-04 19:13:10,819 [INFO] skipping DoValue:Cairo 2:vDmvf0DmBa
+2026-01-04 19:13:10,820 [INFO] skipping DoValue:Leon Retail:513DpRScG1-001
+2026-01-04 19:13:10,820 [INFO] skipping DoValue:Mexico Retail:9SXkwRZq36-001
+2026-01-04 19:13:10,820 [INFO] skipping DoValue:Mexico Retail:SC2RsjZiru
+2026-01-04 19:13:10,820 [INFO] skipping DoValue:Leon Retail:TI8DONFFQs
+2026-01-04 19:13:10,820 [INFO] skipping DoValue:Frontier II - Retail:AVXfqvbb3r
+2026-01-04 19:13:10,820 [INFO] skipping DoValue:Frontier - Retail:T2fxDyeFlj
+2026-01-04 19:13:10,821 [INFO] skipping DoValue:Cairo 3:MDwiTkag49
+2026-01-04 19:13:10,821 [INFO] skipping DoValue:Mexico Retail:7o9hvTdyFG
+2026-01-04 19:13:10,821 [INFO] skipping DoValue:Leon Retail:T8sOCstTHN
+2026-01-04 19:13:10,821 [INFO] skipping DoValue:Heliopolis I - Retail:rgK9bAi9MA-001
+2026-01-04 19:13:10,821 [INFO] skipping DoValue:Frontier II - Retail:XeJ6BugcvL
+2026-01-04 19:13:10,822 [INFO] skipping DoValue:Frontier - Retail:BK24r9wXW0
+2026-01-04 19:13:10,822 [INFO] skipping DoValue:Frontier - Retail:6owd49aYUO
+2026-01-04 19:13:10,822 [INFO] skipping DoValue:Frontier II - Retail:uohWjrTYNQ
+2026-01-04 19:13:10,822 [INFO] skipping DoValue:Frontier - Retail:USatqHEkYJ
+2026-01-04 19:13:10,822 [INFO] skipping DoValue:Frontier - Retail:P7dwoJ87I6
+2026-01-04 19:13:10,823 [INFO] skipping DoValue:Frontier II - Retail:8iH8KjjXFr
+2026-01-04 19:13:10,823 [INFO] skipping DoValue:Cairo 1:KgQIiMjaPq-001
+2026-01-04 19:13:10,823 [INFO] skipping DoValue:Leon Retail:xIeMWJVgy5
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:Leon Retail:apZl3vu57e
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:Leon Retail:aG6xgX8wDT
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:ERB Retail:HZUN4ewlbj-002
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:Frontier II - Retail:4gBqP19jHP
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:Mexico Retail:bX0a5qcFGb
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:Frontier - Retail:YqSVkYQuSS
+2026-01-04 19:13:10,824 [INFO] skipping DoValue:Frontier - Retail:AEOieYtYwK
+2026-01-04 19:13:10,825 [INFO] skipping DoValue:Cairo 2:LPBleQ3R8m
+2026-01-04 19:13:10,825 [INFO] skipping DoValue:Mexico Retail:RwcNXkE8et
+2026-01-04 19:13:10,825 [INFO] skipping DoValue:ERB Retail:YMsETtXlAJ
+2026-01-04 19:13:10,825 [INFO] skipping DoValue:Frontier - Retail:26oYmScDRD
+2026-01-04 19:13:10,825 [INFO] skipping DoValue:Frontier II - Retail:iuZTixc0Mg
+2026-01-04 19:13:10,825 [INFO] skipping DoValue:Leon Retail:9UAe4OB719
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Cairo 1:t83OnRwY6W-001
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Cairo 1:t83OnRwY6W-002
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Heliopolis I - Retail:Q0JI6OjvO9
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Cairo 2:l3ThKYkaWw
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Leon Retail:6OTBerwVNa
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Leon Retail:SgMUX4bWx8
+2026-01-04 19:13:10,826 [INFO] skipping DoValue:Leon Retail:jWXgEgpiX5
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Leon Retail:E0kTXXWMJC
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Frontier - Retail:5nGpaMnSTq
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Mexico Retail:DrX3aBNiDv-001
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Frontier - Retail:HJtuVetlXK
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Cairo 2:P7WI24jkfq
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Cairo 1:0qvmNsd9fk
+2026-01-04 19:13:10,827 [INFO] skipping DoValue:Frontier - Retail:AsxYQ0h2BF
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Cairo 3:OuYsWwy5Wq
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Cairo 2:1vBXwiG5aY
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Frontier - Retail:SxLkm8T8kd
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Frontier - Retail:qinvoKGnmh
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Cairo 1:IKg0K3Z9aa
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Mexico Retail:V5iRqwxHHV
+2026-01-04 19:13:10,828 [INFO] skipping DoValue:Mexico Retail:V5iRqwxHHV
+2026-01-04 19:13:10,829 [INFO] skipping DoValue:Frontier - Retail:q2jFxK2PbQ
+2026-01-04 19:13:10,829 [INFO] skipping DoValue:Gemini A - Retail:4GZImLrI6I
+2026-01-04 19:13:10,829 [INFO] skipping DoValue:Gemini A - Retail:4GZImLrI6I
+2026-01-04 19:13:10,829 [INFO] skipping DoValue:Gemini A - Retail:CnkdjUOhU1
+2026-01-04 19:13:10,829 [INFO] skipping DoValue:Suez - Retail:8Qd8lGMZaZ
+2026-01-04 19:13:10,829 [INFO] skipping DoValue:Frontier - Retail:qR8Dg6PjRS-002
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Frontier - Retail:0QJ7L7u8Lm
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Heliopolis I - Retail:tQn1yalqUT-001
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Cairo 2:nYpDg8cuX1
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Leon Retail:VI3vvOOxSV
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Frontier II - Retail:fABoREPEqM
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Cairo 2:XC02NqWb6f
+2026-01-04 19:13:10,830 [INFO] skipping DoValue:Frontier - Retail:igjTyVJNOr
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Cairo 2:Co52GeQWhW
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Gemini A - Retail:Nkn3X8ONVK
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Frontier - Retail:oNDQaYXES2
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Leon Retail:8aYtKmaPwB
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Mexico Retail:foWyTCUwcM-001
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Cairo 1:PkpOUjhXAc
+2026-01-04 19:13:10,831 [INFO] skipping DoValue:Leon Retail:QfSfRHmJge
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Mexico Retail:bHSeZqDgG1
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Mexico Retail:HCT8TwRkrj
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Frontier II - Retail:4HDkBinwC7
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Frontier - Retail:lU5bWmgPYJ
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Mexico Retail:quw280f6yN
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Cairo 1:9RC2W949YP
+2026-01-04 19:13:10,832 [INFO] skipping DoValue:Leon Retail:5JbiagGLj6
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:ERB Retail:wyUa2Omtwb
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:Cairo 1:Vh1SxEdVjV
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:Mexico Retail:8yZrpndUGT
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:Cairo 2:QTnJj2WhO2
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:Frontier - Retail:mYWxnX7EiQ
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:Frontier - Retail:mYWxnX7EiQ
+2026-01-04 19:13:10,833 [INFO] skipping DoValue:Frontier - Retail:ubTcdlSJRV
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Cairo 1:4CWUOPFkck
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Cairo 2:TfPfidHAL3
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Cairo 2:TfPfidHAL3-001
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Frontier - Retail:rhOFX1UG8Z
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Cairo 1:CggdQprxGd
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Frontier - Retail:yTZ9eZYrX8
+2026-01-04 19:13:10,834 [INFO] skipping DoValue:Cairo 2:stgJLB11KZ
+2026-01-04 19:13:10,835 [INFO] skipping DoValue:Leon Retail:xwHifDJrtK
+2026-01-04 19:13:10,835 [INFO] skipping DoValue:Frontier II - Retail:DZkRFdDWgu
+2026-01-04 19:13:10,835 [INFO] skipping DoValue:Frontier - Retail:EsPrrQKrXm
+2026-01-04 19:13:10,835 [INFO] skipping DoValue:Heliopolis I - Retail:wRwx2SKiZH
+2026-01-04 19:13:10,835 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-005
+2026-01-04 19:13:10,835 [INFO] skipping DoValue:Leon Retail:JfLGirUGiu
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Leon Retail:MJpRprkdqu
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Leon Retail:0jxarXDee6
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Leon Retail:N8dvXPiV7N-001
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Cairo 1:HbCSwH1MUU
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Frontier - Retail:A7pSSkTb7b-001
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Frontier - Retail:L6t22qFEYL
+2026-01-04 19:13:10,836 [INFO] skipping DoValue:Frontier - Retail:jR8vt5sQ18
+2026-01-04 19:13:10,837 [INFO] skipping DoValue:Frontier II - Retail:yhDLSgQcEW
+2026-01-04 19:13:10,837 [INFO] skipping DoValue:Frontier - Retail:nrTYnuIVdP-007
+2026-01-04 19:13:10,837 [INFO] skipping DoValue:Frontier - Retail:Y3QZSAHqLw
+2026-01-04 19:13:10,837 [INFO] skipping DoValue:Mexico Retail:RSeEUv3Yeo
+2026-01-04 19:13:10,837 [INFO] skipping DoValue:Frontier II - Retail:S56Q9Ndmtc
+2026-01-04 19:13:10,837 [INFO] skipping DoValue:Frontier - Retail:kxWNYBL3fN
+2026-01-04 19:13:10,838 [INFO] skipping DoValue:Gemini A - Retail:M5RGwALPAd
+2026-01-04 19:13:10,838 [INFO] skipping DoValue:Mexico Retail:mocgwSBf8o
+2026-01-04 19:13:10,838 [INFO] skipping DoValue:Frontier - Retail:TumWMZu7W8
+2026-01-04 19:13:10,838 [INFO] skipping DoValue:Leon Retail:fnw6YeVBSf
+2026-01-04 19:13:10,838 [INFO] skipping DoValue:Frontier - Retail:6owd49aYUO
+2026-01-04 19:13:10,838 [INFO] skipping DoValue:Gemini A - Retail:DJe70BlVPw-001
+2026-01-04 19:13:10,839 [INFO] skipping DoValue:Cairo 2:5FlxEPdKSH
+2026-01-04 19:13:10,839 [INFO] skipping DoValue:Frontier - Retail:QfV3WrCusK
+2026-01-04 19:13:10,839 [INFO] skipping DoValue:Frontier - Retail:OK5aki7ypR
+2026-01-04 19:13:10,840 [INFO] skipping DoValue:Gemini A - Retail:bl3Fih6qIt
+2026-01-04 19:13:10,840 [INFO] skipping DoValue:Cairo 2:t0nSNDbroD
+2026-01-04 19:13:10,840 [INFO] skipping DoValue:Frontier II - Retail:tgXGYhqwgM
+2026-01-04 19:13:10,840 [INFO] skipping DoValue:Frontier - Retail:XEg7mQKnpE
+2026-01-04 19:13:10,841 [INFO] skipping DoValue:Cairo 1:nHmnngChL7
+2026-01-04 19:13:10,841 [INFO] skipping DoValue:Gemini A - Retail:ameZAZbspv
+2026-01-04 19:13:10,841 [INFO] skipping DoValue:Leon Retail:WtGBvqCaSZ
+2026-01-04 19:13:10,842 [INFO] skipping DoValue:Frontier - Retail:ZkPXbNbqft
+2026-01-04 19:13:10,842 [INFO] skipping DoValue:Mexico Retail:vyhNe4TIxS
+2026-01-04 19:13:10,842 [INFO] skipping DoValue:Cairo 1:198sSAJPyU
+2026-01-04 19:13:10,842 [INFO] skipping DoValue:Frontier - Retail:0GTZlNUS8K
+2026-01-04 19:13:10,842 [INFO] skipping DoValue:Leon Retail:tYnpMAKnqw
+2026-01-04 19:13:10,842 [INFO] skipping DoValue:Gemini A - Retail:J5PNWKgG6U-001
+2026-01-04 19:13:10,843 [INFO] skipping DoValue:Frontier - Retail:lKr1ZBXSkJ
+2026-01-04 19:13:10,843 [INFO] skipping DoValue:Frontier - Retail:aG6x9Z3cDD
+2026-01-04 19:13:10,843 [INFO] skipping DoValue:Frontier - Retail:pFEb9HlrDH
+2026-01-04 19:13:10,843 [INFO] skipping DoValue:Leon Retail:0YdqnlHm6G
+2026-01-04 19:13:10,843 [INFO] skipping DoValue:Leon Retail:3ZEf3NkLWi
+2026-01-04 19:13:10,843 [INFO] skipping DoValue:Cairo 2:NxnRl6OD5G
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Frontier - Retail:7CUODihKPJ
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Mexico Retail:VdHUKZDJcZ
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Leon Retail:I7K9XxGmgM
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Leon Retail:gXnvMcFWJ5
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Frontier II - Retail:HUuWkA8MTD
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Mexico Retail:0C4pjdnKmy
+2026-01-04 19:13:10,844 [INFO] skipping DoValue:Frontier - Retail:vEDNtuZwgx
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Frontier - Retail:u63kENriFg
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Cairo 2:6Ec1UF0br0
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Cairo 2:qkchaYBy6i
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Cairo 2:8yApgKlTwZ
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Frontier II - Retail:f1YjsrubKH
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Mexico Retail:jVskBed4Hc
+2026-01-04 19:13:10,845 [INFO] skipping DoValue:Leon Retail:1WuqQxhN6x
+2026-01-04 19:13:10,846 [INFO] skipping DoValue:Gemini A - Retail:DeTEPdxW1b
+2026-01-04 19:13:10,846 [INFO] skipping DoValue:Frontier - Retail:ZmBoWpAJSl
+2026-01-04 19:13:10,846 [INFO] skipping DoValue:Mexico Retail:T1mN4R5gWu
+2026-01-04 19:13:10,846 [INFO] skipping DoValue:Cairo 2:kMPDQU9sv4
+2026-01-04 19:13:10,846 [INFO] skipping DoValue:Cairo 2:nYeEntgJLJ
+2026-01-04 19:13:10,846 [INFO] skipping DoValue:Frontier - Retail:vLxX7EiZxr
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:Mexico Retail:iu9YyT5xSv
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:ERB Retail:AoSFcD4AP8
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:Frontier - Retail:BVZXn7Q4sd
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:Frontier II - Retail:0tomlnyNRv
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:Leon Retail:LcEILw9Xa6
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-003
+2026-01-04 19:13:10,847 [INFO] skipping DoValue:Frontier - Retail:vVcxUfy1R4
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Leon Retail:nYtTVh3kZW
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Frontier - Retail:jL9JEQDgws
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Leon Retail:iRDHQ3weVD
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Frontier - Retail:1Hpli0IEAR-001
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Cairo 1:0Pl1uI2P9L
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Frontier - Retail:pQxFWm8n7y
+2026-01-04 19:13:10,848 [INFO] skipping DoValue:Leon Retail:of1VbG0oA1
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Frontier - Retail:1FYkicgDHN-004
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Leon Retail:cBDjOlSHSU
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Mexico Retail:EZJYpG4GCX
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Frontier - Retail:A7pSSkTb7b-002
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Heliopolis I - Retail:SQxe78KSlF
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Frontier - Retail:KYE6CIheCd
+2026-01-04 19:13:10,849 [INFO] skipping DoValue:Frontier - Retail:5HqCB7HIVp
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Heliopolis I - Retail:WuIrmWA0J2
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Mexico Corporate:dGNCWgP0c3-001
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Frontier - Retail:YwoxgFbfWy
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Frontier II - Retail:ZGrNUd3hcV
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Cairo 2:XaINkCUnts-001
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Leon Retail:EXUYaiKWuo
+2026-01-04 19:13:10,850 [INFO] skipping DoValue:Leon Retail:dlpOkwCmom
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:Cairo 1:G0WejJrFH3
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:ERB Retail:nrYZ1gA767
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:Frontier - Retail:oKT6dilsP2
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:Leon Retail:JlnkxFnCox
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:Frontier - Retail:bkasacsCDl
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:Mexico Retail:6LwbXkR7mv
+2026-01-04 19:13:10,851 [INFO] skipping DoValue:Gemini A - Retail:3p6SYgwhEs
+2026-01-04 19:13:10,852 [INFO] skipping DoValue:Cairo 2:Vec3dur6mZ
+2026-01-04 19:13:10,852 [INFO] skipping DoValue:Frontier II - Retail:rSTaueVAgK
+2026-01-04 19:13:10,852 [INFO] skipping DoValue:Frontier II - Retail:50BQ9ojSuj
+2026-01-04 19:13:10,852 [INFO] skipping DoValue:Mexico Retail:QFkmbUZxA0
+2026-01-04 19:13:10,852 [INFO] skipping DoValue:Cairo 1:MM1Vsf214s-001
+2026-01-04 19:13:10,852 [INFO] skipping DoValue:Mexico Retail:ClE8y7AEah
+2026-01-04 19:13:10,853 [INFO] skipping DoValue:Gemini A - Retail:E49C0AoaK4
+2026-01-04 19:13:10,853 [INFO] skipping DoValue:Leon Retail:St0MYVMLTB
+2026-01-04 19:13:10,853 [INFO] skipping DoValue:Leon Retail:fujpLsCTc1
+2026-01-04 19:13:10,853 [INFO] skipping DoValue:Frontier - Retail:ZTdcDvMCfl
+2026-01-04 19:13:10,853 [INFO] skipping DoValue:Frontier - Retail:MvuodjZX7Q
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Frontier - Retail:XQL0HkTphi
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Mexico Retail:V8VaiUmudk
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Frontier II - Retail:VW6wtUG4rj
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Frontier - Retail:qZAeMLpBMG
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Frontier - Retail:ABWoRN7w0j
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Mexico Retail:L3ONtNh27U
+2026-01-04 19:13:10,854 [INFO] skipping DoValue:Frontier - Retail:nPXKvRYdtR
+2026-01-04 19:13:10,855 [INFO] skipping DoValue:Leon Retail:X0vhM0Z2mU
+2026-01-04 19:13:10,855 [INFO] skipping DoValue:Mexico Retail:LgmPkOMWTc
+2026-01-04 19:13:10,855 [INFO] skipping DoValue:Heliopolis II - Retail:TAqtIurCQZ
+2026-01-04 19:13:10,855 [INFO] skipping DoValue:Gemini A - Retail:RAvJepTV6X-001
+2026-01-04 19:13:10,855 [INFO] skipping DoValue:Mexico Retail:5xMgIYGfxE
+2026-01-04 19:13:10,855 [INFO] skipping DoValue:Frontier - Retail:nkIetmHnje
+2026-01-04 19:13:10,856 [INFO] skipping DoValue:Frontier II - Retail:uWPytAmeDX
+2026-01-04 19:13:10,856 [INFO] skipping DoValue:Leon Retail:fiFSwfxla1-001
+2026-01-04 19:13:10,857 [INFO] skipping DoValue:Leon Retail:0QDxTAHtE6
+2026-01-04 19:13:10,857 [INFO] skipping DoValue:Cairo 2:1nMqHYsjMG
+2026-01-04 19:13:10,857 [INFO] skipping DoValue:Mexico Retail:bNmIKCyPFV
+2026-01-04 19:13:10,857 [INFO] skipping DoValue:Frontier II - Retail:l6DOrYYEYl
+2026-01-04 19:13:10,857 [INFO] skipping DoValue:Frontier - Retail:CODdwLpmfK
+2026-01-04 19:13:10,858 [INFO] skipping DoValue:Mexico Retail:Yi8itKwxva
+2026-01-04 19:13:10,858 [INFO] skipping DoValue:Cairo 2:BJD433vX4E-012
+2026-01-04 19:13:10,858 [INFO] skipping DoValue:Leon Retail:UHEi8akKhF
+2026-01-04 19:13:10,858 [INFO] skipping DoValue:Frontier - Retail:nejriC7XCg
+2026-01-04 19:13:10,858 [INFO] skipping DoValue:Cairo 1:IxcPrNy0HQ
+2026-01-04 19:13:10,858 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-004
+2026-01-04 19:13:10,859 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-005
+2026-01-04 19:13:10,859 [INFO] skipping DoValue:Frontier - Retail:ii7AH0xa5K
+2026-01-04 19:13:10,859 [INFO] skipping DoValue:Frontier - Corporate:YMjVK9sRUe-001
+2026-01-04 19:13:10,859 [INFO] skipping DoValue:Cairo 2:hN5dksh8bA
+2026-01-04 19:13:10,859 [INFO] skipping DoValue:Leon Retail:H5m3I19PTL
+2026-01-04 19:13:10,859 [INFO] skipping DoValue:Frontier - Retail:tbgnwOci8d
+2026-01-04 19:13:10,860 [INFO] skipping DoValue:Leon Retail:g0nv52REvq
+2026-01-04 19:13:10,860 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-004
+2026-01-04 19:13:10,860 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-005
+2026-01-04 19:13:10,860 [INFO] skipping DoValue:Frontier II - Retail:eG6VixWTxc
+2026-01-04 19:13:10,860 [INFO] skipping DoValue:Frontier - Retail:7LVgKV9Xq6
+2026-01-04 19:13:10,860 [INFO] skipping DoValue:Cairo 1:bV1sLlHVGt
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:Mexico Retail:SEHyjbVSqV
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:Cairo 2:ut6rQHQOSE
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:Cairo 1:qWeB0KHe1M
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:Cairo 2:volYO4sdiT
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:ERB Retail:IBVVlD8RZ8
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:Frontier - Retail:gOY88lEfS7
+2026-01-04 19:13:10,861 [INFO] skipping DoValue:Cairo 2:pCAZMqNQts
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Leon Retail:9uKNF5OFfI
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Mexico Retail:gbylbB9snM
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Frontier - Retail:wrtj4ddeCq
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Frontier II - Retail:Z2u6O8ByGf
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Mexico Retail:FRKUK92Zsk
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Cairo 2:wXI2lE94KS
+2026-01-04 19:13:10,862 [INFO] skipping DoValue:Cairo 2:3la35AgrEo
+2026-01-04 19:13:10,863 [INFO] skipping DoValue:Frontier - Retail:sRXCtfX3YV
+2026-01-04 19:13:10,863 [INFO] skipping DoValue:Frontier II - Retail:M5V3dgYiwU
+2026-01-04 19:13:10,863 [INFO] skipping DoValue:Frontier II - Retail:gGJegPXHWB
+2026-01-04 19:13:10,863 [INFO] skipping DoValue:Frontier - Retail:ohYTjhq99v
+2026-01-04 19:13:10,863 [INFO] skipping DoValue:Cairo 1:wkHnxCfUN7
+2026-01-04 19:13:10,863 [INFO] skipping DoValue:Leon Retail:D0U6M4jDfb
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Leon Retail:vxwCZhMRpv
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Mexico Retail:UPgbXL9dO6
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Frontier - Retail:gcZT0XtWhL
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Cairo 2:NVQ2sb5WUb
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 19:13:10,864 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Frontier - Retail:6dbVQsdCQ4
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Leon Retail:tx46k0jUIJ
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Leon Retail:1U5tuHPCr7
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Frontier - Retail:dATv4FDkad
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Cairo 1:m9cYAxMEDa
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Gemini A - Retail:cj5VhTIROC-001
+2026-01-04 19:13:10,865 [INFO] skipping DoValue:Frontier - Retail:16WYDYR8ZW
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Cairo 1:MM1Vsf214s-002
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Frontier - Retail:40dLx2Yh45-005
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Cairo 1:3sI6XZuAvp
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Leon Retail:v0yXcgnR6I
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Frontier - Retail:o80IcHWA12
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Leon Retail:8SFKFnCjQ0
+2026-01-04 19:13:10,866 [INFO] skipping DoValue:Frontier - Retail:7a0rjaQonT
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Frontier - Retail:dZZEnpMWfn
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Frontier - Retail:aimNiJ0Pgd
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Frontier - Retail:fvv6ZAPA92
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Leon Retail:n5jWVxaSHh
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Cairo 2:2hZ8n6TiOj
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Leon Retail:68uwR55xZ6
+2026-01-04 19:13:10,867 [INFO] skipping DoValue:Frontier - Retail:9WLfuK8Awp
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:Frontier - Retail:xFH4avv144
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:Frontier - Retail:CGLSxNdiaI
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:ERB Retail:hYl0Ew1vuC
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:ERB Retail:hYl0Ew1vuC
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-007
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:Cairo 1:g2A8VfGOV2-006
+2026-01-04 19:13:10,868 [INFO] skipping DoValue:Leon Retail:RHiwP0jH2j
+2026-01-04 19:13:10,869 [INFO] skipping DoValue:Frontier II - Retail:8nUOe2HLOe-001
+2026-01-04 19:13:10,869 [INFO] skipping DoValue:Cairo 2:qwW59yv3ar
+2026-01-04 19:13:10,869 [INFO] skipping DoValue:Mexico Retail:vk9w0eOKgU
+2026-01-04 19:13:10,869 [INFO] skipping DoValue:Frontier II - Retail:fJU57gUYGB
+2026-01-04 19:13:10,869 [INFO] skipping DoValue:Frontier - Retail:7PvL3xonkU
+2026-01-04 19:13:10,869 [INFO] skipping DoValue:Leon Retail:6Vdwa5wNBR
+2026-01-04 19:13:10,870 [INFO] skipping DoValue:Leon Retail:TgCrd045sG
+2026-01-04 19:13:10,870 [INFO] skipping DoValue:Frontier - Retail:WOX3IPIpwG
+2026-01-04 19:13:10,870 [INFO] skipping DoValue:Frontier - Retail:otUhV6xZ2g
+2026-01-04 19:13:10,870 [INFO] skipping DoValue:Cairo 2:jju1ragqU2
+2026-01-04 19:13:10,870 [INFO] skipping DoValue:ERB Retail:vZbsMn6bIE
+2026-01-04 19:13:10,870 [INFO] skipping DoValue:Frontier - Retail:GbfccRYfSU
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Mexico Retail:7o9hvTdyFG
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Gemini A - Retail:4ShsUlUXQS
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Gemini A - Retail:9MntgjswCF
+2026-01-04 19:13:10,871 [INFO] skipping DoValue:Mexico Retail:5nsARAU9NC
+2026-01-04 19:13:10,872 [INFO] skipping DoValue:Leon Retail:AkytK3JAms
+2026-01-04 19:13:10,872 [INFO] skipping DoValue:Mexico Retail:hfAFlfN8d0-001
+2026-01-04 19:13:10,872 [INFO] skipping DoValue:Heliopolis I - Retail:SVeLQNZCZn
+2026-01-04 19:13:10,872 [INFO] skipping DoValue:Mexico Retail:ZCNXpy8OtB
+2026-01-04 19:13:10,872 [INFO] skipping DoValue:Cairo 2:VVJqmidafN
+2026-01-04 19:13:10,873 [INFO] skipping DoValue:Cairo 2:0GGtVQ9lWE-001
+2026-01-04 19:13:10,873 [INFO] skipping DoValue:Cairo 2:XUMtIYKuWZ
+2026-01-04 19:13:10,873 [INFO] skipping DoValue:Frontier - Retail:ETibcfolUV-002
+2026-01-04 19:13:10,873 [INFO] skipping DoValue:Frontier - Retail:4rAVB14uyn
+2026-01-04 19:13:10,874 [INFO] skipping DoValue:Cairo 2:cBpJo8K9N3-002
+2026-01-04 19:13:10,874 [INFO] skipping DoValue:Leon Retail:RjZxRN5sVN-001
+2026-01-04 19:13:10,874 [INFO] skipping DoValue:Cairo 2:XaINkCUnts-002
+2026-01-04 19:13:10,874 [INFO] skipping DoValue:Leon Retail:pN1UNZecuA
+2026-01-04 19:13:10,874 [INFO] skipping DoValue:Cairo 1:8sTyRYsY5l
+2026-01-04 19:13:10,874 [INFO] skipping DoValue:Frontier II - Retail:GELPraPTDw
+2026-01-04 19:13:10,875 [INFO] skipping DoValue:Mexico Retail:2n7s5vo28R
+2026-01-04 19:13:10,875 [INFO] skipping DoValue:Frontier - Retail:bWeirptPTS
+2026-01-04 19:13:10,875 [INFO] skipping DoValue:Leon Retail:m7LFrp47ia
+2026-01-04 19:13:10,875 [INFO] skipping DoValue:Frontier II - Retail:e8xUNwqcKn
+2026-01-04 19:13:10,875 [INFO] skipping DoValue:Frontier - Retail:FY47dAQ7VC
+2026-01-04 19:13:10,875 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-007
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-009
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:Frontier - Retail:G8W0ZvYlqP-008
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:Leon Retail:SktVhJvn8x
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:Frontier - Retail:UkwC27Z2BI
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:ERB Retail:Hn091C4dyI-002
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:Leon Retail:GFtNFQlOS7
+2026-01-04 19:13:10,876 [INFO] skipping DoValue:Frontier - Retail:XISVg4Z2TE
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Frontier - Retail:8T0R9A5uNF
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Gemini A - Retail:hBfpJLh4Gj
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Frontier II - Retail:xkeRfu9OZ2
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Leon Retail:3l98812PKN
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Frontier - Retail:3q9l8SHEm4
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Leon Retail:7LX3kHXxQU
+2026-01-04 19:13:10,877 [INFO] skipping DoValue:Frontier - Retail:LkvUVcDBYF
+2026-01-04 19:13:10,878 [INFO] skipping DoValue:Frontier - Retail:nKZUOkJtrE
+2026-01-04 19:13:10,878 [INFO] skipping DoValue:Heliopolis I - Retail:uLiZEcbOaJ
+2026-01-04 19:13:10,878 [INFO] skipping DoValue:Frontier - Retail:o7WSgrhJfN
+2026-01-04 19:13:10,878 [INFO] skipping DoValue:Frontier - Retail:jNofFcaXaw
+2026-01-04 19:13:10,878 [INFO] skipping DoValue:Leon Retail:fiFSwfxla1-002
+2026-01-04 19:13:10,878 [INFO] skipping DoValue:Gemini A - Retail:L1JJktgCwJ
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Cairo 1:Mp8VnkqqI1-002
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Frontier - Retail:GtZL5v756n
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Mexico Retail:a6GYvqQLY9
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Mexico Retail:51dUb5NhLX
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Cairo 2:kVknnUMMgh
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Frontier - Retail:UMvwwQ5Row
+2026-01-04 19:13:10,879 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-007
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Frontier - Retail:HgwYdJTNnP
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Gemini A - Retail:7VdJFp1Rge
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Cairo 2:GFCNhTeMWU-005
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Leon Retail:RRZIpeHolV
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Leon Retail:5J42wTg4yh
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Frontier - Retail:tjLEfa1VkH-002
+2026-01-04 19:13:10,880 [INFO] skipping DoValue:Frontier - Retail:AZHVcjlidQ
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Leon Retail:ySdInSaPXN
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Frontier - Retail:UE8GgR6p6I
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Frontier - Retail:iWN99RXFfd
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Leon Retail:k4Lhwe1xLK
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Cairo 1:XxiFSNRbtA-001
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Frontier - Retail:ADSFZ8OpMW-002
+2026-01-04 19:13:10,881 [INFO] skipping DoValue:Cairo 2:xW6Pe60Fpg
+2026-01-04 19:13:10,882 [INFO] skipping DoValue:Gemini A - Retail:OuPntGybPq
+2026-01-04 19:13:10,882 [INFO] skipping DoValue:Gemini A - Retail:OuPntGybPq
+2026-01-04 19:13:10,882 [INFO] skipping DoValue:Leon Retail:MiFEAB9qpa
+2026-01-04 19:13:10,882 [INFO] skipping DoValue:Frontier - Retail:8wtJfn1Z1O
+2026-01-04 19:13:10,882 [INFO] skipping DoValue:Frontier II - Retail:eToysUulls
+2026-01-04 19:13:10,882 [INFO] skipping DoValue:Frontier - Retail:Msr6WpTet2
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Frontier - Retail:4OvZb0YjrK
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Frontier - Retail:uAhDht12kB
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Frontier - Retail:nl95YI2toG
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Frontier - Retail:vTwhWFd81j
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Gemini A - Retail:8c9giopBLx
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Frontier II - Retail:8nUOe2HLOe-002
+2026-01-04 19:13:10,883 [INFO] skipping DoValue:Heliopolis II - Retail:JHw8McKp5C
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Cairo 2:cBpJo8K9N3-003
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Mexico Retail:KqJPZDQuF1
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Cairo 1:j6MxFh2cT1
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Leon Retail:NEaPkan1Ow
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Frontier - Retail:I6grVHxdk6
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Frontier - Retail:ndnZf19DX2
+2026-01-04 19:13:10,884 [INFO] skipping DoValue:Frontier - Retail:LQWEr5gXfw
+2026-01-04 19:13:10,885 [INFO] skipping DoValue:Frontier - Retail:V5TkM50X9a
+2026-01-04 19:13:10,885 [INFO] skipping DoValue:Frontier - Retail:2eBmdm1iCj
+2026-01-04 19:13:10,885 [INFO] skipping DoValue:Cairo 1:8hkdho5U3K-001
+2026-01-04 19:13:10,885 [INFO] skipping DoValue:Cairo 1:8hkdho5U3K-002
+2026-01-04 19:13:10,885 [INFO] skipping DoValue:Frontier - Retail:jAM1AhpWns
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Mexico Retail:eYetL9vTqI
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Frontier - Retail:sYvxyEVMUY
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Leon Retail:GWxtHutnZW
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Cairo 2:evhbueqXHO
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Leon Retail:xmnbwkYTaE
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Mexico Retail:XRKEqWEGOi-001
+2026-01-04 19:13:10,886 [INFO] skipping DoValue:Frontier II - Retail:uohWjrTYNQ
+2026-01-04 19:13:10,887 [INFO] skipping DoValue:Leon Retail:5frs8Wd4Mg
+2026-01-04 19:13:10,887 [INFO] skipping DoValue:Mexico Retail:2Is1CsvvrF
+2026-01-04 19:13:10,887 [INFO] skipping DoValue:Frontier - Retail:mNUBWgKSTd
+2026-01-04 19:13:10,887 [INFO] skipping DoValue:Frontier - Retail:LVhW8qsEw7
+2026-01-04 19:13:10,887 [INFO] skipping DoValue:Cairo 2:yt3RQHPAV3
+2026-01-04 19:13:10,887 [INFO] skipping DoValue:Frontier - Retail:EAa2OnrOxI
+2026-01-04 19:13:10,888 [INFO] skipping DoValue:Heliopolis I - Retail:EXl2TLGDuV
+2026-01-04 19:13:10,888 [INFO] skipping DoValue:Mexico Retail:yioiAhqZPs
+2026-01-04 19:13:10,888 [INFO] skipping NBG:nbg-reo:35139_2
+2026-01-04 19:13:10,888 [INFO] skipping NBG:nbg-reo:33788_0
+2026-01-04 19:13:10,888 [INFO] skipping NBG:nbg-reo:34834_0
+2026-01-04 19:13:10,888 [INFO] skipping NBG:nbg-reo:33724_0
+2026-01-04 19:13:10,888 [INFO] skipping NBG:nbg-reo:33970_0
+2026-01-04 19:13:10,889 [INFO] skipping NBG:nbg-reo:33136_0
+2026-01-04 19:13:10,889 [INFO] skipping NBG:nbg-reo:33747_0
+2026-01-04 19:13:10,889 [INFO] skipping NBG:nbg-reo:33547_1
+2026-01-04 19:13:10,889 [INFO] skipping NBG:nbg-reo:35311_0
+2026-01-04 19:13:10,890 [INFO] skipping NBG:nbg-reo:33687_0
+2026-01-04 19:13:10,890 [INFO] skipping NBG:nbg-reo:34340_0
+2026-01-04 19:13:10,890 [INFO] skipping NBG:nbg-reo:33810_0
+2026-01-04 19:13:10,890 [INFO] skipping NBG:nbg-reo:33700_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:34880_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:32554_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:34408_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:33520_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:35225_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:34410_0
+2026-01-04 19:13:10,891 [INFO] skipping NBG:nbg-reo:32805_0
+2026-01-04 19:13:10,892 [INFO] skipping NBG:nbg-reo:34913_0
+2026-01-04 19:13:10,892 [INFO] skipping NBG:nbg-reo:34512_0
+2026-01-04 19:13:10,892 [INFO] skipping NBG:nbg-reo:34304_0
+2026-01-04 19:13:10,892 [INFO] skipping NBG:nbg-reo:34879_0
+2026-01-04 19:13:10,892 [INFO] skipping NBG:nbg-reo:34760_0
+2026-01-04 19:13:10,892 [INFO] skipping NBG:nbg-reo:35209_0
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:34664_0
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:33119_2
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:34412_0
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:34358_1
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:34811_0
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:33119_1
+2026-01-04 19:13:10,893 [INFO] skipping NBG:nbg-reo:34391_0
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:33547_2
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:35005_0
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:33692_0
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:34991_0
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:33541_0
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:33946_0
+2026-01-04 19:13:10,894 [INFO] skipping NBG:nbg-reo:34130_0
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:34821_0
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:35298_0
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:33369_0
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:34688_0
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:33749_1
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:34709_0
+2026-01-04 19:13:10,895 [INFO] skipping NBG:nbg-reo:35124_0
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:33779_0
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:34445_0
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:33506_3
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:34748_0
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:33414_0
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:34787_0
+2026-01-04 19:13:10,896 [INFO] skipping NBG:nbg-reo:33877_1
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:34017_0
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:34497_0
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:33418_0
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:33333_0
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:32682_1
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:35362_1
+2026-01-04 19:13:10,897 [INFO] skipping NBG:nbg-reo:34595_0
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:33984_0
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:35129_0
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:34514_0
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:34356_1
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:35258_1
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:35068_0
+2026-01-04 19:13:10,898 [INFO] skipping NBG:nbg-reo:33085_0
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:33357_0
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:34274_0
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:33996_1
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:35234_1
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:34705_0
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:35044_0
+2026-01-04 19:13:10,899 [INFO] skipping NBG:nbg-reo:35028_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:33121_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:34694_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:34949_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:34328_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:90016_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:34837_0
+2026-01-04 19:13:10,900 [INFO] skipping NBG:nbg-reo:34282_0
+2026-01-04 19:13:10,901 [INFO] skipping NBG:nbg-reo:34768_0
+2026-01-04 19:13:10,901 [INFO] skipping NBG:nbg-reo:32520_0
+2026-01-04 19:13:10,901 [INFO] skipping NBG:nbg-reo:33921_0
+2026-01-04 19:13:10,901 [INFO] skipping NBG:nbg-reo:33960_0
+2026-01-04 19:13:10,901 [INFO] skipping NBG:nbg-reo:33665_1
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:34530_0
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:34848_0
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:35090_0
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:34541_0
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:33938_0
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:34218_0
+2026-01-04 19:13:10,902 [INFO] skipping NBG:nbg-reo:33762_0
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:70155_0
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:34087_1
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:34191_1
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:34537_0
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:35058_0
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:71030_1
+2026-01-04 19:13:10,903 [INFO] skipping NBG:nbg-reo:33738_3
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:34437_0
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:34740_0
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:34300_0
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:33634_0
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:33738_1
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:33097_0
+2026-01-04 19:13:10,904 [INFO] skipping NBG:nbg-reo:33112_0
+2026-01-04 19:13:10,905 [INFO] skipping NBG:nbg-reo:71030_2
+2026-01-04 19:13:10,905 [INFO] skipping NBG:nbg-reo:34487_0
+2026-01-04 19:13:10,905 [INFO] skipping NBG:nbg-reo:34166_3
+2026-01-04 19:13:10,905 [INFO] skipping NBG:nbg-reo:35162_0
+2026-01-04 19:13:10,905 [INFO] skipping NBG:nbg-reo:34601_0
+2026-01-04 19:13:10,905 [INFO] skipping NBG:nbg-reo:35334_0
+2026-01-04 19:13:10,906 [INFO] skipping NBG:nbg-reo:33800_4
+2026-01-04 19:13:10,906 [INFO] skipping NBG:nbg-reo:33465_0
+2026-01-04 19:13:10,907 [INFO] skipping NBG:nbg-reo:33800_6
+2026-01-04 19:13:10,907 [INFO] skipping NBG:nbg-reo:33800_5
+2026-01-04 19:13:10,907 [INFO] skipping NBG:nbg-reo:34867_0
+2026-01-04 19:13:10,907 [INFO] skipping NBG:nbg-reo:34367_0
+2026-01-04 19:13:10,907 [INFO] skipping NBG:nbg-reo:33890_0
+2026-01-04 19:13:10,907 [INFO] skipping NBG:nbg-reo:34786_0
+2026-01-04 19:13:10,908 [INFO] skipping NBG:nbg-reo:32684_0
+2026-01-04 19:13:10,908 [INFO] skipping NBG:nbg-reo:32993_0
+2026-01-04 19:13:10,908 [INFO] skipping DoValue:DVG_28.11:RA271342
+2026-01-04 19:13:10,908 [INFO] skipping DoValue:DVG_28.11:RA145594
+2026-01-04 19:13:10,908 [INFO] skipping DoValue:DVG_28.11:RA587220
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA206359
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA221128
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA520489
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA157871
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA203750
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA409856
+2026-01-04 19:13:10,909 [INFO] skipping DoValue:DVG_28.11:RA585850
+2026-01-04 19:13:10,910 [INFO] skipping DoValue:DVG_28.11:RA178854
+2026-01-04 19:13:10,910 [INFO] skipping DoValue:DVG_28.11:RA501803
+2026-01-04 19:13:10,910 [INFO] skipping DoValue:DVG_28.11:RA587256
+2026-01-04 19:13:10,910 [INFO] skipping DoValue:DVG_28.11:RA506309
+2026-01-04 19:13:10,910 [INFO] skipping DoValue:DVG_28.11:RA568152
+2026-01-04 19:13:10,910 [INFO] skipping DoValue:DVG_28.11:RA175587
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA565869
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA100954
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA592536
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA215031
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA183906
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA187069
+2026-01-04 19:13:10,911 [INFO] skipping DoValue:DVG_28.11:RA587753
+2026-01-04 19:13:10,912 [INFO] skipping DoValue:DVG_28.11:RA206679
+2026-01-04 19:13:10,912 [INFO] skipping DoValue:DVG_28.11:83763
+2026-01-04 19:13:10,912 [INFO] skipping DoValue:DVG_28.11:98174
+2026-01-04 19:13:10,912 [INFO] skipping DoValue:DVG_28.11:116268
+2026-01-04 19:13:10,912 [INFO] skipping DoValue:DVG_28.11:104880
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:86153
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:90407
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:90257
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:116647
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:126241
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:90221
+2026-01-04 19:13:10,913 [INFO] skipping DoValue:DVG_28.11:145919
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-08330
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10010-10198-10199-10200-10201
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10043
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10130
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10189
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10261- 10311-10312
+2026-01-04 19:13:10,914 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10263
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10403
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10441
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10524
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10576-10577
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10677
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10678
+2026-01-04 19:13:10,915 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10679
+2026-01-04 19:13:10,916 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10711
+2026-01-04 19:13:10,916 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10818
+2026-01-04 19:13:10,916 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10820
+2026-01-04 19:13:10,916 [INFO] skipping ERB:ERB_attica_thessaloniki:E-10984
+2026-01-04 19:13:10,916 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11200
+2026-01-04 19:13:10,916 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11214
+2026-01-04 19:13:10,917 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11525
+2026-01-04 19:13:10,917 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11526
+2026-01-04 19:13:10,917 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11873-11876-11877-11879-11880
+2026-01-04 19:13:10,917 [INFO] skipping ERB:ERB_attica_thessaloniki:E-11874-11875-11878
+2026-01-04 19:13:10,917 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12139
+2026-01-04 19:13:10,917 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12250
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12253
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12277
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12388
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12421-12423
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12422
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12424-26-14877
+2026-01-04 19:13:10,918 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12546-12547
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12548-12549
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12559
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12561
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12563
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12583
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12584
+2026-01-04 19:13:10,919 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12585
+2026-01-04 19:13:10,920 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12586
+2026-01-04 19:13:10,920 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12587
+2026-01-04 19:13:10,920 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12588
+2026-01-04 19:13:10,920 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12589
+2026-01-04 19:13:10,920 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12590
+2026-01-04 19:13:10,920 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12621
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12622
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12623
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12656
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12657
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12709
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12881
+2026-01-04 19:13:10,921 [INFO] skipping ERB:ERB_attica_thessaloniki:E-12947
+2026-01-04 19:13:10,922 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14008
+2026-01-04 19:13:10,922 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14067
+2026-01-04 19:13:10,922 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14117
+2026-01-04 19:13:10,922 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14137
+2026-01-04 19:13:10,922 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14189
+2026-01-04 19:13:10,923 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14243
+2026-01-04 19:13:10,923 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14286
+2026-01-04 19:13:10,923 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14297-14298-14299-14300
+2026-01-04 19:13:10,923 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14312
+2026-01-04 19:13:10,924 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14352
+2026-01-04 19:13:10,924 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14353
+2026-01-04 19:13:10,924 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14353-14354
+2026-01-04 19:13:10,924 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14354
+2026-01-04 19:13:10,924 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14356
+2026-01-04 19:13:10,924 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14372
+2026-01-04 19:13:10,925 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14457
+2026-01-04 19:13:10,925 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14593-95
+2026-01-04 19:13:10,925 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14644
+2026-01-04 19:13:10,925 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14645
+2026-01-04 19:13:10,925 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14726
+2026-01-04 19:13:10,925 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14744
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14746
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14753
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14757-14758-14759
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14775
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14776
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14809
+2026-01-04 19:13:10,926 [INFO] skipping ERB:ERB_attica_thessaloniki:E-14867
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-7698
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-80147-80148
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-80333
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8347
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8393
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8747
+2026-01-04 19:13:10,927 [INFO] skipping ERB:ERB_attica_thessaloniki:E-8936
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9166
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9167
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9179
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9365
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9424
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9425
+2026-01-04 19:13:10,928 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9542
+2026-01-04 19:13:10,929 [INFO] skipping ERB:ERB_attica_thessaloniki:E-9581
+2026-01-04 19:13:10,929 [INFO] skipping CRVD:Residental_assets_var:E-8976
+2026-01-04 19:13:10,929 [INFO] skipping CRVD:Residental_assets_var:E-10677
+2026-01-04 19:13:10,929 [INFO] skipping CRVD:Residental_assets_var:2-11574
+2026-01-04 19:13:10,929 [INFO] skipping CRVD:Residental_assets_var:A-6012
+2026-01-04 19:13:10,929 [INFO] skipping CRVD:Residental_assets_var:E-10310-10313-10314
+2026-01-04 19:13:10,929 [INFO] skipping CRVD:Residental_assets_var:2-12725
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:E-14289-14290-14291
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:E-14776
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:CPR-130
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:CPR-191
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:I-00152
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:E-9179
+2026-01-04 19:13:10,930 [INFO] skipping CRVD:Residental_assets_var:CPR-159
+2026-01-04 19:13:10,934 [INFO] skipping CRVD:Residental_assets_var:CPR-152
+2026-01-04 19:13:10,934 [INFO] skipping CRVD:Residental_assets_var:CPR-151
+2026-01-04 19:13:10,934 [INFO] skipping CRVD:Residental_assets_var:E-10308-10303-10304
+2026-01-04 19:13:10,934 [INFO] skipping CRVD:Residental_assets_var:CPR-278
+2026-01-04 19:13:10,934 [INFO] skipping CRVD:Residental_assets_var:E-14571-14572
+2026-01-04 19:13:10,935 [INFO] skipping CRVD:Residental_assets_var:E-14754
+2026-01-04 19:13:10,935 [INFO] skipping CRVD:Residental_assets_var:H-528
+2026-01-04 19:13:10,935 [INFO] skipping CRVD:Residental_assets_var:E-10261- 10311-10312
+2026-01-04 19:13:10,935 [INFO] skipping CRVD:Residental_assets_var:E-14008
+2026-01-04 19:13:10,935 [INFO] skipping CRVD:Residental_assets_var:T-606
+2026-01-04 19:13:10,935 [INFO] skipping CRVD:Residental_assets_var:E-12561
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:E-14189
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:T-5740
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:T-8145
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:CPR-187
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:CPR-188
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:T-555
+2026-01-04 19:13:10,936 [INFO] skipping CRVD:Residental_assets_var:E-12947
+2026-01-04 19:13:10,937 [INFO] skipping CRVD:Residental_assets_var:T-1270
+2026-01-04 19:13:10,937 [INFO] skipping CRVD:Residental_assets_var:T-1412
+2026-01-04 19:13:10,937 [INFO] skipping CRVD:Residental_assets_var:T-925
+2026-01-04 19:13:10,937 [INFO] skipping CRVD:Residental_assets_var:H-815
+2026-01-04 19:13:10,937 [INFO] skipping CRVD:Residental_assets_var:CPR-235
+2026-01-04 19:13:10,937 [INFO] skipping CRVD:scraping_4/1/26:107
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:155
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:168
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:195
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:227
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:262
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:373
+2026-01-04 19:13:10,938 [INFO] skipping CRVD:scraping_4/1/26:404
+2026-01-04 19:13:10,939 [INFO] skipping CRVD:scraping_4/1/26:431
+2026-01-04 19:13:10,939 [INFO] skipping CRVD:scraping_4/1/26:465
+2026-01-04 19:13:10,939 [INFO] skipping CRVD:scraping_4/1/26:1025
+2026-01-04 19:13:10,940 [INFO] skipping CRVD:scraping_4/1/26:1026
+2026-01-04 19:13:10,940 [INFO] skipping CRVD:scraping_4/1/26:1030
+2026-01-04 19:13:10,940 [INFO] skipping CRVD:scraping_4/1/26:1318
+2026-01-04 19:13:10,940 [INFO] skipping CRVD:scraping_4/1/26:1328
+2026-01-04 19:13:10,940 [INFO] skipping CRVD:scraping_4/1/26:1466
+2026-01-04 19:13:10,941 [INFO] skipping CRVD:scraping_4/1/26:1473
+2026-01-04 19:13:10,941 [INFO] skipping CRVD:scraping_4/1/26:1495
+2026-01-04 19:13:10,941 [INFO] skipping CRVD:scraping_4/1/26:1498
+2026-01-04 19:13:10,941 [INFO] skipping CRVD:scraping_4/1/26:1637
+2026-01-04 19:13:10,941 [INFO] skipping CRVD:scraping_4/1/26:1640
+2026-01-04 19:13:10,941 [INFO] skipping CRVD:scraping_4/1/26:1641
+2026-01-04 19:13:10,942 [INFO] skipping CRVD:scraping_4/1/26:1700
+2026-01-04 19:13:10,942 [INFO] skipping CRVD:scraping_4/1/26:1757
+2026-01-04 19:13:10,942 [INFO] skipping CRVD:scraping_4/1/26:1765
+2026-01-04 19:13:10,942 [INFO] skipping CRVD:scraping_4/1/26:1766
+2026-01-04 19:13:10,942 [INFO] skipping CRVD:scraping_4/1/26:1777
+2026-01-04 19:13:10,942 [INFO] skipping CRVD:scraping_4/1/26:1785
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:1924
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:1929
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:1930
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:1935
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:1962
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:2001
+2026-01-04 19:13:10,943 [INFO] skipping CRVD:scraping_4/1/26:3386
+2026-01-04 19:13:10,944 [INFO] skipping CRVD:scraping_4/1/26:6068
+2026-01-04 19:13:10,944 [INFO] skipping CRVD:scraping_4/1/26:6069
+2026-01-04 19:13:10,944 [INFO] skipping CRVD:scraping_4/1/26:6070
+2026-01-04 19:13:10,944 [INFO] skipping CRVD:scraping_4/1/26:6072
+2026-01-04 19:13:10,944 [INFO] skipping CRVD:scraping_4/1/26:6113
+2026-01-04 19:13:10,944 [INFO] skipping CRVD:scraping_4/1/26:6152
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6157
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6197
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6201
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6218
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6240
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6243
+2026-01-04 19:13:10,945 [INFO] skipping CRVD:scraping_4/1/26:6259
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6305
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6334
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6347
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6348
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6403
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6404
+2026-01-04 19:13:10,946 [INFO] skipping CRVD:scraping_4/1/26:6509
+2026-01-04 19:13:10,947 [INFO] skipping CRVD:scraping_4/1/26:6575
+2026-01-04 19:13:10,947 [INFO] skipping CRVD:scraping_4/1/26:6576
+2026-01-04 19:13:10,947 [INFO] skipping CRVD:scraping_4/1/26:6577
+2026-01-04 19:13:10,947 [INFO] skipping CRVD:scraping_4/1/26:6578
+2026-01-04 19:13:10,947 [INFO] skipping CRVD:scraping_4/1/26:6580
+2026-01-04 19:13:10,947 [INFO] skipping CRVD:scraping_4/1/26:6604
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6641
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6715
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6717
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6794
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6806
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6835
+2026-01-04 19:13:10,948 [INFO] skipping CRVD:scraping_4/1/26:6837
+2026-01-04 19:13:10,949 [INFO] skipping CRVD:scraping_4/1/26:6838
+2026-01-04 19:13:10,949 [INFO] skipping CRVD:scraping_4/1/26:6840
+2026-01-04 19:13:10,949 [INFO] skipping CRVD:scraping_4/1/26:6893
+2026-01-04 19:13:10,949 [INFO] skipping CRVD:scraping_4/1/26:6898
+2026-01-04 19:13:10,949 [INFO] skipping CRVD:scraping_4/1/26:6901
+2026-01-04 19:13:10,950 [INFO] skipping CRVD:scraping_4/1/26:6934
+2026-01-04 19:13:10,950 [INFO] skipping CRVD:scraping_4/1/26:7061
+2026-01-04 19:13:10,950 [INFO] skipping CRVD:scraping_4/1/26:7064
+2026-01-04 19:13:10,950 [INFO] skipping CRVD:scraping_4/1/26:7071
+2026-01-04 19:13:10,950 [INFO] skipping CRVD:scraping_4/1/26:7084
+2026-01-04 19:13:10,950 [INFO] skipping CRVD:scraping_4/1/26:7090
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7093
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7095
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7100
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7110
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7136
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7159
+2026-01-04 19:13:10,951 [INFO] skipping CRVD:scraping_4/1/26:7188
+2026-01-04 19:13:10,952 [INFO] skipping CRVD:scraping_4/1/26:7224
+2026-01-04 19:13:10,952 [INFO] skipping CRVD:scraping_4/1/26:7291
+2026-01-04 19:13:10,952 [INFO] skipping CRVD:scraping_4/1/26:7302
+2026-01-04 19:13:10,952 [INFO] skipping CRVD:scraping_4/1/26:7303
+2026-01-04 19:13:10,952 [INFO] skipping CRVD:scraping_4/1/26:7307
+2026-01-04 19:13:10,952 [INFO] skipping CRVD:scraping_4/1/26:7327
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7351
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7361
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7364
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7392
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7404
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7417
+2026-01-04 19:13:10,953 [INFO] skipping CRVD:scraping_4/1/26:7418
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7430
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7431
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7432
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7452
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7510
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7513
+2026-01-04 19:13:10,954 [INFO] skipping CRVD:scraping_4/1/26:7530
+2026-01-04 19:13:10,955 [INFO] skipping CRVD:scraping_4/1/26:7541
+2026-01-04 19:13:10,955 [INFO] skipping CRVD:scraping_4/1/26:7542
+2026-01-04 19:13:10,955 [INFO] skipping CRVD:scraping_4/1/26:7543
+2026-01-04 19:13:10,955 [INFO] skipping CRVD:scraping_4/1/26:7544
+2026-01-04 19:13:10,955 [INFO] skipping CRVD:scraping_4/1/26:7579
+2026-01-04 19:13:10,956 [INFO] skipping CRVD:scraping_4/1/26:7588
+2026-01-04 19:13:10,956 [INFO] skipping CRVD:scraping_4/1/26:7603
+2026-01-04 19:13:10,957 [INFO] skipping CRVD:scraping_4/1/26:7608
+2026-01-04 19:13:10,957 [INFO] skipping CRVD:scraping_4/1/26:7636
+2026-01-04 19:13:10,957 [INFO] skipping CRVD:scraping_4/1/26:7654
+2026-01-04 19:13:10,958 [INFO] skipping CRVD:scraping_4/1/26:7661
+2026-01-04 19:13:10,958 [INFO] skipping CRVD:scraping_4/1/26:7664
+2026-01-04 19:13:10,958 [INFO] skipping CRVD:scraping_4/1/26:7666
+2026-01-04 19:13:10,958 [INFO] skipping CRVD:scraping_4/1/26:7679
+2026-01-04 19:13:10,959 [INFO] skipping CRVD:scraping_4/1/26:7680
+2026-01-04 19:13:10,959 [INFO] skipping CRVD:scraping_4/1/26:7713
+2026-01-04 19:13:10,959 [INFO] skipping CRVD:scraping_4/1/26:7720
+2026-01-04 19:13:10,959 [INFO] skipping CRVD:scraping_4/1/26:7749
+2026-01-04 19:13:10,959 [INFO] skipping CRVD:scraping_4/1/26:7756
+2026-01-04 19:13:10,959 [INFO] skipping CRVD:scraping_4/1/26:7762
+2026-01-04 19:13:10,960 [INFO] skipping CRVD:scraping_4/1/26:7799
+2026-01-04 19:13:10,960 [INFO] skipping CRVD:scraping_4/1/26:7807
+2026-01-04 19:13:10,960 [INFO] skipping CRVD:scraping_4/1/26:7808
+2026-01-04 19:13:10,960 [INFO] skipping CRVD:scraping_4/1/26:7809
+2026-01-04 19:13:10,960 [INFO] skipping CRVD:scraping_4/1/26:7810
+2026-01-04 19:13:10,960 [INFO] skipping CRVD:scraping_4/1/26:7825
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7830
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7832
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7859
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7870
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7875
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7894
+2026-01-04 19:13:10,961 [INFO] skipping CRVD:scraping_4/1/26:7895
+2026-01-04 19:13:10,962 [INFO] skipping CRVD:scraping_4/1/26:7907
+2026-01-04 19:13:10,962 [INFO] skipping CRVD:scraping_4/1/26:7920
+2026-01-04 19:13:10,962 [INFO] skipping CRVD:scraping_4/1/26:7930
+2026-01-04 19:13:10,962 [INFO] skipping CRVD:scraping_4/1/26:7966
+2026-01-04 19:13:10,962 [INFO] skipping CRVD:scraping_4/1/26:7968
+2026-01-04 19:13:10,962 [INFO] skipping CRVD:scraping_4/1/26:7969
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7970
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7971
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7972
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7983
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7993
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7994
+2026-01-04 19:13:10,963 [INFO] skipping CRVD:scraping_4/1/26:7996
+2026-01-04 19:13:10,964 [INFO] skipping CRVD:scraping_4/1/26:8000
+2026-01-04 19:13:10,964 [INFO] skipping CRVD:scraping_4/1/26:8009
+2026-01-04 19:13:10,964 [INFO] skipping CRVD:scraping_4/1/26:8010
+2026-01-04 19:13:10,964 [INFO] skipping CRVD:scraping_4/1/26:8013
+2026-01-04 19:13:10,964 [INFO] skipping CRVD:scraping_4/1/26:8020
+2026-01-04 19:13:10,964 [INFO] skipping CRVD:scraping_4/1/26:8022
+2026-01-04 19:13:10,965 [INFO] skipping CRVD:scraping_4/1/26:8024
+2026-01-04 19:13:10,965 [INFO] skipping CRVD:scraping_4/1/26:8025
+2026-01-04 19:13:10,966 [INFO] skipping CRVD:scraping_4/1/26:8026
+2026-01-04 19:13:10,966 [INFO] skipping CRVD:scraping_4/1/26:8031
+2026-01-04 19:13:10,966 [INFO] skipping CRVD:scraping_4/1/26:8032
+2026-01-04 19:13:10,966 [INFO] skipping CRVD:scraping_4/1/26:8035
+2026-01-04 19:13:10,966 [INFO] skipping CRVD:scraping_4/1/26:8042
+2026-01-04 19:13:10,966 [INFO] skipping CRVD:scraping_4/1/26:8048
+2026-01-04 19:13:10,967 [INFO] skipping CRVD:scraping_4/1/26:8049
+2026-01-04 19:13:10,967 [INFO] skipping CRVD:scraping_4/1/26:8050
+2026-01-04 19:13:10,967 [INFO] skipping CRVD:scraping_4/1/26:8051
+2026-01-04 19:13:10,967 [INFO] skipping CRVD:scraping_4/1/26:8057
+2026-01-04 19:13:10,967 [INFO] skipping CRVD:scraping_4/1/26:8063
+2026-01-04 19:13:10,967 [INFO] skipping CRVD:scraping_4/1/26:8065
+2026-01-04 19:13:10,968 [INFO] skipping CRVD:scraping_4/1/26:8074
+2026-01-04 19:13:10,968 [INFO] skipping CRVD:scraping_4/1/26:8080
+2026-01-04 19:13:10,968 [INFO] skipping CRVD:scraping_4/1/26:8086
+2026-01-04 19:13:10,968 [INFO] skipping CRVD:scraping_4/1/26:8088
+2026-01-04 19:13:10,968 [INFO] skipping CRVD:scraping_4/1/26:8094
+2026-01-04 19:13:10,968 [INFO] skipping CRVD:scraping_4/1/26:8095
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8096
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8098
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8109
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8117
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8122
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8124
+2026-01-04 19:13:10,969 [INFO] skipping CRVD:scraping_4/1/26:8128
+2026-01-04 19:13:10,970 [INFO] skipping CRVD:scraping_4/1/26:8129
+2026-01-04 19:13:10,970 [INFO] skipping CRVD:scraping_4/1/26:8132
+2026-01-04 19:13:10,970 [INFO] skipping CRVD:scraping_4/1/26:8134
+2026-01-04 19:13:10,970 [INFO] skipping CRVD:scraping_4/1/26:8141
+2026-01-04 19:13:10,970 [INFO] skipping CRVD:scraping_4/1/26:8145
+2026-01-04 19:13:10,970 [INFO] skipping CRVD:scraping_4/1/26:8146
+2026-01-04 19:13:10,971 [INFO] skipping CRVD:scraping_4/1/26:8149
+2026-01-04 19:13:10,971 [INFO] skipping CRVD:scraping_4/1/26:8152
+2026-01-04 19:13:10,971 [INFO] skipping CRVD:scraping_4/1/26:8157
+2026-01-04 19:13:10,971 [INFO] skipping CRVD:scraping_4/1/26:8161
+2026-01-04 19:13:10,971 [INFO] skipping CRVD:scraping_4/1/26:8163
+2026-01-04 19:13:10,971 [INFO] skipping CRVD:scraping_4/1/26:8164
+2026-01-04 19:13:10,972 [INFO] skipping CRVD:scraping_4/1/26:8177
+2026-01-04 19:13:10,972 [INFO] skipping CRVD:scraping_4/1/26:8179
+2026-01-04 19:13:10,972 [INFO] skipping CRVD:scraping_4/1/26:8181
+2026-01-04 19:13:10,973 [INFO] skipping CRVD:scraping_4/1/26:8183
+2026-01-04 19:13:10,973 [INFO] skipping CRVD:scraping_4/1/26:8189
+2026-01-04 19:13:10,974 [INFO] skipping CRVD:scraping_4/1/26:8200
+2026-01-04 19:13:10,974 [INFO] skipping CRVD:scraping_4/1/26:8201
+2026-01-04 19:13:10,974 [INFO] skipping CRVD:scraping_4/1/26:8205
+2026-01-04 19:13:10,974 [INFO] skipping CRVD:scraping_4/1/26:8206
+2026-01-04 19:13:10,975 [INFO] skipping CRVD:scraping_4/1/26:8212
+2026-01-04 19:13:10,975 [INFO] skipping CRVD:scraping_4/1/26:8215
+2026-01-04 19:13:10,975 [INFO] skipping CRVD:scraping_4/1/26:8217
+2026-01-04 19:13:10,976 [INFO] skipping CRVD:scraping_4/1/26:8219
+2026-01-04 19:13:10,976 [INFO] skipping CRVD:scraping_4/1/26:8222
+2026-01-04 19:13:10,976 [INFO] skipping CRVD:scraping_4/1/26:8228
+2026-01-04 19:13:10,977 [INFO] skipping CRVD:scraping_4/1/26:8245
+2026-01-04 19:13:10,977 [INFO] skipping CRVD:scraping_4/1/26:8254
+2026-01-04 19:13:10,977 [INFO] skipping CRVD:scraping_4/1/26:8262
+2026-01-04 19:13:10,977 [INFO] skipping CRVD:scraping_4/1/26:8268
+2026-01-04 19:13:10,977 [INFO] skipping CRVD:scraping_4/1/26:8275
+2026-01-04 19:13:10,977 [INFO] skipping CRVD:scraping_4/1/26:8277
+2026-01-04 19:13:10,978 [INFO] skipping CRVD:scraping_4/1/26:8287
+2026-01-04 19:13:10,978 [INFO] skipping CRVD:scraping_4/1/26:8288
+2026-01-04 19:13:10,978 [INFO] skipping CRVD:scraping_4/1/26:8291
+2026-01-04 19:13:10,978 [INFO] skipping CRVD:scraping_4/1/26:8295
+2026-01-04 19:13:10,978 [INFO] skipping CRVD:scraping_4/1/26:8306
+2026-01-04 19:13:10,978 [INFO] skipping CRVD:scraping_4/1/26:8320
+2026-01-04 19:13:10,979 [INFO] skipping CRVD:scraping_4/1/26:8324
+2026-01-04 19:13:10,979 [INFO] skipping CRVD:scraping_4/1/26:8325
+2026-01-04 19:13:10,979 [INFO] skipping CRVD:scraping_4/1/26:8332
+2026-01-04 19:13:10,979 [INFO] skipping CRVD:scraping_4/1/26:8333
+2026-01-04 19:13:10,979 [INFO] skipping CRVD:scraping_4/1/26:8334
+2026-01-04 19:13:10,979 [INFO] skipping CRVD:scraping_4/1/26:8335
+2026-01-04 19:13:10,980 [INFO] skipping CRVD:scraping_4/1/26:8336
+2026-01-04 19:13:10,980 [INFO] skipping CRVD:scraping_4/1/26:8337
+2026-01-04 19:13:10,980 [INFO] skipping CRVD:scraping_4/1/26:8338
+2026-01-04 19:13:10,980 [INFO] skipping CRVD:scraping_4/1/26:8339
+2026-01-04 19:13:10,980 [INFO] skipping CRVD:scraping_4/1/26:8343
+2026-01-04 19:13:10,980 [INFO] skipping CRVD:scraping_4/1/26:8349
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8351
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8352
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8361
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8362
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8371
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8373
+2026-01-04 19:13:10,981 [INFO] skipping CRVD:scraping_4/1/26:8377
+2026-01-04 19:13:10,982 [INFO] skipping CRVD:scraping_4/1/26:8383
+2026-01-04 19:13:10,982 [INFO] skipping CRVD:scraping_4/1/26:8387
+2026-01-04 19:13:10,982 [INFO] skipping CRVD:scraping_4/1/26:8390
+2026-01-04 19:13:10,982 [INFO] skipping CRVD:scraping_4/1/26:8399
+2026-01-04 19:13:10,982 [INFO] skipping CRVD:scraping_4/1/26:8401
+2026-01-04 19:13:10,982 [INFO] skipping CRVD:scraping_4/1/26:8404
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8405
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8407
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8410
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8411
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8412
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8413
+2026-01-04 19:13:10,983 [INFO] skipping CRVD:scraping_4/1/26:8415
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8416
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8417
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8418
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8419
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8421
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8422
+2026-01-04 19:13:10,984 [INFO] skipping CRVD:scraping_4/1/26:8424
+2026-01-04 19:13:10,985 [INFO] skipping CRVD:scraping_4/1/26:8425
+2026-01-04 19:13:10,985 [INFO] skipping CRVD:scraping_4/1/26:8426
+2026-01-04 19:13:10,985 [INFO] skipping CRVD:scraping_4/1/26:8427
+2026-01-04 19:13:10,985 [INFO] skipping CRVD:scraping_4/1/26:8428
+2026-01-04 19:13:10,985 [INFO] skipping CRVD:scraping_4/1/26:8429
+2026-01-04 19:13:10,985 [INFO] skipping CRVD:scraping_4/1/26:8430
+2026-01-04 19:13:10,986 [INFO] skipping CRVD:scraping_4/1/26:8431
+2026-01-04 19:13:10,986 [INFO] skipping CRVD:scraping_4/1/26:8432
+2026-01-04 19:13:10,986 [INFO] skipping CRVD:scraping_4/1/26:8433
+2026-01-04 19:13:10,986 [INFO] skipping CRVD:scraping_4/1/26:8434
+2026-01-04 19:13:10,986 [INFO] skipping CRVD:scraping_4/1/26:8435
+2026-01-04 19:13:10,987 [INFO] skipping CRVD:scraping_4/1/26:8436
+2026-01-04 19:13:10,987 [INFO] skipping CRVD:scraping_4/1/26:8437
+2026-01-04 19:13:10,987 [INFO] skipping CRVD:scraping_4/1/26:8438
+2026-01-04 19:13:10,987 [INFO] skipping CRVD:scraping_4/1/26:8439
+2026-01-04 19:13:10,988 [INFO] skipping CRVD:scraping_4/1/26:8440
+2026-01-04 19:13:10,988 [INFO] skipping CRVD:scraping_4/1/26:8441
+2026-01-04 19:13:10,988 [INFO] skipping CRVD:scraping_4/1/26:8442
+2026-01-04 19:13:10,988 [INFO] skipping CRVD:scraping_4/1/26:8443
+2026-01-04 19:13:10,989 [INFO] skipping CRVD:scraping_4/1/26:8444
+2026-01-04 19:13:10,989 [INFO] skipping CRVD:scraping_4/1/26:8445
+2026-01-04 19:13:10,990 [INFO] skipping CRVD:scraping_4/1/26:8446
+2026-01-04 19:13:10,991 [INFO] skipping CRVD:scraping_4/1/26:8447
+2026-01-04 19:13:10,991 [INFO] skipping CRVD:scraping_4/1/26:8448
+2026-01-04 19:13:10,991 [INFO] skipping CRVD:scraping_4/1/26:8449
+2026-01-04 19:13:10,992 [INFO] skipping CRVD:scraping_4/1/26:8450
+2026-01-04 19:13:10,992 [INFO] skipping CRVD:scraping_4/1/26:8451
+2026-01-04 19:13:10,992 [INFO] skipping CRVD:scraping_4/1/26:8452
+2026-01-04 19:13:10,993 [INFO] skipping CRVD:scraping_4/1/26:8453
+2026-01-04 19:13:10,993 [INFO] skipping CRVD:scraping_4/1/26:8457
+2026-01-04 19:13:10,993 [INFO] skipping CRVD:scraping_4/1/26:8460
+2026-01-04 19:13:10,993 [INFO] skipping CRVD:scraping_4/1/26:8461
+2026-01-04 19:13:10,993 [INFO] skipping CRVD:scraping_4/1/26:8462
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8463
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8464
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8465
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8466
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8467
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8468
+2026-01-04 19:13:10,994 [INFO] skipping CRVD:scraping_4/1/26:8469
+2026-01-04 19:13:10,995 [INFO] skipping CRVD:scraping_4/1/26:8470
+2026-01-04 19:13:10,995 [INFO] skipping CRVD:scraping_4/1/26:8471
+2026-01-04 19:13:10,995 [INFO] skipping CRVD:scraping_4/1/26:8472
+2026-01-04 19:13:10,995 [INFO] skipping CRVD:scraping_4/1/26:8473
+2026-01-04 19:13:10,995 [INFO] skipping CRVD:scraping_4/1/26:8474
+2026-01-04 19:13:10,995 [INFO] skipping CRVD:scraping_4/1/26:8475
+2026-01-04 19:13:10,996 [INFO] skipping CRVD:scraping_4/1/26:8476
+2026-01-04 19:13:10,996 [INFO] skipping CRVD:scraping_4/1/26:8477
+2026-01-04 19:13:10,996 [INFO] skipping CRVD:scraping_4/1/26:8478
+2026-01-04 19:13:10,996 [INFO] skipping CRVD:scraping_4/1/26:8482
+2026-01-04 19:13:10,996 [INFO] skipping CRVD:scraping_4/1/26:8485
+2026-01-04 19:13:10,997 [INFO] skipping CRVD:scraping_4/1/26:8486
+2026-01-04 19:13:10,997 [INFO] skipping CRVD:scraping_4/1/26:8488
+2026-01-04 19:13:10,998 [INFO] skipping CRVD:scraping_4/1/26:8489
+2026-01-04 19:13:10,998 [INFO] skipping CRVD:scraping_4/1/26:8490
+2026-01-04 19:13:10,999 [INFO] skipping CRVD:scraping_4/1/26:8491
+2026-01-04 19:13:10,999 [INFO] skipping CRVD:scraping_4/1/26:8493
+2026-01-04 19:13:10,999 [INFO] skipping CRVD:scraping_4/1/26:8495
+2026-01-04 19:13:11,000 [INFO] skipping CRVD:scraping_4/1/26:8498
+2026-01-04 19:13:11,000 [INFO] skipping CRVD:scraping_4/1/26:8499
+2026-01-04 19:13:11,000 [INFO] skipping CRVD:scraping_4/1/26:8500
+2026-01-04 19:13:11,001 [INFO] skipping CRVD:scraping_4/1/26:8501
+2026-01-04 19:13:11,001 [INFO] skipping CRVD:scraping_4/1/26:8502
+2026-01-04 19:13:11,001 [INFO] skipping CRVD:scraping_4/1/26:8503
+2026-01-04 19:13:11,001 [INFO] skipping CRVD:scraping_4/1/26:8504
+2026-01-04 19:13:11,002 [INFO] skipping CRVD:scraping_4/1/26:8505
+2026-01-04 19:13:11,002 [INFO] skipping CRVD:scraping_4/1/26:8506
+2026-01-04 19:13:11,002 [INFO] skipping CRVD:scraping_4/1/26:8507
+2026-01-04 19:13:11,003 [INFO] skipping CRVD:scraping_4/1/26:8508
+2026-01-04 19:13:11,003 [INFO] skipping CRVD:scraping_4/1/26:8509
+2026-01-04 19:13:11,003 [INFO] skipping CRVD:scraping_4/1/26:8510
+2026-01-04 19:13:11,004 [INFO] skipping CRVD:scraping_4/1/26:8511
+2026-01-04 19:13:11,004 [INFO] skipping CRVD:scraping_4/1/26:8512
+2026-01-04 19:13:11,005 [INFO] skipping CRVD:scraping_4/1/26:8513
+2026-01-04 19:13:11,009 [INFO] skipping CRVD:scraping_4/1/26:8514
+2026-01-04 19:13:11,010 [INFO] skipping CRVD:scraping_4/1/26:8515
+2026-01-04 19:13:11,010 [INFO] skipping CRVD:scraping_4/1/26:8519
+2026-01-04 19:13:11,012 [INFO] skipping CRVD:scraping_4/1/26:8521
+2026-01-04 19:13:11,012 [INFO] skipping CRVD:scraping_4/1/26:8522
+2026-01-04 19:13:11,013 [INFO] skipping CRVD:scraping_4/1/26:8523
+2026-01-04 19:13:11,013 [INFO] skipping CRVD:scraping_4/1/26:8524
+2026-01-04 19:13:11,014 [INFO] skipping CRVD:scraping_4/1/26:8525
+2026-01-04 19:13:11,014 [INFO] skipping CRVD:scraping_4/1/26:8526
+2026-01-04 19:13:11,014 [INFO] skipping CRVD:scraping_4/1/26:8527
+2026-01-04 19:13:11,015 [INFO] skipping CRVD:scraping_4/1/26:8534
+2026-01-04 19:13:11,015 [INFO] skipping CRVD:scraping_4/1/26:8535
+2026-01-04 19:13:11,015 [INFO] skipping CRVD:scraping_4/1/26:8536
+2026-01-04 19:13:11,016 [INFO] skipping CRVD:scraping_4/1/26:8538
+2026-01-04 19:13:11,016 [INFO] skipping CRVD:scraping_4/1/26:8539
+2026-01-04 19:13:11,017 [INFO] skipping CRVD:scraping_4/1/26:8544
+2026-01-04 19:13:11,017 [INFO] skipping CRVD:scraping_4/1/26:8545
+2026-01-04 19:13:11,018 [INFO] skipping CRVD:scraping_4/1/26:8559
+2026-01-04 19:13:11,018 [INFO] skipping CRVD:scraping_4/1/26:8565
+2026-01-04 19:13:11,019 [INFO] skipping CRVD:scraping_4/1/26:8566
+2026-01-04 19:13:11,019 [INFO] skipping CRVD:scraping_4/1/26:8567
+2026-01-04 19:13:11,019 [INFO] skipping CRVD:scraping_4/1/26:8568
+2026-01-04 19:13:11,019 [INFO] skipping CRVD:scraping_4/1/26:8569
+2026-01-04 19:13:11,020 [INFO] skipping CRVD:scraping_4/1/26:8585
+2026-01-04 19:13:11,020 [INFO] skipping CRVD:scraping_4/1/26:8588
+2026-01-04 19:13:11,020 [INFO] skipping CRVD:scraping_4/1/26:8589
+2026-01-04 19:13:11,021 [INFO] skipping CRVD:scraping_4/1/26:8590
+2026-01-04 19:13:11,021 [INFO] skipping CRVD:scraping_4/1/26:8591
+2026-01-04 19:13:11,021 [INFO] skipping CRVD:scraping_4/1/26:8592
+2026-01-04 19:13:11,025 [INFO] skipping CRVD:scraping_4/1/26:8593
+2026-01-04 19:13:11,026 [INFO] skipping CRVD:scraping_4/1/26:8594
+2026-01-04 19:13:11,026 [INFO] skipping CRVD:scraping_4/1/26:8595
+2026-01-04 19:13:11,026 [INFO] skipping CRVD:scraping_4/1/26:8597
+2026-01-04 19:13:11,027 [INFO] skipping CRVD:scraping_4/1/26:8598
+2026-01-04 19:13:11,027 [INFO] skipping CRVD:scraping_4/1/26:8601
+2026-01-04 19:13:11,027 [INFO] skipping CRVD:scraping_4/1/26:8602
+2026-01-04 19:13:11,028 [INFO] skipping CRVD:scraping_4/1/26:8605
+2026-01-04 19:13:11,028 [INFO] skipping CRVD:scraping_4/1/26:8608
+2026-01-04 19:13:11,028 [INFO] skipping CRVD:scraping_4/1/26:8609
+2026-01-04 19:13:11,029 [INFO] skipping CRVD:scraping_4/1/26:8612
+2026-01-04 19:13:11,029 [INFO] skipping CRVD:scraping_4/1/26:8615
+2026-01-04 19:13:11,029 [INFO] skipping CRVD:scraping_4/1/26:8621
+2026-01-04 19:13:11,030 [INFO] skipping CRVD:scraping_4/1/26:8623
+2026-01-04 19:13:11,030 [INFO] skipping CRVD:scraping_4/1/26:8624
+2026-01-04 19:13:11,031 [INFO] skipping CRVD:scraping_4/1/26:8625
+2026-01-04 19:13:11,031 [INFO] skipping CRVD:scraping_4/1/26:8626
+2026-01-04 19:13:11,031 [INFO] skipping CRVD:scraping_4/1/26:8627
+2026-01-04 19:13:11,031 [INFO] skipping CRVD:scraping_4/1/26:8628
+2026-01-04 19:13:11,032 [INFO] skipping CRVD:scraping_4/1/26:8633
+2026-01-04 19:13:11,032 [INFO] skipping CRVD:scraping_4/1/26:8643
+2026-01-04 19:13:11,032 [INFO] skipping CRVD:scraping_4/1/26:8655
+2026-01-04 19:13:11,032 [INFO] skipping CRVD:scraping_4/1/26:8657
+2026-01-04 19:13:11,032 [INFO] skipping CRVD:scraping_4/1/26:8658
+2026-01-04 19:13:11,032 [INFO] skipping CRVD:scraping_4/1/26:8664
+2026-01-04 19:13:11,033 [INFO] skipping CRVD:scraping_4/1/26:8671
+2026-01-04 19:13:11,033 [INFO] skipping CRVD:scraping_4/1/26:8672
+2026-01-04 19:13:11,033 [INFO] skipping CRVD:scraping_4/1/26:8676
+2026-01-04 19:13:11,033 [INFO] skipping CRVD:scraping_4/1/26:8679
+2026-01-04 19:13:11,033 [INFO] skipping CRVD:scraping_4/1/26:8682
+2026-01-04 19:13:11,033 [INFO] skipping CRVD:scraping_4/1/26:8683
+2026-01-04 19:13:11,034 [INFO] skipping CRVD:scraping_4/1/26:8684
+2026-01-04 19:13:11,034 [INFO] skipping CRVD:scraping_4/1/26:8686
+2026-01-04 19:13:11,034 [INFO] skipping CRVD:scraping_4/1/26:8688
+2026-01-04 19:13:11,034 [INFO] skipping CRVD:scraping_4/1/26:8693
+2026-01-04 19:13:11,034 [INFO] skipping CRVD:scraping_4/1/26:8694
+2026-01-04 19:13:11,035 [INFO] skipping CRVD:scraping_4/1/26:8695
+2026-01-04 19:13:11,035 [INFO] skipping CRVD:scraping_4/1/26:8696
+2026-01-04 19:13:11,035 [INFO] skipping CRVD:scraping_4/1/26:8697
+2026-01-04 19:13:11,036 [INFO] skipping CRVD:scraping_4/1/26:8698
+2026-01-04 19:13:11,036 [INFO] skipping CRVD:scraping_4/1/26:8699
+2026-01-04 19:13:11,036 [INFO] skipping CRVD:scraping_4/1/26:8702
+2026-01-04 19:13:11,037 [INFO] skipping CRVD:scraping_4/1/26:8703
+2026-01-04 19:13:11,037 [INFO] skipping CRVD:scraping_4/1/26:8704
+2026-01-04 19:13:11,038 [INFO] skipping CRVD:scraping_4/1/26:8707
+2026-01-04 19:13:11,038 [INFO] skipping CRVD:scraping_4/1/26:8708
+2026-01-04 19:13:11,038 [INFO] skipping CRVD:scraping_4/1/26:8720
+2026-01-04 19:13:11,038 [INFO] skipping CRVD:scraping_4/1/26:8724
+2026-01-04 19:13:11,039 [INFO] skipping CRVD:scraping_4/1/26:8725
+2026-01-04 19:13:11,041 [INFO] skipping CRVD:scraping_4/1/26:8729
+2026-01-04 19:13:11,042 [INFO] skipping CRVD:scraping_4/1/26:8730
+2026-01-04 19:13:11,042 [INFO] skipping CRVD:scraping_4/1/26:8731
+2026-01-04 19:13:11,043 [INFO] skipping CRVD:scraping_4/1/26:8733
+2026-01-04 19:13:11,043 [INFO] skipping CRVD:scraping_4/1/26:8734
+2026-01-04 19:13:11,044 [INFO] skipping CRVD:scraping_4/1/26:8735
+2026-01-04 19:13:11,044 [INFO] skipping CRVD:scraping_4/1/26:8736
+2026-01-04 19:13:11,044 [INFO] skipping CRVD:scraping_4/1/26:8737
+2026-01-04 19:13:11,045 [INFO] skipping CRVD:scraping_4/1/26:8738
+2026-01-04 19:13:11,045 [INFO] skipping CRVD:scraping_4/1/26:8740
+2026-01-04 19:13:11,045 [INFO] skipping CRVD:scraping_4/1/26:8741
+2026-01-04 19:13:11,045 [INFO] skipping CRVD:scraping_4/1/26:8746
+2026-01-04 19:13:11,046 [INFO] skipping CRVD:scraping_4/1/26:8747
+2026-01-04 19:13:11,046 [INFO] skipping CRVD:scraping_4/1/26:8751
+2026-01-04 19:13:11,046 [INFO] skipping CRVD:scraping_4/1/26:8753
+2026-01-04 19:13:11,046 [INFO] skipping CRVD:scraping_4/1/26:8761
+2026-01-04 19:13:11,047 [INFO] skipping CRVD:scraping_4/1/26:8762
+2026-01-04 19:13:11,047 [INFO] skipping CRVD:scraping_4/1/26:8764
+2026-01-04 19:13:11,047 [INFO] skipping CRVD:scraping_4/1/26:8767
+2026-01-04 19:13:11,048 [INFO] skipping CRVD:scraping_4/1/26:8768
+2026-01-04 19:13:11,048 [INFO] skipping CRVD:scraping_4/1/26:8770
+2026-01-04 19:13:11,048 [INFO] skipping CRVD:scraping_4/1/26:8772
+2026-01-04 19:13:11,049 [INFO] skipping CRVD:scraping_4/1/26:8773
+2026-01-04 19:13:11,049 [INFO] skipping CRVD:scraping_4/1/26:8774
+2026-01-04 19:13:11,050 [INFO] skipping CRVD:scraping_4/1/26:8775
+2026-01-04 19:13:11,050 [INFO] skipping CRVD:scraping_4/1/26:8779
+2026-01-04 19:13:11,050 [INFO] skipping CRVD:scraping_4/1/26:8783
+2026-01-04 19:13:11,050 [INFO] skipping CRVD:scraping_4/1/26:8784
+2026-01-04 19:13:11,050 [INFO] skipping CRVD:scraping_4/1/26:8785
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8786
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8787
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8791
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8792
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8793
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8794
+2026-01-04 19:13:11,051 [INFO] skipping CRVD:scraping_4/1/26:8795
+2026-01-04 19:13:11,052 [INFO] skipping CRVD:scraping_4/1/26:8800
+2026-01-04 19:13:11,052 [INFO] skipping CRVD:scraping_4/1/26:8801
+2026-01-04 19:13:11,052 [INFO] skipping CRVD:scraping_4/1/26:8803
+2026-01-04 19:13:11,052 [INFO] skipping CRVD:scraping_4/1/26:8805
+2026-01-04 19:13:11,052 [INFO] skipping CRVD:scraping_4/1/26:8807
+2026-01-04 19:13:11,053 [INFO] skipping CRVD:scraping_4/1/26:8811
+2026-01-04 19:13:11,053 [INFO] skipping CRVD:scraping_4/1/26:8813
+2026-01-04 19:13:11,053 [INFO] skipping CRVD:scraping_4/1/26:8814
+2026-01-04 19:13:11,054 [INFO] skipping CRVD:scraping_4/1/26:8815
+2026-01-04 19:13:11,054 [INFO] skipping CRVD:scraping_4/1/26:8816
+2026-01-04 19:13:11,054 [INFO] skipping CRVD:scraping_4/1/26:8817
+2026-01-04 19:13:11,055 [INFO] skipping CRVD:scraping_4/1/26:8818
+2026-01-04 19:13:11,055 [INFO] skipping CRVD:scraping_4/1/26:8828
+2026-01-04 19:13:11,055 [INFO] skipping CRVD:scraping_4/1/26:8830
+2026-01-04 19:13:11,055 [INFO] skipping CRVD:scraping_4/1/26:8832
+2026-01-04 19:13:11,057 [INFO] skipping CRVD:scraping_4/1/26:8834
+2026-01-04 19:13:11,058 [INFO] skipping CRVD:scraping_4/1/26:8836
+2026-01-04 19:13:11,059 [INFO] skipping CRVD:scraping_4/1/26:8837
+2026-01-04 19:13:11,059 [INFO] skipping CRVD:scraping_4/1/26:8838
+2026-01-04 19:13:11,060 [INFO] skipping CRVD:scraping_4/1/26:8840
+2026-01-04 19:13:11,060 [INFO] skipping CRVD:scraping_4/1/26:8841
+2026-01-04 19:13:11,060 [INFO] skipping CRVD:scraping_4/1/26:8844
+2026-01-04 19:13:11,061 [INFO] skipping CRVD:scraping_4/1/26:8849
+2026-01-04 19:13:11,061 [INFO] skipping CRVD:scraping_4/1/26:8851
+2026-01-04 19:13:11,061 [INFO] skipping CRVD:scraping_4/1/26:8856
+2026-01-04 19:13:11,061 [INFO] handling CRVD:scraping_4/1/26:8857
+2026-01-04 19:13:14,529 [INFO] Successfully fetched min_lat=38.158841089442554 min_lon=22.33993700332056 max_lat=38.16064289933396 max_lon=22.34221902475796
+2026-01-04 19:13:17,845 [INFO] Successfully fetched min_lat=38.1583906299552 min_lon=22.33936651550989 max_lat=38.161093344791915 max_lon=22.34278954766677
+2026-01-04 19:13:21,382 [INFO] Successfully fetched min_lat=38.15771493546363 min_lon=22.33851079695476 max_lat=38.161769007717396 max_lon=22.343645345192723
+2026-01-04 19:13:26,946 [INFO] CRVD:8857	Saved Spitogatos Comparison successfully
+2026-01-04 19:13:26,951 [INFO] fetched 21 assets
+2026-01-04 19:13:26,952 [INFO] handling CRVD:scraping_4/1/26:8858
+2026-01-04 19:13:30,281 [INFO] Successfully fetched min_lat=38.07287012370346 min_lon=23.696943552882214 max_lat=38.074671960030734 max_lon=23.69922290057721
+2026-01-04 19:13:33,651 [INFO] Successfully fetched min_lat=38.07241965762845 min_lon=23.696373733432598 max_lat=38.07512241211897 max_lon=23.69979275497587
+2026-01-04 19:13:36,910 [INFO] Successfully fetched min_lat=38.071743953271344 min_lon=23.69551901736313 max_lat=38.075798085005815 max_lon=23.700647549680685
+2026-01-04 19:13:41,287 [INFO] CRVD:8858	Saved Spitogatos Comparison successfully
+2026-01-04 19:13:41,291 [INFO] fetched 2 assets
+2026-01-04 19:13:41,291 [INFO] handling CRVD:scraping_4/1/26:8859
+2026-01-04 19:13:44,718 [INFO] Successfully fetched min_lat=38.477622138474025 min_lon=23.62474699624282 max_lat=38.47942385017544 max_lon=23.627039032282806
+2026-01-04 19:13:47,984 [INFO] Successfully fetched min_lat=38.47717170345477 min_lon=23.62417400506093 max_lat=38.479874271006494 max_lon=23.62761205912171
+2026-01-04 19:13:51,369 [INFO] Successfully fetched min_lat=38.47649604560581 min_lon=23.62331453165855 max_lat=38.48054989693204 max_lon=23.628471612752403
+2026-01-04 19:13:56,009 [INFO] CRVD:8859	Saved Spitogatos Comparison successfully
+2026-01-04 19:13:56,015 [INFO] fetched 6 assets
+2026-01-04 19:13:56,016 [INFO] handling CRVD:scraping_4/1/26:8860
+2026-01-04 19:13:59,297 [INFO] Successfully fetched min_lat=38.13565108588077 min_lon=21.59179336447779 max_lat=38.137452902904954 max_lon=21.594074663568502
+2026-01-04 19:14:02,589 [INFO] Successfully fetched min_lat=38.135200624615976 min_lon=21.591223057233638 max_lat=38.13790335015186 max_lon=21.594645005870504
+2026-01-04 19:14:05,926 [INFO] Successfully fetched min_lat=38.13452492746255 min_lon=21.5903676095132 max_lat=38.13857901576505 max_lon=21.595500532471124
+2026-01-04 19:14:10,974 [INFO] CRVD:8860	Saved Spitogatos Comparison successfully
+2026-01-04 19:14:10,978 [INFO] fetched 2 assets
+2026-01-04 19:14:10,978 [INFO] handling CRVD:scraping_4/1/26:8862
+2026-01-04 19:14:14,305 [INFO] Successfully fetched min_lat=38.068502075571196 min_lon=23.69024540790107 max_lat=38.07030391324111 max_lon=23.692524620052115
+2026-01-04 19:14:17,554 [INFO] Successfully fetched min_lat=38.06805160916159 min_lon=23.689675622333663 max_lat=38.07075436566609 max_lon=23.69309444056101
+2026-01-04 19:14:20,949 [INFO] Successfully fetched min_lat=38.06737590430343 min_lon=23.68882095708468 max_lat=38.07143003905885 max_lon=23.69394918442833
+2026-01-04 19:14:25,565 [INFO] CRVD:8862	Saved Spitogatos Comparison successfully
+2026-01-04 19:14:25,568 [INFO] fetched 3 assets
+2026-01-04 19:14:25,569 [INFO] handling CRVD:scraping_4/1/26:8864
+2026-01-04 19:14:29,000 [INFO] Successfully fetched min_lat=38.886844201598954 min_lon=22.430629451068317 max_lat=38.8886457868858 max_lon=22.432934578042612
+2026-01-04 19:14:34,893 [INFO] CRVD:8864	Saved Spitogatos Comparison successfully
+2026-01-04 19:14:34,897 [INFO] fetched 5 assets
+2026-01-04 19:14:34,898 [INFO] handling CRVD:scraping_4/1/26:8868
+2026-01-04 19:14:38,199 [INFO] Successfully fetched min_lat=36.5552342249093 min_lon=22.47128928386187 max_lat=36.5570365244905 max_lon=22.473523262077975
+2026-01-04 19:14:41,514 [INFO] Successfully fetched min_lat=36.55478364338905 min_lon=22.47073080551988 max_lat=36.55748709276049 max_lon=22.47408177284476
+2026-01-04 19:14:44,833 [INFO] Successfully fetched min_lat=36.554107766140255 min_lon=22.469893100165347 max_lat=36.55816294019619 max_lon=22.47491955115509
+2026-01-04 19:14:51,691 [INFO] CRVD:8868	Saved Spitogatos Comparison successfully
+2026-01-04 19:14:51,694 [INFO] fetched 1 assets
+2026-01-04 19:14:51,695 [INFO] handling CRVD:scraping_4/1/26:8870
+2026-01-04 19:14:55,138 [INFO] Successfully fetched min_lat=38.02050376182507 min_lon=23.701683740484807 max_lat=38.02230561424536 max_lon=23.703961465146303
+2026-01-04 19:15:00,282 [INFO] CRVD:8870	Saved Spitogatos Comparison successfully
+2026-01-04 19:15:00,290 [INFO] fetched 14 assets
+2026-01-04 19:15:00,291 [INFO] handling CRVD:scraping_4/1/26:8871
+2026-01-04 19:15:03,932 [INFO] Successfully fetched min_lat=38.141960785585155 min_lon=21.548278511517587 max_lat=38.14376260066874 max_lon=21.55056000706705
+2026-01-04 19:15:07,406 [INFO] Successfully fetched min_lat=38.14151032480395 min_lon=21.547708155164234 max_lat=38.144213047428934 max_lon=21.55113039848921
+2026-01-04 19:15:10,822 [INFO] Successfully fetched min_lat=38.140834628374726 min_lon=21.54685263378408 max_lat=38.14488871231089 max_lon=21.55198599877419
+2026-01-04 19:15:15,602 [INFO] CRVD:8871	Saved Spitogatos Comparison successfully
+2026-01-04 19:15:15,606 [INFO] fetched 7 assets
+2026-01-04 19:15:15,606 [INFO] handling CRVD:scraping_4/1/26:8872
+2026-01-04 19:15:18,875 [INFO] Successfully fetched min_lat=37.069992922995226 min_lon=22.42913552027976 max_lat=37.07179506620727 max_lon=22.43138450632726
+2026-01-04 19:15:22,136 [INFO] Successfully fetched min_lat=37.06954238044397 min_lon=22.428573290396898 max_lat=37.07224559526167 max_lon=22.431946769468883
+2026-01-04 19:15:25,489 [INFO] Successfully fetched min_lat=37.06886656155619 min_lon=22.427729958043763 max_lat=37.07292138378147 max_lon=22.432790176654237
+2026-01-04 19:15:32,877 [INFO] CRVD:8872	Saved Spitogatos Comparison successfully
+2026-01-04 19:15:32,882 [INFO] fetched 7 assets
+2026-01-04 19:15:32,883 [INFO] handling CRVD:scraping_4/1/26:8873
+2026-01-04 19:15:36,348 [INFO] Successfully fetched min_lat=38.08329807784236 min_lon=23.74064417828607 max_lat=38.08509991096408 max_lon=23.742923849687607
+2026-01-04 19:15:40,872 [INFO] CRVD:8873	Saved Spitogatos Comparison successfully
+2026-01-04 19:15:40,875 [INFO] fetched 9 assets
+2026-01-04 19:15:40,876 [INFO] handling CRVD:scraping_4/1/26:8876
+2026-01-04 19:15:44,199 [INFO] Successfully fetched min_lat=37.8427930409611 min_lon=21.25147488977613 max_lat=37.844594947940294 max_lon=21.25374713786655
+2026-01-04 19:15:47,446 [INFO] Successfully fetched min_lat=37.84234255727986 min_lon=21.250906845029814 max_lat=37.84504541774828 max_lon=21.254315217166216
+2026-01-04 19:15:50,712 [INFO] Successfully fetched min_lat=37.841666826556 min_lon=21.250054790866933 max_lat=37.84572111725733 max_lon=21.255167349074128
+2026-01-04 19:15:55,235 [INFO] CRVD:8876	Saved Spitogatos Comparison successfully
+2026-01-04 19:15:55,239 [INFO] fetched 3 assets
+2026-01-04 19:15:55,240 [INFO] handling CRVD:scraping_4/1/26:8878
+2026-01-04 19:15:58,840 [INFO] Successfully fetched min_lat=38.00781406625868 min_lon=22.75017334793743 max_lat=38.00961592257763 max_lon=22.7524506799319
+2026-01-04 19:16:04,147 [INFO] CRVD:8878	Saved Spitogatos Comparison successfully
+2026-01-04 19:16:04,151 [INFO] fetched 12 assets
+2026-01-04 19:16:04,152 [INFO] handling CRVD:scraping_4/1/26:8879
+2026-01-04 19:16:07,466 [INFO] Successfully fetched min_lat=37.025339916205574 min_lon=22.125545178783117 max_lat=37.02714207301417 max_lon=22.12779284776533
+2026-01-04 19:16:10,884 [INFO] Successfully fetched min_lat=37.02488937026592 min_lon=22.124983278129957 max_lat=37.02759260547846 max_lon=22.12835478160402
+2026-01-04 19:16:15,461 [INFO] CRVD:8879	Saved Spitogatos Comparison successfully
+2026-01-04 19:16:15,465 [INFO] fetched 9 assets
+2026-01-04 19:16:15,465 [INFO] handling CRVD:scraping_4/1/26:8880
+2026-01-04 19:16:18,893 [INFO] Successfully fetched min_lat=38.615430871355386 min_lon=24.107022956015754 max_lat=38.617232540530736 max_lon=24.10931937077058
+2026-01-04 19:16:22,202 [INFO] Successfully fetched min_lat=38.614980446933124 min_lon=24.106448870277458 max_lat=38.61768295069573 max_lon=24.109893492410485
+2026-01-04 19:16:25,448 [INFO] Successfully fetched min_lat=38.61430480495371 min_lon=24.10558775513215 max_lat=38.61835856059628 max_lon=24.1107546883344
+2026-01-04 19:16:30,289 [INFO] CRVD:8880	Saved Spitogatos Comparison successfully
+2026-01-04 19:16:30,294 [INFO] fetched 2 assets
+2026-01-04 19:16:30,295 [INFO] handling CRVD:scraping_4/1/26:8881
+2026-01-04 19:16:33,603 [INFO] Successfully fetched min_lat=38.74654317993424 min_lon=22.446849710113966 max_lat=38.748344808607186 max_lon=22.449150318794835
+2026-01-04 19:16:36,987 [INFO] Successfully fetched min_lat=38.74609276560458 min_lon=22.44627457601133 max_lat=38.748795208613615 max_lon=22.44972548903345
+2026-01-04 19:16:40,254 [INFO] Successfully fetched min_lat=38.74541713873937 min_lon=22.445411888407435 max_lat=38.74947080325155 max_lon=22.450588257943338
+2026-01-04 19:16:44,798 [INFO] CRVD:8881	Saved Spitogatos Comparison successfully
+2026-01-04 19:16:44,800 [INFO] handling CRVD:scraping_4/1/26:8882
+2026-01-04 19:16:48,220 [INFO] Successfully fetched min_lat=37.93490905507792 min_lon=23.75347247347075 max_lat=37.93671093378718 max_lon=23.755747554298207
+2026-01-04 19:16:52,781 [INFO] CRVD:8882	Saved Spitogatos Comparison successfully
+2026-01-04 19:16:52,785 [INFO] fetched 19 assets
+2026-01-04 19:16:52,786 [INFO] handling CRVD:scraping_4/1/26:8884
+2026-01-04 19:16:56,294 [INFO] Successfully fetched min_lat=38.24018279788149 min_lon=21.73104746112331 max_lat=38.241984582742845 max_lon=21.73333202286989
+2026-01-04 19:17:00,823 [INFO] CRVD:8884	Saved Spitogatos Comparison successfully
+2026-01-04 19:17:00,827 [INFO] fetched 30 assets
+2026-01-04 19:17:00,828 [INFO] handling CRVD:scraping_4/1/26:8885
+2026-01-04 19:17:04,422 [INFO] Successfully fetched min_lat=37.61750900648487 min_lon=22.769316326409424 max_lat=37.619310982504935 max_lon=22.771581700926998
+2026-01-04 19:17:09,675 [INFO] CRVD:8885	Saved Spitogatos Comparison successfully
+2026-01-04 19:17:09,680 [INFO] fetched 8 assets
+2026-01-04 19:17:09,680 [INFO] handling CRVD:scraping_4/1/26:8887
+2026-01-04 19:17:13,000 [INFO] Successfully fetched min_lat=38.984419216679534 min_lon=23.147775870631456 max_lat=38.98622077176567 max_lon=23.15008415862096
+2026-01-04 19:17:16,354 [INFO] Successfully fetched min_lat=38.98396882068646 min_lon=23.147198816916433 max_lat=38.98667115331525 max_lon=23.1506612489015
+2026-01-04 19:17:19,656 [INFO] Successfully fetched min_lat=38.983293221281 min_lon=23.14633325005499 max_lat=38.987346720222824 max_lon=23.15152689803536
+2026-01-04 19:17:25,010 [INFO] CRVD:8887	Saved Spitogatos Comparison successfully
+2026-01-04 19:17:25,012 [INFO] handling CRVD:scraping_4/1/26:8888
+2026-01-04 19:17:28,305 [INFO] Successfully fetched min_lat=38.409543127992094 min_lon=23.902105072232775 max_lat=38.41134486068455 max_lon=23.904394956196718
+2026-01-04 19:17:31,616 [INFO] Successfully fetched min_lat=38.4090926877421 min_lon=23.901532619009828 max_lat=38.41179528678038 max_lon=23.904967444956537
+2026-01-04 19:17:34,971 [INFO] Successfully fetched min_lat=38.40841702205977 min_lon=23.900673952500785 max_lat=38.41247092061585 max_lon=23.90582619142353
+2026-01-04 19:17:40,235 [INFO] CRVD:8888	Saved Spitogatos Comparison successfully
+2026-01-04 19:17:40,238 [INFO] handling CRVD:scraping_4/1/26:8889
+2026-01-04 19:17:43,545 [INFO] Successfully fetched min_lat=38.12119908366141 min_lon=22.397528589340432 max_lat=38.12300090513002 max_lon=22.399809438685796
+2026-01-04 19:17:46,852 [INFO] Successfully fetched min_lat=38.12074862128909 min_lon=22.396958394520087 max_lat=38.12345135349162 max_lon=22.400379668538918
+2026-01-04 19:17:50,180 [INFO] Successfully fetched min_lat=38.12007292247707 min_lon=22.396103115425937 max_lat=38.12412702077954 max_lon=22.401235026456817
+2026-01-04 19:17:55,393 [INFO] CRVD:8889	Saved Spitogatos Comparison successfully
+2026-01-04 19:17:55,397 [INFO] fetched 1 assets
+2026-01-04 19:17:55,397 [INFO] handling CRVD:scraping_4/1/26:8890
+2026-01-04 19:17:58,778 [INFO] Successfully fetched min_lat=38.235008101146015 min_lon=21.991645814175218 max_lat=38.23680988760021 max_lon=21.99393021400944
+2026-01-04 19:18:02,055 [INFO] Successfully fetched min_lat=38.23455764749906 min_lon=21.99107473183168 max_lat=38.23726032717996 max_lon=21.994501331583788
+2026-01-04 19:18:05,482 [INFO] Successfully fetched min_lat=38.233881961753895 min_lon=21.990218121526997 max_lat=38.23793598127393 max_lon=21.995358021157806
+2026-01-04 19:18:10,169 [INFO] CRVD:8890	Saved Spitogatos Comparison successfully
+2026-01-04 19:18:10,172 [INFO] fetched 2 assets
+2026-01-04 19:18:10,173 [INFO] handling CRVD:scraping_4/1/26:8893
+2026-01-04 19:18:13,489 [INFO] Successfully fetched min_lat=38.105415081237815 min_lon=22.397350834743616 max_lat=38.10721690755987 max_lon=22.39963119326072
+2026-01-04 19:18:16,744 [INFO] Successfully fetched min_lat=38.104964617656044 min_lon=22.39678076261665 max_lat=38.10766735713874 max_lon=22.400201300393093
+2026-01-04 19:18:20,074 [INFO] Successfully fetched min_lat=38.104288917032775 min_lon=22.395925667552298 max_lat=38.10834302625549 max_lon=22.401056474219594
+2026-01-04 19:18:24,629 [INFO] CRVD:8893	Saved Spitogatos Comparison successfully
+2026-01-04 19:18:24,631 [INFO] handling CRVD:scraping_4/1/26:8894
+2026-01-04 19:18:27,960 [INFO] Successfully fetched min_lat=38.67124016831581 min_lon=23.203735916102758 max_lat=38.67304182025594 max_lon=23.20603411269818
+2026-01-04 19:18:31,274 [INFO] Successfully fetched min_lat=38.67078974818832 min_lon=23.203161384954086 max_lat=38.67349222609811 max_lon=23.206608679848024
+2026-01-04 19:18:34,584 [INFO] Successfully fetched min_lat=38.67011411264057 min_lon=23.202299601730566 max_lat=38.6741678295039 max_lon=23.20747054407418
+2026-01-04 19:18:39,196 [INFO] CRVD:8894	Saved Spitogatos Comparison successfully
+2026-01-04 19:18:39,201 [INFO] fetched 2 assets
+2026-01-04 19:18:39,202 [INFO] handling CRVD:scraping_4/1/26:8895
+2026-01-04 19:18:42,535 [INFO] Successfully fetched min_lat=39.55723504993852 min_lon=21.768599946448475 max_lat=39.55903642730358 max_lon=21.77092710493565
+2026-01-04 19:18:45,887 [INFO] Successfully fetched min_lat=39.55678469822927 min_lon=21.768018175637778 max_lat=39.55948676427644 max_lon=21.771508913369384
+2026-01-04 19:18:51,098 [INFO] CRVD:8895	Saved Spitogatos Comparison successfully
+2026-01-04 19:18:51,103 [INFO] fetched 5 assets
+2026-01-04 19:18:51,104 [INFO] handling CRVD:scraping_4/1/26:8896
+2026-01-04 19:18:54,357 [INFO] Successfully fetched min_lat=39.48537729427113 min_lon=21.674559634236655 max_lat=39.48717869396937 max_lon=21.676884395754175
+2026-01-04 19:18:57,691 [INFO] Successfully fetched min_lat=39.484926936997084 min_lon=21.673978462601124 max_lat=39.48762903654404 max_lon=21.677465604878243
+2026-01-04 19:19:01,140 [INFO] Successfully fetched min_lat=39.48425139557423 min_lon=21.67310671920503 max_lat=39.48830454489326 max_lon=21.67833743262355
+2026-01-04 19:19:06,329 [INFO] CRVD:8896	Saved Spitogatos Comparison successfully
+2026-01-04 19:19:06,331 [INFO] handling CRVD:scraping_4/1/26:8897
+2026-01-04 19:19:09,862 [INFO] Successfully fetched min_lat=38.11968008342815 min_lon=23.86537761296559 max_lat=38.12148190536388 max_lon=23.86765841505852
+2026-01-04 19:19:14,414 [INFO] CRVD:8897	Saved Spitogatos Comparison successfully
+2026-01-04 19:19:14,417 [INFO] fetched 9 assets
+2026-01-04 19:19:14,418 [INFO] handling CRVD:scraping_4/1/26:8907
+2026-01-04 19:19:17,874 [INFO] Successfully fetched min_lat=38.31636811365562 min_lon=23.79055353897159 max_lat=38.31816987505824 max_lon=23.79284048932691
+2026-01-04 19:19:23,264 [INFO] CRVD:8907	Saved Spitogatos Comparison successfully
+2026-01-04 19:19:23,268 [INFO] fetched 5 assets
+2026-01-04 19:19:23,268 [INFO] handling CRVD:scraping_4/1/26:8908
+2026-01-04 19:19:26,595 [INFO] Successfully fetched min_lat=37.96468305964323 min_lon=22.77985501430139 max_lat=37.96648492921013 max_lon=22.78213101350851
+2026-01-04 19:19:29,932 [INFO] Successfully fetched min_lat=37.964232585285046 min_lon=22.77928603188041 max_lat=37.966935389635005 max_lon=22.782700030691874
+2026-01-04 19:19:33,219 [INFO] Successfully fetched min_lat=37.963556868523234 min_lon=22.77843257128391 max_lat=37.96761107504687 max_lon=22.783553569503713
+2026-01-04 19:19:37,879 [INFO] CRVD:8908	Saved Spitogatos Comparison successfully
+2026-01-04 19:19:37,880 [INFO] handling CRVD:scraping_4/1/26:8909
+2026-01-04 19:19:41,132 [INFO] Successfully fetched min_lat=37.96468305964323 min_lon=22.77985501430139 max_lat=37.96648492921013 max_lon=22.78213101350851
+2026-01-04 19:19:44,454 [INFO] Successfully fetched min_lat=37.964232585285046 min_lon=22.77928603188041 max_lat=37.966935389635005 max_lon=22.782700030691874
+2026-01-04 19:19:47,759 [INFO] Successfully fetched min_lat=37.963556868523234 min_lon=22.77843257128391 max_lat=37.96761107504687 max_lon=22.783553569503713
+2026-01-04 19:19:53,303 [INFO] CRVD:8909	Saved Spitogatos Comparison successfully
+2026-01-04 19:19:53,305 [INFO] handling CRVD:scraping_4/1/26:8910
+2026-01-04 19:19:56,617 [INFO] Successfully fetched min_lat=37.96468305964323 min_lon=22.77985501430139 max_lat=37.96648492921013 max_lon=22.78213101350851
+2026-01-04 19:19:59,956 [INFO] Successfully fetched min_lat=37.964232585285046 min_lon=22.77928603188041 max_lat=37.966935389635005 max_lon=22.782700030691874
+2026-01-04 19:20:03,810 [INFO] Successfully fetched min_lat=37.963556868523234 min_lon=22.77843257128391 max_lat=37.96761107504687 max_lon=22.783553569503713
+2026-01-04 19:20:08,480 [INFO] CRVD:8910	Saved Spitogatos Comparison successfully
+2026-01-04 19:20:08,482 [INFO] handling CRVD:scraping_4/1/26:8911
+2026-01-04 19:20:11,800 [INFO] Successfully fetched min_lat=37.96468305964323 min_lon=22.77985501430139 max_lat=37.96648492921013 max_lon=22.78213101350851
+2026-01-04 19:20:15,119 [INFO] Successfully fetched min_lat=37.964232585285046 min_lon=22.77928603188041 max_lat=37.966935389635005 max_lon=22.782700030691874
+2026-01-04 19:20:18,475 [INFO] Successfully fetched min_lat=37.963556868523234 min_lon=22.77843257128391 max_lat=37.96761107504687 max_lon=22.783553569503713
+2026-01-04 19:20:23,117 [INFO] CRVD:8911	Saved Spitogatos Comparison successfully
+2026-01-04 19:20:23,119 [INFO] handling CRVD:scraping_4/1/26:8912
+2026-01-04 19:20:26,430 [INFO] Successfully fetched min_lat=37.96468305964323 min_lon=22.77985501430139 max_lat=37.96648492921013 max_lon=22.78213101350851
+2026-01-04 19:20:29,731 [INFO] Successfully fetched min_lat=37.964232585285046 min_lon=22.77928603188041 max_lat=37.966935389635005 max_lon=22.782700030691874
+2026-01-04 19:20:32,987 [INFO] Successfully fetched min_lat=37.963556868523234 min_lon=22.77843257128391 max_lat=37.96761107504687 max_lon=22.783553569503713
+2026-01-04 19:20:37,603 [INFO] CRVD:8912	Saved Spitogatos Comparison successfully
+2026-01-04 19:20:37,606 [INFO] handling CRVD:scraping_4/1/26:8913
+2026-01-04 19:20:41,069 [INFO] Successfully fetched min_lat=37.63890500975617 min_lon=24.34081100166893 max_lat=37.640706979225236 max_lon=24.343077025696413
+2026-01-04 19:20:45,654 [INFO] CRVD:8913	Saved Spitogatos Comparison successfully
+2026-01-04 19:20:45,659 [INFO] fetched 29 assets
+2026-01-04 19:20:45,660 [INFO] handling CRVD:scraping_4/1/26:8920
+2026-01-04 19:20:49,139 [INFO] Successfully fetched min_lat=38.05359907328389 min_lon=23.807360639006028 max_lat=38.055400915534314 max_lon=23.809639388926545
+2026-01-04 19:20:53,747 [INFO] CRVD:8920	Saved Spitogatos Comparison successfully
+2026-01-04 19:20:53,752 [INFO] fetched 19 assets
+2026-01-04 19:20:53,753 [INFO] handling CRVD:scraping_4/1/26:8921
+2026-01-04 19:20:57,180 [INFO] Successfully fetched min_lat=37.861925188420656 min_lon=23.76155296306009 max_lat=37.863727089530165 max_lon=23.76382579843381
+2026-01-04 19:21:02,494 [INFO] CRVD:8921	Saved Spitogatos Comparison successfully
+2026-01-04 19:21:02,499 [INFO] fetched 11 assets
+2026-01-04 19:21:02,500 [INFO] handling CRVD:scraping_4/1/26:8924
+2026-01-04 19:21:05,878 [INFO] Successfully fetched min_lat=39.65131025231272 min_lon=20.81660479655027 max_lat=39.653111600423344 max_lon=20.81893510616968
+2026-01-04 19:21:09,141 [INFO] Successfully fetched min_lat=39.65085990789281 min_lon=20.816022238044958 max_lat=39.65356193005832 max_lon=20.81951770247492
+2026-01-04 19:21:12,409 [INFO] Successfully fetched min_lat=39.650184385719086 min_lon=20.815148414460957 max_lat=39.654237418965955 max_lon=20.820391611108768
+2026-01-04 19:21:18,028 [INFO] CRVD:8924	Saved Spitogatos Comparison successfully
+2026-01-04 19:21:18,033 [INFO] fetched 1 assets
+2026-01-04 19:21:18,034 [INFO] handling CRVD:scraping_4/1/26:8927
+2026-01-04 19:21:21,287 [INFO] Successfully fetched min_lat=36.22426579492449 min_lon=27.857137748375848 max_lat=36.226068194600785 max_lon=27.859362277144204
+2026-01-04 19:21:24,595 [INFO] Successfully fetched min_lat=36.223815188458914 min_lon=27.85658163213344 max_lat=36.22651878797299 max_lon=27.85991842528668
+2026-01-04 19:21:27,903 [INFO] Successfully fetched min_lat=36.223139273850954 min_lon=27.855747469731508 max_lat=36.22719467312085 max_lon=27.860752659463756
+2026-01-04 19:21:33,700 [INFO] CRVD:8927	Saved Spitogatos Comparison successfully
+2026-01-04 19:21:33,705 [INFO] fetched 2 assets
+2026-01-04 19:21:33,706 [INFO] handling CRVD:scraping_4/1/26:8928
+2026-01-04 19:21:37,183 [INFO] Successfully fetched min_lat=37.939050057173674 min_lon=23.710486705402126 max_lat=37.940851934611544 max_lon=23.71276191387758
+2026-01-04 19:21:41,853 [INFO] CRVD:8928	Saved Spitogatos Comparison successfully
+2026-01-04 19:21:41,857 [INFO] fetched 30 assets
+2026-01-04 19:21:41,857 [INFO] handling CRVD:scraping_4/1/26:8929
+2026-01-04 19:21:45,218 [INFO] Successfully fetched min_lat=37.966427059910686 min_lon=23.577990987384677 max_lat=37.96822892894199 max_lon=23.580267040427618
+2026-01-04 19:21:50,516 [INFO] CRVD:8929	Saved Spitogatos Comparison successfully
+2026-01-04 19:21:50,520 [INFO] fetched 6 assets
+2026-01-04 19:21:50,520 [INFO] handling CRVD:scraping_4/1/26:8930
+2026-01-04 19:21:53,895 [INFO] Successfully fetched min_lat=38.22042209890422 min_lon=20.61541604224551 max_lat=38.22222388984782 max_lon=20.61769998591878
+2026-01-04 19:21:57,203 [INFO] Successfully fetched min_lat=38.21997164413854 min_lon=20.61484507392948 max_lat=38.22267433055354 max_lon=20.61827098944017
+2026-01-04 19:22:00,564 [INFO] Successfully fetched min_lat=38.219295956718014 min_lon=20.613988634656522 max_lat=38.22334998633918 max_lon=20.619127507925203
+2026-01-04 19:22:05,995 [INFO] CRVD:8930	Saved Spitogatos Comparison successfully
+2026-01-04 19:22:05,999 [INFO] fetched 5 assets
+2026-01-04 19:22:05,999 [INFO] handling CRVD:scraping_4/1/26:8931
+2026-01-04 19:22:09,544 [INFO] Successfully fetched min_lat=37.95598838068652 min_lon=23.62959448399016 max_lat=37.957790252923445 max_lon=23.63187021486938
+2026-01-04 19:22:14,370 [INFO] CRVD:8931	Saved Spitogatos Comparison successfully
+2026-01-04 19:22:14,374 [INFO] fetched 30 assets
+2026-01-04 19:22:14,375 [INFO] handling CRVD:scraping_4/1/26:8932
+2026-01-04 19:22:17,716 [INFO] Successfully fetched min_lat=39.59010962536889 min_lon=20.800778973947143 max_lat=39.59191099251305 max_lon=20.803107231911856
+2026-01-04 19:22:21,028 [INFO] Successfully fetched min_lat=39.58965927620639 min_lon=20.80019692829792 max_lat=39.592361326922216 max_lon=20.803689315245833
+2026-01-04 19:22:24,292 [INFO] Successfully fetched min_lat=39.588983746930644 min_lon=20.79932387395485 max_lat=39.59303682300296 max_lon=20.804562454379575
+2026-01-04 19:22:28,967 [INFO] CRVD:8932	Saved Spitogatos Comparison successfully
+2026-01-04 19:22:28,971 [INFO] fetched 2 assets
+2026-01-04 19:22:28,971 [INFO] handling CRVD:scraping_4/1/26:8933
+2026-01-04 19:22:32,220 [INFO] Successfully fetched min_lat=39.69470892677259 min_lon=19.833026531000602 max_lat=39.69651026138151 max_lon=19.83535829930487
+2026-01-04 19:22:35,478 [INFO] Successfully fetched min_lat=39.69425858571688 min_lon=19.832443607865034 max_lat=39.696960587629846 max_lon=19.835941260322283
+2026-01-04 19:22:38,873 [INFO] Successfully fetched min_lat=39.69358306858106 min_lon=19.831569237366356 max_lat=39.697636071449075 max_lon=19.836815716055106
+2026-01-04 19:22:43,598 [INFO] CRVD:8933	Saved Spitogatos Comparison successfully
+2026-01-04 19:22:43,602 [INFO] fetched 7 assets
+2026-01-04 19:22:43,603 [INFO] handling CRVD:scraping_4/1/26:8934
+2026-01-04 19:22:46,924 [INFO] Successfully fetched min_lat=38.12589408438238 min_lon=20.580995516307336 max_lat=38.1276959044072 max_lon=20.58327651172539
+2026-01-04 19:22:50,260 [INFO] Successfully fetched min_lat=38.12544362236985 min_lon=20.580425284972893 max_lat=38.12814635240669 max_lon=20.583846778100757
+2026-01-04 19:22:53,576 [INFO] Successfully fetched min_lat=38.12476792409663 min_lon=20.579569951110642 max_lat=38.128822019150554 max_lon=20.584702190805082
+2026-01-04 19:22:58,203 [INFO] CRVD:8934	Saved Spitogatos Comparison successfully
+2026-01-04 19:22:58,206 [INFO] fetched 3 assets
+2026-01-04 19:22:58,207 [INFO] handling CRVD:scraping_4/1/26:8935
+2026-01-04 19:23:01,476 [INFO] Successfully fetched min_lat=36.023820764739746 min_lon=27.923890572318673 max_lat=36.02562322486107 max_lon=27.926109452950552
+2026-01-04 19:23:04,876 [INFO] Successfully fetched min_lat=36.02337014321011 min_lon=27.923335867953618 max_lat=36.02607383339173 max_lon=27.926664188902123
+2026-01-04 19:23:09,510 [INFO] CRVD:8935	Saved Spitogatos Comparison successfully
+2026-01-04 19:23:09,516 [INFO] fetched 7 assets
+2026-01-04 19:23:09,517 [INFO] handling CRVD:scraping_4/1/26:8942
+2026-01-04 19:23:12,837 [INFO] Successfully fetched min_lat=40.51603078553337 min_lon=21.676211225337283 max_lat=40.5178318639408 max_lon=21.67857120623885
+2026-01-04 19:23:16,120 [INFO] Successfully fetched min_lat=40.515580508313086 min_lon=21.67562124984654 max_lat=40.51828212592378 max_lon=21.679161221199774
+2026-01-04 19:23:19,521 [INFO] Successfully fetched min_lat=40.51490508676917 min_lon=21.67473630141066 max_lat=40.518957513183736 max_lon=21.680046258443525
+2026-01-04 19:23:24,201 [INFO] CRVD:8942	Saved Spitogatos Comparison successfully
+2026-01-04 19:23:24,205 [INFO] fetched 7 assets
+2026-01-04 19:23:24,206 [INFO] handling CRVD:scraping_4/1/26:8943
+2026-01-04 19:23:27,693 [INFO] Successfully fetched min_lat=38.02218389095742 min_lon=23.749278712793764 max_lat=38.023985742861505 max_lon=23.751556489463354
+2026-01-04 19:23:33,231 [INFO] CRVD:8943	Saved Spitogatos Comparison successfully
+2026-01-04 19:23:33,236 [INFO] fetched 24 assets
+2026-01-04 19:23:33,236 [INFO] handling CRVD:scraping_4/1/26:8944
+2026-01-04 19:23:36,642 [INFO] Successfully fetched min_lat=38.02218389095742 min_lon=23.749278712793764 max_lat=38.023985742861505 max_lon=23.751556489463354
+2026-01-04 19:23:41,338 [INFO] CRVD:8944	Saved Spitogatos Comparison successfully
+2026-01-04 19:23:41,343 [INFO] fetched 24 assets
+2026-01-04 19:23:41,343 [INFO] handling CRVD:scraping_4/1/26:8945
+2026-01-04 19:23:44,772 [INFO] Successfully fetched min_lat=38.02218389095742 min_lon=23.749278712793764 max_lat=38.023985742861505 max_lon=23.751556489463354
+2026-01-04 19:23:50,624 [INFO] CRVD:8945	Saved Spitogatos Comparison successfully
+2026-01-04 19:23:50,628 [INFO] fetched 24 assets
+2026-01-04 19:23:50,628 [INFO] handling CRVD:scraping_4/1/26:8947
+2026-01-04 19:23:54,072 [INFO] Successfully fetched min_lat=38.46303623571979 min_lon=23.595690144270147 max_lat=38.46483795191949 max_lon=23.59798171861485
+2026-01-04 19:23:58,777 [INFO] CRVD:8947	Saved Spitogatos Comparison successfully
+2026-01-04 19:23:58,781 [INFO] fetched 9 assets
+2026-01-04 19:23:58,781 [INFO] handling CRVD:scraping_4/1/26:8949
+2026-01-04 19:24:02,547 [INFO] Successfully fetched min_lat=38.00977245507641 min_lon=23.739637031182685 max_lat=38.01157431079371 max_lon=23.74191442376095
+2026-01-04 19:24:07,257 [INFO] CRVD:8949	Saved Spitogatos Comparison successfully
+2026-01-04 19:24:07,261 [INFO] fetched 30 assets
+2026-01-04 19:24:07,262 [INFO] handling CRVD:scraping_4/1/26:8950
+2026-01-04 19:24:10,657 [INFO] Successfully fetched min_lat=38.46303623571979 min_lon=23.595690144270147 max_lat=38.46483795191949 max_lon=23.59798171861485
+2026-01-04 19:24:15,327 [INFO] CRVD:8950	Saved Spitogatos Comparison successfully
+2026-01-04 19:24:15,331 [INFO] fetched 9 assets
+2026-01-04 19:24:15,332 [INFO] handling CRVD:scraping_4/1/26:8951
+2026-01-04 19:24:18,712 [INFO] Successfully fetched min_lat=38.46303623571979 min_lon=23.595690144270147 max_lat=38.46483795191949 max_lon=23.59798171861485
+2026-01-04 19:24:24,077 [INFO] CRVD:8951	Saved Spitogatos Comparison successfully
+2026-01-04 19:24:24,082 [INFO] fetched 9 assets
+2026-01-04 19:24:24,082 [INFO] handling CRVD:scraping_4/1/26:8955
+2026-01-04 19:24:27,466 [INFO] Successfully fetched min_lat=38.46303623571979 min_lon=23.595690144270147 max_lat=38.46483795191949 max_lon=23.59798171861485
+2026-01-04 19:24:33,239 [INFO] CRVD:8955	Saved Spitogatos Comparison successfully
+2026-01-04 19:24:33,244 [INFO] fetched 9 assets
+2026-01-04 19:24:33,245 [INFO] handling CRVD:scraping_4/1/26:8959
+2026-01-04 19:24:36,610 [INFO] Successfully fetched min_lat=37.8221133023044 min_lon=23.80589665476792 max_lat=37.823915215626954 max_lon=23.808168268696893
+2026-01-04 19:24:41,371 [INFO] CRVD:8959	Saved Spitogatos Comparison successfully
+2026-01-04 19:24:41,375 [INFO] fetched 6 assets
+2026-01-04 19:24:41,375 [INFO] handling CRVD:scraping_4/1/26:8960
+2026-01-04 19:24:44,895 [INFO] Successfully fetched min_lat=37.94212617040657 min_lon=23.715235357984692 max_lat=37.94392804689997 max_lon=23.717510661299524
+2026-01-04 19:24:50,307 [INFO] CRVD:8960	Saved Spitogatos Comparison successfully
+2026-01-04 19:24:50,312 [INFO] fetched 30 assets
+2026-01-04 19:24:50,313 [INFO] handling CRVD:scraping_4/1/26:8962
+2026-01-04 19:24:53,612 [INFO] Successfully fetched min_lat=40.668778478559375 min_lon=22.887958337198125 max_lat=40.670579509185906 max_lon=22.890323694620893
+2026-01-04 19:24:57,066 [INFO] Successfully fetched min_lat=40.668328213243754 min_lon=22.887367017728863 max_lat=40.67102975918312 max_lon=22.890915053863914
+2026-01-04 19:25:02,446 [INFO] CRVD:8962	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:02,453 [INFO] fetched 8 assets
+2026-01-04 19:25:02,455 [INFO] handling CRVD:scraping_4/1/26:8964
+2026-01-04 19:25:05,973 [INFO] Successfully fetched min_lat=37.944248765354786 min_lon=23.655856009918757 max_lat=37.94605064119648 max_lon=23.65813137868358
+2026-01-04 19:25:10,783 [INFO] CRVD:8964	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:10,789 [INFO] fetched 30 assets
+2026-01-04 19:25:10,789 [INFO] handling CRVD:scraping_4/1/26:8966
+2026-01-04 19:25:14,310 [INFO] Successfully fetched min_lat=40.59098246640582 min_lon=22.972584708878394 max_lat=40.59278352137254 max_lon=22.974947322816657
+2026-01-04 19:25:20,388 [INFO] CRVD:8966	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:20,392 [INFO] fetched 20 assets
+2026-01-04 19:25:20,392 [INFO] handling CRVD:scraping_4/1/26:8967
+2026-01-04 19:25:24,035 [INFO] Successfully fetched min_lat=37.960945059070006 min_lon=23.72865407198544 max_lat=37.96274692978482 max_lon=23.73092995581931
+2026-01-04 19:25:28,822 [INFO] CRVD:8967	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:28,828 [INFO] fetched 30 assets
+2026-01-04 19:25:28,828 [INFO] handling CRVD:scraping_4/1/26:8968
+2026-01-04 19:25:32,243 [INFO] Successfully fetched min_lat=37.89001935821989 min_lon=23.744956945956925 max_lat=37.89182125070844 max_lon=23.74723064472514
+2026-01-04 19:25:37,061 [INFO] CRVD:8968	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:37,066 [INFO] fetched 30 assets
+2026-01-04 19:25:37,067 [INFO] handling CRVD:scraping_4/1/26:8971
+2026-01-04 19:25:40,552 [INFO] Successfully fetched min_lat=40.64596638177108 min_lon=22.921310033222362 max_lat=40.64776741953592 max_lon=22.923674585060247
+2026-01-04 19:25:45,426 [INFO] CRVD:8971	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:45,430 [INFO] fetched 30 assets
+2026-01-04 19:25:45,431 [INFO] handling CRVD:scraping_4/1/26:8972
+2026-01-04 19:25:48,767 [INFO] Successfully fetched min_lat=35.305949657204025 min_lon=25.14870445945439 max_lat=35.30775233266425 max_lon=25.150903564936836
+2026-01-04 19:25:52,174 [INFO] Successfully fetched min_lat=35.30549898200681 min_lon=25.148154698327964 max_lat=35.30820299519679 max_lon=25.151453356552302
+2026-01-04 19:25:57,116 [INFO] CRVD:8972	Saved Spitogatos Comparison successfully
+2026-01-04 19:25:57,120 [INFO] fetched 16 assets
+2026-01-04 19:25:57,121 [INFO] handling CRVD:scraping_4/1/26:8973
+2026-01-04 19:26:00,658 [INFO] Successfully fetched min_lat=37.84323525395973 min_lon=23.76568023564271 max_lat=37.84503716080327 max_lon=23.76795249730107
+2026-01-04 19:26:06,749 [INFO] CRVD:8973	Saved Spitogatos Comparison successfully
+2026-01-04 19:26:06,753 [INFO] fetched 30 assets
+2026-01-04 19:26:06,754 [INFO] handling CRVD:scraping_4/1/26:8974
+2026-01-04 19:26:10,275 [INFO] Successfully fetched min_lat=37.84323525395973 min_lon=23.76568023564271 max_lat=37.84503716080327 max_lon=23.76795249730107
+2026-01-04 19:26:15,073 [INFO] CRVD:8974	Saved Spitogatos Comparison successfully
+2026-01-04 19:26:15,078 [INFO] fetched 30 assets
+2026-01-04 19:26:15,079 [INFO] handling CRVD:scraping_4/1/26:8975
+2026-01-04 19:26:18,618 [INFO] Successfully fetched min_lat=37.988162392212125 min_lon=23.76765811972517 max_lat=37.989964254567816 max_lon=23.76993484411095
+2026-01-04 19:26:23,494 [INFO] CRVD:8975	Saved Spitogatos Comparison successfully
+2026-01-04 19:26:23,498 [INFO] fetched 30 assets
+2026-01-04 19:26:23,498 [INFO] handling CRVD:scraping_4/1/26:8976
+2026-01-04 19:26:26,946 [INFO] Successfully fetched min_lat=37.988162392212125 min_lon=23.76765811972517 max_lat=37.989964254567816 max_lon=23.76993484411095
+2026-01-04 19:26:32,446 [INFO] CRVD:8976	Saved Spitogatos Comparison successfully
+2026-01-04 19:26:32,452 [INFO] fetched 30 assets
+2026-01-04 19:26:32,453 [INFO] handling CRVD:scraping_4/1/26:8979
+2026-01-04 19:26:35,901 [INFO] Successfully fetched min_lat=37.988162392212125 min_lon=23.76765811972517 max_lat=37.989964254567816 max_lon=23.76993484411095
+2026-01-04 19:26:40,860 [INFO] CRVD:8979	Saved Spitogatos Comparison successfully
+2026-01-04 19:26:40,864 [INFO] fetched 30 assets
+2026-01-04 19:26:40,865 [INFO] handling CRVD:scraping_4/1/26:8980
+2026-01-04 19:26:44,136 [INFO] Successfully fetched min_lat=38.06907726782268 min_lon=23.821889195695398 max_lat=38.0708791053158 max_lon=23.82416842569343
+2026-01-04 19:26:47,537 [INFO] Successfully fetched min_lat=38.06862680145714 min_lon=23.821319405666745 max_lat=38.07132955769643 max_lon=23.824738250664566
+2026-01-04 19:26:53,827 [INFO] CRVD:8980	Saved Spitogatos Comparison successfully
+2026-01-04 19:26:53,833 [INFO] fetched 6 assets
+2026-01-04 19:26:53,834 [INFO] handling CRVD:scraping_4/1/26:8986
+2026-01-04 19:26:57,150 [INFO] Successfully fetched min_lat=40.29360843999618 min_lon=23.542333672897794 max_lat=40.2954095879079 max_lon=23.54468589832841
+2026-01-04 19:27:00,518 [INFO] Successfully fetched min_lat=40.293158145458534 min_lon=23.54174563605609 max_lat=40.29585986732568 max_lon=23.545273974202882
+2026-01-04 19:27:03,848 [INFO] Successfully fetched min_lat=40.29248269798261 min_lon=23.54086359542977 max_lat=40.29653528078188 max_lon=23.54615610265293
+2026-01-04 19:27:08,851 [INFO] CRVD:8986	Saved Spitogatos Comparison successfully
+2026-01-04 19:27:08,857 [INFO] fetched 4 assets
+2026-01-04 19:27:08,858 [INFO] handling CRVD:scraping_4/1/26:8989
+2026-01-04 19:27:12,096 [INFO] Successfully fetched min_lat=40.46422894661477 min_lon=22.936622932293073 max_lat=40.46603004121732 max_lon=22.938981099201172
+2026-01-04 19:27:15,433 [INFO] Successfully fetched min_lat=40.4637786653594 min_lon=22.936033410249504 max_lat=40.4664803072628 max_lon=22.939570660612546
+2026-01-04 19:27:18,690 [INFO] Successfully fetched min_lat=40.46310323777315 min_lon=22.935149141946034 max_lat=40.46715570062679 max_lon=22.940455017493584
+2026-01-04 19:27:23,971 [INFO] CRVD:8989	Saved Spitogatos Comparison successfully
+2026-01-04 19:27:23,975 [INFO] fetched 2 assets
+2026-01-04 19:27:23,975 [INFO] handling CRVD:scraping_4/1/26:8990
+2026-01-04 19:27:27,357 [INFO] Successfully fetched min_lat=40.40714693783055 min_lon=22.91643714533237 max_lat=40.40894805027366 max_lon=22.918793318811918
+2026-01-04 19:27:30,609 [INFO] Successfully fetched min_lat=40.40669665213013 min_lon=22.91584812158972 max_lat=40.40939832079436 max_lon=22.91938238180992
+2026-01-04 19:27:33,912 [INFO] Successfully fetched min_lat=40.406021217887606 min_lon=22.91496460069544 max_lat=40.41007372088249 max_lon=22.920265991028742
+2026-01-04 19:27:38,845 [INFO] CRVD:8990	Saved Spitogatos Comparison successfully
+2026-01-04 19:27:38,847 [INFO] handling CRVD:scraping_4/1/26:8991
+2026-01-04 19:27:42,259 [INFO] Successfully fetched min_lat=37.97576354711951 min_lon=23.766800394166676 max_lat=37.97756541328345 max_lon=23.76907673549848
+2026-01-04 19:27:48,061 [INFO] CRVD:8991	Saved Spitogatos Comparison successfully
+2026-01-04 19:27:48,065 [INFO] fetched 30 assets
+2026-01-04 19:27:48,066 [INFO] handling CRVD:scraping_4/1/26:8992
+2026-01-04 19:27:51,435 [INFO] Successfully fetched min_lat=40.64596638177108 min_lon=22.921310033222362 max_lat=40.64776741953592 max_lon=22.923674585060247
+2026-01-04 19:27:56,263 [INFO] CRVD:8992	Saved Spitogatos Comparison successfully
+2026-01-04 19:27:56,268 [INFO] fetched 30 assets
+2026-01-04 19:27:56,268 [INFO] handling CRVD:scraping_4/1/26:8993
+2026-01-04 19:27:59,628 [INFO] Successfully fetched min_lat=40.64596638177108 min_lon=22.921310033222362 max_lat=40.64776741953592 max_lon=22.923674585060247
+2026-01-04 19:28:05,304 [INFO] CRVD:8993	Saved Spitogatos Comparison successfully
+2026-01-04 19:28:05,308 [INFO] fetched 30 assets
+2026-01-04 19:28:05,309 [INFO] handling CRVD:scraping_4/1/26:8994
+2026-01-04 19:28:08,694 [INFO] Successfully fetched min_lat=40.64596638177108 min_lon=22.921310033222362 max_lat=40.64776741953592 max_lon=22.923674585060247
+2026-01-04 19:28:14,604 [INFO] CRVD:8994	Saved Spitogatos Comparison successfully
+2026-01-04 19:28:14,609 [INFO] fetched 30 assets
+2026-01-04 19:28:14,609 [INFO] handling CRVD:scraping_4/1/26:8995
+2026-01-04 19:28:18,086 [INFO] Successfully fetched min_lat=40.64596638177108 min_lon=22.921310033222362 max_lat=40.64776741953592 max_lon=22.923674585060247
+2026-01-04 19:28:23,478 [INFO] CRVD:8995	Saved Spitogatos Comparison successfully
+2026-01-04 19:28:23,483 [INFO] fetched 30 assets
+2026-01-04 19:28:23,483 [INFO] handling CRVD:scraping_4/1/26:8996
+2026-01-04 19:28:27,028 [INFO] Successfully fetched min_lat=40.64596638177108 min_lon=22.921310033222362 max_lat=40.64776741953592 max_lon=22.923674585060247
+2026-01-04 19:28:32,724 [INFO] CRVD:8996	Saved Spitogatos Comparison successfully
+2026-01-04 19:28:32,732 [INFO] fetched 30 assets
+2026-01-04 19:28:32,732 [INFO] handling CRVD:scraping_4/1/26:9002
+2026-01-04 19:28:36,007 [INFO] Successfully fetched min_lat=38.19461109493787 min_lon=23.79684744542768 max_lat=38.19641289382443 max_lon=23.799130582700627
+2026-01-04 19:28:39,398 [INFO] Successfully fetched min_lat=38.19416063819286 min_lon=23.796276678689246 max_lat=38.19686333652229 max_lon=23.799701384599437
+2026-01-04 19:28:42,650 [INFO] Successfully fetched min_lat=38.19348494780813 min_lon=23.7954205417658 max_lat=38.197538995300974 max_lon=23.80055760063375
+2026-01-04 19:28:49,029 [INFO] CRVD:9002	Saved Spitogatos Comparison successfully
+2026-01-04 19:28:49,031 [INFO] handling CRVD:scraping_4/1/26:9003
+2026-01-04 19:28:52,412 [INFO] Successfully fetched min_lat=37.989309063420066 min_lon=23.67035763401024 max_lat=37.99111092542355 max_lon=23.67263439383358
+2026-01-04 19:28:57,409 [INFO] CRVD:9003	Saved Spitogatos Comparison successfully
+2026-01-04 19:28:57,415 [INFO] fetched 21 assets
+2026-01-04 19:28:57,416 [INFO] handling CRVD:scraping_4/1/26:9004
+2026-01-04 19:29:00,934 [INFO] Successfully fetched min_lat=38.22070909894833 min_lon=21.736828037759505 max_lat=38.222510889803594 max_lon=21.73911199040519
+2026-01-04 19:29:07,092 [INFO] CRVD:9004	Saved Spitogatos Comparison successfully
+2026-01-04 19:29:07,096 [INFO] fetched 15 assets
+2026-01-04 19:29:07,096 [INFO] handling CRVD:scraping_4/1/26:9005
+2026-01-04 19:29:10,389 [INFO] Successfully fetched min_lat=38.00231713523323 min_lon=23.76645194306772 max_lat=38.00411899324087 max_lon=23.768729105043228
+2026-01-04 19:29:13,814 [INFO] Successfully fetched min_lat=38.001866663755564 min_lon=23.765882669987047 max_lat=38.00456945076664 max_lon=23.76929841295109
+2026-01-04 19:29:19,875 [INFO] CRVD:9005	Saved Spitogatos Comparison successfully
+2026-01-04 19:29:19,879 [INFO] fetched 10 assets
+2026-01-04 19:29:19,880 [INFO] finished, SAVING!
+2026-01-04 19:29:21,641 [INFO] saved successfully
