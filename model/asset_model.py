@@ -14,3 +14,4 @@ class Asset(BaseModel):
     new_state: bool = None
     searched_radius: float = None
     revaluated_price_meter: float = None
+    construction_year: int = None

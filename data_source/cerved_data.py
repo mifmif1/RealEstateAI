@@ -271,40 +271,80 @@ class CervedData:
                     if len(address) > 5:
                         break
         
-        # Extract description
+        # Extract description - look for "Περιγραφή" heading and get the text that follows
         description = None
-        desc_selectors = [
-            ".property-description",
-            "[class*='description']",
-            "[itemprop='description']"
-        ]
-        for selector in desc_selectors:
-            desc_elem = soup.select_one(selector)
-            if desc_elem:
-                description = self._text(desc_elem)
-                if description and len(description) > 10:
-                    break
-        
-        # Also look for description section
-        if not description:
-            desc_label = soup.find(string=re.compile(r'Περιγραφή|Description', re.I))
-            if desc_label:
-                parent = desc_label.find_parent()
-                if parent:
-                    # Get text from the next element or siblings
-                    desc_text = ""
-                    for sibling in parent.find_next_siblings(limit=5):
-                        text = self._text(sibling)
-                        if text and len(text) > 10:
-                            desc_text += " " + text
-                            if len(desc_text) > 50:  # Stop when we have enough text
+        # First try to find the heading "Περιγραφή" or "Description"
+        desc_label = soup.find(string=re.compile(r'Περιγραφή|Description', re.I))
+        if desc_label:
+            # Find the parent element (usually h2, h3, h4, or div)
+            parent = desc_label.find_parent()
+            if parent:
+                # Method 1: Get all text from the parent's next siblings until we hit another heading
+                desc_parts = []
+                current = parent.find_next_sibling()
+                while current and len(desc_parts) < 10:  # Limit to avoid going too far
+                    # Stop if we hit another heading
+                    if current.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+                        break
+                    text = self._text(current)
+                    if text and len(text.strip()) > 5:
+                        desc_parts.append(text.strip())
+                    current = current.find_next_sibling()
+                
+                if desc_parts:
+                    description = " ".join(desc_parts)
+                
+                # Method 2: If not found in siblings, try to get text from the parent container
+                if not description or len(description) < 20:
+                    container = parent.find_parent()
+                    if container:
+                        # Get all text from container
+                        all_text = self._text(container)
+                        # Find where "Περιγραφή" appears and get text after it
+                        desc_match = re.search(r'Περιγραφή[:\s]*(.+?)(?:\n\n|\n[Α-Ω]|$)', all_text, re.DOTALL | re.I)
+                        if desc_match:
+                            description = desc_match.group(1).strip()
+                        elif "Περιγραφή" in all_text:
+                            # Split by "Περιγραφή" and take the part after it
+                            parts = all_text.split("Περιγραφή", 1)
+                            if len(parts) > 1:
+                                description = parts[1].strip()
+                                # Remove any trailing headings or labels
+                                description = re.sub(r'\n(?:Τοποθεσία|Location|Ενεργειακή|Energy).*$', '', description, flags=re.I)
+                
+                # Method 3: Look for paragraphs or divs that come after the heading
+                if not description or len(description) < 20:
+                    # Find all elements after the parent
+                    for elem in parent.find_all_next(['p', 'div'], limit=5):
+                        # Stop if we hit another heading
+                        if elem.find(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+                            break
+                        text = self._text(elem)
+                        if text and len(text.strip()) > 20:
+                            if not description:
+                                description = text.strip()
+                            else:
+                                description += " " + text.strip()
+                            # Stop if we have enough text
+                            if len(description) > 100:
                                 break
-                    if desc_text:
-                        description = desc_text.strip()
         
-        # Also try to find description in paragraph tags near description heading
+        # Fallback: try CSS selectors
         if not description:
-            # Look for paragraphs that contain substantial text
+            desc_selectors = [
+                ".property-description",
+                "[class*='description']",
+                "[itemprop='description']"
+            ]
+            for selector in desc_selectors:
+                desc_elem = soup.select_one(selector)
+                if desc_elem:
+                    description = self._text(desc_elem)
+                    if description and len(description) > 10:
+                        break
+        
+        # Last resort: look for substantial paragraphs
+        if not description:
             paragraphs = soup.find_all("p")
             for p in paragraphs:
                 text = self._text(p)
@@ -312,11 +352,69 @@ class CervedData:
                     description = text
                     break
         
+        # Extract construction year (Έτος κατασκευής)
+        construction_year = None
+        # Look for "Έτος κατασκευής" label
+        year_label = soup.find(string=re.compile(r'Έτος κατασκευής|Έτος κατασκευης|Construction year|Build year', re.I))
+        if year_label:
+            parent = year_label.find_parent()
+            if parent:
+                # Look for year in the same container
+                year_text = self._text(parent)
+                year_match = re.search(r'Έτος κατασκευής[^0-9]*(\d{4})', year_text, re.I)
+                if year_match:
+                    try:
+                        construction_year = int(year_match.group(1))
+                    except ValueError:
+                        pass
+                else:
+                    # Try to find year in next sibling
+                    next_sibling = parent.find_next_sibling()
+                    if next_sibling:
+                        year_text = self._text(next_sibling)
+                        year_match = re.search(r'(\d{4})', year_text)
+                        if year_match:
+                            try:
+                                construction_year = int(year_match.group(1))
+                            except ValueError:
+                                pass
+        
+        # Also search for year patterns in HTML
+        if not construction_year:
+            year_patterns = [
+                r'Έτος κατασκευής[^<]*?(\d{4})',
+                r'Construction year[^<]*?(\d{4})',
+                r'Build year[^<]*?(\d{4})',
+            ]
+            for pattern in year_patterns:
+                match = re.search(pattern, html, re.I)
+                if match:
+                    try:
+                        year = int(match.group(1))
+                        # Validate it's a reasonable year (1900-2100)
+                        if 1900 <= year <= 2100:
+                            construction_year = year
+                            break
+                    except ValueError:
+                        pass
+        
+        # Also search for any 4-digit year in the description or near property details
+        if not construction_year:
+            # Look for years in the range 1900-2100
+            year_match = re.search(r'\b(19\d{2}|20[0-2]\d)\b', html)
+            if year_match:
+                try:
+                    year = int(year_match.group(1))
+                    if 1900 <= year <= 2100:
+                        construction_year = year
+                except ValueError:
+                    pass
+        
         # Extract coordinates
         lat, lon = self._extract_coordinates(soup, html, listing_id)
         
         # Log what we found for debugging
-        logger.debug(f"Listing {listing_id} - Title: {title}, Price: {price}, SQM: {sqm}, Level: {level}, Address: {address}")
+        logger.debug(f"Listing {listing_id} - Title: {title}, Price: {price}, SQM: {sqm}, Level: {level}, Address: {address}, Construction Year: {construction_year}, Description length: {len(description) if description else 0}")
         
         # Asset model requires location (Point), price, and sqm
         # Use default coordinates if not available (0, 0)
@@ -342,7 +440,8 @@ class CervedData:
             price=price,
             url=url,
             level=level,
-            address=address
+            address=address,
+            construction_year=construction_year
         )
         
         # Store title and description separately for Excel export (not in Asset model)
@@ -493,7 +592,7 @@ class CervedData:
         if not assets_data:
             logger.warning("No assets to save; creating empty Excel file.")
             df = pd.DataFrame(columns=["id", "title", "price", "sqm", "url", "level", "address", "description",
-                                     "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
+                                     "construction_year", "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
         else:
             # Convert Asset objects to dict for DataFrame
             rows = []
@@ -541,7 +640,7 @@ class CervedData:
             # Reorder columns to put 'id' first, then title, then other fields
             if 'id' in df.columns:
                 preferred_order = ['id', 'title', 'price', 'sqm', 'level', 'address', 'description', 
-                                 'url', 'lat', 'lon', 'new_state', 'searched_radius', 'revaluated_price_meter']
+                                 'construction_year', 'url', 'lat', 'lon', 'new_state', 'searched_radius', 'revaluated_price_meter']
                 # Get columns in preferred order, then add any remaining columns
                 cols = [c for c in preferred_order if c in df.columns]
                 cols += [c for c in df.columns if c not in cols]
