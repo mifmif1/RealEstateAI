@@ -92,6 +92,292 @@ class CervedData:
         result = self._parse_listing_page(html_content, listing_id, url)
         return result
 
+    def get_all_listing_ids(self, listing_url: str = None, max_pages: int = None) -> List[str]:
+        """
+        Extract all property IDs from the listing page(s).
+        
+        Args:
+            listing_url: URL of the listing page. If None, uses default search URL.
+            max_pages: Maximum number of pages to scrape. If None, scrapes all pages.
+            
+        Returns:
+            List of property IDs (as strings)
+        """
+        if listing_url is None:
+            listing_url = (
+                f"{self._base_url}/el/akinita?"
+                "sel_country=gr&sel_district=&sel_municipality=&sel_category=1&"
+                "sel_availability=Any&sel_area_from=&sel_area_to=&"
+                "sel_price_from=&sel_price_to=&sel_tags=&sel_order=&view=list"
+            )
+        
+        all_ids = set()  # Use set to avoid duplicates
+        
+        # First, get the first page to determine total pages
+        logger.info(f"Fetching listing page: {listing_url}")
+        try:
+            resp = self._session.get(listing_url, timeout=20)
+            resp.raise_for_status()
+            html = resp.text
+        except requests.RequestException as e:
+            logger.error(f"Error fetching listing page: {e}")
+            return []
+        
+        # Extract IDs from first page
+        page_ids = self._extract_ids_from_listing_page(html)
+        all_ids.update(page_ids)
+        logger.info(f"Found {len(page_ids)} IDs on page 1 (total so far: {len(all_ids)})")
+        
+        # Determine total number of pages
+        total_pages = self._get_total_pages(html)
+        if max_pages is not None:
+            total_pages = min(total_pages, max_pages)
+        
+        logger.info(f"Total pages to scrape: {total_pages}")
+        
+        # Scrape remaining pages
+        previous_page_ids = set(page_ids)  # Track IDs from previous page to detect duplicates
+        consecutive_duplicates = 0
+        
+        for page_num in range(2, total_pages + 1):
+            # Try different pagination parameter formats
+            if "?" in listing_url:
+                page_url = f"{listing_url}&page={page_num}"
+            else:
+                page_url = f"{listing_url}?page={page_num}"
+            
+            logger.info(f"Fetching page {page_num}/{total_pages}: {page_url}")
+            
+            try:
+                resp = self._session.get(page_url, timeout=20)
+                if resp.status_code != 200:
+                    logger.warning(f"Page {page_num} returned status {resp.status_code}, stopping pagination")
+                    break
+                
+                resp.raise_for_status()
+                html = resp.text
+                page_ids = self._extract_ids_from_listing_page(html)
+                
+                if not page_ids:
+                    logger.info(f"No IDs found on page {page_num}, stopping pagination")
+                    break
+                
+                # Check if this page has the same IDs as the previous page (duplicate page)
+                current_page_ids = set(page_ids)
+                if current_page_ids == previous_page_ids:
+                    consecutive_duplicates += 1
+                    logger.warning(f"Page {page_num} has the same IDs as previous page (duplicate detected, count: {consecutive_duplicates})")
+                    if consecutive_duplicates >= 2:
+                        logger.warning("Multiple consecutive duplicate pages detected. Stopping pagination.")
+                        break
+                else:
+                    consecutive_duplicates = 0
+                    previous_page_ids = current_page_ids
+                
+                # Count new IDs
+                new_ids = current_page_ids - all_ids
+                all_ids.update(page_ids)
+                logger.info(f"Found {len(page_ids)} IDs on page {page_num} ({len(new_ids)} new, total so far: {len(all_ids)})")
+                
+            except requests.RequestException as e:
+                logger.warning(f"Error fetching page {page_num}: {e}, stopping pagination")
+                break
+        
+        result = sorted(list(all_ids), key=lambda x: int(x) if x.isdigit() else 0)
+        logger.info(f"Total unique IDs found: {len(result)}")
+        return result
+
+    def _extract_ids_from_listing_page(self, html: str) -> List[str]:
+        """
+        Extract property IDs from a listing page HTML.
+        Only extracts IDs from property listing cards, not navigation/menu links.
+        
+        Args:
+            html: HTML content of the listing page
+            
+        Returns:
+            List of property IDs
+        """
+        soup = BeautifulSoup(html, "html.parser")
+        ids = set()
+        
+        # First, identify navigation/menu areas to exclude
+        nav_ids = set()
+        nav_elements = soup.find_all(['nav', 'header', 'footer'])
+        for nav_elem in nav_elements:
+            nav_links = nav_elem.find_all("a", href=re.compile(r'/el/akinita/\d+'))
+            for link in nav_links:
+                href = link.get("href", "")
+                match = re.search(r'/el/akinita/(\d+)', href)
+                if match:
+                    nav_ids.add(match.group(1))
+        
+        # Method 1: Find all links to property pages (most comprehensive)
+        all_links = soup.find_all("a", href=re.compile(r'/el/akinita/\d+'))
+        for link in all_links:
+            href = link.get("href", "")
+            match = re.search(r'/el/akinita/(\d+)', href)
+            if match:
+                prop_id = match.group(1)
+                # Skip if it's in navigation
+                if prop_id not in nav_ids:
+                    # Additional check: make sure it's not in a navigation-like context
+                    parent = link.find_parent(['nav', 'header', 'footer', 'menu'])
+                    if not parent:
+                        ids.add(prop_id)
+        
+        # Method 2: Also search in raw HTML for all property links (fallback to catch everything)
+        all_matches = re.findall(r'/el/akinita/(\d+)', html)
+        for prop_id in all_matches:
+            if prop_id not in nav_ids:
+                ids.add(prop_id)
+        
+        return list(ids)
+
+    def _get_total_pages(self, html: str) -> int:
+        """
+        Extract total number of pages from the listing page.
+        
+        Args:
+            html: HTML content of the listing page
+            
+        Returns:
+            Total number of pages, or 1 if not found
+        """
+        soup = BeautifulSoup(html, "html.parser")
+        max_page = 1
+        
+        # Method 1: Look for pagination links with page numbers
+        pagination_links = soup.find_all("a", href=re.compile(r'page=\d+'))
+        for link in pagination_links:
+            href = link.get("href", "")
+            match = re.search(r'page=(\d+)', href)
+            if match:
+                try:
+                    page_num = int(match.group(1))
+                    max_page = max(max_page, page_num)
+                except ValueError:
+                    pass
+            # Also check the link text
+            link_text = self._text(link)
+            if link_text and link_text.strip().isdigit():
+                try:
+                    page_num = int(link_text.strip())
+                    max_page = max(max_page, page_num)
+                except ValueError:
+                    pass
+        
+        # Method 2: Look for pagination text like "Σελίδα 1 2 3 ... 79"
+        pagination_text = soup.find_all(string=re.compile(r'Σελίδα|Page', re.I))
+        for text in pagination_text:
+            # Find all numbers in the pagination area
+            parent = text.find_parent()
+            if parent:
+                # Get text from parent and siblings
+                pagination_area = self._text(parent)
+                # Also check next siblings
+                for sibling in parent.find_next_siblings(limit=3):
+                    pagination_area += " " + self._text(sibling)
+                
+                # Find all numbers in this area
+                page_numbers = re.findall(r'\b(\d+)\b', pagination_area)
+                for p in page_numbers:
+                    try:
+                        page_num = int(p)
+                        # Reasonable page number (not a year, ID, etc.)
+                        if 1 <= page_num <= 1000:
+                            max_page = max(max_page, page_num)
+                    except ValueError:
+                        pass
+        
+        # Method 3: Search in raw HTML for pagination patterns
+        pagination_patterns = [
+            r'page=(\d+)',
+            r'Σελίδα[^<]*?(\d+)',
+            r'Page[^<]*?(\d+)',
+        ]
+        for pattern in pagination_patterns:
+            matches = re.findall(pattern, html, re.I)
+            for match in matches:
+                try:
+                    page_num = int(match)
+                    if 1 <= page_num <= 1000:
+                        max_page = max(max_page, page_num)
+                except ValueError:
+                    pass
+        
+        # If we found pagination info, return it; otherwise assume 1 page
+        return max_page if max_page > 1 else 1
+
+    def scrape_all_listings(self, listing_url: str = None, max_pages: int = None, 
+                           output_path: str | Path = None) -> Path:
+        """
+        Scrape all properties from the listing page(s) and save to Excel.
+        
+        Args:
+            listing_url: URL of the listing page. If None, uses default search URL.
+            max_pages: Maximum number of pages to scrape. If None, scrapes all pages.
+            output_path: Optional path to save the file. Defaults to excel_db/cerved_assets.xlsx
+            
+        Returns:
+            Path to the saved Excel file
+        """
+        # Get all listing IDs
+        logger.info("Starting to extract all listing IDs...")
+        listing_ids = self.get_all_listing_ids(listing_url, max_pages)
+        
+        if not listing_ids:
+            logger.warning("No listing IDs found")
+            if output_path is None:
+                base_path = Path(__file__).parent.parent / "excel_db"
+                output_path = base_path / "cerved_assets.xlsx"
+            else:
+                output_path = Path(output_path)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            # Create empty Excel file
+            df = pd.DataFrame(columns=["id", "title", "price", "sqm", "url", "level", "address", "description",
+                                     "construction_year", "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
+            df.to_excel(output_path, index=False, engine='openpyxl')
+            return output_path
+        
+        logger.info(f"Found {len(listing_ids)} listings. Starting to scrape details...")
+        
+        # Scrape all listings
+        assets_data = []
+        scraped_ids = []
+        total = len(listing_ids)
+        
+        for idx, listing_id in enumerate(listing_ids, 1):
+            logger.info(f"Scraping listing {listing_id} ({idx}/{total})")
+            result = self.scrape_listing(listing_id)
+            if result:
+                assets_data.append(result)
+                scraped_ids.append(listing_id)
+                logger.info(f"Successfully scraped listing {listing_id}")
+            else:
+                logger.warning(f"Failed to scrape listing {listing_id} (skipped)")
+        
+        # Save all assets to Excel
+        if assets_data:
+            output_path = self.save_to_excel(assets_data, listing_ids=scraped_ids, output_path=output_path)
+            logger.info(f"Successfully saved {len(assets_data)} assets to {output_path}")
+            print(f"\nScraped {len(assets_data)} out of {total} listings")
+            print(f"Results saved to: {output_path}")
+            return output_path
+        else:
+            logger.error("No assets were successfully scraped")
+            if output_path is None:
+                base_path = Path(__file__).parent.parent / "excel_db"
+                output_path = base_path / "cerved_assets-1.xlsx"
+            else:
+                output_path = Path(output_path)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            # Create empty Excel file
+            df = pd.DataFrame(columns=["id", "title", "price", "sqm", "url", "level", "address", "description",
+                                     "construction_year", "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
+            df.to_excel(output_path, index=False, engine='openpyxl')
+            return output_path
+
     def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[Tuple[Asset, str, str]]:
         """Parse the HTML content of a listing page."""
         if not html or len(html) < 100:
@@ -100,22 +386,44 @@ class CervedData:
         
         soup = BeautifulSoup(html, "html.parser")
         
-        # Extract title
+        # Extract title - structure: <div class="title">Title text [Code: ...]<h6>address</h6></div>
         title = None
-        title_selectors = [
-            "h1",
-            ".property-title",
-            "[class*='title']",
-            "title"
-        ]
-        for selector in title_selectors:
-            title_elem = soup.select_one(selector)
+        # Method 1: Look for div with class="title" - this contains both title and address
+        title_div = soup.select_one('div.title')
+        if title_div:
+            # Get all direct text nodes (not from children)
+            # The title is the text directly in the div, before the h6
+            title_parts = []
+            for child in title_div.children:
+                if isinstance(child, str):
+                    text = child.strip()
+                    if text:
+                        title_parts.append(text)
+                elif child.name != 'h6':  # Skip h6 element
+                    text = self._text(child)
+                    if text and text.strip():
+                        title_parts.append(text.strip())
+            if title_parts:
+                title = ' '.join(title_parts).strip()
+        
+        # Method 2: Search in HTML for title pattern (more reliable)
+        if not title:
+            # Look for pattern: <div class="title">Title [Code: ...]<h6>...
+            # Match text between <div class="title"> and <h6>
+            title_match = re.search(r'<div[^>]*class=["\']title["\'][^>]*>\s*([^<]+(?:\[Code:[^\]]+\])?)\s*<h6', html, re.I | re.DOTALL)
+            if title_match:
+                title = title_match.group(1).strip()
+                # Clean up HTML entities and whitespace
+                title = title.replace("&nbsp;", " ").replace("&amp;", "&")
+                title = re.sub(r'\s+', ' ', title).strip()
+        
+        # Method 3: Fallback - Look for h1 or h2
+        if not title:
+            title_elem = soup.find("h1") or soup.find("h2")
             if title_elem:
                 title = self._text(title_elem)
                 if title and len(title) > 3:
-                    # Remove code from title if present (e.g., "[Code: E-9424]")
-                    title = re.sub(r'\s*\[Code:\s*[^\]]+\]', '', title).strip()
-                    break
+                    title = title.strip()
         
         # Extract price - look for price in various formats
         price = None
@@ -217,59 +525,34 @@ class CervedData:
                     except ValueError:
                         pass
         
-        # Extract address/location
+        # Extract address/location - structure: <div class="title">...<h6>address</h6></div>
         address = None
-        # Look for address in the page - often near the title or in a specific section
-        address_selectors = [
-            ".property-address",
-            "[class*='address']",
-            "[itemprop='address']"
-        ]
-        for selector in address_selectors:
-            address_elem = soup.select_one(selector)
+        # Method 1: Search in HTML for h6 pattern inside title div (most reliable)
+        # Pattern: <div class="title">...<h6>address</h6></div>
+        addr_match = re.search(r'<div[^>]*class=["\']title["\'][^>]*>.*?<h6[^>]*>([^<]+)</h6>', html, re.I | re.DOTALL)
+        if addr_match:
+            address = addr_match.group(1).strip()
+            # Clean up HTML entities
+            address = address.replace("&nbsp;", " ").replace("&amp;", "&")
+            address = re.sub(r'\s+', ' ', address).strip()
+        
+        # Method 2: Look for h6 inside div.title using BeautifulSoup
+        if not address:
+            title_div = soup.select_one('div.title')
+            if title_div:
+                h6_elem = title_div.find('h6')
+                if h6_elem:
+                    address = self._text(h6_elem)
+                    if address:
+                        address = address.strip()
+        
+        # Method 3: Fallback - Look for address element
+        if not address:
+            address_elem = soup.find("address")
             if address_elem:
                 address = self._text(address_elem)
                 if address:
-                    break
-        
-        # Try to find address near the title (often appears after title in Cerved pages)
-        if not address and title:
-            # Look for address pattern near title element
-            title_elem = soup.find("h1") or soup.find(string=re.compile(title[:20] if title else "", re.I))
-            if title_elem:
-                if hasattr(title_elem, 'find_next'):
-                    next_elem = title_elem.find_next()
-                    if next_elem:
-                        addr_text = self._text(next_elem)
-                        # Check if it looks like an address (contains comma or street name)
-                        if addr_text and (',' in addr_text or len(addr_text) > 5):
-                            address = addr_text.strip()
-        
-        # Also try to find address near location section
-        if not address:
-            location_section = soup.find(string=re.compile(r'Τοποθεσία|Location', re.I))
-            if location_section:
-                parent = location_section.find_parent()
-                if parent:
-                    # Look for address in nearby elements
-                    for sibling in parent.find_next_siblings(limit=3):
-                        addr_text = self._text(sibling)
-                        if addr_text and len(addr_text) > 5:
-                            address = addr_text.strip()
-                            break
-        
-        # Search for address patterns in HTML (Greek street names)
-        if not address:
-            # Look for patterns like "Street Name Number, City" in Greek
-            address_patterns = [
-                r'([Α-Ωα-ωάέήίόύώΑ-Ω\s]+\d+[,\s]+[Α-Ωα-ωάέήίόύώ\s]+)',
-            ]
-            for pattern in address_patterns:
-                match = re.search(pattern, html)
-                if match:
-                    address = match.group(1).strip()
-                    if len(address) > 5:
-                        break
+                    address = address.strip()
         
         # Extract description - look for "Περιγραφή" heading and get the text that follows
         description = None
@@ -568,7 +851,7 @@ class CervedData:
 
     def save_to_excel(self, assets_data: List[Tuple[Asset, str, str]], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
         """
-        Save scraped assets to an Excel file.
+        Save scraped assets to an Excel file. Appends to existing file if it exists.
         
         Args:
             assets_data: List of tuples (Asset, title, description) to save
@@ -581,17 +864,17 @@ class CervedData:
         if output_path is None:
             # Use absolute path to excel_db folder
             base_path = Path(__file__).parent.parent / "excel_db"
-            output_path = base_path / "cerved_assets.xlsx"
+            output_path = base_path / "cerved_assets-1.xlsx"
         else:
             output_path = Path(output_path)
         
         # Ensure the directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
-        # Convert assets to DataFrame
+        # Convert new assets to DataFrame
         if not assets_data:
-            logger.warning("No assets to save; creating empty Excel file.")
-            df = pd.DataFrame(columns=["id", "title", "price", "sqm", "url", "level", "address", "description",
+            logger.warning("No assets to save.")
+            new_df = pd.DataFrame(columns=["id", "title", "price", "sqm", "url", "level", "address", "description",
                                      "construction_year", "new_state", "searched_radius", "revaluated_price_meter", "lat", "lon"])
         else:
             # Convert Asset objects to dict for DataFrame
@@ -635,35 +918,105 @@ class CervedData:
                 
                 rows.append(asset_dict)
             
-            df = pd.DataFrame(rows)
+            new_df = pd.DataFrame(rows)
             
             # Reorder columns to put 'id' first, then title, then other fields
-            if 'id' in df.columns:
+            if 'id' in new_df.columns:
                 preferred_order = ['id', 'title', 'price', 'sqm', 'level', 'address', 'description', 
                                  'construction_year', 'url', 'lat', 'lon', 'new_state', 'searched_radius', 'revaluated_price_meter']
                 # Get columns in preferred order, then add any remaining columns
-                cols = [c for c in preferred_order if c in df.columns]
-                cols += [c for c in df.columns if c not in cols]
-                df = df[cols]
+                cols = [c for c in preferred_order if c in new_df.columns]
+                cols += [c for c in new_df.columns if c not in cols]
+                new_df = new_df[cols]
         
-        # Save to Excel - overwrite if exists
+        # Read existing file if it exists (read first before trying to delete)
+        existing_df = None
+        if output_path.exists():
+            try:
+                existing_df = pd.read_excel(output_path, engine='openpyxl')
+                logger.info(f"Found existing file with {len(existing_df)} assets. Appending new data...")
+            except PermissionError:
+                logger.error(f"Cannot read {output_path} - file is likely open in another program (e.g., Excel). Please close it and try again.")
+                raise PermissionError(f"File {output_path} is locked. Please close it in Excel or another program and try again.")
+            except Exception as e:
+                logger.warning(f"Could not read existing file {output_path}: {e}. Creating new file.")
+                existing_df = None
+        
+        # Combine existing and new data
+        if existing_df is not None and not existing_df.empty:
+            # Ensure column compatibility
+            if not new_df.empty:
+                # Align columns - add missing columns to both DataFrames
+                all_columns = set(existing_df.columns) | set(new_df.columns)
+                for col in all_columns:
+                    if col not in existing_df.columns:
+                        existing_df[col] = None
+                    if col not in new_df.columns:
+                        new_df[col] = None
+                
+                # Reorder columns to match preferred order
+                if 'id' in all_columns:
+                    preferred_order = ['id', 'title', 'price', 'sqm', 'level', 'address', 'description', 
+                                     'construction_year', 'url', 'lat', 'lon', 'new_state', 'searched_radius', 'revaluated_price_meter']
+                    preferred_order = [c for c in preferred_order if c in all_columns]
+                    remaining_cols = [c for c in all_columns if c not in preferred_order]
+                    column_order = preferred_order + remaining_cols
+                    existing_df = existing_df[column_order]
+                    new_df = new_df[column_order]
+                
+                # Combine DataFrames
+                combined_df = pd.concat([existing_df, new_df], ignore_index=True)
+                
+                # Remove duplicates based on 'id' column, keeping the last occurrence (newer data)
+                if 'id' in combined_df.columns:
+                    before_dedup = len(combined_df)
+                    combined_df = combined_df.drop_duplicates(subset=['id'], keep='last')
+                    duplicates_removed = before_dedup - len(combined_df)
+                    if duplicates_removed > 0:
+                        logger.info(f"Removed {duplicates_removed} duplicate entries (based on ID)")
+                
+                df = combined_df
+            else:
+                df = existing_df
+        else:
+            df = new_df
+        
+        # Save to Excel - with fallback to different filename if file is locked
         try:
-            # If file exists, try to remove it first (in case it's locked)
-            if output_path.exists():
-                try:
-                    output_path.unlink()
-                    logger.debug(f"Removed existing file: {output_path}")
-                except PermissionError:
-                    logger.error(f"Cannot overwrite {output_path} - file is likely open in another program (e.g., Excel). Please close it and try again.")
-                    raise PermissionError(f"File {output_path} is locked. Please close it in Excel or another program and try again.")
-            
-            # Save the DataFrame to Excel
+            # Try to save - if file exists and is locked, we'll get an error
+            # We already read the existing file above, so we can write the combined data
             df.to_excel(output_path, index=False, engine='openpyxl')
-            logger.info(f"Saved {len(df)} assets to {output_path}")
-        except PermissionError as e:
-            # Re-raise with a clearer message
-            logger.error(f"Permission denied when saving to {output_path}. File may be open in Excel.")
-            raise
+            new_count = len(new_df) if not new_df.empty else 0
+            total_count = len(df)
+            logger.info(f"Saved {new_count} new assets. Total assets in file: {total_count}")
+        except (PermissionError, IOError, OSError) as e:
+            # File is locked or other I/O error - try alternative filename
+            logger.warning(f"Cannot save to {output_path}: {e}. Trying alternative filename...")
+            base_path = output_path.parent
+            base_name = output_path.stem  # filename without extension
+            extension = output_path.suffix  # .xlsx
+            
+            # Try numbered filenames: cerved_assets-1.xlsx, cerved_assets-2.xlsx, etc.
+            saved = False
+            for i in range(1, 100):
+                alt_path = base_path / f"{base_name}-{i}{extension}"
+                if not alt_path.exists():
+                    try:
+                        df.to_excel(alt_path, index=False, engine='openpyxl')
+                        new_count = len(new_df) if not new_df.empty else 0
+                        total_count = len(df)
+                        logger.info(f"Saved {new_count} new assets to alternative file: {alt_path}")
+                        logger.info(f"Total assets in file: {total_count}")
+                        output_path = alt_path
+                        saved = True
+                        break
+                    except (PermissionError, IOError, OSError):
+                        continue
+            
+            if not saved:
+                # If we couldn't save to any alternative file, raise error
+                logger.error(f"Could not save to {output_path} or any alternative filename. All files may be locked.")
+                raise PermissionError(f"Could not save to {output_path} or any alternative filename. Please close Excel files and try again.")
         except Exception as e:
             logger.error(f"Error saving to Excel: {e}")
             raise
@@ -753,24 +1106,30 @@ if __name__ == "__main__":
     """
     logging.basicConfig(level=logging.INFO)
     scraper = CervedData()
-    
-    # Example listing ID to scrape
-    listing_id = "1030"
-    
-    logger.info(f"Scraping listing {listing_id}")
-    result = scraper.scrape_listing(listing_id)
-    
-    if result:
-        asset, title, description = result
-        # Save to Excel
-        output_path = scraper.save_to_excel([(asset, title, description)], listing_ids=[listing_id])
-        logger.info(f"Successfully saved asset to {output_path}")
-        print(f"\nScraped listing {listing_id}")
-        print(f"Title: {title}")
-        print(f"Price: {asset.price} €")
-        print(f"SQM: {asset.sqm}")
-        print(f"Results saved to: {output_path}")
-    else:
-        logger.error(f"Failed to scrape listing {listing_id}")
-        print(f"Failed to scrape listing {listing_id}")
 
+    # Option 1: Scrape all listings from the listing page
+    print("Scraping all listings from Cerved Property Services...")
+    output_path = scraper.scrape_all_listings()
+    print(f"\nAll results saved to: {output_path}")
+
+
+
+    # Option 2: Scrape a single listing (uncomment to use)
+    # listing_id = "1026"
+    # logger.info(f"Scraping listing {listing_id}")
+    # result = scraper.scrape_listing(listing_id)
+    #
+    # if result:
+    #     asset, title, description = result
+    #     # Save to Excel
+    #     output_path = scraper.save_to_excel([(asset, title, description)], listing_ids=[listing_id])
+    #     logger.info(f"Successfully saved asset to {output_path}")
+    #     print(f"\nScraped listing {listing_id}")
+    #     print(f"Title: {title}")
+    #     print(f"Price: {asset.price} €")
+    #     print(f"SQM: {asset.sqm}")
+    #     print(f"Results saved to: {output_path}")
+    # else:
+    #     logger.error(f"Failed to scrape listing {listing_id}")
+    #     print(f"Failed to scrape listing {listing_id}")
+    #
