@@ -13,6 +13,8 @@ from model.asset_model import Asset
 from model.geographical_model import Point
 from utils.consts.greek_tems import floor_level_dict
 
+TRIES_TILL_ENOUGH_ASSETS = 1
+
 logger = logging.getLogger(__name__)
 
 logging.basicConfig(
@@ -116,8 +118,8 @@ class SpitogatosFlow:
         # df['District']=df['District'].apply(lambda x: x.title() if pd.notna(x) else x)
         # df['Prefecture']=df['Prefecture'].apply(lambda x: x.title() if pd.notna(x) else x)
         # df['Municipality']=df['Municipality'].apply(lambda x: x.title() if pd.notna(x) else x)
-        # self._add_deltas(df=df)
-        # self._add_interesting(df=df)
+        self._add_deltas(df=df)
+        self._add_interesting(df=df)
         self._add_max_buy_price(df=df)
         self._add_score(df=df)
         #
@@ -134,19 +136,19 @@ class SpitogatosFlow:
     @staticmethod
     def _add_deltas(df: pd.DataFrame) -> pd.DataFrame:
         df['price_under_market'] = (df['price/sqm'] - df['comparison_average']) / df['comparison_average']
-        df['revaluation_under_market'] = ((df['revaluation'] / df['sqm']) -df['comparison_average'])/ df['comparison_average']
+        df['revaluation_under_market'] = ((df['revaluation'] / df['sqm']) - df['comparison_average']) / df[
+            'comparison_average']
         return df
 
     @staticmethod
     def _add_interesting(df: pd.DataFrame) -> pd.DataFrame:
-        df['is_interesting'] = np.where((df['#assets'] > 25) & (df['price_under_market'] < -0.3), True, False)
+        df['is_interesting'] = np.where((df['#assets'] > 18) & (df['price_under_market'] < -0.3), True, False)
         return df
 
     @staticmethod
     def _add_max_buy_price(df: pd.DataFrame) -> pd.DataFrame:
-        df['max_buy_price'] = 0.7*df['revaluation']
+        df['max_buy_price'] = 0.7 * df['revaluation']
         return df
-
 
     def _search_assets_for_row(self, row: pd.Series,
                                location_tolerance: float = 100,
@@ -163,7 +165,7 @@ class SpitogatosFlow:
         i = 0
         assets = []
         point = self._geopy_data_source.convert_location_to_lon_lat(f"{row['lat']}, {row['lon']}")
-        while i < 3 and len(assets) < 5:
+        while i < TRIES_TILL_ENOUGH_ASSETS and len(assets) < 5:
             search_rectangle = self._geopy_data_source.rectangle_from_point(
                 start_point=point,
                 radius_meters=location_tolerance)
@@ -177,29 +179,11 @@ class SpitogatosFlow:
         asset_comparison = AssetComparison(main_asset=row['UniqueCode'], compared_assets=assets)
         return asset_comparison, (location_tolerance / 1.5)
 
-    def _save_comparison_assets(self, asset_comparison: AssetComparison,
-                                excel_path: str,
-                                source: str) -> None:
-        try:
-            df = self._open_excel(excel_path)
-        except FileNotFoundError:
-            logger.exception("Spitogatos file not found. Creating a new one.")
-            df = pd.DataFrame(columns=["source",
-                                       "main_asset",
-                                       "lon",
-                                       "lat",
-                                       "sqm",
-                                       "price",
-                                       "url",
-                                       "level",
-                                       "address",
-                                       "new_state",
-                                       "searched_radius",
-                                       "revaluated_price_meter",
-                                       "fetched_time"])
-        except Exception as e:
-            logger.error(f"Cannot open {excel_path} nor to create. Thus not saving Spitogatos Comaprison.")
-            return
+    @staticmethod
+    def _add_comparison_assets_to_df(current_df: pd.DataFrame,
+                                     asset_comparison: AssetComparison,
+                                     source: str,
+                                     portfolio:str) -> pd.DataFrame:
         # processing
         rows = []
         for asset in asset_comparison.compared_assets:
@@ -211,25 +195,29 @@ class SpitogatosFlow:
 
         df_to_append = pd.DataFrame(rows)
         df_to_append['source'] = source
+        df_to_append['main_asset_portfolio'] = portfolio
         df_to_append['main_asset'] = asset_comparison.main_asset
         df_to_append["fetched_time"] = f"{datetime.datetime.now().strftime("%d%m%Y-%H%M")}"
-        combined = pd.concat([df, df_to_append], ignore_index=True)
-        with pd.ExcelWriter(excel_path, engine="openpyxl", mode="w") as writer:
-            combined.to_excel(writer, index=False)
-        logger.info(f"{source}:{asset_comparison.main_asset}\tSaved Spitogatos Comparison successfully")
+        combined = pd.concat([current_df, df_to_append], ignore_index=True)
+        return combined
 
     def _add_spitogatos_comparison(self, df: pd.DataFrame,
-                                   spitogatos_comparison_assets_excel_path,
+                                   spitogatos_assets_df: pd.DataFrame,
                                    location_tolerance: float = 100,
-                                   sqm_tolerance: int = None) -> pd.DataFrame:
+                                   sqm_tolerance: int = None) -> (pd.DataFrame, pd.DataFrame):
         checked_rows = []
         for index, row in df.iterrows():  # no batching due to short data (around 5000 rows)
             # coords = self._geopy_data_source.coords_from_address(row["address"])
             if (f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}" in checked_rows or
                     row['Portfolio'] != 'scraping_4/1/26' or
                     row['source'] != 'ReInvest' or
-                    #todo add query to handle only if in athen/thessaloniky rectangles!
-                    pd.notna(row['enriched_time'])):  # todo dovalue is temporary row, remove if needed. Time -- check if new rather then if exists att all
+                    (not (((37.77981267646562 <= row['lat'] <= 38.16581244217562) and (
+                            23.514172548030093 <= row['lon'] <= 23.95119276391161)) or (
+                                  (40.56920144450617 <= row['lat'] <= 40.700125630091414) and (
+                                  22.84568686269899 <= row['lon'] <= 22.985406656994204)))) or
+                    # todo add query to handle only if in athen/thessaloniky rectangles!
+                    pd.notna(row[
+                                 'enriched_time'])):  # todo dovalue is temporary row, remove if needed. Time -- check if new rather then if exists att all
                 logger.info(f"skipping {row['source']}:{row['Portfolio']}:{row['UniqueCode']}")
                 # if f"{row['source']}:{row['Portfolio']}:{row['UniqueCode']}" in checked_rows:
                 #     logger.info(f"Already done")
@@ -250,9 +238,10 @@ class SpitogatosFlow:
                 except ConnectionAbortedError as e:
                     logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
                     return df
-                self._save_comparison_assets(asset_comparison=asset_comparison,
-                                             excel_path=spitogatos_comparison_assets_excel_path,
-                                             source=row['source'])
+                spitogatos_assets_df = self._add_comparison_assets_to_df(current_df=spitogatos_assets_df,
+                                                                         asset_comparison=asset_comparison,
+                                                                         source=row['source'],
+                                                                         portfolio=row['Portfolio'])
                 assets = asset_comparison.compared_assets
 
                 if assets:
@@ -272,7 +261,6 @@ class SpitogatosFlow:
                         df.loc[index, 'comparison_std'] = std
                         if std != 0:
                             df.loc[index, 'score'] = (row['price/sqm'] - mean) / std
-
                     new_price, normalized_mean = self._get_valuation_for_row(row, assets)
                     df.loc[index, 'revaluation'] = new_price
                     df.loc[index, 'normalized_mean'] = normalized_mean
@@ -281,20 +269,41 @@ class SpitogatosFlow:
             df.loc[index, 'enriched_time'] = datetime.datetime.now().strftime('%d%m%Y-%H%M')
 
         logger.info("finished, SAVING!")
-        return df
+        return df, spitogatos_assets_df
 
     def expand_excel__spitogatos_comparison(self, excel_path,
                                             spitogatos_comparison_assets_excel_path,
                                             must_columns: List[str],
                                             location_tolerance: float = 100,
                                             sqm_tolerance: int = None):
+        # comparison db:
         df = self._open_excel(excel_path=excel_path, must_columns=must_columns)
         df = self._prepare_df(df)
+        # spitogatos assets db:
         try:
-            self._add_spitogatos_comparison(df=df,
-                                            location_tolerance=location_tolerance,
-                                            sqm_tolerance=sqm_tolerance,
-                                            spitogatos_comparison_assets_excel_path=spitogatos_comparison_assets_excel_path)
+            spitogatos_assets_df = self._open_excel(excel_path)
+        except FileNotFoundError:
+            logger.exception("Spitogatos file not found. Creating a new one.")
+            spitogatos_assets_df = pd.DataFrame(columns=["source",
+                                                         "main_asset_portfolio",
+                                                         "main_asset",
+                                                         "lon",
+                                                         "lat",
+                                                         "sqm",
+                                                         "price",
+                                                         "url",
+                                                         "level",
+                                                         "address",
+                                                         "new_state",
+                                                         "searched_radius",
+                                                         "revaluated_price_meter",
+                                                         "fetched_time"])
+
+        try:
+            df, spitogatos_assets_df = self._add_spitogatos_comparison(df=df,
+                                                                       spitogatos_assets_df=spitogatos_assets_df,
+                                                                       location_tolerance=location_tolerance,
+                                                                       sqm_tolerance=sqm_tolerance)
             # self._add_score(df=df)
             # self._add_deltas(df=df)
             # self._add_interesting(df=df)
@@ -305,6 +314,8 @@ class SpitogatosFlow:
             df.to_excel(
                 f'{excel_path}_spitogatos_comparison_added_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
                 index=False)
+            with pd.ExcelWriter(spitogatos_comparison_assets_excel_path, engine="openpyxl", mode="w") as writer:
+                spitogatos_assets_df.to_excel(writer, index=False)
             logger.info("saved successfully")
 
 
@@ -332,3 +343,4 @@ if __name__ == '__main__':
         excel_path=assets_path,
         spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
         must_columns=columns_valuation)
+#
