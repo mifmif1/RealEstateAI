@@ -237,7 +237,7 @@ class SpitogatosFlow:
                                                                                               sqm_tolerance=sqm_tolerance)
                 except ConnectionAbortedError as e:
                     logger.error(f"error handling row {row['UniqueCode']}. Error: {e}")
-                    return df
+                    return df, spitogatos_assets_df
                 spitogatos_assets_df = self._add_comparison_assets_to_df(current_df=spitogatos_assets_df,
                                                                          asset_comparison=asset_comparison,
                                                                          source=row['source'],
@@ -281,7 +281,7 @@ class SpitogatosFlow:
         df = self._prepare_df(df)
         # spitogatos assets db:
         try:
-            spitogatos_assets_df = self._open_excel(excel_path)
+            spitogatos_assets_df = self._open_excel(excel_path=spitogatos_comparison_assets_excel_path)
         except FileNotFoundError:
             logger.exception("Spitogatos file not found. Creating a new one.")
             spitogatos_assets_df = pd.DataFrame(columns=["source",
