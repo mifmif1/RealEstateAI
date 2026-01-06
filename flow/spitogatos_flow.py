@@ -281,7 +281,7 @@ class SpitogatosFlow:
         df = self._prepare_df(df)
         # spitogatos assets db:
         try:
-            spitogatos_assets_df = self._open_excel(excel_path=spitogatos_comparison_assets_excel_path)
+            spitogatos_assets_df = self._open_excel(excelspitogatos_comparison_assets_excel_path)
         except FileNotFoundError:
             logger.exception("Spitogatos file not found. Creating a new one.")
             spitogatos_assets_df = pd.DataFrame(columns=["source",
@@ -335,12 +335,12 @@ if __name__ == '__main__':
     assets_path = f"../excel_db/all_assets.xlsx"
     spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
 
-    # s.changes_in_excel(assets_path)
+    s.changes_in_excel(assets_path)
 
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
 
-    s.expand_excel__spitogatos_comparison(
-        excel_path=assets_path,
-        spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
-        must_columns=columns_valuation)
-#
+    # s.expand_excel__spitogatos_comparison(
+    #     excel_path=assets_path,
+    #     spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
+    #     must_columns=columns_valuation)
+
