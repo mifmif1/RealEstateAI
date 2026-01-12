@@ -9,7 +9,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from dash import Dash, Input, Output, dcc, html
+from dash import Dash, Input, Output, State, dcc, html
 from dash.dash_table import DataTable
 from dash.dash_table.Format import Format, Group, Scheme, Symbol
 
@@ -67,15 +67,23 @@ def load_dataset() -> pd.DataFrame:
     df = pd.read_excel(DATA_PATH)
     df = df.copy()
 
-    coord_pairs = df["coords"].apply(parse_coordinate_pair)
-    df["lat"] = coord_pairs.apply(lambda pair: pair[0])
-    df["lon"] = coord_pairs.apply(lambda pair: pair[1])
+    # Use existing lat/lon columns if available, otherwise parse from coords
+    if "lat" not in df.columns or df["lat"].isna().all():
+        if "lon" not in df.columns or df["lon"].isna().all():
+            if "coords" in df.columns:
+                coord_pairs = df["coords"].apply(parse_coordinate_pair)
+                df["lat"] = coord_pairs.apply(lambda pair: pair[0])
+                df["lon"] = coord_pairs.apply(lambda pair: pair[1])
+    
+    # Ensure lat/lon are numeric
+    df["lat"] = pd.to_numeric(df.get("lat"), errors="coerce")
+    df["lon"] = pd.to_numeric(df.get("lon"), errors="coerce")
 
     df["price_per_sqm"] = pd.to_numeric(df.get("price/sqm"), errors="coerce")
     df["comparison_average"] = pd.to_numeric(df.get("comparison_average"), errors="coerce")
     df["score"] = pd.to_numeric(df.get("score"), errors="coerce")
     df["sqm"] = pd.to_numeric(df.get("sqm"), errors="coerce")
-    df["price"] = pd.to_numeric(df.get("Price"), errors="coerce")
+    df["price"] = pd.to_numeric(df.get("price"), errors="coerce")  # Changed from "Price" to "price"
     df["AuctionDate"] = pd.to_datetime(df.get("AuctionDate"), errors="coerce")
     df["searched_radius"] = pd.to_numeric(df.get("searched_radius"), errors="coerce")
     df["#assets"] = pd.to_numeric(df.get("#assets"), errors="coerce")
@@ -84,18 +92,23 @@ def load_dataset() -> pd.DataFrame:
     df["comparison_median"] = pd.to_numeric(df.get("comparison_median"), errors="coerce")
     df["comparison_max"] = pd.to_numeric(df.get("comparison_max"), errors="coerce")
 
-    df["price-market_discount"] = pd.to_numeric(df.get("precent_under_market"), errors="coerce") * 100
+    # Changed from "precent_under_market" to "price_under_market"
+    df["price-market_discount"] = pd.to_numeric(df.get("price_under_market"), errors="coerce") * 100
     comparison_safe = df["comparison_average"].replace({0: pd.NA})
     df["price_avg_discount_pct"] = (
         (comparison_safe - df["price_per_sqm"]) / comparison_safe
     ) * 100
 
-    # Use already translated columns from the Excel file; no further translation or parsing.
+    # Use already translated columns from the Excel file; no further translation or parsing needed.
     df["portfolio_label"] = df["Portfolio"].fillna("Unknown")
     df["category_label"] = df["Category"].fillna("Unspecified")
     df["municipality_label"] = df["Municipality"].fillna("—")
     df["title_display"] = df["Title"].fillna("")
-    df["description"] = df.get("description", "").fillna("")
+    # Load DebtorDescr column from Excel as description, fill NaN with empty string
+    if "DebtorDescr" in df.columns:
+        df["description"] = df["DebtorDescr"].fillna("")
+    else:
+        df["description"] = ""
 
     return df
 
@@ -244,24 +257,24 @@ app.layout = dbc.Container(
                         [
                             dbc.Col(
                                 [
-                                    html.Small("Portfolios"),
-                                    dcc.Dropdown(
-                                        id="portfolio-filter",
-                                        options=portfolio_options,
-                                        multi=True,
-                                        placeholder="Select one or more portfolios",
-                                    ),
-                                ],
-                                md=4,
-                            ),
-                            dbc.Col(
-                                [
                                     html.Small("Source"),
                                     dcc.Dropdown(
                                         id="source-filter",
                                         options=source_options,
                                         multi=True,
                                         placeholder="Select data sources",
+                                    ),
+                                ],
+                                md=4,
+                            ),
+                            dbc.Col(
+                                [
+                                    html.Small("Portfolios"),
+                                    dcc.Dropdown(
+                                        id="portfolio-filter",
+                                        options=portfolio_options,
+                                        multi=True,
+                                        placeholder="Select one or more portfolios",
                                     ),
                                 ],
                                 md=4,
@@ -518,6 +531,35 @@ def apply_filters(
 
 
 @app.callback(
+    Output("portfolio-filter", "options"),
+    Output("portfolio-filter", "value"),
+    Input("source-filter", "value"),
+    State("portfolio-filter", "value"),
+)
+def update_portfolio_options(selected_sources, current_portfolios):
+    """Update portfolio options based on selected sources and clear invalid selections."""
+    if not selected_sources or SOURCE_COLUMN is None:
+        # If no sources selected or no source column, show all portfolios
+        all_portfolios = sorted(df["portfolio_label"].unique())
+        portfolio_options = [{"label": name, "value": name} for name in all_portfolios]
+        return portfolio_options, current_portfolios
+    
+    # Filter dataframe by selected sources
+    filtered_df = df[df[SOURCE_COLUMN].isin(selected_sources)]
+    
+    # Get unique portfolios from filtered data
+    available_portfolios = sorted(filtered_df["portfolio_label"].unique())
+    portfolio_options = [{"label": name, "value": name} for name in available_portfolios]
+    
+    # Clear portfolio selection if current selection is not in available portfolios
+    if current_portfolios:
+        valid_portfolios = [p for p in current_portfolios if p in available_portfolios]
+        return portfolio_options, valid_portfolios if valid_portfolios else None
+    
+    return portfolio_options, current_portfolios
+
+
+@app.callback(
     Output("price-range-label", "children"),
     Output("discount-range-label", "children"),
     Input("price-range", "value"),
@@ -578,8 +620,10 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
         )
 
     map_df = filtered.dropna(subset=["lat", "lon"]).copy()
-    # Ensure marker size has valid numeric values (no NaNs) for Plotly
-    map_df["marker_size"] = map_df["price_per_sqm"].fillna(1)
+    # Set all markers to the same fixed size
+    fixed_marker_size = 12
+    map_df["marker_size"] = fixed_marker_size
+    
     map_fig = px.scatter_mapbox(
         map_df,
         lat="lat",
@@ -594,6 +638,7 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
             "price-market_discount": ":.1f",
         },
         size="marker_size",
+        size_max=fixed_marker_size,  # All markers are the same size
         color_continuous_scale=COLOR_SCALE,
         zoom=5,
         height=400,
@@ -682,6 +727,10 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
                     make_link_button("Spitogatos", row.get("spitogatos_url")),
                     make_link_button("eAuction", row.get("eauctions_url"), variant="secondary"),
                     make_link_button("Reonline", row.get("reonline_url"), variant="secondary"),
+                    make_link_button("Altamira", row.get("altamira_url"), variant="secondary"),
+                    make_link_button("CPS", row.get("cps_url"), variant="secondary"),
+                    make_link_button("Cerved", row.get("cerved_url"), variant="secondary"),
+                    make_link_button("Reinvest", row.get("reinvest_url"), variant="secondary"),
                 ]
                 if link
             ),
@@ -689,7 +738,7 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
         ),
         auction_date=filtered["AuctionDate"].dt.strftime("%Y-%m-%d"),
         num_assets=filtered["#assets"],
-        description=filtered.get("description", ""),
+        description=filtered["description"],
     )[
         [
             "municipality_label",
@@ -699,8 +748,6 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
             "searched_radius",
             "num_assets",
             "links",
-            "description",
-            "description",
             "price",
             "sqm",
             "price_per_sqm",
