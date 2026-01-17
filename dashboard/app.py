@@ -135,10 +135,20 @@ else:
 
 municipality_options = [{"label": name, "value": name} for name in sorted(df["municipality_label"].unique())]
 
-price_min = safe_int(df["price_per_sqm"].min(skipna=True), 0)
-price_max = safe_int(df["price_per_sqm"].max(skipna=True), 1)
-discount_min = safe_float(df["price_avg_discount_pct"].min(skipna=True), -100.0)
-discount_max = safe_float(df["price_avg_discount_pct"].max(skipna=True), 100.0)
+price_min = safe_float(df["price_per_sqm"].min(skipna=True), 0.0)
+price_max = safe_float(df["price_per_sqm"].max(skipna=True), 1.0)
+discount_min = safe_float(df["price-market_discount"].min(skipna=True), -100.0)
+discount_max = safe_float(df["price-market_discount"].max(skipna=True), 100.0)
+
+# Create integer marks - only show min and max to avoid decimal clutter
+price_marks = {
+    price_min: f"{int(round(price_min)):,}",
+    price_max: f"{int(round(price_max)):,}"
+}
+discount_marks = {
+    discount_min: f"{int(round(discount_min))}",
+    discount_max: f"{int(round(discount_max))}"
+}
 
 app = Dash(
     __name__,
@@ -304,8 +314,8 @@ app.layout = dbc.Container(
                                         min=price_min,
                                         max=price_max,
                                         value=[price_min, price_max],
-                                        tooltip={"placement": "bottom", "always_visible": False},
-                                        step=(price_max - price_min)/10,
+                                        tooltip={"placement": "bottom", "always_visible": False, "template": "{value:.0f}"},
+                                        step=max(1.0, (price_max - price_min) / 12) if price_max != price_min else 1.0,
                                     ),
                                     html.Div(id="price-range-label", className="small text-muted mt-2"),
                                 ],
@@ -316,11 +326,12 @@ app.layout = dbc.Container(
                                     html.Small("Discount (%)"),
                                     dcc.RangeSlider(
                                         id="discount-range",
-                                        min=round(discount_min, 1),
-                                        max=round(discount_max, 1),
-                                        value=[round(discount_min, 1), round(discount_max, 1)],
-                                        tooltip={"placement": "bottom", "always_visible": False},
-                                        step=max(0.1, round((discount_max - discount_min) / 10, 1)) if discount_max != discount_min else 0.1,
+                                        min=discount_min,
+                                        max=discount_max,
+                                        value=[discount_min, discount_max],
+                                        marks=discount_marks,
+                                        tooltip={"placement": "bottom", "always_visible": False, "template": "{value:.0f}"},
+                                        step=max(0.1, (discount_max - discount_min) / 12) if discount_max != discount_min else 0.1,
                                     ),
                                     html.Div(id="discount-range-label", className="small text-muted mt-2"),
                                 ],
@@ -523,8 +534,8 @@ def apply_filters(
 
     min_discount, max_discount = discount_bounds
     filtered = filtered[
-        (filtered["price_avg_discount_pct"].fillna(discount_min) >= min_discount)
-        & (filtered["price_avg_discount_pct"].fillna(discount_max) <= max_discount)
+        (filtered["price-market_discount"].fillna(discount_min) >= min_discount)
+        & (filtered["price-market_discount"].fillna(discount_max) <= max_discount)
         ]
 
     return filtered
@@ -719,7 +730,7 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
         legend_title="Municipality",
     )
 
-    table_data = filtered[filtered["#assets"] >= 10].assign(
+    table_data = filtered.assign(
         links=filtered.apply(
             lambda row: " ".join(
                 link
