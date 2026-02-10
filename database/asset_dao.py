@@ -28,14 +28,14 @@ class AssetDAO:
         Returns:
             ID of the inserted asset, or None if insertion failed
         """
+        # Store comparable assets in comparable_assets table
         query = """
-            INSERT INTO assets (
-                location, sqm, price, url, level, address, 
-                new_state, searched_radius, revaluated_price_meter, source
+            INSERT INTO comparable_assets (
+                location, sqm, price, url, level, address, construction_year, source
             )
             VALUES (
                 ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
-                %s, %s, %s, %s, %s, %s, %s, %s, %s
+                %s, %s, %s, %s, %s, %s, %s
             )
             RETURNING id
         """
@@ -48,9 +48,7 @@ class AssetDAO:
             asset.url,
             asset.level,
             asset.address,
-            asset.new_state,
-            asset.searched_radius,
-            asset.revaluated_price_meter,
+            asset.construction_year,
             source
         )
         
@@ -74,13 +72,12 @@ class AssetDAO:
             return []
         
         query = """
-            INSERT INTO assets (
-                location, sqm, price, url, level, address,
-                new_state, searched_radius, revaluated_price_meter, source
+            INSERT INTO comparable_assets (
+                location, sqm, price, url, level, address, construction_year, source
             )
             VALUES (
                 ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
-                %s, %s, %s, %s, %s, %s, %s, %s, %s
+                %s, %s, %s, %s, %s, %s, %s
             )
             RETURNING id
         """
@@ -96,9 +93,7 @@ class AssetDAO:
                     asset.url,
                     asset.level,
                     asset.address,
-                    asset.new_state,
-                    asset.searched_radius,
-                    asset.revaluated_price_meter,
+                    asset.construction_year,
                     source
                 )
                 cursor.execute(query, params)
@@ -129,10 +124,10 @@ class AssetDAO:
                 id, 
                 ST_X(location::geometry) as lon,
                 ST_Y(location::geometry) as lat,
-                sqm, price, url, level, address,
-                new_state, searched_radius, revaluated_price_meter, source,
+                sqm, price, url, level, address, construction_year,
+                source,
                 created_at, updated_at
-            FROM assets
+            FROM comparable_assets
             WHERE location && ST_MakeEnvelope(%s, %s, %s, %s, 4326)::geography
         """
         
@@ -179,11 +174,11 @@ class AssetDAO:
                 id,
                 ST_X(location::geometry) as lon,
                 ST_Y(location::geometry) as lat,
-                sqm, price, url, level, address,
-                new_state, searched_radius, revaluated_price_meter, source,
+                sqm, price, url, level, address, construction_year,
+                source,
                 created_at, updated_at,
                 ST_Distance(location, ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography) as distance
-            FROM assets
+            FROM comparable_assets
             WHERE ST_DWithin(
                 location,
                 ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
@@ -257,11 +252,11 @@ class AssetDAO:
                 id,
                 ST_X(location::geometry) as lon,
                 ST_Y(location::geometry) as lat,
-                sqm, price, url, level, address,
-                new_state, searched_radius, revaluated_price_meter, source,
+                sqm, price, url, level, address, construction_year,
+                source,
                 created_at, updated_at,
                 ST_Distance(location, ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography) as distance
-            FROM assets
+            FROM comparable_assets
             WHERE 1=1
         """
         
@@ -302,10 +297,10 @@ class AssetDAO:
                 id,
                 ST_X(location::geometry) as lon,
                 ST_Y(location::geometry) as lat,
-                sqm, price, url, level, address,
-                new_state, searched_radius, revaluated_price_meter, source,
+                sqm, price, url, level, address, construction_year,
+                source,
                 created_at, updated_at
-            FROM assets
+            FROM comparable_assets
             WHERE id = %s
         """
         
@@ -326,7 +321,7 @@ class AssetDAO:
             True if update was successful
         """
         query = """
-            UPDATE assets
+            UPDATE comparable_assets
             SET 
                 location = ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
                 sqm = %s,
@@ -334,9 +329,7 @@ class AssetDAO:
                 url = %s,
                 level = %s,
                 address = %s,
-                new_state = %s,
-                searched_radius = %s,
-                revaluated_price_meter = %s
+                construction_year = %s
             WHERE id = %s
         """
         
@@ -348,9 +341,7 @@ class AssetDAO:
             asset.url,
             asset.level,
             asset.address,
-            asset.new_state,
-            asset.searched_radius,
-            asset.revaluated_price_meter,
+            asset.construction_year,
             asset_id
         )
         
@@ -367,7 +358,7 @@ class AssetDAO:
         Returns:
             True if deletion was successful
         """
-        query = "DELETE FROM assets WHERE id = %s"
+        query = "DELETE FROM comparable_assets WHERE id = %s"
         affected = self.db.execute_update(query, (asset_id,))
         return affected > 0
     
@@ -392,7 +383,7 @@ class AssetDAO:
                 MAX(price / NULLIF(sqm, 0)) as max_price_per_sqm,
                 STDDEV(price / NULLIF(sqm, 0)) as stddev_price_per_sqm,
                 AVG(sqm) as avg_sqm
-            FROM assets
+            FROM comparable_assets
             WHERE 1=1
         """
         
@@ -420,8 +411,6 @@ class AssetDAO:
             url=row.get('url'),
             level=row.get('level'),
             address=row.get('address'),
-            new_state=row.get('new_state'),
-            searched_radius=row.get('searched_radius'),
-            revaluated_price_meter=row.get('revaluated_price_meter')
+            construction_year=row.get('construction_year')
         )
 
