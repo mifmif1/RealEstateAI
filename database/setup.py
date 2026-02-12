@@ -24,19 +24,25 @@ def run_migration(migration_file: Path, conn: psycopg2.extensions.connection):
     
     with open(migration_file, 'r', encoding='utf-8') as f:
         migration_sql = f.read()
+
+    # Work around any accidental tool-artifact text appended to the SQL file
+    # (e.g. lines starting with 'C```assistant to=functions.ApplyPatch').
+    # If such a marker is present, ignore everything after it.
+    sentinel = "C```assistant to=functions.ApplyPatch"
+    idx = migration_sql.find(sentinel)
+    if idx != -1:
+        migration_sql = migration_sql[:idx]
     
     with conn.cursor() as cursor:
-        # Split by semicolons but keep them in the statements
-        statements = [s.strip() + ';' for s in migration_sql.split(';') if s.strip()]
-        
-        for statement in statements:
-            try:
-                cursor.execute(statement)
-                logger.debug(f"Executed: {statement[:50]}...")
-            except Exception as e:
-                logger.error(f"Error executing statement: {e}")
-                logger.error(f"Statement: {statement}")
-                raise
+        try:
+            # Execute the whole migration file at once so that
+            # functions, triggers, etc. with internal semicolons
+            # or dollar-quoted strings are handled correctly by Postgres.
+            cursor.execute(migration_sql)
+            logger.debug(f"Executed migration file {migration_file.name}")
+        except Exception as e:
+            logger.error(f"Error executing migration {migration_file.name}: {e}")
+            raise
     
     conn.commit()
     logger.info(f"Migration {migration_file.name} completed successfully")

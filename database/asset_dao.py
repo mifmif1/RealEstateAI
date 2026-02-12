@@ -28,9 +28,9 @@ class AssetDAO:
         Returns:
             ID of the inserted asset, or None if insertion failed
         """
-        # Store comparable assets in comparable_assets table
+        # Store comparable assets in comparison_assets table
         query = """
-            INSERT INTO comparable_assets (
+            INSERT INTO comparison_assets (
                 location, sqm, price, url, level, address, construction_year, source
             )
             VALUES (
@@ -72,7 +72,7 @@ class AssetDAO:
             return []
         
         query = """
-            INSERT INTO comparable_assets (
+            INSERT INTO comparison_assets (
                 location, sqm, price, url, level, address, construction_year, source
             )
             VALUES (
@@ -127,7 +127,7 @@ class AssetDAO:
                 sqm, price, url, level, address, construction_year,
                 source,
                 created_at, updated_at
-            FROM comparable_assets
+            FROM comparison_assets
             WHERE location && ST_MakeEnvelope(%s, %s, %s, %s, 4326)::geography
         """
         
@@ -178,7 +178,7 @@ class AssetDAO:
                 source,
                 created_at, updated_at,
                 ST_Distance(location, ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography) as distance
-            FROM comparable_assets
+            FROM comparison_assets
             WHERE ST_DWithin(
                 location,
                 ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
@@ -256,7 +256,7 @@ class AssetDAO:
                 source,
                 created_at, updated_at,
                 ST_Distance(location, ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography) as distance
-            FROM comparable_assets
+            FROM comparison_assets
             WHERE 1=1
         """
         
@@ -300,7 +300,7 @@ class AssetDAO:
                 sqm, price, url, level, address, construction_year,
                 source,
                 created_at, updated_at
-            FROM comparable_assets
+            FROM comparison_assets
             WHERE id = %s
         """
         
@@ -321,7 +321,7 @@ class AssetDAO:
             True if update was successful
         """
         query = """
-            UPDATE comparable_assets
+            UPDATE comparison_assets
             SET 
                 location = ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
                 sqm = %s,
@@ -358,7 +358,7 @@ class AssetDAO:
         Returns:
             True if deletion was successful
         """
-        query = "DELETE FROM comparable_assets WHERE id = %s"
+        query = "DELETE FROM comparison_assets WHERE id = %s"
         affected = self.db.execute_update(query, (asset_id,))
         return affected > 0
     
@@ -383,7 +383,7 @@ class AssetDAO:
                 MAX(price / NULLIF(sqm, 0)) as max_price_per_sqm,
                 STDDEV(price / NULLIF(sqm, 0)) as stddev_price_per_sqm,
                 AVG(sqm) as avg_sqm
-            FROM comparable_assets
+            FROM comparison_assets
             WHERE 1=1
         """
         
