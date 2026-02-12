@@ -16,9 +16,11 @@ class SpitogatosData:
     def __init__(self):
         self._session = requests.Session()
 
+    #todo: find why you get only 30 assets
+    #todo: check twice the assets are realy in the rectangle, and that you get all assets in that rectangle
     def get_by_location(self, location: Rectangle, min_area: int,
                         max_area: int) -> List[Asset] | None:
-        # todo: caculate zoom by location's rectangle
+        # todo: calculate zoom by location's rectangle
         url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
         params = {
             'listingType': 'sale',
@@ -79,6 +81,11 @@ class SpitogatosData:
         else:
             logger.error(f"Error getting data from Spitogatos: {response.status_code}, {response.text}")
 
+    #todo: for a given asset, fetch all its data including photos, construction year etc. 
+    def get_by_id(self):
+        pass
 
 if __name__ == '__main__':
     my = SpitogatosData()
+    rectangle = Rectangle(min_lat=37.984178188128524, min_lon=23.722880267062163, max_lat=37.986812614672615, max_lon=23.729852977964395)
+    my.get_by_location(rectangle, 0, 1000)
