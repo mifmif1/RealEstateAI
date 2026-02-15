@@ -74,8 +74,8 @@ class SpitogatosFlow:
     def _open_excel(excel_path: str,
                     must_columns: List[str] = []) -> pd.DataFrame:
         """
-                price, sqm, coords are columns in the Excel
-                """
+        price, sqm, coords are columns in the Excel
+        """
         assert "xlsx" in excel_path[-5:] or "xlsb" in excel_path[-5:]
         if "xlsb" in excel_path[-5:]:
             df = pd.read_excel(excel_path, engine='pyxlsb')
