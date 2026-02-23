@@ -11,13 +11,18 @@ from utils.consts.apis import ApisConsts
 
 logger = logging.getLogger(__name__)
 
+ATHENS_POLYGON = [[23.65922, 37.96352], [23.65029, 38.0312], [23.69289, 38.08151],
+                  [23.73892, 38.12531], [23.79938, 38.11504], [23.82755, 38.08205],
+                  [23.84884, 38.04906], [23.79938, 38.00576], [23.78426, 37.97381],
+                  [23.77877, 37.95377], [23.7348, 37.92342], [23.69632, 37.92505]]
+
 
 class SpitogatosData:
     def __init__(self):
         self._session = requests.Session()
 
-    #todo: find why you get only 30 assets
-    #todo: check twice the assets are realy in the rectangle, and that you get all assets in that rectangle
+    # todo: find why you get only 30 assets
+    # todo: check twice the assets are realy in the rectangle, and that you get all assets in that rectangle
     def get_by_location(self, location: Rectangle, min_area: int,
                         max_area: int) -> List[Asset] | None:
         # todo: calculate zoom by location's rectangle
@@ -70,7 +75,7 @@ class SpitogatosData:
                                          sqm=asset_raw['sq_meters'],
                                          price=asset_raw['price'],
                                          level=asset_raw.get('floorNumber'),
-                                         new_state={'1':True, '0':False}.get(asset_raw.get('newDevelopment')),
+                                         new_state={'1': True, '0': False}.get(asset_raw.get('newDevelopment')),
                                          url=headers["Referer"]))
                 logger.info(f"Successfully fetched {location}")
             except Exception as e:
@@ -81,11 +86,18 @@ class SpitogatosData:
         else:
             logger.error(f"Error getting data from Spitogatos: {response.status_code}, {response.text}")
 
-    #todo: for a given asset, fetch all its data including photos, construction year etc. 
+    # todo: for a given asset, fetch all its data including photos, construction year etc.
     def get_by_id(self):
         pass
 
+    def _get_athens_offset(self, offest:int):
+        pass
+    def get_athens(self):
+        pass
+
+
 if __name__ == '__main__':
     my = SpitogatosData()
-    rectangle = Rectangle(min_lat=37.984178188128524, min_lon=23.722880267062163, max_lat=37.986812614672615, max_lon=23.729852977964395)
+    rectangle = Rectangle(min_lat=37.984178188128524, min_lon=23.722880267062163, max_lat=37.986812614672615,
+                          max_lon=23.729852977964395)
     my.get_by_location(rectangle, 0, 1000)

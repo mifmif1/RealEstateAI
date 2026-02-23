@@ -110,6 +110,7 @@ class SpitogatosFlow:
         """
         df = self._open_excel(excel_path=excel_path)
 
+
         # changes
         # df['lon'] = df['coords'].apply(lambda pnt_str: self._geopy_data_source.convert_location_to_lon_lat(pnt_str).lon if pd.notna(pnt_str) else pnt_str)
         # df['lat'] = df['coords'].apply(lambda pnt_str: self._geopy_data_source.convert_location_to_lon_lat(pnt_str).lat if pd.notna(pnt_str) else pnt_str)
@@ -118,11 +119,29 @@ class SpitogatosFlow:
         # df['District']=df['District'].apply(lambda x: x.title() if pd.notna(x) else x)
         # df['Prefecture']=df['Prefecture'].apply(lambda x: x.title() if pd.notna(x) else x)
         # df['Municipality']=df['Municipality'].apply(lambda x: x.title() if pd.notna(x) else x)
-        self._add_deltas(df=df)
-        self._add_interesting(df=df)
-        self._add_max_buy_price(df=df)
-        self._add_score(df=df)
+        # self._add_deltas(df=df)
+        # self._add_interesting(df=df)
+        # self._add_max_buy_price(df=df)
+        # self._add_score(df=df)
         #
+
+        """
+        x       	y
+        23.71349	37.94592
+        23.75305	37.96698
+        23.72474	37.98979
+        23.69073	37.96988       
+        """
+
+        mask = (
+                (df['lat'] > 0.532355915 * df['lon'] + 25.32190333) &
+                (df['lat'] > -1.052724077 * df['lon'] + 62.90968188) &
+                (df['lat'] < -0.80572236 * df['lon'] + 57.10534349) &
+                (df['lat'] < 0.585416054 * df['lon'] + 24.10094632)
+        )
+
+        filtered_df = df[mask]
+
         with pd.ExcelWriter(f'{excel_path}_changed_{datetime.datetime.now().strftime("%d%m%Y-%H%M")}.xlsx',
                             engine="openpyxl", mode="w") as writer:
             df.to_excel(writer, index=False)
@@ -281,7 +300,7 @@ class SpitogatosFlow:
         df = self._prepare_df(df)
         # spitogatos assets db:
         try:
-            spitogatos_assets_df = self._open_excel(excelspitogatos_comparison_assets_excel_path)
+            spitogatos_assets_df = self._open_excel(spitogatos_comparison_assets_excel_path)
         except FileNotFoundError:
             logger.exception("Spitogatos file not found. Creating a new one.")
             spitogatos_assets_df = pd.DataFrame(columns=["source",
