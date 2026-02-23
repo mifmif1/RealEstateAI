@@ -3,7 +3,6 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 class SpitogatosAsset(BaseModel):
-    name: str
     id: str
     category: str
     subtype: int
@@ -38,4 +37,3 @@ class SpitogatosAsset(BaseModel):
     reAgent: str
     published: str
     first_publish_date: datetime
-    topVIP: bool

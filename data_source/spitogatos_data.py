@@ -1,6 +1,7 @@
 import inspect
 import json
 import logging
+from datetime import datetime
 from time import sleep
 from typing import List
 
@@ -92,9 +93,6 @@ class SpitogatosData:
     def get_by_id(self):
         pass
 
-    def get_all(self, offset: int = 0) -> List[SpitogatosAsset] | None:
-        ...
-
 
     def get_athens(self, offset: int= 0) -> List[SpitogatosAsset] | None:
         url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
@@ -120,7 +118,6 @@ class SpitogatosData:
 
             "cookie": ApisConsts.SPITOGATOS_COOKIE,
             "user-agent": ApisConsts.USER_AGENT,
-
         }
 
         payload = {
@@ -169,48 +166,43 @@ class SpitogatosData:
                     re_agent_obj = asset_raw.get("reAgent", {})
                     agency_name = re_agent_obj.get("agencyName", "Unknown")
 
-                    # 2. Determine topVIP status
-                    is_vip = "vip" in asset_raw.get("adTypeCodes", [])
-
                     # 3. Create the object with explicit field mapping
                     asset = SpitogatosAsset(
-                        name=asset_raw.get("geography", "Unknown Property"),  # Using geography as name
                         id=str(asset_raw.get("id")),
                         category=asset_raw.get("category", ""),
                         subtype=int(asset_raw.get("subtype", 0)),
                         buy_or_rent=int(asset_raw.get("buy_or_rent", 0)),
                         sqm=int(asset_raw.get("sq_meters", 0)),
                         price=int(asset_raw.get("price", 0)),
-                        price_reduced=bool(asset_raw.get("priceReduced")),
+                        price_reduced=bool(asset_raw.get("priceReduced", False)),
                         price_pre_reduction=asset_raw.get("pricePreReduction"),
                         price_change_percentage=asset_raw.get("priceChangePercentage"),
-                        main_image_URL=asset_raw.get("mainImageURL", ""),
-                        geography=asset_raw.get("geography", ""),
-                        geocodeType=asset_raw.get("geocodeType", ""),
-                        longitude=float(asset_raw.get("longitude", 0.0)),
-                        latitude=float(asset_raw.get("latitude", 0.0)),
-                        floor_number=int(asset_raw.get("floorNumber", 0)),
-                        rooms=int(asset_raw.get("rooms", 0)),
-                        total_rooms=int(asset_raw.get("totalRooms", 0)),
-                        no_of_bathrooms=int(asset_raw.get("no_of_bathrooms", 0)),
-                        kitchens=int(asset_raw.get("kitchens", 0)),
-                        living_rooms=int(asset_raw.get("livingRooms", 0)),
-                        within_city_plan=int(asset_raw.get("within_city_plan", 0)),
-                        agricultural_use=int(asset_raw.get("agriculturalUse", 0)),
-                        description=asset_raw.get("description", ""),
-                        new_development=int(asset_raw.get("newDevelopment", 0)),
+                        main_image_URL=asset_raw.get("mainImageURL"),
+                        geography=asset_raw.get("geography"),
+                        geocodeType=asset_raw.get("geocodeType"),
+                        longitude=float(asset_raw.get("longitude")),
+                        latitude=float(asset_raw.get("latitude")),
+                        floor_number=int(asset_raw.get("floorNumber")),
+                        rooms=int(asset_raw.get("rooms")),
+                        total_rooms=int(asset_raw.get("totalRooms")),
+                        no_of_bathrooms=int(asset_raw.get("no_of_bathrooms",)),
+                        kitchens=int(asset_raw.get("kitchens")),
+                        living_rooms=int(asset_raw.get("livingRooms")),
+                        within_city_plan=int(asset_raw.get("within_city_plan")),
+                        agricultural_use=int(asset_raw.get("agriculturalUse")),
+                        description=asset_raw.get("description"),
+                        new_development=int(asset_raw.get("newDevelopment")),
                         website_modified=datetime.strptime(asset_raw.get("modified"), "%Y-%m-%d %H:%M:%S"),
                         website_uploaded=datetime.strptime(asset_raw.get("uploaded"), "%Y-%m-%d %H:%M:%S"),
-                        imageIds=asset_raw.get("imageIds", []),
+                        imageIds=asset_raw.get("imageIds"),
                         has_VTour=bool(asset_raw.get("hasVTour")),
                         has_video=bool(asset_raw.get("hasVideo")),
                         agent_id=int(asset_raw.get("agent_id", 0)),
                         enquirer_id=int(asset_raw.get("enquirerId", 0)),
                         reAgent=agency_name,
-                        published=str(asset_raw.get("published", "")),
+                        published=str(asset_raw.get("published")),
                         first_publish_date=datetime.strptime(asset_raw.get("firstPublishDate"),
                                                              "%Y-%m-%d %H:%M:%S"),
-                        topVIP=is_vip
                     )
 
                     results.append(asset)
@@ -228,4 +220,6 @@ if __name__ == '__main__':
     my = SpitogatosData()
     rectangle = Rectangle(min_lat=37.984178188128524, min_lon=23.722880267062163, max_lat=37.986812614672615,
                           max_lon=23.729852977964395)
-    my.get_by_location(rectangle, 0, 1000)
+    #my.get_by_location(rectangle, 0, 1000)
+    res = my.get_athens()
+
