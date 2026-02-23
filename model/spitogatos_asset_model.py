@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional, List
 from pydantic import BaseModel
 
-class Spitogatos_Asset(BaseModel):
+class SpitogatosAsset(BaseModel):
     name: str
     id: str
     category: str

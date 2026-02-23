@@ -5,7 +5,7 @@ import logging
 from typing import List
 
 import psycopg2.extras
-from model.spitogatos_asset_model import Spitogatos_Asset
+from model.spitogatos_asset_model import SpitogatosAsset
 from model.geographical_model import Rectangle, Circle
 from database.connection import get_db_connection
 
@@ -18,7 +18,7 @@ class SpitogatosDAO:
     def __init__(self):
         self.db = get_db_connection()
 
-    def insert_list(self, assets: List[Spitogatos_Asset]) -> int:
+    def insert_list(self, assets: List[SpitogatosAsset]) -> int:
         """
         Insert a list of Spitogatos_Asset objects into spitogatos_data (bulk).
         Uses ON CONFLICT (id) DO UPDATE to upsert by spitogatos id.
@@ -119,7 +119,7 @@ class SpitogatosDAO:
             )
             return cursor.rowcount
 
-    def search_by_rectangle(self, rectangle: Rectangle) -> List[Spitogatos_Asset]:
+    def search_by_rectangle(self, rectangle: Rectangle) -> List[SpitogatosAsset]:
         """
         Search spitogatos_data by bounding rectangle (min_lon, min_lat, max_lon, max_lat).
 
@@ -154,7 +154,7 @@ class SpitogatosDAO:
         rows = self.db.execute_query(query, params)
         return [self._row_to_asset(row) for row in rows]
 
-    def search_by_circle(self, circle: Circle) -> List[Spitogatos_Asset]:
+    def search_by_circle(self, circle: Circle) -> List[SpitogatosAsset]:
         """
         Search spitogatos_data by center point and radius (circle).
         Radius is in meters (geography type).
@@ -197,9 +197,9 @@ class SpitogatosDAO:
         return [self._row_to_asset(row) for row in rows]
 
     @staticmethod
-    def _row_to_asset(row: dict) -> Spitogatos_Asset:
+    def _row_to_asset(row: dict) -> SpitogatosAsset:
         """Convert database row to Spitogatos_Asset object."""
-        return Spitogatos_Asset(
+        return SpitogatosAsset(
             id=row["id"],
             name=row["name"],
             category=row["category"],

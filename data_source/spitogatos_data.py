@@ -1,3 +1,4 @@
+import inspect
 import json
 import logging
 from time import sleep
@@ -7,6 +8,7 @@ import requests
 
 from model.asset_model import Asset
 from model.geographical_model import Rectangle, Point
+from model.spitogatos_asset_model import SpitogatosAsset
 from utils.consts.apis import ApisConsts
 
 logger = logging.getLogger(__name__)
@@ -37,7 +39,7 @@ class SpitogatosData:
             'longitudeLow': str(location.min_lon)[:9],
             'longitudeHigh': str(location.max_lon)[:9],
             'zoom': '18',  # fits for radius of 100m
-            'offset': '0',
+            'offset': '0', #
         }
         if min_area:
             params['livingAreaLow'] = str(min_area)
@@ -90,10 +92,136 @@ class SpitogatosData:
     def get_by_id(self):
         pass
 
-    def _get_athens_offset(self, offest:int):
-        pass
-    def get_athens(self):
-        pass
+    def get_all(self, offset: int = 0) -> List[SpitogatosAsset] | None:
+        ...
+
+
+    def get_athens(self, offset: int= 0) -> List[SpitogatosAsset] | None:
+        url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
+
+        headers = {
+            "accept": "application/json, text/plain, */*",
+            "accept-language": "en",
+            "cache-control": "no-cache",
+            "content-type": "application/json",
+            "pragma": "no-cache",
+            "priority": "u=1, i",
+            "sec-ch-ua": '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "x-alsbn": "1",
+            "x-locale": "en",
+            "x-mdraw": "1",
+
+            "Referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search/plg-I2R0azeXBWwkdLVGnDNmsnBsKIaydZxhFLonBcSHi6WVwpVLpigMpDl7IXyohiuod4yjVzuhCMpRU7NobKVJsTVP?latitudeLow=36.164488&latitudeHigh=38.779781&longitudeLow=21.027832&longitudeHigh=29.223633&zoom=7",
+
+            "cookie": ApisConsts.SPITOGATOS_COOKIE,
+            "user-agent": ApisConsts.USER_AGENT,
+
+        }
+
+        payload = {
+            "listingType": "sale",
+            "category": "residential",
+            "areaIDs": [],
+            "sortBy": "rankingscore",
+            "sortOrder": "desc",
+            "latitudeLow": 36.164488,
+            "latitudeHigh": 38.779781,
+            "longitudeLow": 21.027832,
+            "longitudeHigh": 29.223633,
+            "zoom": 7,
+            "offset": offset,
+            "geoPolygons": [
+                [
+                    [23.647462384410563, 37.97056472219295],
+                    [23.672195477497798, 38.02525070509564],
+                    [23.705859965311028, 38.05230788177399],
+                    [23.734715240579458, 38.07989590213524],
+                    [23.795860942934038, 38.052848923336796],
+                    [23.84464009874502, 38.046897246195435],
+                    [23.874182404377013, 37.9841046538324],
+                    [23.830212461110786, 37.9862708110884],
+                    [23.741585544214814, 37.898490303711085],
+                    [23.705859965311028, 37.89740593859518],
+                    [23.654332688045923, 37.9342653895578],
+                    [23.648836445137643, 37.94781201436708]
+                ]
+            ]
+        }
+
+        response = self._session.post(url, headers=headers, json=payload)
+
+        if response.status_code == 200:
+            results = []
+            data = json.loads(response.text).get("data", [])
+
+            if not data:
+                logger.error(f"Probably detected as bot")
+                raise ConnectionAbortedError("Probably detected as bot.")
+
+            for asset_raw in data:
+                try:
+                    # 1. Handle the nested reAgent object
+                    re_agent_obj = asset_raw.get("reAgent", {})
+                    agency_name = re_agent_obj.get("agencyName", "Unknown")
+
+                    # 2. Determine topVIP status
+                    is_vip = "vip" in asset_raw.get("adTypeCodes", [])
+
+                    # 3. Create the object with explicit field mapping
+                    asset = SpitogatosAsset(
+                        name=asset_raw.get("geography", "Unknown Property"),  # Using geography as name
+                        id=str(asset_raw.get("id")),
+                        category=asset_raw.get("category", ""),
+                        subtype=int(asset_raw.get("subtype", 0)),
+                        buy_or_rent=int(asset_raw.get("buy_or_rent", 0)),
+                        sqm=int(asset_raw.get("sq_meters", 0)),
+                        price=int(asset_raw.get("price", 0)),
+                        price_reduced=bool(asset_raw.get("priceReduced")),
+                        price_pre_reduction=asset_raw.get("pricePreReduction"),
+                        price_change_percentage=asset_raw.get("priceChangePercentage"),
+                        main_image_URL=asset_raw.get("mainImageURL", ""),
+                        geography=asset_raw.get("geography", ""),
+                        geocodeType=asset_raw.get("geocodeType", ""),
+                        longitude=float(asset_raw.get("longitude", 0.0)),
+                        latitude=float(asset_raw.get("latitude", 0.0)),
+                        floor_number=int(asset_raw.get("floorNumber", 0)),
+                        rooms=int(asset_raw.get("rooms", 0)),
+                        total_rooms=int(asset_raw.get("totalRooms", 0)),
+                        no_of_bathrooms=int(asset_raw.get("no_of_bathrooms", 0)),
+                        kitchens=int(asset_raw.get("kitchens", 0)),
+                        living_rooms=int(asset_raw.get("livingRooms", 0)),
+                        within_city_plan=int(asset_raw.get("within_city_plan", 0)),
+                        agricultural_use=int(asset_raw.get("agriculturalUse", 0)),
+                        description=asset_raw.get("description", ""),
+                        new_development=int(asset_raw.get("newDevelopment", 0)),
+                        website_modified=datetime.strptime(asset_raw.get("modified"), "%Y-%m-%d %H:%M:%S"),
+                        website_uploaded=datetime.strptime(asset_raw.get("uploaded"), "%Y-%m-%d %H:%M:%S"),
+                        imageIds=asset_raw.get("imageIds", []),
+                        has_VTour=bool(asset_raw.get("hasVTour")),
+                        has_video=bool(asset_raw.get("hasVideo")),
+                        agent_id=int(asset_raw.get("agent_id", 0)),
+                        enquirer_id=int(asset_raw.get("enquirerId", 0)),
+                        reAgent=agency_name,
+                        published=str(asset_raw.get("published", "")),
+                        first_publish_date=datetime.strptime(asset_raw.get("firstPublishDate"),
+                                                             "%Y-%m-%d %H:%M:%S"),
+                        topVIP=is_vip
+                    )
+
+                    results.append(asset)
+                except Exception as e:
+                    logger.error(f"Skipping asset. {e}")
+            logger.info(f"Successfully fetched.") # add function params
+            return results
+        else:
+            logger.error(f"Error getting data from Spitogatos: {response.status_code}, {response.text}")
+
+
 
 
 if __name__ == '__main__':
