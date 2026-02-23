@@ -162,11 +162,9 @@ class SpitogatosData:
 
             for asset_raw in data:
                 try:
-                    # 1. Handle the nested reAgent object
                     re_agent_obj = asset_raw.get("reAgent", {})
                     agency_name = re_agent_obj.get("agencyName", "Unknown")
 
-                    # 3. Create the object with explicit field mapping
                     asset = SpitogatosAsset(
                         id=str(asset_raw.get("id")),
                         category=asset_raw.get("category", ""),

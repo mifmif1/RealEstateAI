@@ -14,6 +14,7 @@ from model.geographical_model import Point
 from utils.consts.greek_tems import floor_level_dict
 
 TRIES_TILL_ENOUGH_ASSETS = 1
+SpITOGATOS_pER_pAGE = 30
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +32,11 @@ class SpitogatosFlow:
     def __init__(self):
         self._geopy_data_source = GeopyData()
         self._spitogatos_data_source = SpitogatosData()
+
+    def get_athens(self, offset: int = 0) -> None:
+        # get spitogatos athens `offset` page as List[SpitogatosAsset]
+        # push the data into the DB
+        ...
 
     @staticmethod
     def _get_valuation_for_row(row, assets: List[Asset]) -> (float, float):
