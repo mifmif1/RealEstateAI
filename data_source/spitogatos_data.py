@@ -199,13 +199,15 @@ class SpitogatosData:
                         enquirer_id=int(asset_raw.get("enquirerId", 0)),
                         reAgent=agency_name,
                         published=str(asset_raw.get("published")),
-                        first_publish_date=datetime.strptime(asset_raw.get("firstPublishDate"),
-                                                             "%Y-%m-%d %H:%M:%S"),
+                        first_publish_date=datetime.strptime(
+                            asset_raw.get("firstPublishDate"), "%Y-%m-%d %H:%M:%S"
+                        ),
                     )
 
                     results.append(asset)
                 except Exception as e:
-                    logger.error(f"Skipping asset. {e}")
+                    asset_id = asset_raw.get("id")
+                    logger.error("Skipping asset id=%s. Error: %s", asset_id, e)
             logger.info(f"Successfully fetched.") # add function params
             return results
         else:

@@ -8,6 +8,7 @@ import pandas as pd
 
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
+from database.spitogatos_dao import SpitogatosDAO
 from model.asset_comparison import AssetComparison
 from model.asset_model import Asset
 from model.geographical_model import Point
@@ -31,12 +32,29 @@ logging.basicConfig(
 class SpitogatosFlow:
     def __init__(self):
         self._geopy_data_source = GeopyData()
+        self._spitogatos_dao = SpitogatosDAO()
         self._spitogatos_data_source = SpitogatosData()
 
     def get_athens(self, offset: int = 0) -> None:
-        # get spitogatos athens `offset` page as List[SpitogatosAsset]
-        # push the data into the DB
-        ...
+        """
+        Fetch one Athens page from Spitogatos and persist it to the DB.
+
+        Args:
+            offset: pagination offset for the Spitogatos Athens search
+        """
+        logger.info(f"Fetching Spitogatos Athens page with offset={offset}")
+        try:
+            assets = self._spitogatos_data_source.get_athens(offset=offset)
+        except ConnectionAbortedError as e:
+            logger.error(f"Failed to fetch Athens page (offset={offset}): {e}")
+            return
+
+        if not assets:
+            logger.info(f"No assets returned for Athens page (offset={offset})")
+            return
+
+        inserted = self._spitogatos_dao.insert_list(assets)
+        logger.info(f"Persisted Spitogatos Athens page (offset={offset}): {len(assets)} assets fetched, {inserted} rows affected in DB")
 
     @staticmethod
     def _get_valuation_for_row(row, assets: List[Asset]) -> (float, float):
@@ -346,21 +364,26 @@ class SpitogatosFlow:
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    dovalue_conditions_to_eject = lambda row: (  # not pd.isna(row['comparison_average']) or
-            row['sqm'] < 30 or
-            '%' in row['TitleGR'] or
-            (('Διαμέρισμα' not in row['SubCategoryGR']) and
-             ('Μεζονέτα' not in row['SubCategoryGR']) and
-             ('Μονοκατοικία' not in row['SubCategoryGR']))
-    )
+    s.get_athens(offset=0)
 
-    columns_no_valuation = ['sqm', 'price', 'lon', 'lat', 'UniqueCode', 'source']
-    columns_valuation = columns_no_valuation + ['level', 'new_state']
 
-    assets_path = f"../excel_db/all_assets.xlsx"
-    spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
 
-    s.changes_in_excel(assets_path)
+
+    # dovalue_conditions_to_eject = lambda row: (  # not pd.isna(row['comparison_average']) or
+    #         row['sqm'] < 30 or
+    #         '%' in row['TitleGR'] or
+    #         (('Διαμέρισμα' not in row['SubCategoryGR']) and
+    #          ('Μεζονέτα' not in row['SubCategoryGR']) and
+    #          ('Μονοκατοικία' not in row['SubCategoryGR']))
+    # )
+    #
+    # columns_no_valuation = ['sqm', 'price', 'lon', 'lat', 'UniqueCode', 'source']
+    # columns_valuation = columns_no_valuation + ['level', 'new_state']
+    #
+    # assets_path = f"../excel_db/all_assets.xlsx"
+    # spitogatos_comparison_path = f"../excel_db/spitogatos_comparison_assets.xlsx"
+
+    # s.changes_in_excel(assets_path)
 
     # s.clear_conditions("../byhand/dovalue_revaluation_121125.xlsx", dovalue_conditions1)
 

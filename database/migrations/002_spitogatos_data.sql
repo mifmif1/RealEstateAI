@@ -5,7 +5,6 @@
 CREATE TABLE IF NOT EXISTS spitogatos_data (
     id VARCHAR(100) PRIMARY KEY,
 
-    name TEXT NOT NULL,
     category VARCHAR(100) NOT NULL,
     subtype INTEGER NOT NULL,
     buy_or_rent INTEGER NOT NULL,
@@ -40,9 +39,9 @@ CREATE TABLE IF NOT EXISTS spitogatos_data (
     re_agent VARCHAR(200) NOT NULL,
     published VARCHAR(100) NOT NULL,
     first_publish_date TIMESTAMP NOT NULL,
-    top_vip BOOLEAN NOT NULL,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fetched_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX IF NOT EXISTS idx_spitogatos_data_location

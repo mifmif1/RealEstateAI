@@ -113134,3 +113134,8 @@ Symbols not available. Dumping unresolved backtrace:
 2026-01-06 10:22:06,592 [INFO] fetched 30 assets
 2026-01-06 10:22:06,593 [INFO] finished, SAVING!
 2026-01-06 10:22:35,426 [INFO] saved successfully
+2026-02-24 14:36:31,712 [ERROR] Failed to initialize database connection pool: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+

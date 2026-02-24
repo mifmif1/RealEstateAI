@@ -35,18 +35,17 @@ class SpitogatosDAO:
         ids_in_batch = [a.id for a in assets]
         query = """
             INSERT INTO spitogatos_data (
-                id, name, category, subtype, buy_or_rent, sqm, price,
+                id, category, subtype, buy_or_rent, sqm, price,
                 price_reduced, price_pre_reduction, price_change_percentage,
                 main_image_url, geography, geocode_type, location,
                 floor_number, rooms, total_rooms, no_of_bathrooms, kitchens,
                 living_rooms, within_city_plan, agricultural_use, description,
                 new_development, website_modified, website_uploaded, image_ids,
                 has_vtour, has_video, agent_id, enquirer_id, re_agent,
-                published, first_publish_date, top_vip
+                published, first_publish_date
             )
             VALUES %s
             ON CONFLICT (id) DO UPDATE SET
-                name = EXCLUDED.name,
                 category = EXCLUDED.category,
                 subtype = EXCLUDED.subtype,
                 buy_or_rent = EXCLUDED.buy_or_rent,
@@ -79,18 +78,18 @@ class SpitogatosDAO:
                 re_agent = EXCLUDED.re_agent,
                 published = EXCLUDED.published,
                 first_publish_date = EXCLUDED.first_publish_date,
-                top_vip = EXCLUDED.top_vip
+                modified_date = CURRENT_TIMESTAMP
         """
-        # One row = 37 values; location uses ST_MakePoint(longitude, latitude)
+        # One row = 34 values; location uses ST_MakePoint(longitude, latitude)
         template = """(
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
             ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s, %s, %s, %s
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+            %s, %s, %s, %s, %s, %s
         )"""
         values = [
             (
-                a.id, a.name, a.category, a.subtype, a.buy_or_rent, a.sqm, a.price,
+                a.id, a.category, a.subtype, a.buy_or_rent, a.sqm, a.price,
                 a.price_reduced, a.price_pre_reduction, a.price_change_percentage,
                 a.main_image_URL, a.geography, a.geocodeType,
                 a.longitude, a.latitude,
@@ -98,7 +97,7 @@ class SpitogatosDAO:
                 a.living_rooms, a.within_city_plan, a.agricultural_use, a.description,
                 a.new_development, a.website_modified, a.website_uploaded, a.imageIds,
                 a.has_VTour, a.has_video, a.agent_id, a.enquirer_id, a.reAgent,
-                a.published, a.first_publish_date, a.topVIP,
+                a.published, a.first_publish_date,
             )
             for a in assets
         ]
@@ -131,7 +130,7 @@ class SpitogatosDAO:
         """
         query = """
             SELECT
-                id, name, category, subtype, buy_or_rent, sqm, price,
+                id, category, subtype, buy_or_rent, sqm, price,
                 price_reduced, price_pre_reduction, price_change_percentage,
                 main_image_url, geography, geocode_type,
                 ST_X(location::geometry) AS longitude,
@@ -140,7 +139,7 @@ class SpitogatosDAO:
                 living_rooms, within_city_plan, agricultural_use, description,
                 new_development, website_modified, website_uploaded, image_ids,
                 has_vtour, has_video, agent_id, enquirer_id, re_agent,
-                published, first_publish_date, top_vip
+                published, first_publish_date
             FROM spitogatos_data
             WHERE location && ST_MakeEnvelope(%s, %s, %s, %s, 4326)::geography
             ORDER BY website_modified DESC
@@ -167,7 +166,7 @@ class SpitogatosDAO:
         """
         query = """
             SELECT
-                id, name, category, subtype, buy_or_rent, sqm, price,
+                id, category, subtype, buy_or_rent, sqm, price,
                 price_reduced, price_pre_reduction, price_change_percentage,
                 main_image_url, geography, geocode_type,
                 ST_X(location::geometry) AS longitude,
@@ -176,7 +175,7 @@ class SpitogatosDAO:
                 living_rooms, within_city_plan, agricultural_use, description,
                 new_development, website_modified, website_uploaded, image_ids,
                 has_vtour, has_video, agent_id, enquirer_id, re_agent,
-                published, first_publish_date, top_vip,
+                published, first_publish_date,
                 ST_Distance(location, ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography) AS distance
             FROM spitogatos_data
             WHERE ST_DWithin(
@@ -201,7 +200,6 @@ class SpitogatosDAO:
         """Convert database row to Spitogatos_Asset object."""
         return SpitogatosAsset(
             id=row["id"],
-            name=row["name"],
             category=row["category"],
             subtype=row["subtype"],
             buy_or_rent=row["buy_or_rent"],
@@ -235,5 +233,4 @@ class SpitogatosDAO:
             reAgent=row["re_agent"],
             published=row["published"],
             first_publish_date=row["first_publish_date"],
-            topVIP=row["top_vip"],
         )
