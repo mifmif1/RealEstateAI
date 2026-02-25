@@ -113225,3 +113225,79 @@ main_image_URL
 2026-02-25 10:20:47,766 [INFO] Successfully fetched.
 2026-02-25 10:20:47,824 [INFO] Persisted Athens page offset=570: 29 assets fetched, 29 rows affected in DB (pages_fetched=10, total_assets=299)
 2026-02-25 10:20:47,824 [INFO] Last page at offset=570 had 29 assets (< 30). Assuming end of results. Stopping.
+2026-02-25 10:34:31,993 [INFO] Database connection pool initialized
+2026-02-25 10:34:31,994 [INFO] Starting get_all_athens from offset=510 (page size=30, max_pages=None)
+2026-02-25 10:34:33,995 [INFO] Fetching Athens page at offset=510
+2026-02-25 10:34:34,924 [INFO] Successfully fetched.
+2026-02-25 10:34:35,034 [INFO] Persisted Athens page offset=510: 30 assets fetched, 30 rows affected in DB (pages_fetched=1, total_assets=30)
+2026-02-25 10:34:37,035 [INFO] Fetching Athens page at offset=540
+2026-02-25 10:34:37,577 [INFO] Successfully fetched.
+2026-02-25 10:34:37,655 [INFO] Persisted Athens page offset=540: 30 assets fetched, 30 rows affected in DB (pages_fetched=2, total_assets=60)
+2026-02-25 10:34:39,656 [INFO] Fetching Athens page at offset=570
+2026-02-25 10:34:40,277 [INFO] Successfully fetched.
+2026-02-25 10:34:40,343 [INFO] Persisted Athens page offset=570: 30 assets fetched, 30 rows affected in DB (pages_fetched=3, total_assets=90)
+2026-02-25 10:34:42,344 [INFO] Fetching Athens page at offset=600
+2026-02-25 10:34:42,949 [INFO] Successfully fetched.
+2026-02-25 10:34:43,026 [INFO] Persisted Athens page offset=600: 30 assets fetched, 30 rows affected in DB (pages_fetched=4, total_assets=120)
+2026-02-25 10:34:45,028 [INFO] Fetching Athens page at offset=630
+2026-02-25 10:34:45,764 [INFO] Successfully fetched.
+2026-02-25 10:34:45,849 [INFO] Persisted Athens page offset=630: 30 assets fetched, 30 rows affected in DB (pages_fetched=5, total_assets=150)
+2026-02-25 10:34:47,849 [INFO] Fetching Athens page at offset=660
+2026-02-25 10:34:48,312 [ERROR] Skipping asset id=14228679. Error: 1 validation error for SpitogatosAsset
+main_image_URL
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2026-02-25 10:34:48,313 [INFO] Successfully fetched.
+2026-02-25 10:34:48,375 [INFO] Persisted Athens page offset=660: 29 assets fetched, 29 rows affected in DB (pages_fetched=6, total_assets=179)
+2026-02-25 10:34:50,376 [INFO] Fetching Athens page at offset=690
+2026-02-25 10:34:50,947 [INFO] Successfully fetched.
+2026-02-25 10:34:51,024 [INFO] Persisted Athens page offset=690: 30 assets fetched, 30 rows affected in DB (pages_fetched=7, total_assets=209)
+2026-02-25 10:34:53,024 [INFO] Fetching Athens page at offset=720
+2026-02-25 10:34:53,679 [INFO] Successfully fetched.
+2026-02-25 10:34:53,759 [INFO] Persisted Athens page offset=720: 30 assets fetched, 30 rows affected in DB (pages_fetched=8, total_assets=239)
+2026-02-25 10:34:55,760 [INFO] Fetching Athens page at offset=750
+2026-02-25 10:34:56,226 [INFO] Successfully fetched.
+2026-02-25 10:34:56,280 [INFO] Persisted Athens page offset=750: 30 assets fetched, 30 rows affected in DB (pages_fetched=9, total_assets=269)
+2026-02-25 10:34:58,281 [INFO] Fetching Athens page at offset=780
+2026-02-25 10:34:58,822 [INFO] Successfully fetched.
+2026-02-25 10:34:58,908 [INFO] Persisted Athens page offset=780: 30 assets fetched, 30 rows affected in DB (pages_fetched=10, total_assets=299)
+2026-02-25 10:35:00,910 [INFO] Fetching Athens page at offset=810
+2026-02-25 10:35:03,003 [INFO] Successfully fetched.
+2026-02-25 10:35:03,091 [INFO] Persisted Athens page offset=810: 30 assets fetched, 30 rows affected in DB (pages_fetched=11, total_assets=329)
+2026-02-25 10:35:05,093 [INFO] Fetching Athens page at offset=840
+2026-02-25 10:35:05,975 [INFO] Successfully fetched.
+2026-02-25 10:35:06,043 [INFO] Persisted Athens page offset=840: 30 assets fetched, 30 rows affected in DB (pages_fetched=12, total_assets=359)
+2026-02-25 10:35:08,044 [INFO] Fetching Athens page at offset=870
+2026-02-25 10:35:08,518 [INFO] Successfully fetched.
+2026-02-25 10:35:08,603 [INFO] Persisted Athens page offset=870: 30 assets fetched, 30 rows affected in DB (pages_fetched=13, total_assets=389)
+2026-02-25 10:35:10,605 [INFO] Fetching Athens page at offset=900
+2026-02-25 10:35:11,149 [ERROR] Skipping asset id=18720146. Error: 1 validation error for SpitogatosAsset
+main_image_URL
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2026-02-25 10:35:11,150 [ERROR] Skipping asset id=19360463. Error: 1 validation error for SpitogatosAsset
+main_image_URL
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2026-02-25 10:35:11,153 [INFO] Successfully fetched.
+2026-02-25 10:35:11,239 [INFO] Persisted Athens page offset=900: 28 assets fetched, 28 rows affected in DB (pages_fetched=14, total_assets=417)
+2026-02-25 10:35:13,239 [INFO] Fetching Athens page at offset=930
+2026-02-25 10:35:13,809 [INFO] Successfully fetched.
+2026-02-25 10:35:13,898 [INFO] Persisted Athens page offset=930: 30 assets fetched, 30 rows affected in DB (pages_fetched=15, total_assets=447)
+2026-02-25 10:35:15,899 [INFO] Fetching Athens page at offset=960
+2026-02-25 10:35:16,453 [INFO] Successfully fetched.
+2026-02-25 10:35:16,538 [INFO] Persisted Athens page offset=960: 30 assets fetched, 30 rows affected in DB (pages_fetched=16, total_assets=477)
+2026-02-25 10:35:18,539 [INFO] Fetching Athens page at offset=990
+2026-02-25 10:35:19,130 [INFO] Successfully fetched.
+2026-02-25 10:35:19,230 [INFO] Persisted Athens page offset=990: 30 assets fetched, 30 rows affected in DB (pages_fetched=17, total_assets=507)
+2026-02-25 10:35:21,231 [INFO] Fetching Athens page at offset=1020
+2026-02-25 10:35:21,847 [ERROR] Skipping asset id=19400420. Error: 1 validation error for SpitogatosAsset
+main_image_URL
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2026-02-25 10:35:21,848 [INFO] Successfully fetched.
+2026-02-25 10:35:21,933 [INFO] Persisted Athens page offset=1020: 29 assets fetched, 29 rows affected in DB (pages_fetched=18, total_assets=536)
+2026-02-25 10:35:23,934 [INFO] Fetching Athens page at offset=1050
+2026-02-25 10:35:24,539 [INFO] Successfully fetched.
+2026-02-25 10:35:24,613 [INFO] Persisted Athens page offset=1050: 30 assets fetched, 30 rows affected in DB (pages_fetched=19, total_assets=566)
+2026-02-25 10:35:26,615 [INFO] Fetching Athens page at offset=1080
