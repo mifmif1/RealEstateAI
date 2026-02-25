@@ -113139,3 +113139,17 @@ Symbols not available. Dumping unresolved backtrace:
 connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
 	Is the server running on that host and accepting TCP/IP connections?
 
+2026-02-24 15:23:06,716 [INFO] Database connection pool initialized
+2026-02-24 15:23:18,624 [INFO] Fetching Spitogatos Athens page with offset=0
+2026-02-24 15:23:22,561 [INFO] Successfully fetched.
+2026-02-24 15:24:44,524 [ERROR] Database transaction error: not all arguments converted during string formatting
+2026-02-24 15:24:44,535 [ERROR] Database connection error: not all arguments converted during string formatting
+2026-02-25 09:35:32,984 [INFO] Database connection pool initialized
+2026-02-25 09:36:19,910 [INFO] Fetching Spitogatos Athens page with offset=0
+2026-02-25 09:36:27,154 [INFO] Successfully fetched.
+2026-02-25 09:37:51,023 [ERROR] Database transaction error: not all arguments converted during string formatting
+2026-02-25 09:37:51,034 [ERROR] Database connection error: not all arguments converted during string formatting
+2026-02-25 09:40:07,024 [INFO] Database connection pool initialized
+2026-02-25 09:40:12,391 [INFO] Fetching Spitogatos Athens page with offset=0
+2026-02-25 09:40:15,249 [INFO] Successfully fetched.
+2026-02-25 09:41:12,378 [INFO] Persisted Spitogatos Athens page (offset=0): 30 assets fetched, 30 rows affected in DB
