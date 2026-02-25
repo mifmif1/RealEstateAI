@@ -113301,3 +113301,173 @@ main_image_URL
 2026-02-25 10:35:24,539 [INFO] Successfully fetched.
 2026-02-25 10:35:24,613 [INFO] Persisted Athens page offset=1050: 30 assets fetched, 30 rows affected in DB (pages_fetched=19, total_assets=566)
 2026-02-25 10:35:26,615 [INFO] Fetching Athens page at offset=1080
+2026-02-25 10:42:16,946 [INFO] Database connection pool initialized
+2026-02-25 10:42:16,946 [INFO] Starting get_all_athens from offset=900 (page size=30, max_pages=None)
+2026-02-25 10:42:18,947 [INFO] Fetching Athens page at offset=900
+2026-02-25 10:42:19,677 [INFO] Successfully fetched.
+2026-02-25 10:42:19,770 [INFO] Persisted Athens page offset=900: 30 assets fetched, 30 rows affected in DB (pages_fetched=1, total_assets=30)
+2026-02-25 10:42:21,771 [INFO] Fetching Athens page at offset=930
+2026-02-25 10:42:22,293 [INFO] Successfully fetched.
+2026-02-25 10:42:22,380 [INFO] Persisted Athens page offset=930: 30 assets fetched, 30 rows affected in DB (pages_fetched=2, total_assets=60)
+2026-02-25 10:42:24,381 [INFO] Fetching Athens page at offset=960
+2026-02-25 10:42:24,946 [INFO] Successfully fetched.
+2026-02-25 10:42:25,064 [INFO] Persisted Athens page offset=960: 30 assets fetched, 30 rows affected in DB (pages_fetched=3, total_assets=90)
+2026-02-25 10:42:27,065 [INFO] Fetching Athens page at offset=990
+2026-02-25 10:42:27,517 [INFO] Successfully fetched.
+2026-02-25 10:42:27,590 [INFO] Persisted Athens page offset=990: 30 assets fetched, 30 rows affected in DB (pages_fetched=4, total_assets=120)
+2026-02-25 10:42:29,592 [INFO] Fetching Athens page at offset=1020
+2026-02-25 10:42:30,149 [INFO] Successfully fetched.
+2026-02-25 10:42:30,216 [INFO] Persisted Athens page offset=1020: 30 assets fetched, 30 rows affected in DB (pages_fetched=5, total_assets=150)
+2026-02-25 10:42:32,218 [INFO] Fetching Athens page at offset=1050
+2026-02-25 10:42:32,827 [INFO] Successfully fetched.
+2026-02-25 10:42:32,897 [INFO] Persisted Athens page offset=1050: 30 assets fetched, 30 rows affected in DB (pages_fetched=6, total_assets=180)
+2026-02-25 10:42:34,899 [INFO] Fetching Athens page at offset=1080
+2026-02-25 10:42:35,493 [INFO] Successfully fetched.
+2026-02-25 10:42:35,574 [INFO] Persisted Athens page offset=1080: 30 assets fetched, 30 rows affected in DB (pages_fetched=7, total_assets=210)
+2026-02-25 10:42:37,575 [INFO] Fetching Athens page at offset=1110
+2026-02-25 10:42:38,296 [INFO] Successfully fetched.
+2026-02-25 10:42:38,371 [INFO] Persisted Athens page offset=1110: 30 assets fetched, 30 rows affected in DB (pages_fetched=8, total_assets=240)
+2026-02-25 10:42:40,373 [INFO] Fetching Athens page at offset=1140
+2026-02-25 10:42:40,897 [INFO] Successfully fetched.
+2026-02-25 10:42:40,960 [INFO] Persisted Athens page offset=1140: 30 assets fetched, 30 rows affected in DB (pages_fetched=9, total_assets=270)
+2026-02-25 10:42:42,960 [INFO] Fetching Athens page at offset=1170
+2026-02-25 10:42:43,419 [INFO] Successfully fetched.
+2026-02-25 10:42:43,489 [INFO] Persisted Athens page offset=1170: 30 assets fetched, 30 rows affected in DB (pages_fetched=10, total_assets=300)
+2026-02-25 10:42:45,491 [INFO] Fetching Athens page at offset=1200
+2026-02-25 10:42:45,965 [INFO] Successfully fetched.
+2026-02-25 10:42:46,040 [INFO] Persisted Athens page offset=1200: 30 assets fetched, 30 rows affected in DB (pages_fetched=11, total_assets=330)
+2026-02-25 10:42:48,042 [INFO] Fetching Athens page at offset=1230
+2026-02-25 10:42:48,670 [INFO] Successfully fetched.
+2026-02-25 10:42:48,748 [INFO] Persisted Athens page offset=1230: 30 assets fetched, 30 rows affected in DB (pages_fetched=12, total_assets=360)
+2026-02-25 10:42:50,749 [INFO] Fetching Athens page at offset=1260
+2026-02-25 10:42:51,356 [INFO] Successfully fetched.
+2026-02-25 10:42:51,436 [INFO] Persisted Athens page offset=1260: 30 assets fetched, 30 rows affected in DB (pages_fetched=13, total_assets=390)
+2026-02-25 10:42:53,438 [INFO] Fetching Athens page at offset=1290
+2026-02-25 10:42:54,196 [INFO] Successfully fetched.
+2026-02-25 10:42:54,276 [INFO] Persisted Athens page offset=1290: 30 assets fetched, 30 rows affected in DB (pages_fetched=14, total_assets=420)
+2026-02-25 10:42:56,276 [INFO] Fetching Athens page at offset=1320
+2026-02-25 10:42:56,998 [INFO] Successfully fetched.
+2026-02-25 10:42:57,070 [INFO] Persisted Athens page offset=1320: 30 assets fetched, 30 rows affected in DB (pages_fetched=15, total_assets=450)
+2026-02-25 10:42:59,071 [INFO] Fetching Athens page at offset=1350
+2026-02-25 10:42:59,628 [INFO] Successfully fetched.
+2026-02-25 10:42:59,707 [INFO] Persisted Athens page offset=1350: 30 assets fetched, 30 rows affected in DB (pages_fetched=16, total_assets=480)
+2026-02-25 10:43:01,708 [INFO] Fetching Athens page at offset=1380
+2026-02-25 10:43:02,689 [INFO] Successfully fetched.
+2026-02-25 10:43:02,780 [INFO] Persisted Athens page offset=1380: 30 assets fetched, 30 rows affected in DB (pages_fetched=17, total_assets=510)
+2026-02-25 10:43:04,782 [INFO] Fetching Athens page at offset=1410
+2026-02-25 10:43:05,750 [INFO] Successfully fetched.
+2026-02-25 10:43:05,866 [INFO] Persisted Athens page offset=1410: 30 assets fetched, 30 rows affected in DB (pages_fetched=18, total_assets=540)
+2026-02-25 10:43:07,867 [INFO] Fetching Athens page at offset=1440
+2026-02-25 10:43:08,638 [INFO] Successfully fetched.
+2026-02-25 10:43:08,705 [INFO] Persisted Athens page offset=1440: 30 assets fetched, 30 rows affected in DB (pages_fetched=19, total_assets=570)
+2026-02-25 10:43:10,707 [INFO] Fetching Athens page at offset=1470
+2026-02-25 10:43:11,749 [INFO] Successfully fetched.
+2026-02-25 10:43:11,816 [INFO] Persisted Athens page offset=1470: 30 assets fetched, 30 rows affected in DB (pages_fetched=20, total_assets=600)
+2026-02-25 10:43:13,817 [INFO] Fetching Athens page at offset=1500
+2026-02-25 10:43:14,334 [INFO] Successfully fetched.
+2026-02-25 10:43:14,408 [INFO] Persisted Athens page offset=1500: 30 assets fetched, 30 rows affected in DB (pages_fetched=21, total_assets=630)
+2026-02-25 10:43:16,410 [INFO] Fetching Athens page at offset=1530
+2026-02-25 10:43:16,968 [INFO] Successfully fetched.
+2026-02-25 10:43:17,045 [INFO] Persisted Athens page offset=1530: 30 assets fetched, 30 rows affected in DB (pages_fetched=22, total_assets=660)
+2026-02-25 10:43:19,046 [INFO] Fetching Athens page at offset=1560
+2026-02-25 10:43:19,612 [INFO] Successfully fetched.
+2026-02-25 10:43:19,684 [INFO] Persisted Athens page offset=1560: 30 assets fetched, 30 rows affected in DB (pages_fetched=23, total_assets=690)
+2026-02-25 10:43:21,687 [INFO] Fetching Athens page at offset=1590
+2026-02-25 10:43:22,164 [INFO] Successfully fetched.
+2026-02-25 10:43:22,236 [INFO] Persisted Athens page offset=1590: 30 assets fetched, 30 rows affected in DB (pages_fetched=24, total_assets=720)
+2026-02-25 10:43:24,238 [INFO] Fetching Athens page at offset=1620
+2026-02-25 10:43:24,965 [INFO] Successfully fetched.
+2026-02-25 10:43:25,030 [INFO] Persisted Athens page offset=1620: 30 assets fetched, 30 rows affected in DB (pages_fetched=25, total_assets=750)
+2026-02-25 10:43:27,031 [INFO] Fetching Athens page at offset=1650
+2026-02-25 10:43:27,942 [INFO] Successfully fetched.
+2026-02-25 10:43:28,004 [INFO] Persisted Athens page offset=1650: 30 assets fetched, 30 rows affected in DB (pages_fetched=26, total_assets=780)
+2026-02-25 10:43:30,006 [INFO] Fetching Athens page at offset=1680
+2026-02-25 10:43:30,607 [INFO] Successfully fetched.
+2026-02-25 10:43:30,678 [INFO] Persisted Athens page offset=1680: 30 assets fetched, 30 rows affected in DB (pages_fetched=27, total_assets=810)
+2026-02-25 10:43:32,679 [INFO] Fetching Athens page at offset=1710
+2026-02-25 10:43:33,193 [INFO] Successfully fetched.
+2026-02-25 10:43:33,293 [INFO] Persisted Athens page offset=1710: 30 assets fetched, 30 rows affected in DB (pages_fetched=28, total_assets=840)
+2026-02-25 10:43:35,294 [INFO] Fetching Athens page at offset=1740
+2026-02-25 10:43:35,889 [INFO] Successfully fetched.
+2026-02-25 10:43:35,952 [INFO] Persisted Athens page offset=1740: 30 assets fetched, 30 rows affected in DB (pages_fetched=29, total_assets=870)
+2026-02-25 10:43:37,953 [INFO] Fetching Athens page at offset=1770
+2026-02-25 10:43:38,595 [INFO] Successfully fetched.
+2026-02-25 10:43:38,662 [INFO] Persisted Athens page offset=1770: 30 assets fetched, 30 rows affected in DB (pages_fetched=30, total_assets=900)
+2026-02-25 10:43:40,663 [INFO] Fetching Athens page at offset=1800
+2026-02-25 10:43:41,187 [INFO] Successfully fetched.
+2026-02-25 10:43:41,260 [INFO] Persisted Athens page offset=1800: 30 assets fetched, 30 rows affected in DB (pages_fetched=31, total_assets=930)
+2026-02-25 10:43:43,261 [INFO] Fetching Athens page at offset=1830
+2026-02-25 10:43:43,767 [INFO] Successfully fetched.
+2026-02-25 10:43:43,835 [INFO] Persisted Athens page offset=1830: 30 assets fetched, 30 rows affected in DB (pages_fetched=32, total_assets=960)
+2026-02-25 10:43:45,836 [INFO] Fetching Athens page at offset=1860
+2026-02-25 10:43:46,538 [INFO] Successfully fetched.
+2026-02-25 10:43:46,606 [INFO] Persisted Athens page offset=1860: 30 assets fetched, 30 rows affected in DB (pages_fetched=33, total_assets=990)
+2026-02-25 10:43:48,608 [INFO] Fetching Athens page at offset=1890
+2026-02-25 10:43:49,327 [INFO] Successfully fetched.
+2026-02-25 10:43:49,401 [INFO] Persisted Athens page offset=1890: 30 assets fetched, 30 rows affected in DB (pages_fetched=34, total_assets=1020)
+2026-02-25 10:43:51,401 [INFO] Fetching Athens page at offset=1920
+2026-02-25 10:43:52,204 [INFO] Successfully fetched.
+2026-02-25 10:43:52,278 [INFO] Persisted Athens page offset=1920: 30 assets fetched, 30 rows affected in DB (pages_fetched=35, total_assets=1050)
+2026-02-25 10:43:54,279 [INFO] Fetching Athens page at offset=1950
+2026-02-25 10:43:54,908 [INFO] Successfully fetched.
+2026-02-25 10:43:54,972 [INFO] Persisted Athens page offset=1950: 30 assets fetched, 30 rows affected in DB (pages_fetched=36, total_assets=1080)
+2026-02-25 10:43:56,973 [INFO] Fetching Athens page at offset=1980
+2026-02-25 10:43:57,530 [INFO] Successfully fetched.
+2026-02-25 10:43:57,590 [INFO] Persisted Athens page offset=1980: 30 assets fetched, 30 rows affected in DB (pages_fetched=37, total_assets=1110)
+2026-02-25 10:43:59,592 [INFO] Fetching Athens page at offset=2010
+2026-02-25 10:44:00,181 [INFO] Successfully fetched.
+2026-02-25 10:44:00,243 [INFO] Persisted Athens page offset=2010: 30 assets fetched, 30 rows affected in DB (pages_fetched=38, total_assets=1140)
+2026-02-25 10:44:02,244 [INFO] Fetching Athens page at offset=2040
+2026-02-25 10:44:03,138 [INFO] Successfully fetched.
+2026-02-25 10:44:03,200 [INFO] Persisted Athens page offset=2040: 30 assets fetched, 30 rows affected in DB (pages_fetched=39, total_assets=1170)
+2026-02-25 10:44:05,200 [INFO] Fetching Athens page at offset=2070
+2026-02-25 10:44:05,746 [INFO] Successfully fetched.
+2026-02-25 10:44:05,821 [INFO] Persisted Athens page offset=2070: 30 assets fetched, 30 rows affected in DB (pages_fetched=40, total_assets=1200)
+2026-02-25 10:44:07,823 [INFO] Fetching Athens page at offset=2100
+2026-02-25 10:44:08,506 [INFO] Successfully fetched.
+2026-02-25 10:44:08,580 [INFO] Persisted Athens page offset=2100: 30 assets fetched, 30 rows affected in DB (pages_fetched=41, total_assets=1230)
+2026-02-25 10:44:10,582 [INFO] Fetching Athens page at offset=2130
+2026-02-25 10:44:11,253 [INFO] Successfully fetched.
+2026-02-25 10:44:11,319 [INFO] Persisted Athens page offset=2130: 30 assets fetched, 30 rows affected in DB (pages_fetched=42, total_assets=1260)
+2026-02-25 10:44:13,320 [INFO] Fetching Athens page at offset=2160
+2026-02-25 10:44:13,958 [INFO] Successfully fetched.
+2026-02-25 10:44:14,026 [INFO] Persisted Athens page offset=2160: 30 assets fetched, 30 rows affected in DB (pages_fetched=43, total_assets=1290)
+2026-02-25 10:44:16,028 [INFO] Fetching Athens page at offset=2190
+2026-02-25 10:44:16,530 [INFO] Successfully fetched.
+2026-02-25 10:44:16,600 [INFO] Persisted Athens page offset=2190: 30 assets fetched, 30 rows affected in DB (pages_fetched=44, total_assets=1320)
+2026-02-25 10:44:18,602 [INFO] Fetching Athens page at offset=2220
+2026-02-25 10:44:19,203 [INFO] Successfully fetched.
+2026-02-25 10:44:19,262 [INFO] Persisted Athens page offset=2220: 30 assets fetched, 30 rows affected in DB (pages_fetched=45, total_assets=1350)
+2026-02-25 10:44:21,263 [INFO] Fetching Athens page at offset=2250
+2026-02-25 10:44:22,134 [INFO] Successfully fetched.
+2026-02-25 10:44:22,203 [INFO] Persisted Athens page offset=2250: 30 assets fetched, 30 rows affected in DB (pages_fetched=46, total_assets=1380)
+2026-02-25 10:44:24,204 [INFO] Fetching Athens page at offset=2280
+2026-02-25 10:44:24,883 [INFO] Successfully fetched.
+2026-02-25 10:44:24,941 [INFO] Persisted Athens page offset=2280: 30 assets fetched, 30 rows affected in DB (pages_fetched=47, total_assets=1410)
+2026-02-25 10:44:26,943 [INFO] Fetching Athens page at offset=2310
+2026-02-25 10:44:27,421 [INFO] Successfully fetched.
+2026-02-25 10:44:27,477 [INFO] Persisted Athens page offset=2310: 30 assets fetched, 30 rows affected in DB (pages_fetched=48, total_assets=1440)
+2026-02-25 10:44:29,478 [INFO] Fetching Athens page at offset=2340
+2026-02-25 10:44:30,024 [INFO] Successfully fetched.
+2026-02-25 10:44:30,086 [INFO] Persisted Athens page offset=2340: 30 assets fetched, 30 rows affected in DB (pages_fetched=49, total_assets=1470)
+2026-02-25 10:44:32,087 [INFO] Fetching Athens page at offset=2370
+2026-02-25 10:44:33,001 [INFO] Successfully fetched.
+2026-02-25 10:44:33,064 [INFO] Persisted Athens page offset=2370: 30 assets fetched, 30 rows affected in DB (pages_fetched=50, total_assets=1500)
+2026-02-25 10:44:35,066 [INFO] Fetching Athens page at offset=2400
+2026-02-25 10:44:35,748 [INFO] Successfully fetched.
+2026-02-25 10:44:35,809 [INFO] Persisted Athens page offset=2400: 30 assets fetched, 30 rows affected in DB (pages_fetched=51, total_assets=1530)
+2026-02-25 10:44:37,810 [INFO] Fetching Athens page at offset=2430
+2026-02-25 10:44:38,382 [INFO] Successfully fetched.
+2026-02-25 10:44:38,446 [INFO] Persisted Athens page offset=2430: 30 assets fetched, 30 rows affected in DB (pages_fetched=52, total_assets=1560)
+2026-02-25 10:44:40,447 [INFO] Fetching Athens page at offset=2460
+2026-02-25 10:44:41,063 [INFO] Successfully fetched.
+2026-02-25 10:44:41,121 [INFO] Persisted Athens page offset=2460: 30 assets fetched, 30 rows affected in DB (pages_fetched=53, total_assets=1590)
+2026-02-25 10:44:43,122 [INFO] Fetching Athens page at offset=2490
+2026-02-25 10:44:43,782 [INFO] Successfully fetched.
+2026-02-25 10:44:43,867 [INFO] Persisted Athens page offset=2490: 30 assets fetched, 30 rows affected in DB (pages_fetched=54, total_assets=1620)
+2026-02-25 10:44:45,869 [INFO] Fetching Athens page at offset=2520
+2026-02-25 10:44:46,368 [INFO] Successfully fetched.
+2026-02-25 10:44:46,431 [INFO] Persisted Athens page offset=2520: 30 assets fetched, 30 rows affected in DB (pages_fetched=55, total_assets=1650)
+2026-02-25 10:44:48,432 [INFO] Fetching Athens page at offset=2550
+2026-02-25 10:44:49,282 [INFO] Successfully fetched.
+2026-02-25 10:44:49,363 [INFO] Persisted Athens page offset=2550: 30 assets fetched, 30 rows affected in DB (pages_fetched=56, total_assets=1680)

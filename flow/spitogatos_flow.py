@@ -465,7 +465,7 @@ class SpitogatosFlow:
 if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.get_athens(offset=0)
-    s.get_all_athens(start_offset=510)
+    s.get_all_athens(start_offset=900)
 
 
 
