@@ -102,17 +102,86 @@ class SpitogatosDAO:
             for a in assets
         ]
         with self.db.get_cursor() as cursor:
+            # Load existing rows for these ids so we can log detailed diffs on conflict
             cursor.execute(
-                "SELECT id FROM spitogatos_data WHERE id = ANY(%s)",
+                """
+                SELECT
+                    id, category, subtype, buy_or_rent, sqm, price,
+                    price_reduced, price_pre_reduction, price_change_percentage,
+                    main_image_url, geography, geocode_type,
+                    ST_X(location::geometry) AS longitude,
+                    ST_Y(location::geometry) AS latitude,
+                    floor_number, rooms, total_rooms, no_of_bathrooms, kitchens,
+                    living_rooms, within_city_plan, agricultural_use, description,
+                    new_development, website_modified, website_uploaded, image_ids,
+                    has_vtour, has_video, agent_id, enquirer_id, re_agent,
+                    published, first_publish_date
+                FROM spitogatos_data
+                WHERE id = ANY(%s)
+                """,
                 (ids_in_batch,),
             )
-            existing = {row["id"] for row in cursor.fetchall()}
-            if existing:
-                logger.info(
-                    "spitogatos_data id conflict (will upsert): %d ids already exist: %s",
-                    len(existing),
-                    sorted(existing)[:50] if len(existing) > 50 else sorted(existing),
-                )
+            existing_rows = cursor.fetchall()
+            if existing_rows:
+                existing_by_id = {row["id"]: row for row in existing_rows}
+                assets_by_id = {a.id: a for a in assets}
+
+                for asset_id, old_row in existing_by_id.items():
+                    new_asset = assets_by_id.get(asset_id)
+                    if not new_asset:
+                        continue
+
+                    diffs = []
+                    # Map model attributes to row keys
+                    field_map = [
+                        ("category", "category"),
+                        ("subtype", "subtype"),
+                        ("buy_or_rent", "buy_or_rent"),
+                        ("sqm", "sqm"),
+                        ("price", "price"),
+                        ("price_reduced", "price_reduced"),
+                        ("price_pre_reduction", "price_pre_reduction"),
+                        ("price_change_percentage", "price_change_percentage"),
+                        ("main_image_URL", "main_image_url"),
+                        ("geography", "geography"),
+                        ("geocodeType", "geocode_type"),
+                        ("longitude", "longitude"),
+                        ("latitude", "latitude"),
+                        ("floor_number", "floor_number"),
+                        ("rooms", "rooms"),
+                        ("total_rooms", "total_rooms"),
+                        ("no_of_bathrooms", "no_of_bathrooms"),
+                        ("kitchens", "kitchens"),
+                        ("living_rooms", "living_rooms"),
+                        ("within_city_plan", "within_city_plan"),
+                        ("agricultural_use", "agricultural_use"),
+                        ("description", "description"),
+                        ("new_development", "new_development"),
+                        ("website_modified", "website_modified"),
+                        ("website_uploaded", "website_uploaded"),
+                        ("imageIds", "image_ids"),
+                        ("has_VTour", "has_vtour"),
+                        ("has_video", "has_video"),
+                        ("agent_id", "agent_id"),
+                        ("enquirer_id", "enquirer_id"),
+                        ("reAgent", "re_agent"),
+                        ("published", "published"),
+                        ("first_publish_date", "first_publish_date"),
+                    ]
+
+                    for model_attr, row_key in field_map:
+                        old_val = old_row.get(row_key)
+                        new_val = getattr(new_asset, model_attr)
+                        if old_val != new_val:
+                            diffs.append(f"{model_attr}: old={old_val!r}, new={new_val!r}")
+
+                    if diffs:
+                        logger.info(
+                            "spitogatos_data conflict on id=%s. Differing fields: %s",
+                            asset_id,
+                            "; ".join(diffs),
+                        )
+
             psycopg2.extras.execute_values(
                 cursor, query, values, template=template, page_size=500
             )

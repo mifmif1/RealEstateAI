@@ -175,7 +175,7 @@ class SpitogatosData:
                         price_reduced=bool(asset_raw.get("priceReduced", False)),
                         price_pre_reduction=asset_raw.get("pricePreReduction"),
                         price_change_percentage=asset_raw.get("priceChangePercentage"),
-                        main_image_URL=asset_raw.get("mainImageURL"),
+                        main_image_URL=asset_raw.get("mainImageURL", "No Image"),
                         geography=asset_raw.get("geography"),
                         geocodeType=asset_raw.get("geocodeType"),
                         longitude=float(asset_raw.get("longitude")),

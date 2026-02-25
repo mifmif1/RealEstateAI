@@ -113153,3 +113153,75 @@ connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection re
 2026-02-25 09:40:12,391 [INFO] Fetching Spitogatos Athens page with offset=0
 2026-02-25 09:40:15,249 [INFO] Successfully fetched.
 2026-02-25 09:41:12,378 [INFO] Persisted Spitogatos Athens page (offset=0): 30 assets fetched, 30 rows affected in DB
+2026-02-25 10:11:20,760 [INFO] Database connection pool initialized
+2026-02-25 10:11:20,760 [INFO] Starting get_all_athens from offset=30 (page size=30, max_pages=None)
+2026-02-25 10:11:22,761 [INFO] Fetching Athens page at offset=30
+2026-02-25 10:11:24,175 [INFO] Successfully fetched.
+2026-02-25 10:11:24,231 [INFO] Persisted Athens page offset=30: 30 assets fetched, 30 rows affected in DB (pages_fetched=1, total_assets=30)
+2026-02-25 10:11:26,232 [INFO] Fetching Athens page at offset=60
+2026-02-25 10:11:27,009 [INFO] Successfully fetched.
+2026-02-25 10:11:27,067 [INFO] Persisted Athens page offset=60: 30 assets fetched, 30 rows affected in DB (pages_fetched=2, total_assets=60)
+2026-02-25 10:11:29,069 [INFO] Fetching Athens page at offset=90
+2026-02-25 10:11:29,686 [INFO] Successfully fetched.
+2026-02-25 10:11:29,747 [INFO] Persisted Athens page offset=90: 30 assets fetched, 30 rows affected in DB (pages_fetched=3, total_assets=90)
+2026-02-25 10:11:31,749 [INFO] Fetching Athens page at offset=120
+2026-02-25 10:11:32,344 [INFO] Successfully fetched.
+2026-02-25 10:11:32,401 [INFO] Persisted Athens page offset=120: 30 assets fetched, 30 rows affected in DB (pages_fetched=4, total_assets=120)
+2026-02-25 10:11:34,402 [INFO] Fetching Athens page at offset=150
+2026-02-25 10:11:35,066 [INFO] Successfully fetched.
+2026-02-25 10:11:35,137 [INFO] Persisted Athens page offset=150: 30 assets fetched, 30 rows affected in DB (pages_fetched=5, total_assets=150)
+2026-02-25 10:11:37,138 [INFO] Fetching Athens page at offset=180
+2026-02-25 10:11:37,732 [INFO] Successfully fetched.
+2026-02-25 10:11:37,734 [INFO] spitogatos_data id conflict (will upsert): 8 ids already exist: ['15306112', '17525382', '17845334', '18097341', '18179127', '18320066', '18378584', '18445369']
+2026-02-25 10:11:37,799 [INFO] Persisted Athens page offset=180: 30 assets fetched, 30 rows affected in DB (pages_fetched=6, total_assets=180)
+2026-02-25 10:11:39,801 [INFO] Fetching Athens page at offset=210
+2026-02-25 10:11:40,498 [INFO] Successfully fetched.
+2026-02-25 10:11:40,506 [INFO] spitogatos_data id conflict (will upsert): 9 ids already exist: ['17612262', '18033787', '18212911', '18881923', '19047361', '19093653', '19282896', '19363433', '19391586']
+2026-02-25 10:11:40,587 [INFO] Persisted Athens page offset=210: 30 assets fetched, 30 rows affected in DB (pages_fetched=7, total_assets=210)
+2026-02-25 10:11:42,590 [INFO] Fetching Athens page at offset=240
+2026-02-25 10:11:43,175 [INFO] Successfully fetched.
+2026-02-25 10:11:43,177 [INFO] spitogatos_data id conflict (will upsert): 13 ids already exist: ['17394700', '17561291', '17699046', '17743703', '18059243', '18157053', '18287728', '18343818', '18492168', '18516501', '18532913', '18591734', '18905821']
+2026-02-25 10:11:43,231 [INFO] Persisted Athens page offset=240: 30 assets fetched, 30 rows affected in DB (pages_fetched=8, total_assets=240)
+2026-02-25 10:11:45,232 [INFO] Fetching Athens page at offset=270
+2026-02-25 10:11:45,944 [INFO] Successfully fetched.
+2026-02-25 10:11:46,006 [INFO] Persisted Athens page offset=270: 30 assets fetched, 30 rows affected in DB (pages_fetched=9, total_assets=270)
+2026-02-25 10:11:48,006 [INFO] Fetching Athens page at offset=300
+2026-02-25 10:11:48,761 [INFO] Successfully fetched.
+2026-02-25 10:11:48,818 [INFO] Persisted Athens page offset=300: 30 assets fetched, 30 rows affected in DB (pages_fetched=10, total_assets=300)
+2026-02-25 10:20:21,046 [INFO] Database connection pool initialized
+2026-02-25 10:20:21,046 [INFO] Starting get_all_athens from offset=300 (page size=30, max_pages=None)
+2026-02-25 10:20:23,048 [INFO] Fetching Athens page at offset=300
+2026-02-25 10:20:23,805 [INFO] Successfully fetched.
+2026-02-25 10:20:23,902 [INFO] Persisted Athens page offset=300: 30 assets fetched, 30 rows affected in DB (pages_fetched=1, total_assets=30)
+2026-02-25 10:20:25,903 [INFO] Fetching Athens page at offset=330
+2026-02-25 10:20:26,442 [INFO] Successfully fetched.
+2026-02-25 10:20:26,513 [INFO] Persisted Athens page offset=330: 30 assets fetched, 30 rows affected in DB (pages_fetched=2, total_assets=60)
+2026-02-25 10:20:28,514 [INFO] Fetching Athens page at offset=360
+2026-02-25 10:20:29,042 [INFO] Successfully fetched.
+2026-02-25 10:20:29,121 [INFO] Persisted Athens page offset=360: 30 assets fetched, 30 rows affected in DB (pages_fetched=3, total_assets=90)
+2026-02-25 10:20:31,122 [INFO] Fetching Athens page at offset=390
+2026-02-25 10:20:31,645 [INFO] Successfully fetched.
+2026-02-25 10:20:31,703 [INFO] Persisted Athens page offset=390: 30 assets fetched, 30 rows affected in DB (pages_fetched=4, total_assets=120)
+2026-02-25 10:20:33,705 [INFO] Fetching Athens page at offset=420
+2026-02-25 10:20:34,394 [INFO] Successfully fetched.
+2026-02-25 10:20:34,454 [INFO] Persisted Athens page offset=420: 30 assets fetched, 30 rows affected in DB (pages_fetched=5, total_assets=150)
+2026-02-25 10:20:36,455 [INFO] Fetching Athens page at offset=450
+2026-02-25 10:20:37,104 [INFO] Successfully fetched.
+2026-02-25 10:20:37,164 [INFO] Persisted Athens page offset=450: 30 assets fetched, 30 rows affected in DB (pages_fetched=6, total_assets=180)
+2026-02-25 10:20:39,164 [INFO] Fetching Athens page at offset=480
+2026-02-25 10:20:39,812 [INFO] Successfully fetched.
+2026-02-25 10:20:39,893 [INFO] Persisted Athens page offset=480: 30 assets fetched, 30 rows affected in DB (pages_fetched=7, total_assets=210)
+2026-02-25 10:20:41,894 [INFO] Fetching Athens page at offset=510
+2026-02-25 10:20:42,487 [INFO] Successfully fetched.
+2026-02-25 10:20:42,542 [INFO] Persisted Athens page offset=510: 30 assets fetched, 30 rows affected in DB (pages_fetched=8, total_assets=240)
+2026-02-25 10:20:44,542 [INFO] Fetching Athens page at offset=540
+2026-02-25 10:20:45,062 [INFO] Successfully fetched.
+2026-02-25 10:20:45,143 [INFO] Persisted Athens page offset=540: 30 assets fetched, 30 rows affected in DB (pages_fetched=9, total_assets=270)
+2026-02-25 10:20:47,144 [INFO] Fetching Athens page at offset=570
+2026-02-25 10:20:47,761 [ERROR] Skipping asset id=14228679. Error: 1 validation error for SpitogatosAsset
+main_image_URL
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+2026-02-25 10:20:47,766 [INFO] Successfully fetched.
+2026-02-25 10:20:47,824 [INFO] Persisted Athens page offset=570: 29 assets fetched, 29 rows affected in DB (pages_fetched=10, total_assets=299)
+2026-02-25 10:20:47,824 [INFO] Last page at offset=570 had 29 assets (< 30). Assuming end of results. Stopping.

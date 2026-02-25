@@ -1,6 +1,7 @@
 import datetime
 import logging
 import statistics
+from time import sleep
 from typing import Callable, List
 
 import numpy as np
@@ -62,6 +63,7 @@ class SpitogatosFlow:
         )
 
         while True:
+            sleep(2)
             if max_pages is not None and pages_fetched >= max_pages:
                 logger.info("Reached max_pages=%s, stopping get_all_athens.", max_pages)
                 break
@@ -128,16 +130,9 @@ class SpitogatosFlow:
                 total_assets,
             )
 
-            # Heuristic: if fewer than a full page of assets, assume we've reached the last page
-            if len(assets) < SPITOGATOS_PER_PAGE:
-                logger.info(
-                    "Last page at offset=%s had %d assets (< %d). Assuming end of results. Stopping.",
-                    offset,
-                    len(assets),
-                    SPITOGATOS_PER_PAGE,
-                )
-                break
-
+            # Always move to next page; stopping condition is either:
+            # - explicit max_pages, or
+            # - an empty page (handled above).
             offset += SPITOGATOS_PER_PAGE
 
     def get_athens(self, offset: int = 0) -> None:
@@ -469,8 +464,8 @@ class SpitogatosFlow:
 
 if __name__ == '__main__':
     s = SpitogatosFlow()
-    s.get_athens(offset=0)
-
+    # s.get_athens(offset=0)
+    s.get_all_athens(start_offset=300)
 
 
 
