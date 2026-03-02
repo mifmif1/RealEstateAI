@@ -8,6 +8,7 @@ from typing import Optional
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.concurrency import run_in_threadpool
 import pandas as pd
 
 from flow.spitogatos_flow import SpitogatosFlow
@@ -44,6 +45,7 @@ async def root():
         "version": "1.0.0",
         "endpoints": {
             "spitogatos": "/spitogatos/expand-excel-comparison",
+            "spitogatos_get_all_athens": "/spitogatos/get-all-athens",
             "reonline": "/reonline/add-sqm"
         }
     }
@@ -118,6 +120,29 @@ async def expand_excel_spitogatos_comparison(
         if temp_input_path and temp_input_path.exists():
             temp_input_path.unlink()
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+
+
+@app.post("/spitogatos/get-all-athens")
+async def get_all_athens(
+    start_offset: int = 0,
+    max_pages: Optional[int] = None,
+):
+    """
+    Trigger fetching and persisting all Athens listings from Spitogatos.
+
+    This runs the long-running scraping job in a background thread so the API
+    request does not block the event loop.
+    """
+    try:
+        await run_in_threadpool(spitogatos_flow.get_all_athens, start_offset, max_pages)
+        return {
+            "status": "ok",
+            "message": "Completed get_all_athens run.",
+            "start_offset": start_offset,
+            "max_pages": max_pages,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error running get_all_athens: {str(e)}")
 
 
 @app.post("/reonline/add-sqm")
