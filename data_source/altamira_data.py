@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Point
 
 logger = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ class AltamiraData:
             }
         )
 
-    def scrape_listing(self, listing_id: str) -> Optional[Asset]:
+    def scrape_listing(self, listing_id: str) -> Optional[TargetAsset]:
         """
         Scrape a single listing by its ID.
         
@@ -155,7 +155,7 @@ class AltamiraData:
         # Try to find API endpoint or check if data is in script tags
         return self._parse_listing_page(html_content, listing_id, url)
 
-    def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[Asset]:
+    def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[TargetAsset]:
         """Parse the HTML content of a listing page."""
         # Check if HTML is valid before parsing
         if not html or len(html) < 100:
@@ -430,7 +430,7 @@ class AltamiraData:
         if address is None:
             address = ""
         
-        return Asset(
+        return TargetAsset(
             location=Point(lat=lat, lon=lon),
             sqm=sqm,
             price=price,
@@ -711,7 +711,7 @@ class AltamiraData:
         
         return None
 
-    def _try_api_scrape(self, listing_id: str) -> Optional[Asset]:
+    def _try_api_scrape(self, listing_id: str) -> Optional[TargetAsset]:
         """Try to scrape using API endpoint directly."""
         api_urls = [
             f"https://api.marketplace.altamiraproperties.gr/listings/{listing_id}",
@@ -741,7 +741,7 @@ class AltamiraData:
         
         return None
     
-    def _parse_api_data(self, data: dict, listing_id: str, url: str) -> Optional[Asset]:
+    def _parse_api_data(self, data: dict, listing_id: str, url: str) -> Optional[TargetAsset]:
         """Parse data from API response."""
         # Extract fields from API response
         price = data.get("price") or data.get("amount") or data.get("priceAmount")
@@ -777,7 +777,7 @@ class AltamiraData:
         if address is None:
             address = ""
         
-        return Asset(
+        return TargetAsset(
             location=Point(lat=float(lat), lon=float(lon)),
             sqm=float(sqm),
             price=float(price),
@@ -881,7 +881,7 @@ class AltamiraData:
         
         return json_data
 
-    def save_to_excel(self, assets: List[Asset], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
+    def save_to_excel(self, assets: List[TargetAsset], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
         """
         Save scraped assets to an Excel file.
         

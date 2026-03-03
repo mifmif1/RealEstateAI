@@ -7,7 +7,7 @@ from typing import List
 
 import requests
 
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Rectangle, Point
 from model.spitogatos_asset_model import SpitogatosAsset
 from utils.consts.apis import ApisConsts
@@ -27,7 +27,7 @@ class SpitogatosData:
     # todo: find why you get only 30 assets
     # todo: check twice the assets are realy in the rectangle, and that you get all assets in that rectangle
     def get_by_location(self, location: Rectangle, min_area: int,
-                        max_area: int) -> List[Asset] | None:
+                        max_area: int) -> List[TargetAsset] | None:
         # todo: calculate zoom by location's rectangle
         url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
         params = {
@@ -74,12 +74,12 @@ class SpitogatosData:
             try:
                 data = json.loads(response.text)['data']
                 for asset_raw in data:
-                    results.append(Asset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
-                                         sqm=asset_raw['sq_meters'],
-                                         price=asset_raw['price'],
-                                         level=asset_raw.get('floorNumber'),
-                                         new_state={'1': True, '0': False}.get(asset_raw.get('newDevelopment')),
-                                         url=headers["Referer"]))
+                    results.append(TargetAsset(location=Point(lon=asset_raw['longitude'], lat=asset_raw['latitude']),
+                                               sqm=asset_raw['sq_meters'],
+                                               price=asset_raw['price'],
+                                               level=asset_raw.get('floorNumber'),
+                                               new_state={'1': True, '0': False}.get(asset_raw.get('newDevelopment')),
+                                               url=headers["Referer"]))
                 logger.info(f"Successfully fetched {location}")
             except Exception as e:
                 logger.error(f"Failed to fetch {location}: {e}")

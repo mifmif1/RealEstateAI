@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException, WebDriverException
 
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Point
 
 logger = logging.getLogger(__name__)
@@ -385,7 +385,7 @@ class ReinvestData:
         # If we found pagination info, return it; otherwise assume 1 page
         return max_page if max_page > 1 else 1
 
-    def scrape_listing(self, listing_id: str) -> Optional[Tuple[Asset, str, str, str]]:
+    def scrape_listing(self, listing_id: str) -> Optional[Tuple[TargetAsset, str, str, str]]:
         """
         Scrape a single listing by its ID.
         
@@ -426,7 +426,7 @@ class ReinvestData:
         result = self._parse_listing_page(html_content, listing_id, url)
         return result
 
-    def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[Tuple[Asset, str, str, str]]:
+    def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[Tuple[TargetAsset, str, str, str]]:
         """Parse the HTML content of a listing page."""
         if not html or len(html) < 100:
             logger.error(f"Listing {listing_id} - Invalid or empty HTML")
@@ -759,7 +759,7 @@ class ReinvestData:
         if address is None:
             address = ""
         
-        asset = Asset(
+        asset = TargetAsset(
             location=Point(lat=lat, lon=lon),
             sqm=sqm,
             price=price,
@@ -1094,7 +1094,7 @@ class ReinvestData:
             df.to_excel(output_path, index=False, engine='openpyxl')
             return output_path
 
-    def save_to_excel(self, assets_data: List[Tuple[Asset, str, str, str]], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
+    def save_to_excel(self, assets_data: List[Tuple[TargetAsset, str, str, str]], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
         """
         Save scraped assets to an Excel file. Appends to existing file if it exists.
         

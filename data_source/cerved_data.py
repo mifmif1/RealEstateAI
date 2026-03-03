@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Point
 
 logger = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ class CervedData:
             }
         )
 
-    def scrape_listing(self, listing_id: str) -> Optional[Tuple[Asset, str, str]]:
+    def scrape_listing(self, listing_id: str) -> Optional[Tuple[TargetAsset, str, str]]:
         """
         Scrape a single listing by its ID.
         
@@ -378,7 +378,7 @@ class CervedData:
             df.to_excel(output_path, index=False, engine='openpyxl')
             return output_path
 
-    def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[Tuple[Asset, str, str]]:
+    def _parse_listing_page(self, html: str, listing_id: str, url: str) -> Optional[Tuple[TargetAsset, str, str]]:
         """Parse the HTML content of a listing page."""
         if not html or len(html) < 100:
             logger.error(f"Listing {listing_id} - Invalid or empty HTML")
@@ -717,7 +717,7 @@ class CervedData:
         if address is None:
             address = ""
         
-        asset = Asset(
+        asset = TargetAsset(
             location=Point(lat=lat, lon=lon),
             sqm=sqm,
             price=price,
@@ -849,7 +849,7 @@ class CervedData:
         
         return None
 
-    def save_to_excel(self, assets_data: List[Tuple[Asset, str, str]], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
+    def save_to_excel(self, assets_data: List[Tuple[TargetAsset, str, str]], listing_ids: List[str] = None, output_path: str | Path = None) -> Path:
         """
         Save scraped assets to an Excel file. Appends to existing file if it exists.
         

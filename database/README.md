@@ -96,14 +96,14 @@ psql -U postgres -d realestate_ai -f database/migrations/001_initial_schema.sql
 
 ```python
 from database.asset_dao import AssetDAO
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Point, Rectangle
 
 # Initialize DAO
 dao = AssetDAO()
 
 # Insert an asset
-asset = Asset(
+asset = TargetAsset(
     location=Point(lat=37.9838, lon=23.7275),  # Athens coordinates
     sqm=80.0,
     price=150000.0,

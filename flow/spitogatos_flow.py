@@ -10,9 +10,12 @@ import pandas as pd
 from data_source.geopy_data import GeopyData
 from data_source.spitogatos_data import SpitogatosData
 from database.spitogatos_dao import SpitogatosDAO
+from model import comparison_data_model
 from model.asset_comparison import AssetComparison
-from model.asset_model import Asset
-from model.geographical_model import Point
+from model.asset_model import TargetAsset
+from model.comparison_data_model import ComparisonDataModel
+from model.geographical_model import Point, Circle
+from model.spitogatos_asset_model import SpitogatosAsset
 from utils.consts.greek_tems import floor_level_dict
 
 TRIES_TILL_ENOUGH_ASSETS = 1
@@ -156,8 +159,74 @@ class SpitogatosFlow:
         inserted = self._spitogatos_dao.insert_list(assets)
         logger.info(f"Persisted Spitogatos Athens page (offset={offset}): {len(assets)} assets fetched, {inserted} rows affected in DB")
 
+    def get_assets_by_circle(self, lon: float, lat: float, radius_meters: float) -> List[SpitogatosAsset]:
+        """
+        Fetch all assets from spitogatos_data that lie within a circle
+        defined by a center point and radius (in meters).
+
+        Args:
+            lon: Longitude of the circle center.
+            lat: Latitude of the circle center.
+            radius_meters: Radius of the circle in meters.
+
+        Returns:
+            List of SpitogatosAsset records within the given circle.
+        """
+        circle = Circle(
+            center_lat=lat,
+            center_lon=lon,
+            radius=radius_meters,
+        )
+        assets = self._spitogatos_dao.search_by_circle(circle)
+        logger.info(
+            "Fetched %s assets from spitogatos_data within radius=%s m of point (lat=%s, lon=%s)",
+            len(assets),
+            radius_meters,
+            lat,
+            lon,
+        )
+        return assets
+
+
+    def get_asset_statistics_by_radius(self, asset: TargetAsset, radius_meters:int=100, min_assets:int=10) -> comparison_data_model:
+        for i in range(4):
+            assets = self.get_assets_by_circle(lon=asset.lon, lat=asset.lat, radius_meters=radius_meters)
+            if len(assets) < min_assets:
+                logger.info("Not enough assets to compare with (%d) of radius %d", len(assets), radius_meters)
+                radius_meters *= 1.3
+            else:
+                comparison_data = self.get_asset_statistics_by_comparisons(asset, assets)
+                return comparison_data
+
+        logger.info("Not enough assets near by to compare with. id: %d ", asset.id)
+        return None
+
+
+    #not static because it might use it when reevaluating
+    def get_asset_statistics_by_comparisons(self, asset: TargetAsset, comparison_assets: List[SpitogatosAsset]) -> comparison_data_model:
+        assert comparison_assets is not None
+        assert len(comparison_assets) > 0
+        assert asset is not None
+
+        comparison_price_per_sqm = sorted([(comparison_asset.price/comparison_asset.sqm) for comparison_asset in comparison_assets])
+        no_assets = len(comparison_price_per_sqm)
+        min = comparison_price_per_sqm[0]
+        max = comparison_price_per_sqm[-1]
+        median = comparison_price_per_sqm[len(comparison_assets) // 2]
+        mean = sum(comparison_price_per_sqm) / no_assets
+        std = statistics.stdev(comparison_price_per_sqm)
+        return ComparisonDataModel(min=min,
+                                   max=max,
+                                   median=median,
+                                   mean=mean,
+                                   std=std,
+                                   no_assets=no_assets,
+                                   # revaluation=... # todo
+                                   spitogatos_comparison_assets=[comparison_asset.id for comparison_asset in comparison_assets])
+
+
     @staticmethod
-    def _get_valuation_for_row(row, assets: List[Asset]) -> (float, float):
+    def _get_valuation_for_row(row, assets: List[TargetAsset]) -> (float, float):
         assert 'level' in row.keys()
         assert 'sqm' in row.keys()
         assert 'new_state' in row.keys()

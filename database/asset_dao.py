@@ -4,7 +4,7 @@ Data Access Object for Asset model with location-based queries using PostGIS
 import logging
 from typing import List, Optional
 
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Point, Rectangle
 from database.connection import get_db_connection
 
@@ -17,7 +17,7 @@ class AssetDAO:
     def __init__(self):
         self.db = get_db_connection()
     
-    def insert_asset(self, asset: Asset, source: str = None) -> Optional[int]:
+    def insert_asset(self, asset: TargetAsset, source: str = None) -> Optional[int]:
         """
         Insert a new asset into the database
         
@@ -57,7 +57,7 @@ class AssetDAO:
             result = cursor.fetchone()
             return result['id'] if result else None
     
-    def insert_assets_batch(self, assets: List[Asset], source: str = None) -> List[int]:
+    def insert_assets_batch(self, assets: List[TargetAsset], source: str = None) -> List[int]:
         """
         Insert multiple assets in a batch operation
         
@@ -106,7 +106,7 @@ class AssetDAO:
     def get_assets_by_rectangle(self, rectangle: Rectangle, 
                                  min_sqm: Optional[float] = None,
                                  max_sqm: Optional[float] = None,
-                                 source: Optional[str] = None) -> List[Asset]:
+                                 source: Optional[str] = None) -> List[TargetAsset]:
         """
         Get assets within a bounding rectangle
         
@@ -155,7 +155,7 @@ class AssetDAO:
     def get_assets_by_radius(self, center: Point, radius_meters: float,
                              min_sqm: Optional[float] = None,
                              max_sqm: Optional[float] = None,
-                             source: Optional[str] = None) -> List[Asset]:
+                             source: Optional[str] = None) -> List[TargetAsset]:
         """
         Get assets within a radius of a center point
         
@@ -214,7 +214,7 @@ class AssetDAO:
     def get_assets_by_point_and_tolerance(self, point: Point, tolerance_meters: float,
                                           min_sqm: Optional[float] = None,
                                           max_sqm: Optional[float] = None,
-                                          source: Optional[str] = None) -> List[Asset]:
+                                          source: Optional[str] = None) -> List[TargetAsset]:
         """
         Get assets near a point within a tolerance distance (convenience method)
         
@@ -233,7 +233,7 @@ class AssetDAO:
     def get_nearest_assets(self, point: Point, limit: int = 10,
                           min_sqm: Optional[float] = None,
                           max_sqm: Optional[float] = None,
-                          source: Optional[str] = None) -> List[Asset]:
+                          source: Optional[str] = None) -> List[TargetAsset]:
         """
         Get the nearest N assets to a point
         
@@ -282,7 +282,7 @@ class AssetDAO:
         rows = self.db.execute_query(query, tuple(params))
         return [self._row_to_asset(row) for row in rows]
     
-    def get_asset_by_id(self, asset_id: int) -> Optional[Asset]:
+    def get_asset_by_id(self, asset_id: int) -> Optional[TargetAsset]:
         """
         Get a single asset by ID
         
@@ -309,7 +309,7 @@ class AssetDAO:
             return self._row_to_asset(rows[0])
         return None
     
-    def update_asset(self, asset_id: int, asset: Asset) -> bool:
+    def update_asset(self, asset_id: int, asset: TargetAsset) -> bool:
         """
         Update an existing asset
         
@@ -402,9 +402,9 @@ class AssetDAO:
         return {}
     
     @staticmethod
-    def _row_to_asset(row: dict) -> Asset:
+    def _row_to_asset(row: dict) -> TargetAsset:
         """Convert database row to Asset object"""
-        return Asset(
+        return TargetAsset(
             location=Point(lat=row['lat'], lon=row['lon']),
             sqm=row['sqm'],
             price=row['price'],

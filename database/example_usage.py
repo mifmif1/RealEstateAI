@@ -2,7 +2,7 @@
 Example usage of the AssetDAO for location-based queries
 """
 from database.asset_dao import AssetDAO
-from model.asset_model import Asset
+from model.asset_model import TargetAsset
 from model.geographical_model import Point, Rectangle
 
 
@@ -13,7 +13,7 @@ def example_basic_usage():
     
     # Example 1: Insert an asset
     print("Example 1: Inserting an asset")
-    asset = Asset(
+    asset = TargetAsset(
         location=Point(lat=37.9838, lon=23.7275),  # Athens coordinates
         sqm=80.0,
         price=150000.0,
@@ -79,7 +79,7 @@ def example_batch_operations():
     
     # Create multiple assets
     assets = [
-        Asset(
+        TargetAsset(
             location=Point(lat=37.9838 + i * 0.001, lon=23.7275 + i * 0.001),
             sqm=80.0 + i * 10,
             price=150000.0 + i * 10000,
