@@ -21,7 +21,7 @@ class SpitogatosAsset(BaseModel):
     floor_number: int
     rooms: int
     total_rooms: int
-    no_of_bathrooms: int
+    bathrooms: int
     kitchens: int
     living_rooms: int
     within_city_plan: int

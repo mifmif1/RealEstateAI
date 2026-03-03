@@ -183,7 +183,7 @@ class SpitogatosData:
                         floor_number=int(asset_raw.get("floorNumber")),
                         rooms=int(asset_raw.get("rooms")),
                         total_rooms=int(asset_raw.get("totalRooms")),
-                        no_of_bathrooms=int(asset_raw.get("no_of_bathrooms",)),
+                        bathrooms=int(asset_raw.get("no_of_bathrooms", )),
                         kitchens=int(asset_raw.get("kitchens")),
                         living_rooms=int(asset_raw.get("livingRooms")),
                         within_city_plan=int(asset_raw.get("within_city_plan")),
