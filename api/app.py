@@ -4,15 +4,19 @@ Exposes all functions from the flow folder as REST API endpoints.
 """
 import shutil
 from pathlib import Path
-from typing import Optional
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
-from fastapi.responses import FileResponse
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.concurrency import run_in_threadpool
+from typing import Optional, List
+
 import pandas as pd
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi.concurrency import run_in_threadpool
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from flow.spitogatos_flow import SpitogatosFlow
 from flow.reonline_flow import ReOnlineFlow
+from model.asset_model import TargetAsset
+from model.comparison_data_model import ComparisonDataModel
+from model.spitogatos_asset_model import SpitogatosAsset
 
 app = FastAPI(
     title="RealEstateAI Flow API",
@@ -46,6 +50,9 @@ async def root():
         "endpoints": {
             "spitogatos": "/spitogatos/expand-excel-comparison",
             "spitogatos_get_all_athens": "/spitogatos/get-all-athens",
+            "spitogatos_assets_by_circle": "/spitogatos/assets-by-circle",
+            "spitogatos_asset_statistics_by_radius": "/spitogatos/asset-statistics-by-radius",
+            "spitogatos_asset_statistics_by_comparisons": "/spitogatos/asset-statistics-by-comparisons",
             "reonline": "/reonline/add-sqm"
         }
     }
@@ -143,6 +150,98 @@ async def get_all_athens(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error running get_all_athens: {str(e)}")
+
+
+@app.get(
+    "/spitogatos/assets-by-circle",
+    response_model=List[SpitogatosAsset],
+    summary="Get Spitogatos assets within a circle",
+)
+async def get_assets_by_circle(
+    lon: float,
+    lat: float,
+    radius_meters: float = 100,
+):
+    """
+    Return all Spitogatos assets stored in the DB that lie within a circle
+    defined by a center point (lon, lat) and radius in meters.
+    """
+    try:
+        assets = await run_in_threadpool(
+            spitogatos_flow.get_assets_by_circle,
+            lon,
+            lat,
+            radius_meters,
+        )
+        return assets
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error fetching assets by circle: {str(e)}",
+        )
+
+
+@app.post(
+    "/spitogatos/asset-statistics-by-radius",
+    response_model=ComparisonDataModel,
+    summary="Get price statistics for a target asset using nearby assets",
+)
+async def get_asset_statistics_by_radius(
+    asset: TargetAsset,
+    radius_meters: int = 100,
+    min_assets: int = 10,
+):
+    """
+    Compute price-per-sqm statistics for a target asset based on Spitogatos
+    assets within a growing radius until at least `min_assets` are found.
+    """
+    try:
+        result = await run_in_threadpool(
+            spitogatos_flow.get_asset_statistics_by_radius,
+            asset,
+            radius_meters,
+            min_assets,
+        )
+        if result is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Not enough nearby assets to compute statistics",
+            )
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error computing asset statistics by radius: {str(e)}",
+        )
+
+
+@app.post(
+    "/spitogatos/asset-statistics-by-comparisons",
+    response_model=ComparisonDataModel,
+    summary="Get price statistics for a target asset using explicit comparison assets",
+)
+async def get_asset_statistics_by_comparisons(
+    asset: TargetAsset,
+    comparison_assets: List[SpitogatosAsset],
+):
+    """
+    Compute price-per-sqm statistics for a target asset given an explicit list
+    of comparison Spitogatos assets.
+    """
+    try:
+        result = await run_in_threadpool(
+            spitogatos_flow.get_asset_statistics_by_comparisons,
+            asset,
+            comparison_assets,
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error computing asset statistics by comparisons: {str(e)}",
+        )
 
 
 @app.post("/reonline/add-sqm")
