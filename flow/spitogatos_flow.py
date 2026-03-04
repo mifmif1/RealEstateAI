@@ -202,7 +202,6 @@ class SpitogatosFlow:
         return None
 
 
-    #not static because it might use it when reevaluating
     def get_asset_statistics_by_comparisons(self, asset: TargetAsset, comparison_assets: List[SpitogatosAsset]) -> comparison_data_model:
         assert comparison_assets is not None
         assert len(comparison_assets) > 0
@@ -210,19 +209,51 @@ class SpitogatosFlow:
 
         comparison_price_per_sqm = sorted([(comparison_asset.price/comparison_asset.sqm) for comparison_asset in comparison_assets])
         no_assets = len(comparison_price_per_sqm)
-        min = comparison_price_per_sqm[0]
-        max = comparison_price_per_sqm[-1]
-        median = comparison_price_per_sqm[len(comparison_assets) // 2]
-        mean = sum(comparison_price_per_sqm) / no_assets
-        std = statistics.stdev(comparison_price_per_sqm)
-        return ComparisonDataModel(min=min,
-                                   max=max,
-                                   median=median,
-                                   mean=mean,
-                                   std=std,
-                                   no_assets=no_assets,
-                                   # revaluation=... # todo
+        reevaluation = self.reevaluate_by_comparisons(asset=asset, comparison_assets=comparison_assets)
+
+        return ComparisonDataModel(no_assets = no_assets,
+                                   reevaluated_price=reevaluation,
+                                   min=comparison_price_per_sqm[0],
+                                   max=comparison_price_per_sqm[-1],
+                                   std=statistics.stdev(comparison_price_per_sqm),
+                                   mean=sum(comparison_price_per_sqm) / no_assets,
+                                   median=comparison_price_per_sqm[no_assets // 2],
+                                   discount=(asset.price - reevaluation)/reevaluation,
                                    spitogatos_comparison_assets=[comparison_asset.id for comparison_asset in comparison_assets])
+    @staticmethod
+    def reevaluate_by_comparisons(asset: TargetAsset, comparison_assets: List[SpitogatosAsset]) -> float:
+        floor_rank = {
+            -1: -0.4,
+            0: -0.1,
+            1: 0,
+            2: 0.05,
+            3: 0.1,
+            4: 0.15,
+            5: 0.20,
+            6: 0.25,
+        }
+        renew_rank = {
+            True: 0.2,
+            False: 0,
+        }
+        revised_prices_per_sqm = []
+        for comparison_asset in comparison_assets:
+            price_per_meter = comparison_asset.price/comparison_asset.sqm
+            #10% down
+            price_per_meter *= 0.9
+
+            #level factor
+            price_per_meter *= (1 - floor_rank.get(asset.level, 0.25))
+
+            # renew factor
+            price_per_meter *= (1 - renew_rank.get(asset.new_state, 0))
+            revised_prices_per_sqm.append(price_per_meter)
+        revised_mean = statistics.mean(revised_prices_per_sqm)
+        asset_revised_price = revised_mean * asset.sqm
+        asset_revised_price *= (1 + floor_rank.get(floor_level_dict.get(asset.level), 0.25))
+        asset_revised_price *= (1 + renew_rank.get((asset.construction_year > 2000), 0))  if asset.construction_year else 1
+        return asset_revised_price
+
 
 
     @staticmethod
@@ -250,7 +281,7 @@ class SpitogatosFlow:
         }
         for asset in assets:
             asset.revaluated_price_meter = asset.price / asset.sqm
-            # 15% down
+            # 10% down
             asset.revaluated_price_meter *= 0.9
             # level factor
             asset.revaluated_price_meter *= (1 - floor_rank.get(asset.level, 0.25))  # if level is greater than 6

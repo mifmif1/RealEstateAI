@@ -9,5 +9,6 @@ class ComparisonDataModel(BaseModel):
     mean: float
     median: float
     no_assets: int
-    revaluation: Optional[float]
+    discount: Optional[float]
+    reevaluated_price: Optional[float]
     spitogatos_comparison_assets: List[str] # ids

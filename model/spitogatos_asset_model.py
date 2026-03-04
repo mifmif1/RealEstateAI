@@ -9,6 +9,7 @@ class SpitogatosAsset(BaseModel):
     buy_or_rent: int
     sqm: int
     price: int
+    revised_price: Optional[float] # such that price will reflect the no_rooms, year, etc.
     price_reduced: bool
     price_pre_reduction: Optional[int]
     price_change_percentage: Optional[int]
