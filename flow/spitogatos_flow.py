@@ -200,7 +200,7 @@ class SpitogatosFlow:
                 comparison_data = self.get_asset_statistics_by_comparisons(asset, assets)
                 return comparison_data
 
-        logger.info("Not enough assets near by to compare with. id: %d ", asset.id)
+        logger.info("Not enough assets near by to compare with. id: %s", asset.id)
         return None
 
     def get_asset_statistics_by_comparisons(self, asset: TargetAsset,

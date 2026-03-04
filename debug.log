@@ -94,3 +94,89 @@ connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection re
 connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
 	Is the server running on that host and accepting TCP/IP connections?
 
+2026-03-04 13:57:22,142 [INFO] Database connection pool initialized
+2026-03-04 13:59:50,074 [INFO] Database connection pool initialized
+2026-03-04 13:59:50,095 [INFO] Fetched 17 assets from spitogatos_data within radius=100 m of point (lat=37.9748275186335, lon=23.7407577887361)
+2026-03-04 13:59:50,148 [INFO] Fetched 32 assets from spitogatos_data within radius=100 m of point (lat=37.9502285176401, lon=23.6661497806925)
+2026-03-04 13:59:50,179 [INFO] Fetched 19 assets from spitogatos_data within radius=100 m of point (lat=37.9682010085562, lon=23.6997664097982)
+2026-03-04 13:59:50,226 [INFO] Fetched 51 assets from spitogatos_data within radius=100 m of point (lat=37.9865701839112, lon=23.74644501165)
+2026-03-04 13:59:50,289 [INFO] Fetched 43 assets from spitogatos_data within radius=100 m of point (lat=37.958599933149, lon=23.7302261428712)
+2026-03-04 13:59:50,320 [INFO] Fetched 31 assets from spitogatos_data within radius=100 m of point (lat=37.9728509538236, lon=23.7735550674701)
+2026-03-04 13:59:50,351 [INFO] Fetched 19 assets from spitogatos_data within radius=100 m of point (lat=37.9938919920421, lon=23.7573680349334)
+2026-03-04 13:59:50,399 [INFO] Fetched 20 assets from spitogatos_data within radius=100 m of point (lat=38.0222067931224, lon=23.750897350814)
+2026-03-04 13:59:50,462 [INFO] Fetched 68 assets from spitogatos_data within radius=100 m of point (lat=37.965472, lon=23.753583)
+2026-03-04 13:59:50,571 [INFO] Fetched 100 assets from spitogatos_data within radius=100 m of point (lat=38.0095079737551, lon=23.7328304134921)
+2026-03-04 13:59:50,618 [INFO] Fetched 18 assets from spitogatos_data within radius=100 m of point (lat=38.0057432, lon=23.7828672)
+2026-03-04 13:59:50,618 [INFO] Fetched 0 assets from spitogatos_data within radius=100 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 13:59:50,618 [INFO] Not enough assets to compare with (0) of radius 100
+2026-03-04 13:59:50,618 [INFO] Fetched 0 assets from spitogatos_data within radius=130.0 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 13:59:50,618 [INFO] Not enough assets to compare with (0) of radius 130
+2026-03-04 13:59:50,634 [INFO] Fetched 0 assets from spitogatos_data within radius=169.0 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 13:59:50,634 [INFO] Not enough assets to compare with (0) of radius 169
+2026-03-04 13:59:50,634 [INFO] Fetched 0 assets from spitogatos_data within radius=219.70000000000002 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 13:59:50,634 [INFO] Not enough assets to compare with (0) of radius 219
+2026-03-04 13:59:50,681 [INFO] Fetched 31 assets from spitogatos_data within radius=100 m of point (lat=37.9415286, lon=23.7190829)
+2026-03-04 13:59:50,774 [INFO] Fetched 88 assets from spitogatos_data within radius=100 m of point (lat=38.0048089, lon=23.7431185)
+2026-03-04 13:59:50,781 [INFO] Fetched 0 assets from spitogatos_data within radius=100 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 13:59:50,781 [INFO] Not enough assets to compare with (0) of radius 100
+2026-03-04 13:59:50,781 [INFO] Fetched 0 assets from spitogatos_data within radius=130.0 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 13:59:50,781 [INFO] Not enough assets to compare with (0) of radius 130
+2026-03-04 13:59:50,781 [INFO] Fetched 0 assets from spitogatos_data within radius=169.0 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 13:59:50,797 [INFO] Not enough assets to compare with (0) of radius 169
+2026-03-04 13:59:50,797 [INFO] Fetched 0 assets from spitogatos_data within radius=219.70000000000002 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 13:59:50,797 [INFO] Not enough assets to compare with (0) of radius 219
+2026-03-04 13:59:50,844 [INFO] Fetched 41 assets from spitogatos_data within radius=100 m of point (lat=37.95731913, lon=23.73171329)
+2026-03-04 13:59:50,859 [INFO] Fetched 0 assets from spitogatos_data within radius=100 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 13:59:50,859 [INFO] Not enough assets to compare with (0) of radius 100
+2026-03-04 13:59:50,859 [INFO] Fetched 0 assets from spitogatos_data within radius=130.0 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 13:59:50,859 [INFO] Not enough assets to compare with (0) of radius 130
+2026-03-04 13:59:50,870 [INFO] Fetched 0 assets from spitogatos_data within radius=169.0 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 13:59:50,870 [INFO] Not enough assets to compare with (0) of radius 169
+2026-03-04 13:59:50,872 [INFO] Fetched 0 assets from spitogatos_data within radius=219.70000000000002 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 13:59:50,872 [INFO] Not enough assets to compare with (0) of radius 219
+2026-03-04 13:59:50,952 [INFO] Fetched 100 assets from spitogatos_data within radius=100 m of point (lat=37.99435, lon=23.7237)
+2026-03-04 13:59:50,967 [INFO] Fetched 24 assets from spitogatos_data within radius=100 m of point (lat=37.97666449, lon=23.76793855)
+2026-03-04 14:04:31,598 [INFO] Database connection pool initialized
+2026-03-04 14:04:31,649 [INFO] Fetched 17 assets from spitogatos_data within radius=100 m of point (lat=37.9748275186335, lon=23.7407577887361)
+2026-03-04 14:04:31,649 [INFO] Fetched 32 assets from spitogatos_data within radius=100 m of point (lat=37.9502285176401, lon=23.6661497806925)
+2026-03-04 14:04:31,674 [INFO] Fetched 19 assets from spitogatos_data within radius=100 m of point (lat=37.9682010085562, lon=23.6997664097982)
+2026-03-04 14:04:31,688 [INFO] Fetched 51 assets from spitogatos_data within radius=100 m of point (lat=37.9865701839112, lon=23.74644501165)
+2026-03-04 14:04:31,696 [INFO] Fetched 43 assets from spitogatos_data within radius=100 m of point (lat=37.958599933149, lon=23.7302261428712)
+2026-03-04 14:04:31,696 [INFO] Fetched 31 assets from spitogatos_data within radius=100 m of point (lat=37.9728509538236, lon=23.7735550674701)
+2026-03-04 14:04:31,711 [INFO] Fetched 19 assets from spitogatos_data within radius=100 m of point (lat=37.9938919920421, lon=23.7573680349334)
+2026-03-04 14:04:31,711 [INFO] Fetched 20 assets from spitogatos_data within radius=100 m of point (lat=38.0222067931224, lon=23.750897350814)
+2026-03-04 14:04:31,734 [INFO] Fetched 68 assets from spitogatos_data within radius=100 m of point (lat=37.965472, lon=23.753583)
+2026-03-04 14:04:31,749 [INFO] Fetched 100 assets from spitogatos_data within radius=100 m of point (lat=38.0095079737551, lon=23.7328304134921)
+2026-03-04 14:04:31,749 [INFO] Fetched 18 assets from spitogatos_data within radius=100 m of point (lat=38.0057432, lon=23.7828672)
+2026-03-04 14:04:31,765 [INFO] Fetched 0 assets from spitogatos_data within radius=100 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 14:04:31,765 [INFO] Not enough assets to compare with (0) of radius 100
+2026-03-04 14:04:31,765 [INFO] Fetched 0 assets from spitogatos_data within radius=130.0 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 14:04:31,765 [INFO] Not enough assets to compare with (0) of radius 130
+2026-03-04 14:04:31,782 [INFO] Fetched 0 assets from spitogatos_data within radius=169.0 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 14:04:31,782 [INFO] Not enough assets to compare with (0) of radius 169
+2026-03-04 14:04:31,782 [INFO] Fetched 0 assets from spitogatos_data within radius=219.70000000000002 m of point (lat=37.8941945, lon=23.7559461)
+2026-03-04 14:04:31,782 [INFO] Not enough assets to compare with (0) of radius 219
+2026-03-04 14:04:31,782 [INFO] Not enough assets near by to compare with. id: 1543310
+2026-03-04 14:04:31,798 [INFO] Fetched 31 assets from spitogatos_data within radius=100 m of point (lat=37.9415286, lon=23.7190829)
+2026-03-04 14:04:31,809 [INFO] Fetched 88 assets from spitogatos_data within radius=100 m of point (lat=38.0048089, lon=23.7431185)
+2026-03-04 14:04:31,823 [INFO] Fetched 0 assets from spitogatos_data within radius=100 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 14:04:31,823 [INFO] Not enough assets to compare with (0) of radius 100
+2026-03-04 14:04:31,823 [INFO] Fetched 0 assets from spitogatos_data within radius=130.0 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 14:04:31,823 [INFO] Not enough assets to compare with (0) of radius 130
+2026-03-04 14:04:31,823 [INFO] Fetched 0 assets from spitogatos_data within radius=169.0 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 14:04:31,823 [INFO] Not enough assets to compare with (0) of radius 169
+2026-03-04 14:04:31,839 [INFO] Fetched 0 assets from spitogatos_data within radius=219.70000000000002 m of point (lat=37.957705, lon=23.644961)
+2026-03-04 14:04:31,839 [INFO] Not enough assets to compare with (0) of radius 219
+2026-03-04 14:04:31,839 [INFO] Not enough assets near by to compare with. id: 1422316
+2026-03-04 14:04:31,843 [INFO] Fetched 41 assets from spitogatos_data within radius=100 m of point (lat=37.95731913, lon=23.73171329)
+2026-03-04 14:04:31,843 [INFO] Fetched 0 assets from spitogatos_data within radius=100 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 14:04:31,843 [INFO] Not enough assets to compare with (0) of radius 100
+2026-03-04 14:04:31,858 [INFO] Fetched 0 assets from spitogatos_data within radius=130.0 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 14:04:31,858 [INFO] Not enough assets to compare with (0) of radius 130
+2026-03-04 14:04:31,867 [INFO] Fetched 0 assets from spitogatos_data within radius=169.0 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 14:04:31,867 [INFO] Not enough assets to compare with (0) of radius 169
+2026-03-04 14:04:31,870 [INFO] Fetched 0 assets from spitogatos_data within radius=219.70000000000002 m of point (lat=37.84807488, lon=23.75861567)
+2026-03-04 14:04:31,870 [INFO] Not enough assets to compare with (0) of radius 219
+2026-03-04 14:04:31,870 [INFO] Not enough assets near by to compare with. id: 8361
+2026-03-04 14:04:31,886 [INFO] Fetched 100 assets from spitogatos_data within radius=100 m of point (lat=37.99435, lon=23.7237)
+2026-03-04 14:04:31,902 [INFO] Fetched 24 assets from spitogatos_data within radius=100 m of point (lat=37.97666449, lon=23.76793855)

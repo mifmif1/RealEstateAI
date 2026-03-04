@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Optional, List
+
 from pydantic import BaseModel
+
 
 class SpitogatosAsset(BaseModel):
     id: str
@@ -9,7 +11,8 @@ class SpitogatosAsset(BaseModel):
     buy_or_rent: int
     sqm: int
     price: int
-    revised_price: Optional[float] # such that price will reflect the no_rooms, year, etc.
+    # Optional field; not all rows will have a revised price stored.
+    revised_price: Optional[float] = None
     price_reduced: bool
     price_pre_reduction: Optional[int]
     price_change_percentage: Optional[int]

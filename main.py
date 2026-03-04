@@ -25,6 +25,8 @@ def load_target_assets_from_excel(path: str) -> List[TargetAsset]:
     - level
     - construction_year
     """
+
+
     df = pd.read_excel(path)
     required_columns = ["source", "portfolio", "id", "lon", "lat", "sqm", "price"]
     missing = [c for c in required_columns if c not in df.columns]
@@ -33,6 +35,22 @@ def load_target_assets_from_excel(path: str) -> List[TargetAsset]:
 
     assets: List[TargetAsset] = []
     for _, row in df.iterrows():
+        url = (
+            str(row["url"])
+            if "url" in df.columns and pd.notna(row["url"])
+            else None
+        )
+        level = (
+            int(row["level"])
+            if "level" in df.columns and pd.notna(row["level"])
+            else None
+        )
+        construction_year = (
+            int(row["construction_year"])
+            if "construction_year" in df.columns and pd.notna(row["construction_year"])
+            else None
+        )
+
         asset = TargetAsset(
             source=str(row["source"]),
             portfolio=str(row["portfolio"]),
@@ -41,11 +59,9 @@ def load_target_assets_from_excel(path: str) -> List[TargetAsset]:
             lat=float(row["lat"]),
             sqm=float(row["sqm"]),
             price=float(row["price"]),
-            url=row.get("url"),
-            level=int(row["level"]) if "level" in df.columns and pd.notna(row["level"]) else None,
-            construction_year=int(row["construction_year"])
-            if "construction_year" in df.columns and pd.notna(row["construction_year"])
-            else None,
+            url=url,
+            level=level,
+            construction_year=construction_year,
         )
         assets.append(asset)
     return assets
