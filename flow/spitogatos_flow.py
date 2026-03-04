@@ -2,7 +2,7 @@ import datetime
 import logging
 import statistics
 from time import sleep
-from typing import Callable, List
+from typing import List
 
 import numpy as np
 import pandas as pd
@@ -38,8 +38,6 @@ class SpitogatosFlow:
         self._geopy_data_source = GeopyData()
         self._spitogatos_dao = SpitogatosDAO()
         self._spitogatos_data_source = SpitogatosData()
-
-
 
     def get_all_athens(self, start_offset: int = 0, max_pages: int | None = None) -> None:
         """
@@ -157,9 +155,11 @@ class SpitogatosFlow:
             return
 
         inserted = self._spitogatos_dao.insert_list(assets)
-        logger.info(f"Persisted Spitogatos Athens page (offset={offset}): {len(assets)} assets fetched, {inserted} rows affected in DB")
+        logger.info(
+            f"Persisted Spitogatos Athens page (offset={offset}): {len(assets)} assets fetched, {inserted} rows affected in DB")
 
-    def get_assets_by_circle(self, lon: float, lat: float, radius_meters: float) -> List[SpitogatosAsset]:
+    def get_assets_by_circle(self, lon: float, lat: float, radius_meters: float, limit: int = 100) -> List[
+        SpitogatosAsset]:
         """
         Fetch all assets from spitogatos_data that lie within a circle
         defined by a center point and radius (in meters).
@@ -168,16 +168,18 @@ class SpitogatosFlow:
             lon: Longitude of the circle center.
             lat: Latitude of the circle center.
             radius_meters: Radius of the circle in meters.
+            limit: Maximum number of assets to return.
 
         Returns:
             List of SpitogatosAsset records within the given circle.
         """
+        assert radius_meters > 0
         circle = Circle(
             center_lat=lat,
             center_lon=lon,
             radius=radius_meters,
         )
-        assets = self._spitogatos_dao.search_by_circle(circle)
+        assets = self._spitogatos_dao.search_by_circle(circle)[:limit]
         logger.info(
             "Fetched %s assets from spitogatos_data within radius=%s m of point (lat=%s, lon=%s)",
             len(assets),
@@ -187,8 +189,8 @@ class SpitogatosFlow:
         )
         return assets
 
-
-    def get_asset_statistics_by_radius(self, asset: TargetAsset, radius_meters:int=100, min_assets:int=10) -> comparison_data_model:
+    def get_asset_statistics_by_radius(self, asset: TargetAsset, radius_meters: int = 100,
+                                       min_assets: int = 10) -> ComparisonDataModel | None:
         for i in range(4):
             assets = self.get_assets_by_circle(lon=asset.lon, lat=asset.lat, radius_meters=radius_meters)
             if len(assets) < min_assets:
@@ -201,25 +203,28 @@ class SpitogatosFlow:
         logger.info("Not enough assets near by to compare with. id: %d ", asset.id)
         return None
 
-
-    def get_asset_statistics_by_comparisons(self, asset: TargetAsset, comparison_assets: List[SpitogatosAsset]) -> comparison_data_model:
+    def get_asset_statistics_by_comparisons(self, asset: TargetAsset,
+                                            comparison_assets: List[SpitogatosAsset]) -> ComparisonDataModel:
         assert comparison_assets is not None
         assert len(comparison_assets) > 0
         assert asset is not None
 
-        comparison_price_per_sqm = sorted([(comparison_asset.price/comparison_asset.sqm) for comparison_asset in comparison_assets])
+        comparison_price_per_sqm = sorted(
+            [(comparison_asset.price / comparison_asset.sqm) for comparison_asset in comparison_assets])
         no_assets = len(comparison_price_per_sqm)
         reevaluation = self.reevaluate_by_comparisons(asset=asset, comparison_assets=comparison_assets)
 
-        return ComparisonDataModel(no_assets = no_assets,
+        return ComparisonDataModel(no_assets=no_assets,
                                    reevaluated_price=reevaluation,
                                    min=comparison_price_per_sqm[0],
                                    max=comparison_price_per_sqm[-1],
-                                   std=statistics.stdev(comparison_price_per_sqm),
+                                   std=statistics.stdev(comparison_price_per_sqm) if no_assets >= 2 else 0.0,
                                    mean=sum(comparison_price_per_sqm) / no_assets,
                                    median=comparison_price_per_sqm[no_assets // 2],
-                                   discount=(asset.price - reevaluation)/reevaluation,
-                                   spitogatos_comparison_assets=[comparison_asset.id for comparison_asset in comparison_assets])
+                                   discount=(asset.price - reevaluation) / reevaluation,
+                                   spitogatos_comparison_assets=[comparison_asset.id for comparison_asset in
+                                                                 comparison_assets])
+
     @staticmethod
     def reevaluate_by_comparisons(asset: TargetAsset, comparison_assets: List[SpitogatosAsset]) -> float:
         floor_rank = {
@@ -238,23 +243,23 @@ class SpitogatosFlow:
         }
         revised_prices_per_sqm = []
         for comparison_asset in comparison_assets:
-            price_per_meter = comparison_asset.price/comparison_asset.sqm
-            #10% down
+            price_per_meter = comparison_asset.price / comparison_asset.sqm
+            # 10% down
             price_per_meter *= 0.9
 
-            #level factor
+            # level factor
             price_per_meter *= (1 - floor_rank.get(asset.level, 0.25))
 
             # renew factor
-            price_per_meter *= (1 - renew_rank.get(asset.new_state, 0))
+            price_per_meter *= (
+                    1 - renew_rank.get((asset.construction_year > 2000), 0)) if asset.construction_year else 1
             revised_prices_per_sqm.append(price_per_meter)
         revised_mean = statistics.mean(revised_prices_per_sqm)
         asset_revised_price = revised_mean * asset.sqm
         asset_revised_price *= (1 + floor_rank.get(floor_level_dict.get(asset.level), 0.25))
-        asset_revised_price *= (1 + renew_rank.get((asset.construction_year > 2000), 0))  if asset.construction_year else 1
+        asset_revised_price *= (
+                1 + renew_rank.get((asset.construction_year > 2000), 0)) if asset.construction_year else 1
         return asset_revised_price
-
-
 
     @staticmethod
     def _get_valuation_for_row(row, assets: List[TargetAsset]) -> (float, float):
@@ -333,7 +338,6 @@ class SpitogatosFlow:
         used to make any parsing changes. not used in any "real" term
         """
         df = self._open_excel(excel_path=excel_path)
-
 
         # changes
         # df['lon'] = df['coords'].apply(lambda pnt_str: self._geopy_data_source.convert_location_to_lon_lat(pnt_str).lon if pd.notna(pnt_str) else pnt_str)
@@ -426,7 +430,7 @@ class SpitogatosFlow:
     def _add_comparison_assets_to_df(current_df: pd.DataFrame,
                                      asset_comparison: AssetComparison,
                                      source: str,
-                                     portfolio:str) -> pd.DataFrame:
+                                     portfolio: str) -> pd.DataFrame:
         # processing
         rows = []
         for asset in asset_comparison.compared_assets:
@@ -567,8 +571,6 @@ if __name__ == '__main__':
     # s.get_athens(offset=0)
     s.get_all_athens(start_offset=44670)
 
-
-
     # dovalue_conditions_to_eject = lambda row: (  # not pd.isna(row['comparison_average']) or
     #         row['sqm'] < 30 or
     #         '%' in row['TitleGR'] or
@@ -591,4 +593,3 @@ if __name__ == '__main__':
     #     excel_path=assets_path,
     #     spitogatos_comparison_assets_excel_path=spitogatos_comparison_path,
     #     must_columns=columns_valuation)
-
