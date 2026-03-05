@@ -1,11 +1,12 @@
 import logging
+import re
 from datetime import datetime
 from typing import Iterable, Generator
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 import scrapy
 
-from model.landea_asset_model import LandeaAsset
+from model.landea_asset_model import LandeaAssetModel
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +52,7 @@ class LandeaData(scrapy.Spider):
             },
         )
 
-    def parse(self, response) -> Generator[LandeaAsset | scrapy.Request, None, None]:
+    def parse(self, response) -> Generator[LandeaAssetModel | scrapy.Request, None, None]:
         current_page = response.meta['current_page']
         properties = response.css('div.propertycard')
 
@@ -80,7 +81,7 @@ class LandeaData(scrapy.Spider):
             },
         )
 
-    def parse_property(self, prop_selector) -> LandeaAsset:
+    def parse_property(self, prop_selector) -> LandeaAssetModel:
         """Extracts a LandeaAsset from a single property card."""
         # 1. Address extraction
         address_parts = prop_selector.xpath('.//div[contains(@class, "property-address")]/text()').getall()
@@ -112,12 +113,25 @@ class LandeaData(scrapy.Spider):
                 return None
 
         # Try to extract a URL/id for the card (if present)
-        href = prop_selector.css("a::attr(href)").get()
-        url = href if href and href.startswith("http") else href
+        href = (
+            prop_selector.attrib.get("data-href")
+            or prop_selector.attrib.get("data-url")
+            or prop_selector.css("a::attr(href)").get()
+        )
+        if href and href.startswith("/"):
+            url = f"https://www.landea.gr{href}"
+        else:
+            url = href
 
         sqm_str = prop_selector.xpath(
             './/div[contains(@class, "SRFSQM")]/following-sibling::text()'
         ).get(default="").strip() or None
+        # Fallback: many cards include sqm only in the title text, e.g. "Apartment 97 sq.m."
+        if not sqm_str:
+            title_text = prop_selector.css('div.title span::text').get(default="") or ""
+            match = re.search(r"(\d+(?:[.,]\d+)?)\s*sq\.?m", title_text, flags=re.IGNORECASE)
+            if match:
+                sqm_str = match.group(1)
         bedrooms_str = prop_selector.xpath(
             './/div[contains(@class, "BDRMS")]/following-sibling::text()'
         ).get(default="").strip() or None
@@ -125,7 +139,7 @@ class LandeaData(scrapy.Spider):
             './/div[contains(@class, "CSTRYR")]/following-sibling::text()'
         ).get(default="").strip() or None
 
-        asset = LandeaAsset(
+        asset = LandeaAssetModel(
             url_id=url or "",
             landea_id=url or "",
             url=url,
