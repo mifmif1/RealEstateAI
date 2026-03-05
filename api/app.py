@@ -3,6 +3,7 @@ FastAPI application for RealEstateAI flow functions.
 Exposes all functions from the flow folder as REST API endpoints.
 """
 import shutil
+from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
 
@@ -161,6 +162,10 @@ async def get_assets_by_circle(
     lon: float,
     lat: float,
     radius_meters: float = 100,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
 ):
     """
     Return all Spitogatos assets stored in the DB that lie within a circle
@@ -172,6 +177,11 @@ async def get_assets_by_circle(
             lon,
             lat,
             radius_meters,
+            100,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
         )
         return assets
     except Exception as e:

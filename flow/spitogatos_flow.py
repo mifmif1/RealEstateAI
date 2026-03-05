@@ -158,8 +158,17 @@ class SpitogatosFlow:
         logger.info(
             f"Persisted Spitogatos Athens page (offset={offset}): {len(assets)} assets fetched, {inserted} rows affected in DB")
 
-    def get_assets_by_circle(self, lon: float, lat: float, radius_meters: float, limit: int = 100) -> List[
-        SpitogatosAsset]:
+    def get_assets_by_circle(
+        self,
+        lon: float,
+        lat: float,
+        radius_meters: float,
+        limit: int = 100,
+        website_modified_from: datetime.datetime | None = None,
+        website_modified_to: datetime.datetime | None = None,
+        website_uploaded_from: datetime.datetime | None = None,
+        website_uploaded_to: datetime.datetime | None = None,
+    ) -> List[SpitogatosAsset]:
         """
         Fetch all assets from spitogatos_data that lie within a circle
         defined by a center point and radius (in meters).
@@ -169,6 +178,10 @@ class SpitogatosFlow:
             lat: Latitude of the circle center.
             radius_meters: Radius of the circle in meters.
             limit: Maximum number of assets to return.
+            website_modified_from: Optional lower bound for website_modified (inclusive).
+            website_modified_to: Optional upper bound for website_modified (inclusive).
+            website_uploaded_from: Optional lower bound for website_uploaded (inclusive).
+            website_uploaded_to: Optional upper bound for website_uploaded (inclusive).
 
         Returns:
             List of SpitogatosAsset records within the given circle.
@@ -179,7 +192,13 @@ class SpitogatosFlow:
             center_lon=lon,
             radius=radius_meters,
         )
-        assets = self._spitogatos_dao.search_by_circle(circle)[:limit]
+        assets = self._spitogatos_dao.search_by_circle(
+            circle,
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )[:limit]
         logger.info(
             "Fetched %s assets from spitogatos_data within radius=%s m of point (lat=%s, lon=%s)",
             len(assets),
