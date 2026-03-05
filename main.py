@@ -1,11 +1,17 @@
 import argparse
-from typing import List
+import json
+from datetime import datetime
+from typing import List, Optional
 
 import pandas as pd
+import requests
+from scrapy import Selector
 
+from data_source.landea_data import LandeaData
 from flow.spitogatos_flow import SpitogatosFlow
 from model.asset_model import TargetAsset
 from model.comparison_data_model import ComparisonDataModel
+from model.landea_asset_model import LandeaAsset
 
 
 def load_target_assets_from_excel(path: str) -> List[TargetAsset]:
@@ -107,14 +113,55 @@ def asset_statistics_to_rows(
     return rows
 
 
+def fetch_landea_first_page_to_json(
+    output_json: str,
+    base_url: Optional[str] = None,
+) -> None:
+    """
+    Fetch the first Landea search-results page and save it as a JSON
+    list of LandeaAsset objects.
+    """
+    spider = LandeaData(target_url=base_url)
+    first_page_url = spider._build_page_url(spider.base_url, 1)
+
+    resp = requests.get(first_page_url, headers=spider.custom_headers, timeout=30)
+    resp.raise_for_status()
+
+    sel = Selector(text=resp.text)
+    properties = sel.css("div.propertycard")
+
+    assets: List[LandeaAsset] = []
+
+    for prop in properties:
+        # Reuse the spider's parsing logic to produce a LandeaAsset
+        asset = spider.parse_property(prop)
+        assets.append(asset)
+
+    with open(output_json, "w", encoding="utf-8") as f:
+        json.dump(
+            [asset.model_dump() for asset in assets],
+            f,
+            ensure_ascii=False,
+            indent=2,
+            default=str,
+        )
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=(
-            "Load target assets from an Excel file, compute statistics using "
-            "Spitogatos comparison assets, and write results to an output Excel."
+            "Utility entrypoint:\n"
+            "- Load target assets from an Excel file, compute statistics using "
+            "Spitogatos comparison assets, and write results to an output Excel.\n"
+            "- Or fetch the first Landea page and save it as JSON."
         )
     )
-    parser.add_argument("input_excel", help="Path to input Excel file with target assets")
+    parser.add_argument(
+        "input_excel",
+        nargs="?",
+        default=None,
+        help="Path to input Excel file with target assets",
+    )
     parser.add_argument(
         "--output-excel",
         default="asset_statistics_output.xlsx",
@@ -132,7 +179,30 @@ def main():
         default=10,
         help="Minimum number of comparison assets required (default: 10)",
     )
+    parser.add_argument(
+        "--lande-output-json",
+        dest="lande_output_json",
+        help="If set, fetch the first Landea page and save it as JSON to this path.",
+    )
+    parser.add_argument(
+        "--lande-url",
+        dest="lande_url",
+        default=None,
+        help="Optional Landea search URL to use as base (defaults to residential search).",
+    )
     args = parser.parse_args()
+
+    # Mode 1: Landea first-page JSON export
+    if args.lande_output_json:
+        fetch_landea_first_page_to_json(
+            output_json=args.lande_output_json,
+            base_url=args.lande_url,
+        )
+        return
+
+    # Mode 2: Existing Spitogatos Excel enrichment
+    if not args.input_excel:
+        parser.error("Either input_excel or --lande-output-json must be provided.")
 
     assets = load_target_assets_from_excel(args.input_excel)
     flow = SpitogatosFlow()
