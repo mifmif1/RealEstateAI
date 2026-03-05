@@ -2,14 +2,13 @@
 Data Access Object for Spitogatos_Asset with location-based queries using PostGIS
 """
 import logging
+from datetime import datetime
 from typing import List
 
 import psycopg2.extras
-from model.spitogatos_asset_model import SpitogatosAsset
-from model.geographical_model import Rectangle, Circle
 from database.connection import get_db_connection
-
-logger = logging.getLogger(__name__)
+from model.geographical_model import Rectangle, Circle
+from model.spitogatos_asset_model import SpitogatosAsset
 
 
 class SpitogatosDAO:
@@ -187,17 +186,28 @@ class SpitogatosDAO:
             )
             return cursor.rowcount
 
-    def search_by_rectangle(self, rectangle: Rectangle) -> List[SpitogatosAsset]:
+    def search_by_rectangle(
+        self,
+        rectangle: Rectangle,
+        website_modified_from: datetime | None = None,
+        website_modified_to: datetime | None = None,
+        website_uploaded_from: datetime | None = None,
+        website_uploaded_to: datetime | None = None,
+    ) -> List[SpitogatosAsset]:
         """
         Search spitogatos_data by bounding rectangle (min_lon, min_lat, max_lon, max_lat).
 
         Args:
-            rectangle: Rectangle defining the search area
+            rectangle: Rectangle defining the search area.
+            website_modified_from: Optional lower bound for website_modified (inclusive).
+            website_modified_to: Optional upper bound for website_modified (inclusive).
+            website_uploaded_from: Optional lower bound for website_uploaded (inclusive).
+            website_uploaded_to: Optional upper bound for website_uploaded (inclusive).
 
         Returns:
             List of Spitogatos_Asset within the rectangle
         """
-        query = """
+        base_query = """
             SELECT
                 id, category, subtype, buy_or_rent, sqm, price,
                 price_reduced, price_pre_reduction, price_change_percentage,
@@ -210,30 +220,64 @@ class SpitogatosDAO:
                 has_vtour, has_video, agent_id, enquirer_id, re_agent,
                 published, first_publish_date
             FROM spitogatos_data
-            WHERE location && ST_MakeEnvelope(%s, %s, %s, %s, 4326)::geography
-            ORDER BY website_modified DESC
         """
-        params = (
+
+        where_clauses = [
+            "location && ST_MakeEnvelope(%s, %s, %s, %s, 4326)::geography"
+        ]
+        params = [
             rectangle.min_lon,
             rectangle.min_lat,
             rectangle.max_lon,
             rectangle.max_lat,
+        ]
+
+        if website_modified_from is not None:
+            where_clauses.append("website_modified >= %s")
+            params.append(website_modified_from)
+        if website_modified_to is not None:
+            where_clauses.append("website_modified <= %s")
+            params.append(website_modified_to)
+        if website_uploaded_from is not None:
+            where_clauses.append("website_uploaded >= %s")
+            params.append(website_uploaded_from)
+        if website_uploaded_to is not None:
+            where_clauses.append("website_uploaded <= %s")
+            params.append(website_uploaded_to)
+
+        query = (
+            base_query
+            + " WHERE "
+            + " AND ".join(where_clauses)
+            + " ORDER BY website_modified DESC"
         )
+
         rows = self.db.execute_query(query, params)
         return [self._row_to_asset(row) for row in rows]
 
-    def search_by_circle(self, circle: Circle) -> List[SpitogatosAsset]:
+    def search_by_circle(
+        self,
+        circle: Circle,
+        website_modified_from: datetime | None = None,
+        website_modified_to: datetime | None = None,
+        website_uploaded_from: datetime | None = None,
+        website_uploaded_to: datetime | None = None,
+    ) -> List[SpitogatosAsset]:
         """
         Search spitogatos_data by center point and radius (circle).
         Radius is in meters (geography type).
 
         Args:
-            circle: Circle with center_lat, center_lon, radius (meters)
+            circle: Circle with center_lat, center_lon, radius (meters).
+            website_modified_from: Optional lower bound for website_modified (inclusive).
+            website_modified_to: Optional upper bound for website_modified (inclusive).
+            website_uploaded_from: Optional lower bound for website_uploaded (inclusive).
+            website_uploaded_to: Optional upper bound for website_uploaded (inclusive).
 
         Returns:
             List of Spitogatos_Asset within the circle
         """
-        query = """
+        base_query = """
             SELECT
                 id, category, subtype, buy_or_rent, sqm, price,
                 price_reduced, price_pre_reduction, price_change_percentage,
@@ -247,21 +291,41 @@ class SpitogatosDAO:
                 published, first_publish_date,
                 ST_Distance(location, ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography) AS distance
             FROM spitogatos_data
-            WHERE ST_DWithin(
-                location,
-                ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography,
-                %s
-            )
-            ORDER BY distance ASC
         """
-        params = (
-            circle.center_lon,
-            circle.center_lat,
+
+        where_clauses = [
+            "ST_DWithin("
+            "location, "
+            "ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography, "
+            "%s"
+            ")"
+        ]
+        params = [
             circle.center_lon,
             circle.center_lat,
             circle.radius,
+        ]
+
+        if website_modified_from is not None:
+            where_clauses.append("website_modified >= %s")
+            params.append(website_modified_from)
+        if website_modified_to is not None:
+            where_clauses.append("website_modified <= %s")
+            params.append(website_modified_to)
+        if website_uploaded_from is not None:
+            where_clauses.append("website_uploaded >= %s")
+            params.append(website_uploaded_from)
+        if website_uploaded_to is not None:
+            where_clauses.append("website_uploaded <= %s")
+            params.append(website_uploaded_to)
+
+        query = (
+            base_query
+            + " WHERE "
+            + " AND ".join(where_clauses)
+            + " ORDER BY distance ASC"
         )
-        rows = self.db.execute_query(query, params)
+        rows = self.db.execute_query(query, tuple(params))
         return [self._row_to_asset(row) for row in rows]
 
     @staticmethod
