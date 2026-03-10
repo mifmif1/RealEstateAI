@@ -123,6 +123,19 @@ class LandeaData(scrapy.Spider):
         else:
             url = href
 
+        # Extract stable id segment from detail URL, e.g.
+        # "https://www.landea.gr/en/details/bd1_ak3h4471_3572dak271e5kbj456h"
+        # -> "bd1_ak3h4471_3572dak271e5kbj456h"
+        if url:
+            try:
+                parsed = urlparse(url)
+                path_segment = parsed.path.rstrip("/").split("/")[-1]
+                url_id = path_segment or ""
+            except Exception:
+                url_id = ""
+        else:
+            url_id = ""
+
         sqm_str = prop_selector.xpath(
             './/div[contains(@class, "SRFSQM")]/following-sibling::text()'
         ).get(default="").strip() or None
@@ -140,8 +153,8 @@ class LandeaData(scrapy.Spider):
         ).get(default="").strip() or None
 
         asset = LandeaAssetModel(
-            url_id=url or "",
-            landea_id=url or "",
+            url_id=url_id,
+            landea_id=url_id,
             url=url,
             sqm=_to_float(sqm_str),
             lat=None,
