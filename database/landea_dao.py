@@ -95,8 +95,11 @@ class LandeaDAO:
         """
         if not assets:
             return 0
+
         count = 0
-        query = """
+        ids_in_batch = [a.landea_id for a in assets]
+
+        upsert_query = """
             INSERT INTO landea_assets (
                 landea_id, url_id, url, sqm, lat, lon, location,
                 title, floor, is_hot, price, address, bedrooms,
@@ -128,6 +131,61 @@ class LandeaDAO:
                 modified_at = CURRENT_TIMESTAMP
         """
         with self.db.get_cursor() as cursor:
+            # Load existing rows for these landea_ids so we can log detailed diffs on conflict
+            cursor.execute(
+                """
+                SELECT
+                    landea_id, url_id, url, sqm, lat, lon,
+                    title, floor, is_hot, price, address, bedrooms,
+                    auction_date, construction_year, fetch_date
+                FROM landea_assets
+                WHERE landea_id = ANY(%s)
+                """,
+                (ids_in_batch,),
+            )
+            existing_rows = cursor.fetchall()
+            if existing_rows:
+                existing_by_id = {row["landea_id"]: row for row in existing_rows}
+                assets_by_id = {a.landea_id: a for a in assets}
+
+                field_map = [
+                    ("url_id", "url_id"),
+                    ("url", "url"),
+                    ("sqm", "sqm"),
+                    ("lat", "lat"),
+                    ("lon", "lon"),
+                    ("title", "title"),
+                    ("floor", "floor"),
+                    ("is_hot", "is_hot"),
+                    ("price", "price"),
+                    ("address", "address"),
+                    ("bedrooms", "bedrooms"),
+                    ("auction_date", "auction_date"),
+                    ("construction_year", "construction_year"),
+                    ("fetch_date", "fetch_date"),
+                ]
+
+                for landea_id, old_row in existing_by_id.items():
+                    new_asset = assets_by_id.get(landea_id)
+                    if not new_asset:
+                        continue
+
+                    diffs = []
+                    for model_attr, row_key in field_map:
+                        old_val = old_row.get(row_key)
+                        new_val = getattr(new_asset, model_attr)
+                        if old_val != new_val:
+                            diffs.append(
+                                f"{model_attr}: old={old_val!r}, new={new_val!r}"
+                            )
+
+                    if diffs:
+                        logger.info(
+                            "landea_assets conflict on landea_id=%s. Differing fields: %s",
+                            landea_id,
+                            "; ".join(diffs),
+                        )
+
             for asset in assets:
                 params = (
                     asset.landea_id,
@@ -150,7 +208,7 @@ class LandeaDAO:
                     asset.construction_year,
                     asset.fetch_date,
                 )
-                cursor.execute(query, params)
+                cursor.execute(upsert_query, params)
                 count += cursor.rowcount
         return count
 
