@@ -1,8 +1,10 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional
+
 from pydantic import BaseModel
 
-class LandeaAsset(BaseModel):
+
+class LandeaAssetModel(BaseModel):
     url_id: str
     landea_id: str
     url: Optional[str]
@@ -16,6 +18,7 @@ class LandeaAsset(BaseModel):
     address: Optional[str]
     bedrooms: Optional[int]
     auction_date: Optional[str]
-    fetch_date = Optional[datetime]
     construction_year: Optional[int]
+    fetch_date: Optional[datetime] = None
+    modified_date: Optional[datetime] = None
 
