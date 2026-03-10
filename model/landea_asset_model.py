@@ -17,6 +17,7 @@ class LandeaAssetModel(BaseModel):
     price: Optional[float]
     address: Optional[str]
     bedrooms: Optional[int]
+    description: Optional[str]
     auction_date: Optional[str]
     construction_year: Optional[int]
     fetch_date: Optional[datetime] = None
