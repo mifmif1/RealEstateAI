@@ -1,12 +1,12 @@
 """
-Data Access Object for LandeaAsset with location-based queries using PostGIS.
+Data Access Object for Landea assets with location-based queries using PostGIS.
 """
 import logging
 from typing import List, Optional
 
 from database.connection import get_db_connection
 from model.geographical_model import Circle, Rectangle
-from model.landea_asset_model import LandeaAsset
+from model.landea_asset_model import LandeaAssetModel
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class LandeaDAO:
     def __init__(self):
         self.db = get_db_connection()
 
-    def insert(self, asset: LandeaAsset) -> bool:
+    def insert(self, asset: LandeaAssetModel) -> bool:
         """
         Insert a single LandeaAsset. Uses ON CONFLICT (landea_id) DO UPDATE to upsert.
 
@@ -83,7 +83,7 @@ class LandeaDAO:
             cursor.execute(query, params)
         return True
 
-    def insert_batch(self, assets: List[LandeaAsset]) -> int:
+    def insert_batch(self, assets: List[LandeaAssetModel]) -> int:
         """
         Insert or update multiple LandeaAssets. Uses ON CONFLICT (landea_id) DO UPDATE.
 
@@ -210,14 +210,236 @@ class LandeaDAO:
                 )
                 cursor.execute(upsert_query, params)
                 count += cursor.rowcount
-        return count
+            return count
+
+    # ------------------------------------------------------------------
+    # Stage 1: upsert listing-level data only (no coords/location/description)
+    # ------------------------------------------------------------------
+    def upsert_stage1_batch(self, assets: List[LandeaAssetModel]) -> int:
+        """
+        Upsert a batch of LandeaAssetModel objects using only listing-level
+        fields (no enrichment fields like description/features/location).
+        """
+        if not assets:
+            return 0
+
+        query = """
+            INSERT INTO landea_assets (
+                landea_id,
+                url_id,
+                url,
+                property_type,
+                sqm,
+                lat,
+                lon,
+                title,
+                floor,
+                is_hot,
+                price,
+                address,
+                bedrooms,
+                bathrooms,
+                auction_date,
+                construction_year,
+                fetch_date
+            )
+            VALUES (
+                %s, %s, %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s, %s,
+                %s, %s, %s
+            )
+            ON CONFLICT (landea_id) DO UPDATE SET
+                url_id = EXCLUDED.url_id,
+                url = EXCLUDED.url,
+                property_type = EXCLUDED.property_type,
+                sqm = EXCLUDED.sqm,
+                title = EXCLUDED.title,
+                floor = EXCLUDED.floor,
+                is_hot = EXCLUDED.is_hot,
+                price = EXCLUDED.price,
+                address = EXCLUDED.address,
+                bedrooms = EXCLUDED.bedrooms,
+                bathrooms = EXCLUDED.bathrooms,
+                auction_date = EXCLUDED.auction_date,
+                construction_year = EXCLUDED.construction_year,
+                fetch_date = EXCLUDED.fetch_date;
+        """
+
+        affected = 0
+        with self.db.get_cursor() as cursor:
+            for asset in assets:
+                params = (
+                    asset.landea_id,
+                    asset.url_id,
+                    asset.url,
+                    asset.property_type,
+                    asset.sqm,
+                    asset.lat,
+                    asset.lon,
+                    asset.title,
+                    asset.floor,
+                    asset.is_hot,
+                    asset.price,
+                    asset.address,
+                    asset.bedrooms,
+                    asset.bathrooms,
+                    asset.auction_date,
+                    asset.construction_year,
+                    asset.fetch_date,
+                )
+                cursor.execute(query, params)
+                affected += cursor.rowcount
+
+        logger.info("Stage 1 DAO: upserted %s landea_assets rows.", affected)
+        return affected
+
+    # ------------------------------------------------------------------
+    # Stage 2: enrichment helpers
+    # ------------------------------------------------------------------
+    def get_assets_missing_coords(self, limit: int = 100) -> List[LandeaAssetModel]:
+        """
+        Fetch a batch of assets where lat or lon is NULL, for enrichment.
+        """
+        query = """
+            SELECT
+                landea_id,
+                url_id,
+                url,
+                property_type,
+                sqm,
+                lat,
+                lon,
+                title,
+                floor,
+                is_hot,
+                price,
+                address,
+                bedrooms,
+                bathrooms,
+                features,
+                description,
+                auction_date,
+                construction_year,
+                fetch_date,
+                modified_date
+            FROM landea_assets
+            WHERE (lat IS NULL OR lon IS NULL)
+            LIMIT %s
+        """
+        rows = self.db.execute_query(query, (limit,))
+        return [LandeaAssetModel(**row) for row in rows]
+
+    def upsert_enriched_batch(self, assets: List[LandeaAssetModel]) -> int:
+        """
+        Upsert a batch of enriched assets, including coordinates, location,
+        description, features, etc.
+        """
+        if not assets:
+            return 0
+
+        query = """
+            INSERT INTO landea_assets (
+                landea_id,
+                url_id,
+                url,
+                property_type,
+                sqm,
+                lat,
+                lon,
+                location,
+                title,
+                floor,
+                is_hot,
+                price,
+                address,
+                bedrooms,
+                bathrooms,
+                features,
+                description,
+                auction_date,
+                construction_year,
+                fetch_date,
+                modified_date
+            )
+            VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s,
+                CASE
+                    WHEN %s IS NOT NULL AND %s IS NOT NULL
+                    THEN ST_SetSRID(ST_MakePoint(%s, %s), 4326)::geography
+                    ELSE NULL
+                END,
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s
+            )
+            ON CONFLICT (landea_id) DO UPDATE SET
+                url_id = EXCLUDED.url_id,
+                url = EXCLUDED.url,
+                property_type = EXCLUDED.property_type,
+                sqm = EXCLUDED.sqm,
+                lat = EXCLUDED.lat,
+                lon = EXCLUDED.lon,
+                location = CASE
+                    WHEN EXCLUDED.lat IS NOT NULL AND EXCLUDED.lon IS NOT NULL
+                    THEN ST_SetSRID(ST_MakePoint(EXCLUDED.lon, EXCLUDED.lat), 4326)::geography
+                    ELSE landea_assets.location
+                END,
+                title = EXCLUDED.title,
+                floor = EXCLUDED.floor,
+                is_hot = EXCLUDED.is_hot,
+                price = EXCLUDED.price,
+                address = EXCLUDED.address,
+                bedrooms = EXCLUDED.bedrooms,
+                bathrooms = EXCLUDED.bathrooms,
+                features = EXCLUDED.features,
+                description = EXCLUDED.description,
+                auction_date = EXCLUDED.auction_date,
+                construction_year = EXCLUDED.construction_year,
+                fetch_date = EXCLUDED.fetch_date,
+                modified_date = EXCLUDED.modified_date;
+        """
+
+        affected = 0
+        with self.db.get_cursor() as cursor:
+            for asset in assets:
+                params = (
+                    asset.landea_id,
+                    asset.url_id,
+                    asset.url,
+                    asset.property_type,
+                    asset.sqm,
+                    asset.lat,
+                    asset.lon,
+                    asset.lon,
+                    asset.lat,
+                    asset.lon,
+                    asset.lat,
+                    asset.title,
+                    asset.floor,
+                    asset.is_hot,
+                    asset.price,
+                    asset.address,
+                    asset.bedrooms,
+                    asset.bathrooms,
+                    asset.features,
+                    asset.description,
+                    asset.auction_date,
+                    asset.construction_year,
+                    asset.fetch_date,
+                    asset.modified_date,
+                )
+                cursor.execute(query, params)
+                affected += cursor.rowcount
+
+        logger.info("Stage 2 DAO: upserted %s enriched landea_assets rows.", affected)
+        return affected
 
     def search_by_rectangle(
         self,
         rectangle: Rectangle,
         min_sqm: Optional[float] = None,
         max_sqm: Optional[float] = None,
-    ) -> List[LandeaAsset]:
+    ) -> List[LandeaAssetModel]:
         """
         Search landea_assets by bounding rectangle (min_lon, min_lat, max_lon, max_lat).
         Only rows with a non-null location are included.
@@ -260,7 +482,7 @@ class LandeaDAO:
         circle: Circle,
         min_sqm: Optional[float] = None,
         max_sqm: Optional[float] = None,
-    ) -> List[LandeaAsset]:
+    ) -> List[LandeaAssetModel]:
         """
         Search landea_assets by center point and radius (circle).
         Radius is in meters (geography). Only rows with a non-null location are included.
@@ -304,7 +526,7 @@ class LandeaDAO:
         rows = self.db.execute_query(base_query, tuple(params))
         return [self._row_to_asset(row) for row in rows]
 
-    def get_by_landea_id(self, landea_id: str) -> Optional[LandeaAsset]:
+    def get_by_landea_id(self, landea_id: str) -> Optional[LandeaAssetModel]:
         """
         Get a single LandeaAsset by landea_id.
 
@@ -327,7 +549,7 @@ class LandeaDAO:
             return self._row_to_asset(rows[0])
         return None
 
-    def update(self, asset: LandeaAsset) -> bool:
+    def update(self, asset: LandeaAssetModel) -> bool:
         """
         Update an existing LandeaAsset by landea_id.
 
@@ -387,12 +609,13 @@ class LandeaDAO:
         return affected > 0
 
     @staticmethod
-    def _row_to_asset(row: dict) -> LandeaAsset:
-        """Convert a database row to LandeaAsset."""
-        return LandeaAsset(
+    def _row_to_asset(row: dict) -> LandeaAssetModel:
+        """Convert a database row to LandeaAssetModel."""
+        return LandeaAssetModel(
             url_id=row["url_id"],
             landea_id=row["landea_id"],
             url=row.get("url"),
+            property_type=row.get("property_type"),
             sqm=row.get("sqm"),
             lat=row.get("lat"),
             lon=row.get("lon"),
@@ -402,7 +625,11 @@ class LandeaDAO:
             price=row.get("price"),
             address=row.get("address"),
             bedrooms=row.get("bedrooms"),
+            bathrooms=row.get("bathrooms"),
+            features=row.get("features"),
+            description=row.get("description"),
             auction_date=row.get("auction_date"),
-            fetch_date=row.get("fetch_date"),
             construction_year=row.get("construction_year"),
+            fetch_date=row.get("fetch_date"),
+            modified_date=row.get("modified_date"),
         )

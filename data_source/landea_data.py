@@ -1,20 +1,25 @@
-import re
 import logging
-from pathlib import Path
+import re
 import concurrent.futures
-from typing import List, Dict, Any
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import List, Dict, Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-import scrapy
-import requests
 import pandas as pd
-from urllib3.util.retry import Retry
+import requests
+import scrapy
 from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
+from database.landea_dao import LandeaDAO
 from model.landea_asset_model import LandeaAssetModel
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", force=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    force=True,
+)
 logger = logging.getLogger(__name__)
 
 
@@ -39,6 +44,7 @@ class LandeaScraper:
         adapter = HTTPAdapter(max_retries=retries, pool_connections=max_workers, pool_maxsize=max_workers)
         self.session.mount('https://', adapter)
         self.session.mount('http://', adapter)
+        self.landea_dao = LandeaDAO()
 
     @staticmethod
     def _build_page_url(url: str, page_number: int) -> str:
@@ -265,43 +271,57 @@ class LandeaScraper:
 
         return enriched_assets
 
+
     # ==========================================
-    # EXPORTING
+    # DATABASE INTEGRATION
     # ==========================================
-    @staticmethod
-    def save_to_excel(assets: list[LandeaAssetModel], output_path: str = "landea_assets.xlsx") -> str:
+    def save_stage1_to_db(self, max_pages: int | None = None) -> int:
+        """
+        Stage 1 DB write:
+        - Crawl all search pages.
+        - For each asset, upsert listing-level fields (id, url, basic attrs) into landea_assets.
+        - Does NOT touch lat/lon/location/description/features so that later enrichment is preserved.
+        """
+        assets = self.scrape_all_search_pages(max_pages=max_pages)
         if not assets:
-            return output_path
+            logger.info("Stage 1: no assets collected, skipping DB write.")
+            return 0
 
-        df = pd.DataFrame([a.model_dump() for a in assets])
-        if 'features' in df.columns:
-            df['features'] = df['features'].apply(lambda x: ", ".join(x) if isinstance(x, list) else x)
+        affected_total = self.landea_dao.upsert_stage1_batch(assets)
+        logger.info("Stage 1: upserted %s rows into landea_assets via DAO.", affected_total)
+        return affected_total
 
-        for col in ("fetch_date", "modified_date"):
-            if col in df.columns:
-                df[col] = df[col].apply(lambda x: x.isoformat() if x is not None else None)
+    def enrich_missing_in_db(self, batch_size: int = 100) -> int:
+        """
+        Stage 2 DB enrichment:
+        - Load rows from landea_assets where lat or lon is NULL.
+        - Enrich each asset from its detail page (description, coords, features, etc.).
+        - Upsert full enriched records back into landea_assets, including location.
+        """
+        total_updated = 0
 
-        output_path_obj = Path(output_path)
-        output_path_obj.parent.mkdir(parents=True, exist_ok=True)
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M")
-        final_path = output_path_obj.with_name(f"{output_path_obj.stem}_{timestamp}{output_path_obj.suffix}")
+        while True:
+            assets_batch: List[LandeaAssetModel] = self.landea_dao.get_assets_missing_coords(
+                limit=batch_size
+            )
+            if not assets_batch:
+                break
 
-        df.to_excel(final_path, index=False)
-        logger.info("Wrote %s Landea assets to %s", len(assets), final_path)
-        return str(final_path)
+            enriched_batch = self.enrich_all_concurrently(assets_batch)
+            updated = self.landea_dao.upsert_enriched_batch(enriched_batch)
+            total_updated += updated
+            logger.info("Stage 2: upserted %s enriched rows so far.", total_updated)
+
+        logger.info("Stage 2 complete. Total enriched rows upserted: %s", total_updated)
+        return total_updated
 
 
 # --- Execution Example ---
 if __name__ == "__main__":
     scraper = LandeaScraper(max_workers=5)
 
-    print("\n--- RUNNING STAGE 1: BULK SCRAPING ---")
-    bulk_assets = scraper.scrape_all_search_pages(max_pages=2)
+    print("\n--- RUNNING STAGE 1: SAVE LISTINGS TO DB ---")
+    scraper.save_stage1_to_db(max_pages=2)
 
-    if bulk_assets:
-        print(f"\nSuccessfully gathered {len(bulk_assets)} assets from search.")
-
-        print("\n--- RUNNING STAGE 2: CONCURRENT ENRICHMENT ---")
-        enriched_assets = scraper.enrich_all_concurrently(bulk_assets)
-
-        scraper.save_to_excel(enriched_assets, "landea_properties.xlsx")
+    print("\n--- RUNNING STAGE 2: ENRICH MISSING COORDS FROM DB ---")
+    scraper.enrich_missing_in_db(batch_size=50)
