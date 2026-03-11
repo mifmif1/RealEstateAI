@@ -1,12 +1,16 @@
-import logging
 import re
-from datetime import datetime, timezone
+import logging
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+import concurrent.futures
+from typing import List, Dict, Any
+from datetime import datetime, timezone
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-import pandas as pd
-import requests
 import scrapy
+import requests
+import pandas as pd
+from urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 
 from model.landea_asset_model import LandeaAssetModel
 
