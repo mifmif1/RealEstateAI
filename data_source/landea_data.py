@@ -14,6 +14,7 @@ from requests.adapters import HTTPAdapter
 
 from model.landea_asset_model import LandeaAssetModel
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", force=True)
 logger = logging.getLogger(__name__)
 
 
