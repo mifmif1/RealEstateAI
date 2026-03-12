@@ -1,12 +1,10 @@
+import concurrent.futures
 import logging
 import re
-import concurrent.futures
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import List, Dict, Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-import pandas as pd
 import requests
 import scrapy
 from requests.adapters import HTTPAdapter
@@ -25,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 class LandeaScraper:
     def __init__(self, base_url: str | None = None, max_workers: int = 5) -> None:
-        self.base_url = base_url or "https://www.landea.gr/en/SearchResults/Residential/All/All?sortBy=1"
+        self.base_url = base_url or "https://www.landea.gr/en/SearchResults/Residential/All/All?sortBy=8"
         self.max_workers = max_workers
 
         self.custom_headers = {
@@ -271,7 +269,6 @@ class LandeaScraper:
 
         return enriched_assets
 
-
     # ==========================================
     # DATABASE INTEGRATION
     # ==========================================
@@ -320,8 +317,8 @@ class LandeaScraper:
 if __name__ == "__main__":
     scraper = LandeaScraper(max_workers=5)
 
-    print("\n--- RUNNING STAGE 1: SAVE LISTINGS TO DB ---")
-    scraper.save_stage1_to_db(max_pages=2)
+    # print("\n--- RUNNING STAGE 1: SAVE LISTINGS TO DB ---")
+    # scraper.save_stage1_to_db()
 
     print("\n--- RUNNING STAGE 2: ENRICH MISSING COORDS FROM DB ---")
     scraper.enrich_missing_in_db(batch_size=50)

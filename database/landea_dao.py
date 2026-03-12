@@ -370,7 +370,8 @@ class LandeaDAO:
                     ELSE NULL
                 END,
                 %s, %s, %s, %s, %s,
-                %s, %s, %s, %s, %s, %s
+                %s, %s, %s, %s, %s,
+                %s, %s, %s
             )
             ON CONFLICT (landea_id) DO UPDATE SET
                 url_id = EXCLUDED.url_id,
