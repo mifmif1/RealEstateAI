@@ -7,14 +7,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
 
-import pandas as pd
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
-from flow.spitogatos_flow import SpitogatosFlow
+from flow.landea_flow import LandeaFlow
 from flow.reonline_flow import ReOnlineFlow
+from flow.spitogatos_flow import SpitogatosFlow
 from model.asset_model import TargetAsset
 from model.comparison_data_model import ComparisonDataModel
 from model.spitogatos_asset_model import SpitogatosAsset
@@ -37,6 +37,7 @@ app.add_middleware(
 # Initialize flow classes
 spitogatos_flow = SpitogatosFlow()
 reonline_flow = ReOnlineFlow()
+landea_flow = LandeaFlow()
 
 # Temporary directory for file uploads
 UPLOAD_DIR = Path("api/uploads")
@@ -54,86 +55,17 @@ async def root():
             "spitogatos_assets_by_circle": "/spitogatos/assets-by-circle",
             "spitogatos_asset_statistics_by_radius": "/spitogatos/asset-statistics-by-radius",
             "spitogatos_asset_statistics_by_comparisons": "/spitogatos/asset-statistics-by-comparisons",
-            "reonline": "/reonline/add-sqm"
+            "reonline": "/reonline/add-sqm",
+            "landea_stage1": "/landea/run-stage1",
+            "landea_stage2": "/landea/run-stage2",
         }
     }
 
 
-@app.post("/spitogatos/expand-excel-comparison")
-async def expand_excel_spitogatos_comparison(
-    file: UploadFile = File(..., description="Excel file (.xlsx or .xlsb)"),
-    must_columns: str = Form(..., description="Comma-separated list of required columns"),
-    location_tolerance: float = Form(100, description="Location tolerance in meters"),
-    sqm_tolerance: Optional[int] = Form(None, description="Square meter tolerance"),
-    skip_sqm_lt: Optional[float] = Form(None, description="Skip rows where sqm < this value"),
-    skip_if_has_comparison: bool = Form(False, description="Skip rows that already have comparison_average"),
-    skip_if_has_percent: bool = Form(False, description="Skip rows with '%' in TitleGR"),
-    skip_if_not_residential: bool = Form(False, description="Skip rows that are not residential (not Διαμέρισμα, Μεζονέτα, or Μονοκατοικία)")
-):
-    temp_input_path = None
-    try:
-        if not (file.filename.endswith('.xlsx') or file.filename.endswith('.xlsb')):
-            raise HTTPException(status_code=400, detail="File must be .xlsx or .xlsb format")
-
-        columns_list = [col.strip() for col in must_columns.split(',')]
-
-        temp_input_path = UPLOAD_DIR / f"input_{file.filename}"
-        with open(temp_input_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-
-        def row_conditions(row):
-            conditions = []
-            if skip_sqm_lt is not None and 'sqm' in row.keys():
-                conditions.append(row['sqm'] < skip_sqm_lt)
-            if skip_if_has_comparison and 'comparison_average' in row.keys():
-                conditions.append(not pd.isna(row['comparison_average']))
-            if skip_if_has_percent and 'TitleGR' in row.keys():
-                conditions.append('%' in str(row['TitleGR']))
-            if skip_if_not_residential and 'SubCategoryGR' in row.keys():
-                subcategory = str(row['SubCategoryGR'])
-                conditions.append(
-                    ('Διαμέρισμα' not in subcategory) and
-                    ('Μεζονέτα' not in subcategory) and
-                    ('Μονοκατοικία' not in subcategory)
-                )
-            return any(conditions)
-
-        spitogatos_flow.expand_excel__spitogatos_comparison(
-            excel_path=str(temp_input_path),
-            must_columns=columns_list,
-            row_conditions=row_conditions,
-            location_tolerance=location_tolerance,
-            sqm_tolerance=sqm_tolerance
-        )
-
-        output_files = list(UPLOAD_DIR.glob(f"input_{file.filename.rsplit('.', 1)[0]}_spitogatos_comparison_*.xlsx"))
-        if not output_files:
-            output_files = list(UPLOAD_DIR.glob(f"input_{file.filename.rsplit('.', 1)[0]}_spitogatos_comparison_*.xlsb"))
-        if not output_files:
-            raise HTTPException(status_code=500, detail="Output file not found after processing")
-
-        output_file = max(output_files, key=lambda p: p.stat().st_mtime)
-        if temp_input_path and temp_input_path.exists():
-            temp_input_path.unlink()
-
-        return FileResponse(
-            path=str(output_file),
-            filename=output_file.name,
-            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        if temp_input_path and temp_input_path.exists():
-            temp_input_path.unlink()
-        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
-
-
 @app.post("/spitogatos/get-all-athens")
 async def get_all_athens(
-    start_offset: int = 0,
-    max_pages: Optional[int] = None,
+        start_offset: int = 0,
+        max_pages: Optional[int] = None,
 ):
     """
     Trigger fetching and persisting all Athens listings from Spitogatos.
@@ -159,13 +91,13 @@ async def get_all_athens(
     summary="Get Spitogatos assets within a circle",
 )
 async def get_assets_by_circle(
-    lon: float,
-    lat: float,
-    radius_meters: float = 100,
-    website_modified_from: Optional[datetime] = None,
-    website_modified_to: Optional[datetime] = None,
-    website_uploaded_from: Optional[datetime] = None,
-    website_uploaded_to: Optional[datetime] = None,
+        lon: float,
+        lat: float,
+        radius_meters: float = 100,
+        website_modified_from: Optional[datetime] = None,
+        website_modified_to: Optional[datetime] = None,
+        website_uploaded_from: Optional[datetime] = None,
+        website_uploaded_to: Optional[datetime] = None,
 ):
     """
     Return all Spitogatos assets stored in the DB that lie within a circle
@@ -197,9 +129,9 @@ async def get_assets_by_circle(
     summary="Get price statistics for a target asset using nearby assets",
 )
 async def get_asset_statistics_by_radius(
-    asset: TargetAsset,
-    radius_meters: int = 100,
-    min_assets: int = 10,
+        asset: TargetAsset,
+        radius_meters: int = 100,
+        min_assets: int = 10,
 ):
     """
     Compute price-per-sqm statistics for a target asset based on Spitogatos
@@ -233,8 +165,8 @@ async def get_asset_statistics_by_radius(
     summary="Get price statistics for a target asset using explicit comparison assets",
 )
 async def get_asset_statistics_by_comparisons(
-    asset: TargetAsset,
-    comparison_assets: List[SpitogatosAsset],
+        asset: TargetAsset,
+        comparison_assets: List[SpitogatosAsset],
 ):
     """
     Compute price-per-sqm statistics for a target asset given an explicit list
@@ -256,7 +188,7 @@ async def get_asset_statistics_by_comparisons(
 
 @app.post("/reonline/add-sqm")
 async def add_sqm_reonline(
-    file: UploadFile = File(..., description="Excel file (.xlsx or .xlsb) with 'Link' column")
+        file: UploadFile = File(..., description="Excel file (.xlsx or .xlsb) with 'Link' column")
 ):
     temp_input_path = None
     try:
@@ -293,6 +225,56 @@ async def add_sqm_reonline(
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
 
+@app.post("/landea/run-stage1")
+async def landea_run_stage1(
+        start_page: int = 1,
+        max_pages: Optional[int] = None,
+):
+    """
+    Trigger Landea Stage 1:
+    - Crawl search pages from Landea and upsert listing-level data into DB.
+    """
+    try:
+        affected = await run_in_threadpool(
+            landea_flow.run_stage1,
+            max_pages,
+            start_page,
+        )
+        return {
+            "status": "ok",
+            "message": "Completed Landea Stage 1.",
+            "start_page": start_page,
+            "max_pages": max_pages,
+            "rows_affected": affected,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error running Landea Stage 1: {str(e)}")
+
+
+@app.post("/landea/run-stage2")
+async def landea_run_stage2(
+        batch_size: int = 100,
+):
+    """
+    Trigger Landea Stage 2:
+    - Enrich DB rows missing coordinates from their detail pages.
+    """
+    try:
+        total_updated = await run_in_threadpool(
+            landea_flow.run_stage2,
+            batch_size,
+        )
+        return {
+            "status": "ok",
+            "message": "Completed Landea Stage 2.",
+            "batch_size": batch_size,
+            "rows_enriched": total_updated,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error running Landea Stage 2: {str(e)}")
+
+
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
