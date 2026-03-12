@@ -137,10 +137,10 @@ class LandeaScraper:
 
         return extracted_assets
 
-    def scrape_all_search_pages(self, max_pages: int | None = None) -> List[LandeaAssetModel]:
+    def scrape_all_search_pages(self, max_pages: int | None = None, start_page: int = 1) -> List[LandeaAssetModel]:
         all_assets: List[LandeaAssetModel] = []
         seen_ids: set[str] = set()
-        current_page = 1
+        current_page = start_page
 
         while True:
             if max_pages is not None and current_page > max_pages:
@@ -275,14 +275,14 @@ class LandeaScraper:
     # ==========================================
     # DATABASE INTEGRATION
     # ==========================================
-    def save_stage1_to_db(self, max_pages: int | None = None) -> int:
+    def save_stage1_to_db(self, max_pages: int | None = None, start_page: int = 1) -> int:
         """
         Stage 1 DB write:
         - Crawl all search pages.
         - For each asset, upsert listing-level fields (id, url, basic attrs) into landea_assets.
         - Does NOT touch lat/lon/location/description/features so that later enrichment is preserved.
         """
-        assets = self.scrape_all_search_pages(max_pages=max_pages)
+        assets = self.scrape_all_search_pages(max_pages=max_pages, start_page=start_page)
         if not assets:
             logger.info("Stage 1: no assets collected, skipping DB write.")
             return 0
