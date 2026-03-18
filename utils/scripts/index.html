@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Athens Neighborhoods Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        #map { height: 100vh; width: 100vw; }
+
+        /* Styling for the hover info box */
+        .info {
+            padding: 10px 14px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            color: #333;
+        }
+        .info h4 { margin: 0 0 5px; color: #777; border-bottom: 1px solid #ccc; padding-bottom: 3px;}
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // 1. Initialize map centered roughly on Athens
+    const map = L.map('map').setView([37.9838, 23.7275], 12);
+
+    // 2. Add OpenStreetMap street tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 3. Create a custom control for the hover info box
+    const info = L.control();
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
+
+    // Update the info box based on feature properties
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Neighborhood Data</h4>' +  (props ?
+            '<b>' + (props.name_en || props.name) + '</b><br />' +
+            'District: ' + (props.name_dk_en || props.name_dk) + '<br />' +
+            'Area: ' + Math.round(props.shape_area).toLocaleString() + ' m²'
+            : 'Hover over a neighborhood');
+    };
+    info.addTo(map);
+
+    // 4. Styling function for the polygons
+    function style(feature) {
+        // A simple array of colors to assign to neighborhoods
+        const colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8'];
+        const colorIndex = (feature.properties.gid || 1) % colors.length;
+
+        return {
+            fillColor: colors[colorIndex],
+            weight: 2,
+            opacity: 1,
+            color: 'white', // Border color
+            dashArray: '3',
+            fillOpacity: 0.6
+        };
+    }
+
+    // 5. Interaction handlers (Hover on / Hover off)
+    let geojsonLayer;
+
+    function highlightFeature(e) {
+        const layer = e.target;
+        layer.setStyle({
+            weight: 4,
+            color: '#444',
+            dashArray: '',
+            fillOpacity: 0.8
+        });
+        layer.bringToFront();
+        info.update(layer.feature.properties);
+    }
+
+    function resetHighlight(e) {
+        geojsonLayer.resetStyle(e.target);
+        info.update();
+    }
+
+    function onEachFeature(feature, layer) {
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight
+        });
+    }
+
+    // 6. Fetch the JSON file and add it to the map
+    fetch('athens_wgs84.json')
+        .then(response => {
+            if (!response.ok) throw new Error("Could not load JSON file.");
+            return response.json();
+        })
+        .then(data => {
+            geojsonLayer = L.geoJson(data, {
+                style: style,
+                onEachFeature: onEachFeature
+            }).addTo(map);
+
+            // Automatically zoom/pan the map to fit exactly around the neighborhoods
+            map.fitBounds(geojsonLayer.getBounds());
+        })
+        .catch(error => console.error('Error:', error));
+</script>
+
+</body>
+</html>
