@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Athens Neighborhoods Map</title>
+    <title>Attica Administrative Regions</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -49,11 +49,19 @@
 
     // Update the info box based on feature properties
     info.update = function (props) {
-        this._div.innerHTML = '<h4>Neighborhood Data</h4>' +  (props ?
-            '<b>' + (props.name_en || props.name) + '</b><br />' +
-            'District: ' + (props.name_dk_en || props.name_dk) + '<br />' +
-            'Area: ' + Math.round(props.shape_area).toLocaleString() + ' m²'
-            : 'Hover over a neighborhood');
+        const name =
+            (props && (props["name:en"] || props.sorting_name || props.name)) || "";
+        const adminLevel =
+            (props && props.admin_level) || "";
+        const population =
+            (props && props.population) || "";
+
+        this._div.innerHTML = '<h4>Region Data</h4>' + (props
+            ? '<b>' + name + '</b><br />' +
+              (adminLevel ? ('Admin level: ' + adminLevel + '<br />') : '') +
+              (population ? ('Population: ' + Number(population).toLocaleString() + '<br />') : '') +
+              (props.ref ? ('Ref: ' + props.ref) : '')
+            : 'Hover over a region');
     };
     info.addTo(map);
 
@@ -61,7 +69,14 @@
     function style(feature) {
         // A simple array of colors to assign to neighborhoods
         const colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8'];
-        const colorIndex = (feature.properties.gid || 1) % colors.length;
+        const props = feature && feature.properties ? feature.properties : {};
+        const key = props["@id"] || props.ref || props.sorting_name || props.name || "1";
+        // crude deterministic hash -> color index
+        let hash = 0;
+        for (let i = 0; i < String(key).length; i++) {
+            hash = (hash * 31 + String(key).charCodeAt(i)) >>> 0;
+        }
+        const colorIndex = hash % colors.length;
 
         return {
             fillColor: colors[colorIndex],
@@ -101,7 +116,7 @@
     }
 
     // 6. Fetch the JSON file and add it to the map
-    fetch('athens_wgs84.json')
+    fetch('attica_regions.geojson')
         .then(response => {
             if (!response.ok) throw new Error("Could not load JSON file.");
             return response.json();
