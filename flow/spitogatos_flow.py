@@ -203,6 +203,58 @@ class SpitogatosFlow:
         )
         return assets
 
+    def get_assets_by_athens_neighborhood(
+        self,
+        neighborhood_name_en: str,
+        website_modified_from: datetime.datetime | None = None,
+        website_modified_to: datetime.datetime | None = None,
+        website_uploaded_from: datetime.datetime | None = None,
+        website_uploaded_to: datetime.datetime | None = None,
+    ) -> List[SpitogatosAsset]:
+        """
+        Fetch all Spitogatos assets stored in the DB that lie within the given
+        Athens neighborhood polygon (geography.athens_neighborhood.name_en).
+        """
+        assets = self._spitogatos_dao.search_by_athens_neighborhood(
+            neighborhood_name_en=neighborhood_name_en,
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+        logger.info(
+            "Fetched %s assets from spitogatos_data in Athens neighborhood=%s",
+            len(assets),
+            neighborhood_name_en,
+        )
+        return assets
+
+    def get_assets_by_attica_municipality(
+        self,
+        municipality_name_en: str,
+        website_modified_from: datetime.datetime | None = None,
+        website_modified_to: datetime.datetime | None = None,
+        website_uploaded_from: datetime.datetime | None = None,
+        website_uploaded_to: datetime.datetime | None = None,
+    ) -> List[SpitogatosAsset]:
+        """
+        Fetch all Spitogatos assets stored in the DB that lie within the given
+        Attica municipality polygon (geography.attica_municipality.name_en).
+        """
+        assets = self._spitogatos_dao.search_by_attica_municipality(
+            municipality_name_en=municipality_name_en,
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+        logger.info(
+            "Fetched %s assets from spitogatos_data in Attica municipality=%s",
+            len(assets),
+            municipality_name_en,
+        )
+        return assets
+
     def get_asset_statistics_by_radius(self, asset: TargetAsset,
                                        radius_meters: int = 100,
                                        min_assets: int = 10,

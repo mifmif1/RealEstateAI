@@ -127,6 +127,64 @@ async def get_assets_by_circle(
         )
 
 
+@spitogatos_router.get(
+    "/assets-by-athens-neighborhood",
+    response_model=List[SpitogatosAsset],
+    summary="Get Spitogatos assets within an Athens neighborhood",
+)
+async def get_assets_by_athens_neighborhood(
+    neighborhood_name_en: str,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    try:
+        assets = await run_in_threadpool(
+            spitogatos_flow.get_assets_by_athens_neighborhood,
+            neighborhood_name_en,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        return assets
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error fetching assets by Athens neighborhood: {str(e)}",
+        )
+
+
+@spitogatos_router.get(
+    "/assets-by-attica-municipality",
+    response_model=List[SpitogatosAsset],
+    summary="Get Spitogatos assets within an Attica municipality",
+)
+async def get_assets_by_attica_municipality(
+    municipality_name_en: str,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    try:
+        assets = await run_in_threadpool(
+            spitogatos_flow.get_assets_by_attica_municipality,
+            municipality_name_en,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        return assets
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error fetching assets by Attica municipality: {str(e)}",
+        )
+
+
 @spitogatos_router.post(
     "/asset-statistics-by-radius",
     response_model=ComparisonDataModel,
