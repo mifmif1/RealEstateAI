@@ -39,6 +39,7 @@ CREATE INDEX IF NOT EXISTS idx_attica_municipality_admin_level
 CREATE INDEX IF NOT EXISTS idx_attica_municipality_name_en
     ON geography.attica_municipality (name_en);
 
+DROP TRIGGER IF EXISTS update_attica_municipality_updated_at ON geography.attica_municipality;
 CREATE TRIGGER update_attica_municipality_updated_at
 BEFORE UPDATE ON geography.attica_municipality
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
