@@ -63,6 +63,7 @@ CREATE INDEX IF NOT EXISTS idx_potential_assets_source_portfolio_code
 CREATE INDEX IF NOT EXISTS idx_potential_assets_created_at
     ON potential_assets (created_at);
 
+DROP TRIGGER IF EXISTS update_potential_assets_updated_at ON potential_assets;
 CREATE TRIGGER update_potential_assets_updated_at
 BEFORE UPDATE ON potential_assets
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -117,6 +118,7 @@ CREATE INDEX IF NOT EXISTS idx_comparison_assets_source_portfolio_code
 CREATE INDEX IF NOT EXISTS idx_comparison_assets_created_at
     ON comparison_assets (created_at);
 
+DROP TRIGGER IF EXISTS update_comparison_assets_updated_at ON comparison_assets;
 CREATE TRIGGER update_comparison_assets_updated_at
 BEFORE UPDATE ON comparison_assets
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -156,6 +158,7 @@ CREATE TABLE IF NOT EXISTS potential_comparison_summary (
 CREATE INDEX IF NOT EXISTS idx_potential_comparison_summary_created_at
     ON potential_comparison_summary (created_at);
 
+DROP TRIGGER IF EXISTS update_potential_comparison_summary_updated_at ON potential_comparison_summary;
 CREATE TRIGGER update_potential_comparison_summary_updated_at
 BEFORE UPDATE ON potential_comparison_summary
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

@@ -51,6 +51,7 @@ BEGIN
 END;
 $$ LANGUAGE 'plpgsql';
 
+DROP TRIGGER IF EXISTS update_landea_assets_modified_at ON landea_assets;
 CREATE TRIGGER update_landea_assets_modified_at
 BEFORE UPDATE ON landea_assets
 FOR EACH ROW EXECUTE FUNCTION update_modified_at_column();
