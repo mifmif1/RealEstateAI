@@ -12,6 +12,7 @@ from utils.consts.greek_tems import floor_level_dict
 from data_source.spitogatos_data import SpitogatosData
 from model.spitogatos_asset_model import SpitogatosAsset
 from model.comparison_data_model import ComparisonDataModel
+from model.area_statistics_model import AreaStatisticsModel
 
 SPITOGATOS_PER_PAGE = 30
 TRIES_TILL_ENOUGH_ASSETS = 1
@@ -254,6 +255,76 @@ class SpitogatosFlow:
             municipality_name_en,
         )
         return assets
+
+    def get_neighborhood_statistics(
+        self,
+        neighborhood_name_en: str,
+        website_modified_from: datetime.datetime | None = None,
+        website_modified_to: datetime.datetime | None = None,
+        website_uploaded_from: datetime.datetime | None = None,
+        website_uploaded_to: datetime.datetime | None = None,
+    ) -> AreaStatisticsModel | None:
+        """
+        Compute price-per-sqm statistics for all Spitogatos assets inside a given
+        Athens neighborhood (by name_en).
+        """
+        assets = self.get_assets_by_athens_neighborhood(
+            neighborhood_name_en=neighborhood_name_en,
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+        if not assets:
+            return None
+
+        price_per_sqm = sorted([(a.price / a.sqm) for a in assets if a.sqm])
+        if not price_per_sqm:
+            return None
+        n = len(price_per_sqm)
+        return AreaStatisticsModel(
+            no_assets=n,
+            min=price_per_sqm[0],
+            max=price_per_sqm[-1],
+            std=statistics.stdev(price_per_sqm) if n >= 2 else 0.0,
+            mean=sum(price_per_sqm) / n,
+            median=price_per_sqm[n // 2],
+        )
+
+    def get_municipality_statistics(
+        self,
+        municipality_name_en: str,
+        website_modified_from: datetime.datetime | None = None,
+        website_modified_to: datetime.datetime | None = None,
+        website_uploaded_from: datetime.datetime | None = None,
+        website_uploaded_to: datetime.datetime | None = None,
+    ) -> AreaStatisticsModel | None:
+        """
+        Compute price-per-sqm statistics for all Spitogatos assets inside a given
+        Attica municipality (by name_en).
+        """
+        assets = self.get_assets_by_attica_municipality(
+            municipality_name_en=municipality_name_en,
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+        if not assets:
+            return None
+
+        price_per_sqm = sorted([(a.price / a.sqm) for a in assets if a.sqm])
+        if not price_per_sqm:
+            return None
+        n = len(price_per_sqm)
+        return AreaStatisticsModel(
+            no_assets=n,
+            min=price_per_sqm[0],
+            max=price_per_sqm[-1],
+            std=statistics.stdev(price_per_sqm) if n >= 2 else 0.0,
+            mean=sum(price_per_sqm) / n,
+            median=price_per_sqm[n // 2],
+        )
 
     def get_asset_statistics_by_radius(self, asset: TargetAsset,
                                        radius_meters: int = 100,

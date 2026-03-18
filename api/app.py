@@ -16,6 +16,7 @@ from flow.landea_flow import LandeaFlow
 from flow.reonline_flow import ReOnlineFlow
 from flow.spitogatos_flow import SpitogatosFlow
 from model.asset_model import TargetAsset
+from model.area_statistics_model import AreaStatisticsModel
 from model.comparison_data_model import ComparisonDataModel
 from model.spitogatos_asset_model import SpitogatosAsset
 
@@ -182,6 +183,78 @@ async def get_assets_by_attica_municipality(
         raise HTTPException(
             status_code=500,
             detail=f"Error fetching assets by Attica municipality: {str(e)}",
+        )
+
+
+@spitogatos_router.get(
+    "/neighborhood-statistics",
+    response_model=AreaStatisticsModel,
+    summary="Get price-per-sqm statistics for an Athens neighborhood",
+)
+async def get_neighborhood_statistics(
+    neighborhood_name_en: str,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    try:
+        result = await run_in_threadpool(
+            spitogatos_flow.get_neighborhood_statistics,
+            neighborhood_name_en,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        if result is None:
+            raise HTTPException(
+                status_code=404,
+                detail="No assets found to compute neighborhood statistics",
+            )
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error computing neighborhood statistics: {str(e)}",
+        )
+
+
+@spitogatos_router.get(
+    "/municipality-statistics",
+    response_model=AreaStatisticsModel,
+    summary="Get price-per-sqm statistics for an Attica municipality",
+)
+async def get_municipality_statistics(
+    municipality_name_en: str,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    try:
+        result = await run_in_threadpool(
+            spitogatos_flow.get_municipality_statistics,
+            municipality_name_en,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        if result is None:
+            raise HTTPException(
+                status_code=404,
+                detail="No assets found to compute municipality statistics",
+            )
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error computing municipality statistics: {str(e)}",
         )
 
 
