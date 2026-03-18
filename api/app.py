@@ -74,7 +74,7 @@ async def get_all_athens(
     request does not block the event loop.
     """
     try:
-        await run_in_threadpool(spitogatos_flow.get_all_athens, start_offset, max_pages)
+        await run_in_threadpool(spitogatos_flow.fetch_all_athens, start_offset, max_pages)
         return {
             "status": "ok",
             "message": "Completed get_all_athens run.",
