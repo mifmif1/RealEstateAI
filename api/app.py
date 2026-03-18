@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, APIRouter
 from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -39,6 +39,10 @@ spitogatos_flow = SpitogatosFlow()
 reonline_flow = ReOnlineFlow()
 landea_flow = LandeaFlow()
 
+# Routers (keep URLs grouped by prefix)
+spitogatos_router = APIRouter(prefix="/spitogatos", tags=["spitogatos"])
+landea_router = APIRouter(prefix="/landea", tags=["landea"])
+
 # Temporary directory for file uploads
 UPLOAD_DIR = Path("api/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -62,7 +66,7 @@ async def root():
     }
 
 
-@app.post("/spitogatos/get-all-athens")
+@spitogatos_router.post("/get-all-athens")
 async def get_all_athens(
         start_offset: int = 0,
         max_pages: Optional[int] = None,
@@ -85,8 +89,8 @@ async def get_all_athens(
         raise HTTPException(status_code=500, detail=f"Error running get_all_athens: {str(e)}")
 
 
-@app.get(
-    "/spitogatos/assets-by-circle",
+@spitogatos_router.get(
+    "/assets-by-circle",
     response_model=List[SpitogatosAsset],
     summary="Get Spitogatos assets within a circle",
 )
@@ -123,8 +127,8 @@ async def get_assets_by_circle(
         )
 
 
-@app.post(
-    "/spitogatos/asset-statistics-by-radius",
+@spitogatos_router.post(
+    "/asset-statistics-by-radius",
     response_model=ComparisonDataModel,
     summary="Get price statistics for a target asset using nearby assets",
 )
@@ -132,6 +136,11 @@ async def get_asset_statistics_by_radius(
         asset: TargetAsset,
         radius_meters: int = 100,
         min_assets: int = 10,
+        limit: int = 100,
+        website_modified_from: Optional[datetime] = None,
+        website_modified_to: Optional[datetime] = None,
+        website_uploaded_from: Optional[datetime] = None,
+        website_uploaded_to: Optional[datetime] = None,
 ):
     """
     Compute price-per-sqm statistics for a target asset based on Spitogatos
@@ -143,6 +152,11 @@ async def get_asset_statistics_by_radius(
             asset,
             radius_meters,
             min_assets,
+            limit,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
         )
         if result is None:
             raise HTTPException(
@@ -159,8 +173,8 @@ async def get_asset_statistics_by_radius(
         )
 
 
-@app.post(
-    "/spitogatos/asset-statistics-by-comparisons",
+@spitogatos_router.post(
+    "/asset-statistics-by-comparisons",
     response_model=ComparisonDataModel,
     summary="Get price statistics for a target asset using explicit comparison assets",
 )
@@ -225,7 +239,7 @@ async def add_sqm_reonline(
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
 
-@app.post("/landea/run-stage1")
+@landea_router.post("/run-stage1")
 async def landea_run_stage1(
         start_page: int = 1,
         max_pages: Optional[int] = None,
@@ -251,7 +265,7 @@ async def landea_run_stage1(
         raise HTTPException(status_code=500, detail=f"Error running Landea Stage 1: {str(e)}")
 
 
-@app.post("/landea/run-stage2")
+@landea_router.post("/run-stage2")
 async def landea_run_stage2(
         batch_size: int = 100,
 ):
@@ -273,6 +287,9 @@ async def landea_run_stage2(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error running Landea Stage 2: {str(e)}")
 
+
+app.include_router(spitogatos_router)
+app.include_router(landea_router)
 
 if __name__ == "__main__":
     import uvicorn
