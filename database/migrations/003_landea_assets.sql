@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS landea_assets (
     url_id VARCHAR(200) NOT NULL,
 
     url TEXT,
+    property_type TEXT,
     sqm FLOAT,
     lat FLOAT,
     lon FLOAT,
@@ -18,10 +19,14 @@ CREATE TABLE IF NOT EXISTS landea_assets (
     price FLOAT,
     address TEXT,
     bedrooms INTEGER,
+    bathrooms INTEGER,
+    features TEXT[],
+    description TEXT,
     auction_date VARCHAR(50),
     construction_year INTEGER,
 
     fetch_date TIMESTAMP,
+    modified_date TIMESTAMP,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

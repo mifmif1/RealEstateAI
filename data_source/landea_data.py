@@ -1,176 +1,324 @@
+import concurrent.futures
 import logging
 import re
-from datetime import datetime
-from typing import Iterable, Generator
-from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+from datetime import datetime, timezone
+from typing import List, Dict, Any
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
+import requests
 import scrapy
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
+from database.landea_dao import LandeaDAO
 from model.landea_asset_model import LandeaAssetModel
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    force=True,
+)
 logger = logging.getLogger(__name__)
 
 
-class LandeaData(scrapy.Spider):
+class LandeaScraper:
+    def __init__(self, base_url: str | None = None, max_workers: int = 5) -> None:
+        self.base_url = base_url or "https://www.landea.gr/en/SearchResults/Residential/All/All?sortBy=8"
+        self.max_workers = max_workers
 
-    name = "landea"
+        self.custom_headers = {
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "accept-language": "en-US,en;q=0.9",
+            "sec-ch-ua": '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        }
 
-    custom_headers = {
-        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "accept-language": "en-US,en;q=0.9",
-        "sec-ch-ua": '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"Windows"',
-        "upgrade-insecure-requests": "1",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
-    }
+        self.session = requests.Session()
+        self.session.headers.update(self.custom_headers)
+        retries = Retry(total=3, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
+        adapter = HTTPAdapter(max_retries=retries, pool_connections=max_workers, pool_maxsize=max_workers)
+        self.session.mount('https://', adapter)
+        self.session.mount('http://', adapter)
+        self.landea_dao = LandeaDAO()
 
-    def __init__(self, target_url: str | None = None, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        # Default URL if none is provided via the command line
-        self.base_url = target_url or "https://www.landea.gr/en/SearchResults/Residential/All/All"
-
-    def _build_page_url(self, url: str, page_number: int) -> str:
-        """Safely injects or updates the 'page' query parameter in any URL."""
+    @staticmethod
+    def _build_page_url(url: str, page_number: int) -> str:
         parsed = urlparse(url)
         query = parse_qs(parsed.query)
-        query['page'] = [str(page_number)]
+        query["page"] = [str(page_number)]
         new_query = urlencode(query, doseq=True)
         return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, new_query, parsed.fragment))
 
-    def start_requests(self) -> Iterable[scrapy.Request]:
-        # Kick off the scrape starting at Page 1
-        first_page_url = self._build_page_url(self.base_url, 1)
+    # ==========================================
+    # STAGE 1: SEARCH PAGE PARSING (FAST)
+    # ==========================================
+    def _parse_search_list_html(self, html_content: str) -> List[LandeaAssetModel]:
+        sel = scrapy.Selector(text=html_content)
+        extracted_assets: List[LandeaAssetModel] = []
+        current_fetch_date = datetime.now(timezone.utc)
 
-        yield scrapy.Request(
-            url=first_page_url,
-            headers=self.custom_headers,
-            callback=self.parse,
-            meta={
-                'current_page': 1,        # Pass the page counter to the parse function
-                'impersonate': 'chrome110',
-            },
-        )
+        for prop in sel.css('a.property-anchor'):
 
-    def parse(self, response) -> Generator[LandeaAssetModel | scrapy.Request, None, None]:
-        current_page = response.meta['current_page']
-        properties = response.css('div.propertycard')
+            # URLs & IDs
+            href = prop.attrib.get('href', '')
+            url = f"https://www.landea.gr{href}" if href.startswith("/") else href
+            url_id = url.rstrip('/').split('/')[-1] if url else ""
+            landea_id = prop.attrib.get('propertyid', '')
 
-        # If the page has no property cards, we've reached the end. Stop scraping.
-        if not properties:
-            self.logger.info(f"--- No properties found on page {current_page}. Scraping finished! ---")
-            return
+            # --- Reverted to the original, reliable XPath extractions ---
+            title = prop.css('div#title span::text').get(default='').strip() or None
 
-        self.logger.info(f"--- Scraping Page {current_page} | Found {len(properties)} properties ---")
+            property_type = None
+            if title:
+                type_match = re.search(r'^([A-Za-z\-\s]+?)(?=\s*\d)', title)
+                if type_match:
+                    property_type = type_match.group(1).strip()
 
-        # Extract data for all properties on the current page
-        for prop in properties:
-            yield self.parse_property(prop)
+            raw_address_parts = prop.xpath('.//div[@id="address"]/text()').getall()
+            address = " ".join([t.strip() for t in raw_address_parts if t.strip()]) or None
 
-        # Automatically generate the request for the next page
-        next_page = current_page + 1
-        next_page_url = self._build_page_url(self.base_url, next_page)
+            is_hot = prop.css('div.tagArea.hot').get() is not None
 
-        yield scrapy.Request(
-            url=next_page_url,
-            headers=self.custom_headers,
-            callback=self.parse,
-            meta={
-                'current_page': next_page,
-                'impersonate': 'chrome110',
-            },
-        )
+            auction_date = prop.xpath(
+                './/div[contains(text(), "Auction date:")]/following-sibling::div[contains(@class, "secondCardline")]/text()').get(
+                default='').strip() or None
 
-    def parse_property(self, prop_selector) -> LandeaAssetModel:
-        """Extracts a LandeaAsset from a single property card."""
-        # 1. Address extraction
-        address_parts = prop_selector.xpath('.//div[contains(@class, "property-address")]/text()').getall()
-        address = "".join(address_parts).strip() if address_parts else None
+            price = None
+            raw_price = prop.xpath(
+                './/div[contains(text(), "Starting Bid:")]/following-sibling::div[contains(@class, "secondCardline")]/text()').get(
+                default='').strip()
+            if raw_price:
+                price_cleaned = raw_price.replace('€', '').replace('.', '').strip().replace(',', '.')
+                price_cleaned = re.sub(r'[^\d.]', '', price_cleaned)
+                if price_cleaned:
+                    price = float(price_cleaned)
 
-        # 2. Price and Date extraction
-        price_elements = prop_selector.css('div.card-price::text').getall()
-        raw_price = price_elements[0].strip() if len(price_elements) > 0 else None
-        auction_date = price_elements[1].strip() if len(price_elements) > 1 else None
+            # --- DYNAMIC ICON PARSING ---
+            sqm, bedrooms, bathrooms, construction_year, floor = None, None, None, None, None
+            features = []
 
-        # Helper parsers
-        def _to_float(value: str | None) -> float | None:
-            if not value:
-                return None
-            digits = "".join(ch if (ch.isdigit() or ch in ",.") else "" for ch in value)
-            digits = digits.replace(",", "")
+            # Loop through every icon block on the card
+            for node in prop.css('ul.facilities-list li .one-line'):
+                # Extract text using robust direct text node grabbing
+                raw_text_parts = node.xpath('./text()').getall()
+                attr_text = "".join(raw_text_parts).strip()
+                if not attr_text: continue
+
+                if 'm²' in attr_text:
+                    sqm_cleaned = re.sub(r'[^\d.]', '', attr_text.replace(',', '.'))
+                    if sqm_cleaned: sqm = float(sqm_cleaned)
+                elif re.search(r'(\d+)\s*[Bb]ed', attr_text):
+                    bedrooms = int(re.search(r'(\d+)\s*[Bb]ed', attr_text).group(1))
+                elif re.search(r'(\d+)\s*[Bb]ath', attr_text):
+                    bathrooms = int(re.search(r'(\d+)\s*[Bb]ath', attr_text).group(1))
+                elif re.search(r'^\d{4}$', attr_text):
+                    construction_year = int(attr_text)
+                elif re.search(r'\b\d+(st|nd|rd|th)\b|\bBasement\b|\bSemi-basement\b|\bGround\b|\bMezzanine\b',
+                               attr_text, re.IGNORECASE):
+                    floor = attr_text
+                elif not attr_text.isdigit():
+                    features.append(attr_text)  # Captures "Storage", "Parking", etc.
+
+            asset = LandeaAssetModel(
+                url_id=url_id, landea_id=landea_id, url=url if url else None,
+                property_type=property_type, sqm=sqm, lat=None, lon=None,
+                title=title, floor=floor, is_hot=is_hot, price=price,
+                address=address, bedrooms=bedrooms, bathrooms=bathrooms,
+                features=features if features else None,
+                description=None, auction_date=auction_date,
+                construction_year=construction_year, fetch_date=current_fetch_date
+            )
+            extracted_assets.append(asset)
+
+        return extracted_assets
+
+    def scrape_all_search_pages(self, max_pages: int | None = None, start_page: int = 1) -> List[LandeaAssetModel]:
+        all_assets: List[LandeaAssetModel] = []
+        seen_ids: set[str] = set()
+        current_page = start_page
+
+        while True:
+            if max_pages is not None and current_page > max_pages:
+                break
+
+            page_url = self._build_page_url(self.base_url, current_page)
+            logger.info("Stage 1 - Fetching Search Page %s", current_page)
+
             try:
-                return float(digits) if digits else None
-            except ValueError:
-                return None
+                resp = self.session.get(page_url, timeout=20)
+                resp.raise_for_status()
+            except Exception as exc:
+                logger.error("Failed to fetch search page %s: %s", current_page, exc)
+                break
 
-        def _to_int(value: str | None) -> int | None:
-            if not value:
-                return None
-            digits = "".join(ch for ch in value if ch.isdigit())
+            page_assets = self._parse_search_list_html(resp.text)
+
+            if not page_assets:
+                break
+
+            for asset in page_assets:
+                if asset.landea_id not in seen_ids:
+                    seen_ids.add(asset.landea_id)
+                    all_assets.append(asset)
+
+            current_page += 1
+
+        logger.info("Stage 1 Complete. Collected %s assets.", len(all_assets))
+        return all_assets
+
+    # ==========================================
+    # STAGE 2: DETAIL PAGE ENRICHMENT
+    # ==========================================
+    def _parse_detailed_html(self, html_content: str) -> Dict[str, Any]:
+        sel = scrapy.Selector(text=html_content)
+        extracted_data = {}
+
+        raw_desc = sel.xpath('//div[contains(@class, "properties-description")]/p//text()').getall()
+        if raw_desc:
+            extracted_data['description'] = " ".join([t.strip() for t in raw_desc if t.strip()])
+
+        lat_match = re.search(r"var latitude\s*=\s*'([0-9\.\-]+)';", html_content)
+        lon_match = re.search(r"var longitude\s*=\s*'([0-9\.\-]+)';", html_content)
+        if lat_match and lon_match:
             try:
-                return int(digits) if digits else None
+                extracted_data['lat'] = float(lat_match.group(1))
+                extracted_data['lon'] = float(lon_match.group(1))
             except ValueError:
-                return None
+                pass
 
-        # Try to extract a URL/id for the card (if present)
-        href = (
-            prop_selector.attrib.get("data-href")
-            or prop_selector.attrib.get("data-url")
-            or prop_selector.css("a::attr(href)").get()
-        )
-        if href and href.startswith("/"):
-            url = f"https://www.landea.gr{href}"
-        else:
-            url = href
+        prop_type = sel.xpath(
+            'normalize-space(//ol[@itemtype="https://schema.org/BreadcrumbList"]/li[4]//span[@itemprop="name"])').get(
+            default='')
+        if prop_type:
+            extracted_data['property_type'] = prop_type
 
-        sqm_str = prop_selector.xpath(
-            './/div[contains(@class, "SRFSQM")]/following-sibling::text()'
-        ).get(default="").strip() or None
-        # Fallback: many cards include sqm only in the title text, e.g. "Apartment 97 sq.m."
-        if not sqm_str:
-            title_text = prop_selector.css('div.title span::text').get(default="") or ""
-            match = re.search(r"(\d+(?:[.,]\d+)?)\s*sq\.?m", title_text, flags=re.IGNORECASE)
-            if match:
-                sqm_str = match.group(1)
-        bedrooms_str = prop_selector.xpath(
-            './/div[contains(@class, "BDRMS")]/following-sibling::text()'
-        ).get(default="").strip() or None
-        construction_year_str = prop_selector.xpath(
-            './/div[contains(@class, "CSTRYR")]/following-sibling::text()'
-        ).get(default="").strip() or None
+        # Backup extraction for Price just in case Stage 1 missed it
+        raw_price = sel.css('.priceinfovalue::text').get(default='').strip()
+        if raw_price:
+            p_clean = raw_price.replace('€', '').replace('.', '').replace(',', '.').strip()
+            p_clean = re.sub(r'[^\d.]', '', p_clean)
+            if p_clean: extracted_data['price'] = float(p_clean)
 
-        asset = LandeaAssetModel(
-            url_id=url or "",
-            landea_id=url or "",
-            url=url,
-            sqm=_to_float(sqm_str),
-            lat=None,
-            lon=None,
-            title=prop_selector.css('div.title span::text').get(default="").strip() or None,
-            floor=prop_selector.xpath(
-                './/div[contains(@class, "FLR")]/following-sibling::text()'
-            ).get(default="").strip() or None,
-            is_hot=bool(prop_selector.css('div.hot')),
-            price=_to_float(raw_price),
-            address=address or None,
-            bedrooms=_to_int(bedrooms_str),
-            auction_date=auction_date,
-            fetch_date=datetime.utcnow(),
-            construction_year=_to_int(construction_year_str),
-        )
+        attributes = sel.xpath('//div[contains(@class, "attributeItemText")]/text()').getall()
+        features = []
+
+        for attr in attributes:
+            attr = attr.strip()
+            if not attr: continue
+
+            bdrms_match = re.search(r'(\d+)\s*[Bb]edroom', attr)
+            if bdrms_match:
+                extracted_data['bedrooms'] = int(bdrms_match.group(1))
+                continue
+
+            bthrms_match = re.search(r'(\d+)\s*[Bb]athroom', attr)
+            if bthrms_match:
+                extracted_data['bathrooms'] = int(bthrms_match.group(1))
+                continue
+
+            skip_pattern = r'm²|\b\d+(st|nd|rd|th)\b|\bBasement\b|\bSemi-basement\b|\bGround\b|\bMezzanine\b'
+            if re.search(skip_pattern, attr, re.IGNORECASE) or attr.replace('.', '').isdigit():
+                continue
+
+            features.append(attr)
+
+        if features:
+            extracted_data['features'] = features
+
+        return extracted_data
+
+    def enrich_asset(self, asset: LandeaAssetModel) -> LandeaAssetModel:
+        if not asset.url:
+            return asset
+
+        try:
+            resp = self.session.get(asset.url, timeout=20)
+            resp.raise_for_status()
+            detailed_data = self._parse_detailed_html(resp.text)
+
+            keys_to_update = ['description', 'lat', 'lon', 'property_type', 'sqm', 'construction_year', 'floor',
+                              'price', 'bedrooms', 'bathrooms', 'features']
+            for key in keys_to_update:
+                if key in detailed_data and detailed_data[key] is not None:
+                    setattr(asset, key, detailed_data[key])
+
+            asset.modified_date = datetime.now(timezone.utc)
+
+        except Exception as exc:
+            logger.error(f"Failed to enrich {asset.landea_id}: {exc}")
 
         return asset
 
+    def enrich_all_concurrently(self, assets: List[LandeaAssetModel]) -> List[LandeaAssetModel]:
+        logger.info(f"Starting concurrent enrichment for {len(assets)} assets with {self.max_workers} workers...")
+        enriched_assets = []
 
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            futures = {executor.submit(self.enrich_asset, asset): asset for asset in assets}
+            for idx, future in enumerate(concurrent.futures.as_completed(futures), start=1):
+                try:
+                    completed_asset = future.result()
+                    enriched_assets.append(completed_asset)
+                    if idx % 10 == 0 or idx == len(assets):
+                        logger.info(f"Enriched {idx}/{len(assets)} properties...")
+                except Exception as exc:
+                    logger.error(f"A thread threw an exception: {exc}")
+
+        return enriched_assets
+
+    # ==========================================
+    # DATABASE INTEGRATION
+    # ==========================================
+    def save_stage1_to_db(self, max_pages: int | None = None, start_page: int = 1) -> int:
+        """
+        Stage 1 DB write:
+        - Crawl all search pages.
+        - For each asset, upsert listing-level fields (id, url, basic attrs) into landea_assets.
+        - Does NOT touch lat/lon/location/description/features so that later enrichment is preserved.
+        """
+        assets = self.scrape_all_search_pages(max_pages=max_pages, start_page=start_page)
+        if not assets:
+            logger.info("Stage 1: no assets collected, skipping DB write.")
+            return 0
+
+        affected_total = self.landea_dao.upsert_stage1_batch(assets)
+        logger.info("Stage 1: upserted %s rows into landea_assets via DAO.", affected_total)
+        return affected_total
+
+    def enrich_missing_in_db(self, batch_size: int = 100) -> int:
+        """
+        Stage 2 DB enrichment:
+        - Load rows from landea_assets where lat or lon is NULL.
+        - Enrich each asset from its detail page (description, coords, features, etc.).
+        - Upsert full enriched records back into landea_assets, including location.
+        """
+        total_updated = 0
+
+        while True:
+            assets_batch: List[LandeaAssetModel] = self.landea_dao.get_assets_missing_coords(
+                limit=batch_size
+            )
+            if not assets_batch:
+                break
+
+            enriched_batch = self.enrich_all_concurrently(assets_batch)
+            updated = self.landea_dao.upsert_enriched_batch(enriched_batch)
+            total_updated += updated
+            logger.info("Stage 2: upserted %s enriched rows so far.", total_updated)
+
+        logger.info("Stage 2 complete. Total enriched rows upserted: %s", total_updated)
+        return total_updated
+
+
+# --- Execution Example ---
 if __name__ == "__main__":
-    """
-    Example usage:
-        python -m data_source.landea_data
-    This will scrape Athens and Thessaloniki residential assets (using
-    placeholder selectors) and write them to byhand/landea_assets.xlsx.
-    """
-    logging.basicConfig(level=logging.INFO)
-    scraper = LandeaData()
-    scraper.fetch_to_excel()
+    scraper = LandeaScraper(max_workers=5)
 
+    # print("\n--- RUNNING STAGE 1: SAVE LISTINGS TO DB ---")
+    # scraper.save_stage1_to_db()
 
+    print("\n--- RUNNING STAGE 2: ENRICH MISSING COORDS FROM DB ---")
+    scraper.enrich_missing_in_db(batch_size=50)
