@@ -328,6 +328,104 @@ class SpitogatosDAO:
         rows = self.db.execute_query(query, tuple(params))
         return [self._row_to_asset(row) for row in rows]
 
+    def search_by_athens_neighborhood(
+        self,
+        neighborhood_name_en: str,
+        website_modified_from: datetime | None = None,
+        website_modified_to: datetime | None = None,
+        website_uploaded_from: datetime | None = None,
+        website_uploaded_to: datetime | None = None,
+    ) -> List[SpitogatosAsset]:
+        """
+        Fetch all Spitogatos assets whose point location lies within an Athens neighborhood
+        multipolygon stored in geography.athens_neighborhood (matched by name_en).
+        """
+        base_query = """
+            SELECT
+                s.id, s.category, s.subtype, s.buy_or_rent, s.sqm, s.price,
+                s.price_reduced, s.price_pre_reduction, s.price_change_percentage,
+                s.main_image_url, s.geography, s.geocode_type,
+                ST_X(s.location::geometry) AS longitude,
+                ST_Y(s.location::geometry) AS latitude,
+                s.floor_number, s.rooms, s.total_rooms, s.no_of_bathrooms, s.kitchens,
+                s.living_rooms, s.within_city_plan, s.agricultural_use, s.description,
+                s.new_development, s.website_modified, s.website_uploaded, s.image_ids,
+                s.has_vtour, s.has_video, s.agent_id, s.enquirer_id, s.re_agent,
+                s.published, s.first_publish_date
+            FROM spitogatos_data s
+            JOIN geography.athens_neighborhood n
+              ON n.name_en = %s
+            WHERE ST_Contains(n.geom, s.location::geometry)
+        """
+        params: list = [neighborhood_name_en]
+
+        if website_modified_from is not None:
+            base_query += " AND s.website_modified >= %s"
+            params.append(website_modified_from)
+        if website_modified_to is not None:
+            base_query += " AND s.website_modified <= %s"
+            params.append(website_modified_to)
+        if website_uploaded_from is not None:
+            base_query += " AND s.website_uploaded >= %s"
+            params.append(website_uploaded_from)
+        if website_uploaded_to is not None:
+            base_query += " AND s.website_uploaded <= %s"
+            params.append(website_uploaded_to)
+
+        base_query += " ORDER BY s.website_modified DESC"
+        rows = self.db.execute_query(base_query, tuple(params))
+        return [self._row_to_asset(row) for row in rows]
+
+    def search_by_attica_municipality(
+        self,
+        municipality_name_en: str,
+        website_modified_from: datetime | None = None,
+        website_modified_to: datetime | None = None,
+        website_uploaded_from: datetime | None = None,
+        website_uploaded_to: datetime | None = None,
+    ) -> List[SpitogatosAsset]:
+        """
+        Fetch all Spitogatos assets whose point location lies within an Attica municipality
+        multipolygon stored in geography.attica_municipality.
+
+        Matching is done by municipality_name_en against name_en.
+        """
+        base_query = """
+            SELECT
+                s.id, s.category, s.subtype, s.buy_or_rent, s.sqm, s.price,
+                s.price_reduced, s.price_pre_reduction, s.price_change_percentage,
+                s.main_image_url, s.geography, s.geocode_type,
+                ST_X(s.location::geometry) AS longitude,
+                ST_Y(s.location::geometry) AS latitude,
+                s.floor_number, s.rooms, s.total_rooms, s.no_of_bathrooms, s.kitchens,
+                s.living_rooms, s.within_city_plan, s.agricultural_use, s.description,
+                s.new_development, s.website_modified, s.website_uploaded, s.image_ids,
+                s.has_vtour, s.has_video, s.agent_id, s.enquirer_id, s.re_agent,
+                s.published, s.first_publish_date
+            FROM spitogatos_data s
+            JOIN geography.attica_municipality m
+              ON m.name_en = %s
+            WHERE ST_Contains(m.geom, s.location::geometry)
+        """
+        params: list = [municipality_name_en]
+
+        if website_modified_from is not None:
+            base_query += " AND s.website_modified >= %s"
+            params.append(website_modified_from)
+        if website_modified_to is not None:
+            base_query += " AND s.website_modified <= %s"
+            params.append(website_modified_to)
+        if website_uploaded_from is not None:
+            base_query += " AND s.website_uploaded >= %s"
+            params.append(website_uploaded_from)
+        if website_uploaded_to is not None:
+            base_query += " AND s.website_uploaded <= %s"
+            params.append(website_uploaded_to)
+
+        base_query += " ORDER BY s.website_modified DESC"
+        rows = self.db.execute_query(base_query, tuple(params))
+        return [self._row_to_asset(row) for row in rows]
+
     @staticmethod
     def _row_to_asset(row: dict) -> SpitogatosAsset:
         """Convert database row to Spitogatos_Asset object."""
