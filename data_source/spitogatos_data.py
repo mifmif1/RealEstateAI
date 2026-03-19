@@ -208,6 +208,120 @@ class SpitogatosData:
         else:
             logger.error(f"Error getting data from Spitogatos: {response.status_code}, {response.text}")
 
+    def get_polygon(self, offset: int= 0) -> List[SpitogatosAsset] | None:
+            
+        url = "https://www.spitogatos.gr/n_api/v1/properties/search-results"
+
+        headers = {
+            'accept': 'application/json, text/plain, */*',
+            'accept-language': 'en',
+            "cache-control": "no-cache",
+            'content-type': 'application/json',
+            'origin': 'https://www.spitogatos.gr',
+            "pragma": "no-cache",
+            "sec-ch-ua": '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            'priority': 'u=1, i',
+            'referer': 'https://www.spitogatos.gr_',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36',
+            'x-alsbn': '1',
+            'x-locale': 'en',
+            'x-mdraw': '1',
+            'cookie': """segment_session=cd820841-7c5f-4667-bc9f-aac6fa12cc8b; ajs_anonymous_id=cd820841-7c5f-4667-bc9f-aac6fa12cc8b; _cc_id=c0c997e5e0fedbf694aee10c85ebc1d9; lastSearch=%2Fpwliseis-diamerismata%2Fathina-kentro%2Fme_fotografia; _hjSessionUser_1348694=eyJpZCI6IjQ4YWVhZGRhLTk3OTYtNTlhNS04N2M4LTUzMDFhOTU1MWExMSIsImNyZWF0ZWQiOjE3NTEzMDUwNjE2NTksImV4aXN0aW5nIjp0cnVlfQ==; _ga_LEEXB314YZ=GS2.1.s1751305058$o1$g1$t1751305970$j60$l0$h0; euconsent-v2=CQZBc4AQZBc4AAKA9AENB_FgAAAAAEPgAAyIAAAXMABMNCogjLIgQCBQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKQswBBUGaLQXgyfRkaYBg-YJklOgyAJgjIyTYhN-Ew8UhRCghyA2KWYAAA.YAAAAAAAAAAA; addtl_consent=1~; IABGPP_HDR_GppString=DBABMA~CQZC64sQZC64sAKA9AENB_FgAAAAAEPgAAyIAAAXMABMNCogjLIgQCBQMIIEACgrCACgQBAAAkDRAQAmDApyBgAusJkAIAUAAwQAgABBgACAAASABCIAKACAQAAQCBQABgAQBAQAMDAAGACxEAgABAdAxTAggECwASMyqDTAlAASCAlsqEEgGBBXCEIs8AggREwUAAAIABQEAADwWAhJICViQQBcQTQAAEAAAUQIECKQswBBUGaLQXgyfRkaYBg-YJklOgyAJgjIyTYhN-Ew8UhRCghyA2KWYAAA.YAAAAAAAAAAA; anonymous_user_id=anon_1773946004167_vhx8mpn0w; _pubcid=267f3827-71ab-4a50-b70e-55d46531ab89; panoramaId_expiry=1774550808071; panoramaId=823999b8140060f1927ff6abf7c116d5393835ce8dc0bade7ff77b96a8dc07ed; panoramaIdType=panoIndiv; cto_bundle=nlR_8l83dEt1b3UlMkYzN2g0WTRmMVIxbkJvY0R6RURGSU4yUzVsb2ZVWENERzRCcHJ1UHl3aEdjMFJGM0tqakxKOTltYmglMkJXcFFXdXpLbW80NyUyRkJqeSUyRld3WVRuMDBsSHZqU1FiNVlvVkgwJTJCWmxaQk12S2Fsem1CTVBTT1drJTJGZnRwUzRjRURCVzZtTHBOZFlac0hXMzFUQ1FSM0ElM0QlM0Q; _gcl_au=1.1.1909828160.1773946011; _gid=GA1.2.1140090052.1773946011; _tt_enable_cookie=1; _ttp=01KM3PR07P4RVYNCATGV7KQKZV_.tt.1; _fbp=fb.1.1773946012230.63773639956680817; _hjSession_1348694=eyJpZCI6ImZiNmZmNDFkLWEwNmQtNDdmMy1hNDUyLWIzMDUyNjg3NjM0NSIsImMiOjE3NzM5NDYwMTM3MTAsInMiOjAsInIiOjAsInNiIjowLCJzciI6MCwic2UiOjAsImZzIjowLCJzcCI6MH0=; auth.strategy=laravelJWT; auth._token.laravelJWT=false; auth._token_expiration.laravelJWT=false; auth._refresh_token.laravelJWT=false; auth._refresh_token_expiration.laravelJWT=false; g_state={"i_l":0,"i_ll":1773947617527,"i_b":"vGSzss1uBzRGRjGC0LEybmKIoTyBAErpYHQvMfokRRc","i_e":{"enable_itp_optimization":0}}; reese84=3:gfHpYhQgQnqauDQKXi7lJw==:z+svrBLvuiAOTIDa111V2/42Igg+JgcD4BrtAoqHoDQVq5jGw0FpZqm0veDNGRWNvw2J+CLHvCy8hMxRytUgojpKvIXsxcrBWGTbA2A/if0neVL3m1Yk7tD3XFjA3uja4tp4DCPzi9WmSB7h6DP8p/+km5T9YYyW5oUwyGJwYSxjvYeFlirWnIPHSe7bliwiKLaZffCiWz1A2EVR4237PkhU10xRvMRPG/L4f9bOVuYaY3d3QnWXYR8LfygafX1e+HXN8TkUQzXJHheCr2eXzo+EwRZyBwS1jbq+afVng+PqB+aawQuCInGrVBf3knGRYEXSI9TdcoCmks8Cs3wa6ml3fd0DkWklTyPaImJhZ5aSXEKorc0gOpwxKswgXy+kKrgIqS6VJnBUTo9eiVm7O+51VtIT1Us6iQKEpCbxXJ9K71QKB+wVKSKK7xAQA6TSjJfpwS4aS8RRt8jer8AASQ==:KtpzHnNR8xDiAlWQz+J7J4qlfP9ox27vyPghn7hKKHg=; __gads=ID=81c1974cb69f224d:T=1751349711:RT=1773947617:S=ALNI_MbHv0JIGzkgO8kY2a2oKUZJgKcT3g; __eoi=ID=3673ca3996d50a7b:T=1773946006:RT=1773947617:S=AA-AfjYhfIjSLIZI2wv4Vh_oyXqx; _gat_UA-3455846-3=1; _rdt_uuid=1773946010829.e227afbe-7258-4276-9a72-8413e4ceb335; _ga=GA1.1.738186405.1751305058; ttcsid=1773946011901::QfOf_xrEUigwrs-LGzcD.1.1773947673523.0::1.1603936.1606853::1661606.35.361.656::253205.3.51; ttcsid_D0JJKCRC77U9SUC01950=1773946011900::bJtcqn8in2VNLC3QE6Sa.1.1773947673523.1; en_lastSearch=%2Ffor_sale-homes%2Fmap-search%2Fplg-I2KIWzeSclyJK6SIwYVLcFwWSLEITBFnuiF8SBuhE4wQmboSR8E3O6EwHBAwuiIjwUQroWJ8EJi6FzbCgWtDTBUQsnZsoQMLKYLKgksjhcowIbIRTKMJC5dcoVebhmyiEptlDKEWexZ5yjQzshfKNXG6FRfKFRC6GUn_; spitogatosS=listingType%3Dsale%26propertyCategory%3Dresidential; sesId=35RCDjNg2nF7RScFuOhXpMjhChC4A6Qn; _ga_8HD2LETKWJ=GS2.1.s1773946010$o4$g1$t1773947675$j3$l0$h0; _ga_KT1TCYQ5FH=GS2.1.s1773946010$o4$g1$t1773947675$j3$l0$h0; en_personalizedSearches=true""",
+            "Referer": "https://www.spitogatos.gr/en/for_sale-homes/map-search/plg-I2KIWzeSclyJK6SIwYVLcFwWSLEITBFnuiF8SBuhE4wQmboSR8E3O6EwHBAwuiIjwUQroWJ8EJi6FzbCgWtDTBUQsnZsoQMLKYLKgksjhcowIbIRTKMJC5dcoVebhmyiEptlDKEWexZ5yjQzshfKNXG6FRfKFRC6GUn_",
+            "user-agent": ApisConsts.USER_AGENT,
+
+        }
+
+        payload = {
+            "listingType": "sale",
+            "category": "residential",
+            "areaIDs": [],
+
+            "geoPolygons": [
+                [
+                    [23.62885, 37.92725], [23.63777, 37.92237], [23.65631, 37.92942], 
+                    [23.67279, 37.94026], [23.68446, 37.93809], [23.68927, 37.92671], 
+                    [23.70026, 37.91424], [23.71399, 37.90123], [23.72429, 37.879], 
+                    [23.73871, 37.86273], [23.74969, 37.84537], [23.77785, 37.84971], 
+                    [23.79295, 37.87737], [23.78265, 37.90719], [23.77441, 37.93104], 
+                    [23.7442, 37.95218], [23.7133, 37.96193], [23.69751, 37.97059], 
+                    [23.67622, 37.97709], [23.66455, 37.99388], [23.63022, 37.99605], 
+                    [23.59451, 37.98088], [23.57941, 37.96139]
+                ]
+            ],
+            "sortBy": "rankingscore",
+            "sortOrder": "desc",
+            "offset": offset,
+        }
+
+        response = self._session.post(url, headers=headers, json=payload)
+
+        if response.status_code == 200:
+            results = []
+            data = json.loads(response.text).get("data", [])
+
+            if not data:
+                logger.error(f"Probably detected as bot")
+                raise ConnectionAbortedError("Probably detected as bot.")
+
+            for asset_raw in data:
+                try:
+                    re_agent_obj = asset_raw.get("reAgent", {})
+                    agency_name = re_agent_obj.get("agencyName", "Unknown")
+
+                    asset = SpitogatosAsset(
+                        id=str(asset_raw.get("id")),
+                        category=asset_raw.get("category", ""),
+                        subtype=int(asset_raw.get("subtype", 0)),
+                        buy_or_rent=int(asset_raw.get("buy_or_rent", 0)),
+                        sqm=int(asset_raw.get("sq_meters", 0)),
+                        price=int(asset_raw.get("price", 0)),
+                        price_reduced=bool(asset_raw.get("priceReduced", False)),
+                        price_pre_reduction=asset_raw.get("pricePreReduction"),
+                        price_change_percentage=asset_raw.get("priceChangePercentage"),
+                        main_image_URL=asset_raw.get("mainImageURL", "No Image") or "No Image",
+                        geography=asset_raw.get("geography"),
+                        geocodeType=asset_raw.get("geocodeType"),
+                        longitude=float(asset_raw.get("longitude")),
+                        latitude=float(asset_raw.get("latitude")),
+                        floor_number=int(asset_raw.get("floorNumber")),
+                        rooms=int(asset_raw.get("rooms")),
+                        total_rooms=int(asset_raw.get("totalRooms")),
+                        bathrooms=int(asset_raw.get("no_of_bathrooms", )),
+                        kitchens=int(asset_raw.get("kitchens")),
+                        living_rooms=int(asset_raw.get("livingRooms")),
+                        within_city_plan=int(asset_raw.get("within_city_plan")),
+                        agricultural_use=int(asset_raw.get("agriculturalUse")),
+                        description=asset_raw.get("description"),
+                        new_development=int(asset_raw.get("newDevelopment")),
+                        website_modified=datetime.strptime(asset_raw.get("modified"), "%Y-%m-%d %H:%M:%S"),
+                        website_uploaded=datetime.strptime(asset_raw.get("uploaded"), "%Y-%m-%d %H:%M:%S"),
+                        imageIds=asset_raw.get("imageIds"),
+                        has_VTour=bool(asset_raw.get("hasVTour")),
+                        has_video=bool(asset_raw.get("hasVideo")),
+                        agent_id=int(asset_raw.get("agent_id", 0)),
+                        enquirer_id=int(asset_raw.get("enquirerId", 0)),
+                        reAgent=agency_name,
+                        published=str(asset_raw.get("published")),
+                        first_publish_date=datetime.strptime(
+                            asset_raw.get("firstPublishDate"), "%Y-%m-%d %H:%M:%S"
+                        ),
+                    )
+
+                    results.append(asset)
+                except Exception as e:
+                    asset_id = asset_raw.get("id")
+                    logger.error("Skipping asset id=%s. Error: %s", asset_id, e)
+            logger.info(f"Successfully fetched.") # add function params
+            return results
+        else:
+            logger.error(f"Error getting data from Spitogatos: {response.status_code}, {response.text}")
+
 
 
 
@@ -216,5 +330,7 @@ if __name__ == '__main__':
     rectangle = Rectangle(min_lat=37.984178188128524, min_lon=23.722880267062163, max_lat=37.986812614672615,
                           max_lon=23.729852977964395)
     #my.get_by_location(rectangle, 0, 1000)
-    res = my.get_athens()
+    # res = my.get_athens()
 
+    res = my.get_polygon()
+    print(res)

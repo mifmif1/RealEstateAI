@@ -35,6 +35,106 @@ class SpitogatosFlow:
         self._spitogatos_dao = SpitogatosDAO()
         self._spitogatos_data_source = SpitogatosData()
 
+
+    def fetch_all_polygon(self, start_offset: int = 0, max_pages: int | None = None) -> None:
+        """
+        Fetch all Polygon pages, each time increasing offset by SPITOGATOS_PER_PAGE.
+
+        In case of bot detection or any other problem in fetching:
+        - Try the same offset once more.
+        - If it fails again, stop and log the whole process.
+
+        Args:
+            start_offset: Initial offset to start from.
+            max_pages: Optional safety limit on number of pages to fetch.
+        """
+        offset = start_offset
+        consecutive_failures = 0
+        pages_fetched = 0
+        total_assets = 0
+
+        logger.info(
+            "Starting get_all_polygon from offset=%s (page size=%s, max_pages=%s)",
+            offset,
+            SPITOGATOS_PER_PAGE,
+            max_pages,
+        )
+
+        while True:
+            sleep(2)
+            if max_pages is not None and pages_fetched >= max_pages:
+                logger.info("Reached max_pages=%s, stopping get_all_polygon.", max_pages)
+                break
+
+            logger.info("Fetching Polygon page at offset=%s", offset)
+            try:
+                assets = self._spitogatos_data_source.get_polygon(offset=offset)
+            except ConnectionAbortedError as e:
+                consecutive_failures += 1
+                logger.error(
+                    "Bot detection or connection error on offset=%s (attempt=%s): %s",
+                    offset,
+                    consecutive_failures,
+                    e,
+                )
+                if consecutive_failures >= 2:
+                    logger.error(
+                        "Stopping get_all_polygon after %s consecutive failures at offset=%s.",
+                        consecutive_failures,
+                        offset,
+                    )
+                    break
+                # Retry same offset once more
+                continue
+            except Exception as e:
+                consecutive_failures += 1
+                logger.error(
+                    "Unexpected error fetching Polygon page at offset=%s (attempt=%s): %s",
+                    offset,
+                    consecutive_failures,
+                    e,
+                )
+                if consecutive_failures >= 2:
+                    logger.error(
+                        "Stopping get_all_polygon after %s consecutive unexpected failures at offset=%s.",
+                        consecutive_failures,
+                        offset,
+                    )
+                    break
+                # Retry same offset once more
+                continue
+
+            # Successful fetch
+            consecutive_failures = 0
+
+            if not assets:
+                logger.info(
+                    "No assets returned for Polygon page (offset=%s). Assuming end of results. Stopping.",
+                    offset,
+                )
+                break
+
+            inserted = self._spitogatos_dao.insert_list(assets)
+            pages_fetched += 1
+            total_assets += len(assets)
+
+            logger.info(
+                "Persisted Polygon page offset=%s: %d assets fetched, %d rows affected in DB "
+                "(pages_fetched=%s, total_assets=%s)",
+                offset,
+                len(assets),
+                inserted,
+                pages_fetched,
+                total_assets,
+            )
+
+            # Always move to next page; stopping condition is either:
+            # - explicit max_pages, or
+            # - an empty page (handled above).
+            offset += SPITOGATOS_PER_PAGE
+
+
+
     def fetch_all_athens(self, start_offset: int = 0, max_pages: int | None = None) -> None:
         """
         Fetch all Athens pages, each time increasing offset by SpITOGATOS_pER_pAGE.
@@ -416,4 +516,5 @@ class SpitogatosFlow:
 if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.get_athens(offset=0)
-    s.fetch_all_athens(start_offset=44670)
+    # s.fetch_all_athens(start_offset=44670)
+    s.fetch_all_polygon()
