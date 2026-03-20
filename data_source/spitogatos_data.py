@@ -157,7 +157,7 @@ class SpitogatosData:
 
             for asset_raw in data:
                 try:
-                    re_agent_obj = asset_raw.get("reAgent", {})
+                    re_agent_obj = asset_raw.get("reAgent") or {}
                     agency_name = re_agent_obj.get("agencyName", "Unknown")
 
                     asset = SpitogatosAsset(
@@ -270,7 +270,7 @@ class SpitogatosData:
 
             for asset_raw in data:
                 try:
-                    re_agent_obj = asset_raw.get("reAgent", {})
+                    re_agent_obj = asset_raw.get("reAgent") or {}
                     agency_name = re_agent_obj.get("agencyName", "Unknown")
 
                     asset = SpitogatosAsset(
@@ -374,7 +374,7 @@ class SpitogatosData:
 
             for asset_raw in data:
                 try:
-                    re_agent_obj = asset_raw.get("reAgent", {})
+                    re_agent_obj = asset_raw.get("reAgent") or {}
                     agency_name = re_agent_obj.get("agencyName", "Unknown")
 
                     asset = SpitogatosAsset(

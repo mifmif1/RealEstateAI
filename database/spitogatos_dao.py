@@ -12,6 +12,12 @@ from model.spitogatos_asset_model import SpitogatosAsset
 
 logger = logging.getLogger(__name__)
 
+def _safe_log_text(text: str) -> str:
+    """
+    Make log text safe for Windows cp1252 consoles (keeps process from crashing on emoji).
+    """
+    return text.encode("cp1252", errors="backslashreplace").decode("cp1252")
+
 
 class SpitogatosDAO:
     """Data Access Object for spitogatos_data table with spatial queries"""
@@ -177,10 +183,11 @@ class SpitogatosDAO:
                             diffs.append(f"{model_attr}: old={old_val!r}, new={new_val!r}")
 
                     if diffs:
+                        diff_text = _safe_log_text("; ".join(diffs))
                         logger.info(
                             "spitogatos_data conflict on id=%s. Differing fields: %s",
                             asset_id,
-                            "; ".join(diffs),
+                            diff_text,
                         )
 
             psycopg2.extras.execute_values(
