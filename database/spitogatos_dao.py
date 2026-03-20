@@ -10,6 +10,8 @@ from database.connection import get_db_connection
 from model.geographical_model import Rectangle, Circle
 from model.spitogatos_asset_model import SpitogatosAsset
 
+logger = logging.getLogger(__name__)
+
 
 class SpitogatosDAO:
     """Data Access Object for spitogatos_data table with spatial queries"""
@@ -149,7 +151,7 @@ class SpitogatosDAO:
                         ("floor_number", "floor_number"),
                         ("rooms", "rooms"),
                         ("total_rooms", "total_rooms"),
-                        ("no_of_bathrooms", "no_of_bathrooms"),
+                        ("bathrooms", "no_of_bathrooms"),
                         ("kitchens", "kitchens"),
                         ("living_rooms", "living_rooms"),
                         ("within_city_plan", "within_city_plan"),
