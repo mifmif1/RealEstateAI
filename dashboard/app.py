@@ -1,15 +1,20 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from pathlib import Path
-from typing import List, Sequence
+import json
+import os
 import re
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+from typing import Any, List, Optional, Sequence, Tuple
 
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from dash import Dash, Input, Output, State, dcc, html
+from dash import Dash, Input, Output, State, callback_context, dcc, html
 from dash.dash_table import DataTable
 from dash.dash_table.Format import Format, Group, Scheme, Symbol
 
@@ -207,6 +212,179 @@ COLOR_SCALE = px.colors.sequential.Tealgrn
 
 px.defaults.template = "plotly_white"
 
+# Geography map: polygon + statistics (see API /geography/* routes)
+GEOGRAPHY_API_BASE = os.environ.get("REALESTATE_API_BASE", "http://localhost:8000").rstrip("/")
+GEO_LAYER_NEIGHBORHOODS = "neighborhoods"
+GEO_LAYER_MUNICIPALITIES = "municipalities"
+
+
+def _geo_request_json(path: str) -> Tuple[Optional[Any], Optional[str]]:
+    """GET JSON from the geography API. Returns (data, error_message)."""
+    url = f"{GEOGRAPHY_API_BASE}{path}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Accept": "application/json",
+            "User-Agent": "RealEstateAI-dashboard/1.0",
+        },
+        method="GET",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            raw = resp.read().decode()
+            if resp.status != 200:
+                return None, f"HTTP {resp.status} from {url}"
+            return json.loads(raw), None
+    except urllib.error.HTTPError as e:
+        try:
+            detail = e.read().decode(errors="replace")
+        except OSError:
+            detail = str(e)
+        if e.code == 404:
+            return None, "not_found"
+        return None, f"HTTP {e.code}: {detail[:300]}"
+    except urllib.error.URLError as e:
+        return None, f"Network error: {e.reason!s}"
+    except json.JSONDecodeError as e:
+        return None, f"Invalid JSON: {e}"
+    except Exception as e:
+        return None, str(e)
+
+
+def fetch_athens_neighborhoods_geojson() -> Tuple[Optional[dict], Optional[str]]:
+    return _geo_request_json("/geography/athens-neighborhoods")
+
+
+def fetch_attica_municipalities_geojson() -> Tuple[Optional[dict], Optional[str]]:
+    return _geo_request_json("/geography/attica-municipalities")
+
+
+def fetch_neighborhood_statistics(name_en: str) -> Tuple[Optional[dict], Optional[str]]:
+    q = urllib.parse.urlencode({"neighborhood_name_en": name_en})
+    return _geo_request_json(f"/geography/neighborhood-statistics?{q}")
+
+
+def fetch_municipality_statistics(name_en: str) -> Tuple[Optional[dict], Optional[str]]:
+    q = urllib.parse.urlencode({"municipality_name_en": name_en})
+    return _geo_request_json(f"/geography/municipality-statistics?{q}")
+
+
+def _geo_empty_figure(message: str) -> go.Figure:
+    fig = go.Figure()
+    fig.update_layout(
+        annotations=[
+            dict(
+                text=message,
+                x=0.5,
+                y=0.5,
+                xref="paper",
+                yref="paper",
+                showarrow=False,
+                font=dict(size=14, color=TEXT_MUTED),
+            )
+        ],
+        xaxis_visible=False,
+        yaxis_visible=False,
+        paper_bgcolor=CARD_BG,
+        margin=dict(l=0, r=0, t=0, b=0),
+        height=420,
+    )
+    return fig
+
+
+def _geojson_to_polygon_map_figure(geojson: Optional[dict], err: Optional[str], layer_label: str) -> go.Figure:
+    if err:
+        return _geo_empty_figure(f"Could not load {layer_label}: {err}")
+    if not geojson:
+        return _geo_empty_figure(f"No data for {layer_label}.")
+    features = geojson.get("features") or []
+    if not features:
+        return _geo_empty_figure(f"No polygons returned for {layer_label}.")
+
+    for i, feat in enumerate(features):
+        props = feat.setdefault("properties", {})
+        if not props.get("name_en"):
+            props["name_en"] = f"__unnamed_{i}"
+
+    ids: List[str] = []
+    for feat in features:
+        props = feat.get("properties") or {}
+        ids.append(str(props.get("name_en", "")))
+
+    plot_df = pd.DataFrame({"id": ids, "z": [1.0] * len(ids)})
+
+    fig = px.choropleth_mapbox(
+        plot_df,
+        geojson=geojson,
+        locations="id",
+        color="z",
+        featureidkey="properties.name_en",
+        mapbox_style="carto-positron",
+        color_continuous_scale=[[0, "#cfe8eb"], [1, "#1d7d8d"]],
+        zoom=10,
+        center={"lat": 37.9838, "lon": 23.7275},
+        opacity=0.45,
+        height=420,
+    )
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=0, b=0),
+        coloraxis_showscale=False,
+        paper_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        mapbox=dict(
+            style="carto-positron",
+            center={"lat": 37.9838, "lon": 23.7275},
+            zoom=10,
+        ),
+    )
+    fig.update_traces(marker_line_width=0.8, marker_line_color="#333333")
+    return fig
+
+
+def _geo_stats_placeholder() -> html.Div:
+    return html.Div(
+        html.P(
+            "Click a polygon to load statistics from the API.",
+            className="text-muted mb-0 small",
+        )
+    )
+
+
+def _geo_stats_error(message: str) -> html.Div:
+    return html.Div(
+        html.P(message, className="text-danger mb-0 small"),
+    )
+
+
+def _geo_stats_success(area_name: str, stats: dict) -> html.Div:
+    def fmt_num(x: Any) -> str:
+        if x is None:
+            return "—"
+        try:
+            f = float(x)
+            if abs(f) >= 1000 or (abs(f) > 0 and abs(f) < 0.01):
+                return f"{f:,.4f}"
+            return f"{f:,.2f}"
+        except (TypeError, ValueError):
+            return str(x)
+
+    return html.Div(
+        [
+            html.H6(area_name, className="text-uppercase small mb-2", style={"color": TEXT_MUTED}),
+            html.Ul(
+                [
+                    html.Li([html.Strong("No. assets: "), " ", f"{stats.get('no_assets', '—')}"]),
+                    html.Li([html.Strong("Min: "), " ", fmt_num(stats.get("min"))]),
+                    html.Li([html.Strong("Max: "), " ", fmt_num(stats.get("max"))]),
+                    html.Li([html.Strong("Mean: "), " ", fmt_num(stats.get("mean"))]),
+                    html.Li([html.Strong("Median: "), " ", fmt_num(stats.get("median"))]),
+                    html.Li([html.Strong("Std: "), " ", fmt_num(stats.get("std"))]),
+                ],
+                className="small mb-0 ps-3",
+            ),
+        ]
+    )
+
 
 def make_link_button(label: str, url: str | None, variant: str = "primary") -> str:
     if not isinstance(url, str) or not url.strip():
@@ -393,6 +571,80 @@ app.layout = dbc.Container(
                         style={"background": CARD_BG},
                     ),
                     md=6,
+                ),
+            ],
+            className="g-3 mb-4",
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H5("Geography boundaries & area statistics", className="mb-2"),
+                                html.P(
+                                    "Polygons from the API; click a region for Spitogatos €/sqm stats.",
+                                    className="text-muted small mb-3",
+                                ),
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            [
+                                                html.Small("Layer", className="d-block text-muted mb-1"),
+                                                dbc.RadioItems(
+                                                    id="geo-layer-radio",
+                                                    options=[
+                                                        {"label": "Athens neighborhoods", "value": GEO_LAYER_NEIGHBORHOODS},
+                                                        {"label": "Attica municipalities", "value": GEO_LAYER_MUNICIPALITIES},
+                                                    ],
+                                                    value=GEO_LAYER_NEIGHBORHOODS,
+                                                    inline=True,
+                                                    className="mb-0",
+                                                ),
+                                            ],
+                                            md=6,
+                                        ),
+                                        dbc.Col(
+                                            [
+                                                html.Small("API base", className="d-block text-muted mb-1"),
+                                                html.Code(
+                                                    GEOGRAPHY_API_BASE,
+                                                    className="small",
+                                                    style={"wordBreak": "break-all"},
+                                                ),
+                                            ],
+                                            md=6,
+                                        ),
+                                    ],
+                                    className="g-2 mb-3 align-items-end",
+                                ),
+                                dcc.Graph(
+                                    id="geo-polygon-map",
+                                    config={
+                                        "displayModeBar": True,
+                                        "modeBarButtonsToAdd": ["zoomInMapbox", "zoomOutMapbox"],
+                                        "displaylogo": False,
+                                    },
+                                    style={"height": "420px"},
+                                ),
+                                html.Div(
+                                    [
+                                        html.Small("Selected area", className="text-muted d-block mb-1"),
+                                        html.Div(
+                                            id="geo-stats-panel",
+                                            children=_geo_stats_placeholder(),
+                                            className="border rounded p-3",
+                                            style={"background": "#f8fafc", "minHeight": "120px"},
+                                        ),
+                                    ],
+                                    className="mt-2",
+                                ),
+                            ]
+                        ),
+                        className="shadow-sm border-0",
+                        style={"background": CARD_BG},
+                    ),
+                    md=12,
                 ),
             ],
             className="g-3 mb-4",
@@ -803,6 +1055,59 @@ def update_visuals(portfolios, sources, municipalities, price_range, discount_ra
         median_sqm_price,
         avg_discount,
     )
+
+
+@app.callback(
+    Output("geo-polygon-map", "figure"),
+    Input("geo-layer-radio", "value"),
+)
+def update_geo_polygon_map(layer: str):
+    if layer == GEO_LAYER_MUNICIPALITIES:
+        data, err = fetch_attica_municipalities_geojson()
+        return _geojson_to_polygon_map_figure(data, err, "Attica municipalities")
+    data, err = fetch_athens_neighborhoods_geojson()
+    return _geojson_to_polygon_map_figure(data, err, "Athens neighborhoods")
+
+
+@app.callback(
+    Output("geo-stats-panel", "children"),
+    Input("geo-polygon-map", "clickData"),
+    Input("geo-layer-radio", "value"),
+)
+def update_geo_stats_panel(click_data: Optional[dict], layer: str):
+    ctx = callback_context
+    if ctx.triggered:
+        trig = ctx.triggered[0]["prop_id"].split(".")[0]
+        if trig == "geo-layer-radio":
+            return _geo_stats_placeholder()
+
+    if not click_data or not click_data.get("points"):
+        return _geo_stats_placeholder()
+
+    pt = click_data["points"][0]
+    location = pt.get("location")
+    if location is None or str(location).startswith("__unnamed_"):
+        return _geo_stats_error("This polygon has no English name in the API; statistics cannot be loaded.")
+
+    name_en = str(location)
+
+    if layer == GEO_LAYER_MUNICIPALITIES:
+        stats, err = fetch_municipality_statistics(name_en)
+        label = "Municipality"
+    else:
+        stats, err = fetch_neighborhood_statistics(name_en)
+        label = "Neighborhood"
+
+    if err == "not_found":
+        return _geo_stats_error(
+            f"No Spitogatos assets with valid €/sqm for area “{name_en}” (404)."
+        )
+    if err:
+        return _geo_stats_error(f"Statistics failed: {err}")
+    if not stats:
+        return _geo_stats_error("No statistics returned.")
+
+    return _geo_stats_success(f"{label}: {name_en}", stats)
 
 
 if __name__ == "__main__":
