@@ -12,12 +12,14 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from flow.geography_flow import GeographyFlow
 from flow.landea_flow import LandeaFlow
 from flow.reonline_flow import ReOnlineFlow
 from flow.spitogatos_flow import SpitogatosFlow
-from model.asset_model import TargetAsset
 from model.area_statistics_model import AreaStatisticsModel
+from model.asset_model import TargetAsset
 from model.comparison_data_model import ComparisonDataModel
+from model.geojson_model import GeoJsonFeatureCollection
 from model.spitogatos_asset_model import SpitogatosAsset
 
 app = FastAPI(
@@ -36,11 +38,13 @@ app.add_middleware(
 )
 
 # Initialize flow classes
+geography_flow = GeographyFlow()
 spitogatos_flow = SpitogatosFlow()
 reonline_flow = ReOnlineFlow()
 landea_flow = LandeaFlow()
 
 # Routers (keep URLs grouped by prefix)
+geography_router = APIRouter(prefix="/geography", tags=["geography"])
 spitogatos_router = APIRouter(prefix="/spitogatos", tags=["spitogatos"])
 landea_router = APIRouter(prefix="/landea", tags=["landea"])
 
@@ -55,6 +59,10 @@ async def root():
         "message": "RealEstateAI Flow API",
         "version": "1.0.0",
         "endpoints": {
+            "geography_athens_neighborhoods": "/geography/athens-neighborhoods",
+            "geography_attica_municipalities": "/geography/attica-municipalities",
+            "geography_neighborhood_statistics": "/geography/neighborhood-statistics",
+            "geography_municipality_statistics": "/geography/municipality-statistics",
             "spitogatos": "/spitogatos/expand-excel-comparison",
             "spitogatos_get_all_athens": "/spitogatos/get-all-athens",
             "spitogatos_assets_by_circle": "/spitogatos/assets-by-circle",
@@ -65,6 +73,124 @@ async def root():
             "landea_stage2": "/landea/run-stage2",
         }
     }
+
+
+@geography_router.get(
+    "/athens-neighborhoods",
+    response_model=GeoJsonFeatureCollection,
+    summary="Get all Athens neighborhood boundaries as GeoJSON",
+)
+async def get_athens_neighborhoods():
+    """
+    Return all Athens neighborhood polygons as a GeoJSON FeatureCollection
+    for frontend map rendering.
+    """
+    try:
+        return await run_in_threadpool(geography_flow.get_athens_neighborhoods)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error fetching Athens neighborhoods: {str(e)}",
+        )
+
+
+@geography_router.get(
+    "/attica-municipalities",
+    response_model=GeoJsonFeatureCollection,
+    summary="Get all Attica municipality boundaries as GeoJSON",
+)
+async def get_attica_municipalities():
+    """
+    Return all Attica municipality polygons as a GeoJSON FeatureCollection
+    for frontend map rendering.
+    """
+    try:
+        return await run_in_threadpool(geography_flow.get_attica_municipalities)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error fetching Attica municipalities: {str(e)}",
+        )
+
+
+@geography_router.get(
+    "/neighborhood-statistics",
+    response_model=AreaStatisticsModel,
+    summary="Get Spitogatos price-per-sqm statistics for an Athens neighborhood",
+)
+async def get_neighborhood_statistics_geography(
+    neighborhood_name_en: str,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    """
+    Compute price-per-sqm statistics for all Spitogatos assets inside the
+    given Athens neighborhood polygon. Returns 404 if no assets are found.
+    """
+    try:
+        result = await run_in_threadpool(
+            geography_flow.get_neighborhood_statistics,
+            neighborhood_name_en,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        if result is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No assets found for neighborhood '{neighborhood_name_en}'",
+            )
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error computing neighborhood statistics: {str(e)}",
+        )
+
+
+@geography_router.get(
+    "/municipality-statistics",
+    response_model=AreaStatisticsModel,
+    summary="Get Spitogatos price-per-sqm statistics for an Attica municipality",
+)
+async def get_municipality_statistics_geography(
+    municipality_name_en: str,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    """
+    Compute price-per-sqm statistics for all Spitogatos assets inside the
+    given Attica municipality polygon. Returns 404 if no assets are found.
+    """
+    try:
+        result = await run_in_threadpool(
+            geography_flow.get_municipality_statistics,
+            municipality_name_en,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        if result is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No assets found for municipality '{municipality_name_en}'",
+            )
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error computing municipality statistics: {str(e)}",
+        )
 
 
 @spitogatos_router.post("/get-all-athens")
@@ -419,6 +545,7 @@ async def landea_run_stage2(
         raise HTTPException(status_code=500, detail=f"Error running Landea Stage 2: {str(e)}")
 
 
+app.include_router(geography_router)
 app.include_router(spitogatos_router)
 app.include_router(landea_router)
 
