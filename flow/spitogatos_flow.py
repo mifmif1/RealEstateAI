@@ -2,7 +2,7 @@ import datetime
 import logging
 import statistics
 from time import sleep
-from typing import List
+from typing import Any, Dict, List, Optional
 
 from model.asset_model import TargetAsset
 from model.geographical_model import Circle
@@ -10,9 +10,22 @@ from data_source.geopy_data import GeopyData
 from database.spitogatos_dao import SpitogatosDAO
 from utils.consts.greek_tems import floor_level_dict
 from data_source.spitogatos_data import SpitogatosData
+from data_source.spitogatos_analytics_data import SpitogatosAnalyticsData
 from model.spitogatos_asset_model import SpitogatosAsset
 from model.comparison_data_model import ComparisonDataModel
 from model.area_statistics_model import AreaStatisticsModel
+from model.spitogatos_analytics_models import (
+    AreaSummaryRow,
+    AreaDistributionSeries,
+    DistributionBucket,
+    DistributionPayload,
+    AreaTrendSeries,
+    TrendPoint,
+    TrendPayload,
+    RelationshipPoint,
+    RelationshipPayload,
+    TableDistributionPayload,
+)
 
 SPITOGATOS_PER_PAGE = 30
 TRIES_TILL_ENOUGH_ASSETS = 1
@@ -29,11 +42,26 @@ logging.basicConfig(
 )
 
 
+_VALID_METRICS = {
+    "upload_time", "floor_number", "price", "sqm", "price_per_sqm", "new_development"
+}
+
+_METRIC_LABELS = {
+    "upload_time": "Listing Age (days)",
+    "floor_number": "Floor Number",
+    "price": "Price (€)",
+    "sqm": "Area (sqm)",
+    "price_per_sqm": "Price per sqm (€/sqm)",
+    "new_development": "New Development",
+}
+
+
 class SpitogatosFlow:
     def __init__(self):
         self._geopy_data_source = GeopyData()
         self._spitogatos_dao = SpitogatosDAO()
         self._spitogatos_data_source = SpitogatosData()
+        self._analytics_data = SpitogatosAnalyticsData()
 
 
     def fetch_all_polygon(self, start_offset: int = 0, max_pages: int | None = None) -> None:
@@ -608,6 +636,211 @@ class SpitogatosFlow:
         asset_revised_price *= (
                 1 + renew_rank.get((asset.construction_year > 2000), 0)) if asset.construction_year else 1
         return asset_revised_price
+
+
+    # ------------------------------------------------------------------
+    # Analytics: table + distribution (main selector view)
+    # ------------------------------------------------------------------
+
+    def get_table_distribution(
+        self,
+        metric: str,
+        n_buckets: int = 20,
+        website_modified_from: Optional[datetime.datetime] = None,
+        website_modified_to: Optional[datetime.datetime] = None,
+        website_uploaded_from: Optional[datetime.datetime] = None,
+        website_uploaded_to: Optional[datetime.datetime] = None,
+    ) -> TableDistributionPayload:
+        """
+        Return the combined summary-table rows and distribution series for all
+        neighborhoods and municipalities for the selected metric.
+        """
+        if metric not in _VALID_METRICS:
+            raise ValueError(f"Invalid metric {metric!r}. Choose from {sorted(_VALID_METRICS)}")
+
+        filters = dict(
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+
+        summary_rows_raw = self._analytics_data.get_area_summary(metric=metric, **filters)
+        dist_raw = self._analytics_data.get_area_distribution(metric=metric, n_buckets=n_buckets, **filters)
+
+        summary_rows = [
+            AreaSummaryRow(
+                area_type=r["area_type"],
+                area_name=r["area_name"],
+                n=int(r["n"]),
+                min=r.get("min"),
+                max=r.get("max"),
+                mean=r.get("mean"),
+                median=r.get("median"),
+                stddev=r.get("stddev"),
+                p10=r.get("p10"),
+                p25=r.get("p25"),
+                p75=r.get("p75"),
+                p90=r.get("p90"),
+                iqr=r.get("iqr"),
+                cv=r.get("cv"),
+                skewness=r.get("skewness"),
+                kurtosis=r.get("kurtosis"),
+            )
+            for r in summary_rows_raw
+        ]
+
+        series = [
+            AreaDistributionSeries(
+                area_type=s["area_type"],
+                area_name=s["area_name"],
+                buckets=[
+                    DistributionBucket(
+                        bucket_label=dist_raw["bucket_labels"][b["bucket_index"] - 1]
+                        if 0 < b["bucket_index"] <= len(dist_raw["bucket_labels"])
+                        else str(b["bucket_index"]),
+                        bucket_index=b["bucket_index"],
+                        count=b["count"],
+                        density=b.get("density"),
+                    )
+                    for b in s["buckets"]
+                ],
+            )
+            for s in dist_raw["series"]
+        ]
+
+        distribution = DistributionPayload(
+            metric=metric,
+            bucket_edges=dist_raw["bucket_edges"],
+            bucket_labels=dist_raw["bucket_labels"],
+            series=series,
+        )
+
+        logger.info(
+            "get_table_distribution metric=%s summary_rows=%d dist_series=%d",
+            metric, len(summary_rows), len(series),
+        )
+        return TableDistributionPayload(
+            metric=metric,
+            summary_rows=summary_rows,
+            distribution=distribution,
+        )
+
+    # ------------------------------------------------------------------
+    # Analytics: time trends (priority A)
+    # ------------------------------------------------------------------
+
+    def get_analytics_trends(
+        self,
+        metric: str,
+        granularity: str = "month",
+        area_type: Optional[str] = None,
+        area_names: Optional[List[str]] = None,
+        website_modified_from: Optional[datetime.datetime] = None,
+        website_modified_to: Optional[datetime.datetime] = None,
+        website_uploaded_from: Optional[datetime.datetime] = None,
+        website_uploaded_to: Optional[datetime.datetime] = None,
+    ) -> TrendPayload:
+        """
+        Return monthly/weekly/daily trend series per area for the metric.
+        """
+        if metric not in _VALID_METRICS:
+            raise ValueError(f"Invalid metric {metric!r}.")
+
+        filters = dict(
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+
+        rows = self._analytics_data.get_area_trend(metric=metric, granularity=granularity, **filters)
+
+        # Group rows by area
+        series_map: Dict[tuple, List] = {}
+        for r in rows:
+            key = (r["area_type"], r["area_name"])
+            if key not in series_map:
+                series_map[key] = []
+            series_map[key].append(r)
+
+        # Optionally filter to requested areas
+        if area_type and area_names:
+            series_map = {
+                k: v for k, v in series_map.items()
+                if k[0] == area_type and k[1] in area_names
+            }
+
+        series = [
+            AreaTrendSeries(
+                area_type=k[0],
+                area_name=k[1],
+                points=[
+                    TrendPoint(
+                        period=p["period"] if isinstance(p["period"], str) else str(p["period"]),
+                        mean=p.get("mean"),
+                        median=p.get("median"),
+                        p25=p.get("p25"),
+                        p75=p.get("p75"),
+                        n=int(p["n"]),
+                    )
+                    for p in pts
+                ],
+            )
+            for k, pts in series_map.items()
+        ]
+
+        logger.info("get_analytics_trends metric=%s granularity=%s series=%d", metric, granularity, len(series))
+        return TrendPayload(metric=metric, granularity=granularity, series=series)
+
+    # ------------------------------------------------------------------
+    # Analytics: variable relationships (priority C)
+    # ------------------------------------------------------------------
+
+    def get_analytics_relationships(
+        self,
+        x_metric: str,
+        y_metric: str,
+        area_type: Optional[str] = None,
+        area_names: Optional[List[str]] = None,
+        sample_limit: int = 3000,
+        website_modified_from: Optional[datetime.datetime] = None,
+        website_modified_to: Optional[datetime.datetime] = None,
+        website_uploaded_from: Optional[datetime.datetime] = None,
+        website_uploaded_to: Optional[datetime.datetime] = None,
+    ) -> RelationshipPayload:
+        """
+        Return sampled (x, y) pairs for scatter/relationship charts.
+        """
+        for m in (x_metric, y_metric):
+            if m not in _VALID_METRICS:
+                raise ValueError(f"Invalid metric {m!r}.")
+
+        rows = self._analytics_data.get_relationship_data(
+            x_metric=x_metric,
+            y_metric=y_metric,
+            area_type=area_type,
+            area_names=area_names,
+            sample_limit=sample_limit,
+            website_modified_from=website_modified_from,
+            website_modified_to=website_modified_to,
+            website_uploaded_from=website_uploaded_from,
+            website_uploaded_to=website_uploaded_to,
+        )
+
+        points = [
+            RelationshipPoint(
+                x=float(r["x"]),
+                y=float(r["y"]),
+                area_type=r.get("area_type"),
+                area_name=r.get("area_name"),
+            )
+            for r in rows
+            if r.get("x") is not None and r.get("y") is not None
+        ]
+
+        logger.info("get_analytics_relationships x=%s y=%s points=%d", x_metric, y_metric, len(points))
+        return RelationshipPayload(x_metric=x_metric, y_metric=y_metric, points=points)
 
 
 if __name__ == '__main__':

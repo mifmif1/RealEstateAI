@@ -21,6 +21,11 @@ from model.asset_model import TargetAsset
 from model.comparison_data_model import ComparisonDataModel
 from model.geojson_model import GeoJsonFeatureCollection
 from model.spitogatos_asset_model import SpitogatosAsset
+from model.spitogatos_analytics_models import (
+    TableDistributionPayload,
+    TrendPayload,
+    RelationshipPayload,
+)
 
 app = FastAPI(
     title="RealEstateAI Flow API",
@@ -545,8 +550,134 @@ async def landea_run_stage2(
         raise HTTPException(status_code=500, detail=f"Error running Landea Stage 2: {str(e)}")
 
 
+analytics_router = APIRouter(prefix="/spitogatos/analytics", tags=["spitogatos-analytics"])
+
+
+@analytics_router.get(
+    "/table-distribution",
+    response_model=TableDistributionPayload,
+    summary="Summary statistics table + shared-axis distribution series for all areas",
+)
+async def get_analytics_table_distribution(
+    metric: str,
+    n_buckets: int = 20,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    """
+    Returns per-area summary statistics (count, min, max, mean, median, std,
+    percentiles, IQR, CV, skewness, kurtosis) and histogram distribution series
+    for all neighborhoods and municipalities for the selected metric.
+
+    metric: upload_time | floor_number | price | sqm | price_per_sqm | new_development
+    """
+    try:
+        result = await run_in_threadpool(
+            spitogatos_flow.get_table_distribution,
+            metric,
+            n_buckets,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error computing table/distribution: {str(e)}")
+
+
+@analytics_router.get(
+    "/trends",
+    response_model=TrendPayload,
+    summary="Time-series trend data per area for a selected metric",
+)
+async def get_analytics_trends(
+    metric: str,
+    granularity: str = "month",
+    area_type: Optional[str] = None,
+    area_names: Optional[str] = None,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    """
+    Returns monthly/weekly/daily mean, median, p25, p75 trend series per area.
+
+    metric: upload_time | floor_number | price | sqm | price_per_sqm | new_development
+    granularity: day | week | month
+    area_names: comma-separated list of area names to filter (optional)
+    """
+    try:
+        names_list = [n.strip() for n in area_names.split(",")] if area_names else None
+        result = await run_in_threadpool(
+            spitogatos_flow.get_analytics_trends,
+            metric,
+            granularity,
+            area_type,
+            names_list,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error computing trends: {str(e)}")
+
+
+@analytics_router.get(
+    "/relationships",
+    response_model=RelationshipPayload,
+    summary="Sampled (x, y) variable pairs for scatter/relationship charts",
+)
+async def get_analytics_relationships(
+    x_metric: str,
+    y_metric: str,
+    area_type: Optional[str] = None,
+    area_names: Optional[str] = None,
+    sample_limit: int = 3000,
+    website_modified_from: Optional[datetime] = None,
+    website_modified_to: Optional[datetime] = None,
+    website_uploaded_from: Optional[datetime] = None,
+    website_uploaded_to: Optional[datetime] = None,
+):
+    """
+    Returns up to sample_limit (x, y) metric pairs for relationship/scatter charts.
+
+    x_metric, y_metric: upload_time | floor_number | price | sqm | price_per_sqm | new_development
+    area_names: comma-separated list to filter (optional)
+    """
+    try:
+        names_list = [n.strip() for n in area_names.split(",")] if area_names else None
+        result = await run_in_threadpool(
+            spitogatos_flow.get_analytics_relationships,
+            x_metric,
+            y_metric,
+            area_type,
+            names_list,
+            sample_limit,
+            website_modified_from,
+            website_modified_to,
+            website_uploaded_from,
+            website_uploaded_to,
+        )
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error computing relationships: {str(e)}")
+
+
 app.include_router(geography_router)
 app.include_router(spitogatos_router)
+app.include_router(analytics_router)
 app.include_router(landea_router)
 
 if __name__ == "__main__":

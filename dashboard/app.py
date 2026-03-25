@@ -1110,5 +1110,577 @@ def update_geo_stats_panel(click_data: Optional[dict], layer: str):
     return _geo_stats_success(f"{label}: {name_en}", stats)
 
 
+# ===========================================================================
+# Spitogatos Analytics section helpers
+# ===========================================================================
+
+_ANALYTICS_METRICS = [
+    {"label": "Listing Age (days since upload)", "value": "upload_time"},
+    {"label": "Floor Number", "value": "floor_number"},
+    {"label": "Price (€)", "value": "price"},
+    {"label": "Area (sqm)", "value": "sqm"},
+    {"label": "Price per sqm (€/sqm)", "value": "price_per_sqm"},
+    {"label": "New Development (0/1)", "value": "new_development"},
+]
+
+_ANALYTICS_GRANULARITY = [
+    {"label": "Monthly", "value": "month"},
+    {"label": "Weekly", "value": "week"},
+    {"label": "Daily", "value": "day"},
+]
+
+_RELATIONSHIP_PAIRS = [
+    {"label": "Price vs sqm", "value": "price|sqm"},
+    {"label": "Price/sqm vs Floor", "value": "price_per_sqm|floor_number"},
+    {"label": "Price vs Listing Age", "value": "price|upload_time"},
+    {"label": "sqm vs Listing Age", "value": "sqm|upload_time"},
+    {"label": "Price/sqm vs Listing Age", "value": "price_per_sqm|upload_time"},
+]
+
+ANALYTICS_API_BASE = os.environ.get("REALESTATE_API_BASE", "http://localhost:8000").rstrip("/")
+
+
+def _fetch_analytics(path: str) -> Tuple[Optional[Any], Optional[str]]:
+    return _geo_request_json(path)
+
+
+def _fetch_table_distribution(metric: str, n_buckets: int = 20) -> Tuple[Optional[dict], Optional[str]]:
+    q = urllib.parse.urlencode({"metric": metric, "n_buckets": n_buckets})
+    return _geo_request_json(f"/spitogatos/analytics/table-distribution?{q}")
+
+
+def _fetch_trends(metric: str, granularity: str) -> Tuple[Optional[dict], Optional[str]]:
+    q = urllib.parse.urlencode({"metric": metric, "granularity": granularity})
+    return _geo_request_json(f"/spitogatos/analytics/trends?{q}")
+
+
+def _fetch_relationships(x_metric: str, y_metric: str) -> Tuple[Optional[dict], Optional[str]]:
+    q = urllib.parse.urlencode({"x_metric": x_metric, "y_metric": y_metric, "sample_limit": 3000})
+    return _geo_request_json(f"/spitogatos/analytics/relationships?{q}")
+
+
+def _analytics_empty(msg: str = "No data — select a metric and click Refresh.") -> go.Figure:
+    fig = go.Figure()
+    fig.update_layout(
+        paper_bgcolor=CARD_BG,
+        plot_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        annotations=[dict(text=msg, x=0.5, y=0.5, xref="paper", yref="paper",
+                          showarrow=False, font=dict(size=14, color=TEXT_MUTED))],
+        xaxis_visible=False, yaxis_visible=False,
+        margin=dict(l=0, r=0, t=30, b=0), height=380,
+    )
+    return fig
+
+
+# ===========================================================================
+# Analytics layout — injected into main app.layout after existing content
+# ===========================================================================
+
+_analytics_tab = dbc.Tab(
+    label="Spitogatos Analytics",
+    tab_id="tab-analytics",
+    children=[
+        dbc.Card(
+            dbc.CardBody([
+                # Controls row
+                dbc.Row([
+                    dbc.Col([
+                        html.Small("Metric", className="d-block text-muted mb-1"),
+                        dcc.Dropdown(
+                            id="analytics-metric",
+                            options=_ANALYTICS_METRICS,
+                            value="price_per_sqm",
+                            clearable=False,
+                        ),
+                    ], md=4),
+                    dbc.Col([
+                        html.Small("Areas to highlight (distribution / trend)", className="d-block text-muted mb-1"),
+                        dcc.Dropdown(
+                            id="analytics-area-select",
+                            options=[],
+                            multi=True,
+                            placeholder="All areas shown — select to highlight",
+                        ),
+                    ], md=5),
+                    dbc.Col([
+                        html.Small("Trend granularity", className="d-block text-muted mb-1"),
+                        dcc.Dropdown(
+                            id="analytics-granularity",
+                            options=_ANALYTICS_GRANULARITY,
+                            value="month",
+                            clearable=False,
+                        ),
+                    ], md=2),
+                    dbc.Col([
+                        html.Br(),
+                        dbc.Button("Refresh", id="analytics-refresh-btn", color="primary",
+                                   className="w-100", n_clicks=0),
+                    ], md=1),
+                ], className="g-3 mb-3"),
+
+                # View tabs
+                dbc.Tabs(id="analytics-view-tabs", active_tab="view-dist", children=[
+                    dbc.Tab(label="Distribution & Table", tab_id="view-dist"),
+                    dbc.Tab(label="Time Trends", tab_id="view-trend"),
+                    dbc.Tab(label="Relationships", tab_id="view-rel"),
+                ], className="mb-3"),
+
+                dcc.Store(id="analytics-td-store"),   # TableDistribution payload
+                dcc.Store(id="analytics-trend-store"),
+                dcc.Store(id="analytics-rel-store"),
+                dcc.Store(id="analytics-area-options-store"),  # list of all area names
+
+                # Distribution view
+                html.Div(id="analytics-dist-view", children=[
+                    dbc.Row([
+                        dbc.Col([
+                            html.H6("Distribution (select areas to add/remove traces)",
+                                    className="mb-2 text-muted small"),
+                            dcc.Graph(id="analytics-dist-graph", figure=_analytics_empty(),
+                                      config={"displayModeBar": True, "displaylogo": False}),
+                        ], md=7),
+                        dbc.Col([
+                            html.H6("Box Plot (spread & outliers per area)",
+                                    className="mb-2 text-muted small"),
+                            dcc.Graph(id="analytics-box-graph", figure=_analytics_empty(),
+                                      config={"displayModeBar": True, "displaylogo": False}),
+                        ], md=5),
+                    ], className="g-3 mb-3"),
+                    dbc.Row([
+                        dbc.Col([
+                            html.H6("ECDF (empirical CDF comparison)",
+                                    className="mb-2 text-muted small"),
+                            dcc.Graph(id="analytics-ecdf-graph", figure=_analytics_empty(),
+                                      config={"displayModeBar": True, "displaylogo": False}),
+                        ], md=6),
+                        dbc.Col([
+                            html.H6("Summary statistics table",
+                                    className="mb-2 text-muted small"),
+                            html.Div(id="analytics-summary-table"),
+                        ], md=6),
+                    ], className="g-3"),
+                ]),
+
+                # Trend view
+                html.Div(id="analytics-trend-view", style={"display": "none"}, children=[
+                    dbc.Row([
+                        dbc.Col([
+                            html.H6("Median trend over time", className="mb-2 text-muted small"),
+                            dcc.Graph(id="analytics-trend-graph", figure=_analytics_empty(),
+                                      config={"displayModeBar": True, "displaylogo": False}),
+                        ], md=8),
+                        dbc.Col([
+                            html.H6("Percentile band (P25–P75)", className="mb-2 text-muted small"),
+                            dcc.Graph(id="analytics-band-graph", figure=_analytics_empty(),
+                                      config={"displayModeBar": True, "displaylogo": False}),
+                        ], md=4),
+                    ], className="g-3"),
+                ]),
+
+                # Relationship view
+                html.Div(id="analytics-rel-view", style={"display": "none"}, children=[
+                    dbc.Row([
+                        dbc.Col([
+                            html.Small("Variable pair", className="d-block text-muted mb-1"),
+                            dcc.Dropdown(
+                                id="analytics-rel-pair",
+                                options=_RELATIONSHIP_PAIRS,
+                                value="price|sqm",
+                                clearable=False,
+                            ),
+                        ], md=4),
+                    ], className="g-3 mb-3"),
+                    dbc.Row([
+                        dbc.Col([
+                            html.H6("Scatter plot", className="mb-2 text-muted small"),
+                            dcc.Graph(id="analytics-scatter-graph", figure=_analytics_empty(),
+                                      config={"displayModeBar": True, "displaylogo": False}),
+                        ], md=12),
+                    ], className="g-3"),
+                ]),
+            ]),
+            className="shadow-sm border-0",
+            style={"background": CARD_BG},
+        )
+    ],
+)
+
+
+# Inject the analytics tab into the existing layout — find the Tabs component
+# (there is one wrapping the existing panels) and append.
+# Since the layout is defined as a list we patch it by adding a new Tabs card below.
+_analytics_section = dbc.Card(
+    dbc.CardBody([
+        html.H4("Spitogatos Market Analytics", className="mb-3 fw-bold", style={"color": ACCENT}),
+        html.P(
+            "Explore distribution, time trends, and variable relationships for all Spitogatos listings, "
+            "grouped by Athens neighborhoods and Attica municipalities.",
+            className="text-muted mb-3",
+        ),
+        _analytics_tab,
+    ]),
+    className="shadow-sm border-0 mb-4",
+    style={"background": CARD_BG},
+)
+
+app.layout.children.append(_analytics_section)  # type: ignore[union-attr]
+
+
+# ===========================================================================
+# Analytics callbacks
+# ===========================================================================
+
+@app.callback(
+    Output("analytics-td-store", "data"),
+    Output("analytics-trend-store", "data"),
+    Output("analytics-area-options-store", "data"),
+    Input("analytics-refresh-btn", "n_clicks"),
+    State("analytics-metric", "value"),
+    State("analytics-granularity", "value"),
+    prevent_initial_call=True,
+)
+def refresh_analytics_stores(n_clicks, metric, granularity):
+    if not metric:
+        return None, None, []
+
+    td_data, td_err = _fetch_table_distribution(metric)
+    trend_data, trend_err = _fetch_trends(metric, granularity)
+
+    # Build area options from summary rows
+    area_opts = []
+    if td_data and "summary_rows" in td_data:
+        for row in td_data["summary_rows"]:
+            prefix = "N" if row["area_type"] == "neighborhood" else "M"
+            area_opts.append({
+                "label": f"[{prefix}] {row['area_name']}",
+                "value": f"{row['area_type']}::{row['area_name']}",
+            })
+
+    return td_data or {}, trend_data or {}, area_opts
+
+
+@app.callback(
+    Output("analytics-area-select", "options"),
+    Input("analytics-area-options-store", "data"),
+)
+def update_area_select_options(opts):
+    return opts or []
+
+
+@app.callback(
+    Output("analytics-rel-store", "data"),
+    Input("analytics-rel-pair", "value"),
+    State("analytics-refresh-btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def refresh_relationship_store(pair, _n):
+    if not pair or "|" not in pair:
+        return {}
+    x_m, y_m = pair.split("|", 1)
+    rel_data, rel_err = _fetch_relationships(x_m, y_m)
+    return rel_data or {}
+
+
+@app.callback(
+    Output("analytics-dist-view", "style"),
+    Output("analytics-trend-view", "style"),
+    Output("analytics-rel-view", "style"),
+    Input("analytics-view-tabs", "active_tab"),
+)
+def toggle_analytics_views(active_tab):
+    show = {"display": "block"}
+    hide = {"display": "none"}
+    return (
+        show if active_tab == "view-dist" else hide,
+        show if active_tab == "view-trend" else hide,
+        show if active_tab == "view-rel" else hide,
+    )
+
+
+@app.callback(
+    Output("analytics-dist-graph", "figure"),
+    Output("analytics-box-graph", "figure"),
+    Output("analytics-ecdf-graph", "figure"),
+    Output("analytics-summary-table", "children"),
+    Input("analytics-td-store", "data"),
+    Input("analytics-area-select", "value"),
+    State("analytics-metric", "value"),
+)
+def update_distribution_views(td_data, selected_areas, metric):
+    if not td_data or "distribution" not in td_data:
+        empty = _analytics_empty()
+        return empty, empty, empty, html.P("No data loaded. Click Refresh.", className="text-muted small")
+
+    dist = td_data["distribution"]
+    summary_rows = td_data.get("summary_rows", [])
+    bucket_labels = dist.get("bucket_labels", [])
+    series = dist.get("series", [])
+    metric_label = next((m["label"] for m in _ANALYTICS_METRICS if m["value"] == metric), metric)
+
+    selected_keys = set(selected_areas or [])
+
+    # ---------- Distribution line chart (KDE-style using density) ----------
+    dist_fig = go.Figure()
+    palette = px.colors.qualitative.Prism
+    for idx, s in enumerate(series):
+        key = f"{s['area_type']}::{s['area_name']}"
+        if selected_keys and key not in selected_keys:
+            continue
+        buckets = sorted(s["buckets"], key=lambda b: b["bucket_index"])
+        xs = [bucket_labels[b["bucket_index"] - 1] if 0 < b["bucket_index"] <= len(bucket_labels)
+              else str(b["bucket_index"]) for b in buckets]
+        ys = [b.get("density") or 0 for b in buckets]
+        prefix = "N" if s["area_type"] == "neighborhood" else "M"
+        dist_fig.add_trace(go.Scatter(
+            x=xs, y=ys,
+            mode="lines",
+            name=f"[{prefix}] {s['area_name']}",
+            line=dict(color=palette[idx % len(palette)], width=2),
+        ))
+    dist_fig.update_layout(
+        xaxis_title=metric_label,
+        yaxis_title="Density",
+        paper_bgcolor=CARD_BG, plot_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        legend=dict(orientation="v", x=1.02, y=1),
+        margin=dict(l=40, r=10, t=30, b=40),
+        height=380,
+    )
+
+    # ---------- Box plot from summary rows ----------
+    box_fig = go.Figure()
+    for idx, row in enumerate(summary_rows):
+        key = f"{row['area_type']}::{row['area_name']}"
+        if selected_keys and key not in selected_keys:
+            continue
+        prefix = "N" if row["area_type"] == "neighborhood" else "M"
+        box_fig.add_trace(go.Box(
+            name=f"[{prefix}] {row['area_name']}",
+            q1=[row.get("p25") or 0],
+            median=[row.get("median") or 0],
+            q3=[row.get("p75") or 0],
+            lowerfence=[row.get("min") or 0],
+            upperfence=[row.get("max") or 0],
+            mean=[row.get("mean") or 0],
+            marker_color=palette[idx % len(palette)],
+        ))
+    box_fig.update_layout(
+        yaxis_title=metric_label,
+        paper_bgcolor=CARD_BG, plot_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        showlegend=False,
+        margin=dict(l=40, r=10, t=30, b=40),
+        height=380,
+    )
+
+    # ---------- ECDF from distribution buckets ----------
+    ecdf_fig = go.Figure()
+    for idx, s in enumerate(series):
+        key = f"{s['area_type']}::{s['area_name']}"
+        if selected_keys and key not in selected_keys:
+            continue
+        buckets = sorted(s["buckets"], key=lambda b: b["bucket_index"])
+        counts = [b["count"] for b in buckets]
+        total = sum(counts)
+        if total == 0:
+            continue
+        xs = [bucket_labels[b["bucket_index"] - 1] if 0 < b["bucket_index"] <= len(bucket_labels)
+              else str(b["bucket_index"]) for b in buckets]
+        cumulative = []
+        running = 0
+        for c in counts:
+            running += c
+            cumulative.append(running / total)
+        prefix = "N" if s["area_type"] == "neighborhood" else "M"
+        ecdf_fig.add_trace(go.Scatter(
+            x=xs, y=cumulative,
+            mode="lines",
+            name=f"[{prefix}] {s['area_name']}",
+            line=dict(color=palette[idx % len(palette)], width=2),
+        ))
+    ecdf_fig.update_layout(
+        xaxis_title=metric_label,
+        yaxis_title="Cumulative probability",
+        paper_bgcolor=CARD_BG, plot_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        legend=dict(orientation="v", x=1.02, y=1),
+        margin=dict(l=40, r=10, t=30, b=40),
+        height=380,
+    )
+
+    # ---------- Summary table ----------
+    cols_def = [
+        {"name": "Type", "id": "area_type"},
+        {"name": "Area", "id": "area_name"},
+        {"name": "N", "id": "n"},
+        {"name": "Min", "id": "min"},
+        {"name": "P10", "id": "p10"},
+        {"name": "P25", "id": "p25"},
+        {"name": "Median", "id": "median"},
+        {"name": "Mean", "id": "mean"},
+        {"name": "P75", "id": "p75"},
+        {"name": "P90", "id": "p90"},
+        {"name": "Max", "id": "max"},
+        {"name": "Std", "id": "stddev"},
+        {"name": "IQR", "id": "iqr"},
+        {"name": "CV", "id": "cv"},
+        {"name": "Skew", "id": "skewness"},
+        {"name": "Kurt", "id": "kurtosis"},
+    ]
+
+    def _fmt(v):
+        if v is None:
+            return "—"
+        try:
+            f = float(v)
+            return f"{f:,.2f}"
+        except Exception:
+            return str(v)
+
+    table_rows = []
+    for row in summary_rows:
+        table_rows.append({k: _fmt(row.get(k)) if k not in ("area_type", "area_name", "n") else row.get(k)
+                           for k in ["area_type", "area_name", "n", "min", "p10", "p25",
+                                     "median", "mean", "p75", "p90", "max", "stddev",
+                                     "iqr", "cv", "skewness", "kurtosis"]})
+
+    summary_table = DataTable(
+        id="analytics-summary-datatable",
+        data=table_rows,
+        columns=cols_def,
+        sort_action="native",
+        filter_action="native",
+        page_size=15,
+        style_table={"overflowX": "auto"},
+        style_cell={"fontSize": 12, "fontFamily": "inherit", "padding": "4px 8px",
+                    "textAlign": "left"},
+        style_header={"backgroundColor": ACCENT, "color": "white", "fontWeight": "bold",
+                      "fontSize": 12},
+        style_data_conditional=[
+            {"if": {"row_index": "odd"}, "backgroundColor": "#f5f5f5"},
+        ],
+    )
+
+    return dist_fig, box_fig, ecdf_fig, summary_table
+
+
+@app.callback(
+    Output("analytics-trend-graph", "figure"),
+    Output("analytics-band-graph", "figure"),
+    Input("analytics-trend-store", "data"),
+    Input("analytics-area-select", "value"),
+    State("analytics-metric", "value"),
+)
+def update_trend_views(trend_data, selected_areas, metric):
+    if not trend_data or "series" not in trend_data:
+        empty = _analytics_empty()
+        return empty, empty
+
+    series = trend_data["series"]
+    metric_label = next((m["label"] for m in _ANALYTICS_METRICS if m["value"] == metric), metric)
+    selected_keys = set(selected_areas or [])
+    palette = px.colors.qualitative.Prism
+
+    trend_fig = go.Figure()
+    band_fig = go.Figure()
+
+    for idx, s in enumerate(series):
+        key = f"{s['area_type']}::{s['area_name']}"
+        if selected_keys and key not in selected_keys:
+            continue
+        pts = sorted(s["points"], key=lambda p: p["period"])
+        periods = [p["period"] for p in pts]
+        medians = [p.get("median") for p in pts]
+        p25s = [p.get("p25") for p in pts]
+        p75s = [p.get("p75") for p in pts]
+        color = palette[idx % len(palette)]
+        prefix = "N" if s["area_type"] == "neighborhood" else "M"
+        label = f"[{prefix}] {s['area_name']}"
+
+        trend_fig.add_trace(go.Scatter(
+            x=periods, y=medians, mode="lines+markers",
+            name=label, line=dict(color=color, width=2),
+            marker=dict(size=4),
+        ))
+
+        # Band: fill between p25 and p75 for first/few selected areas for clarity
+        if not selected_keys or key in selected_keys:
+            band_fig.add_trace(go.Scatter(
+                x=periods + periods[::-1],
+                y=p75s + (p25s[::-1] if p25s else []),
+                fill="toself",
+                fillcolor=color.replace("rgb", "rgba").replace(")", ", 0.15)") if color.startswith("rgb") else color,
+                line=dict(color="rgba(0,0,0,0)"),
+                name=f"{label} P25–P75",
+                showlegend=False,
+            ))
+            band_fig.add_trace(go.Scatter(
+                x=periods, y=medians, mode="lines",
+                name=label, line=dict(color=color, width=2),
+            ))
+
+    for fig in (trend_fig, band_fig):
+        fig.update_layout(
+            xaxis_title="Period",
+            yaxis_title=metric_label,
+            paper_bgcolor=CARD_BG, plot_bgcolor=CARD_BG,
+            font=dict(color="#1d1d1f"),
+            legend=dict(orientation="v", x=1.02, y=1),
+            margin=dict(l=40, r=10, t=30, b=40),
+            height=380,
+        )
+
+    return trend_fig, band_fig
+
+
+@app.callback(
+    Output("analytics-scatter-graph", "figure"),
+    Input("analytics-rel-store", "data"),
+    State("analytics-rel-pair", "value"),
+)
+def update_relationship_view(rel_data, pair):
+    if not rel_data or "points" not in rel_data or not rel_data["points"]:
+        return _analytics_empty("No relationship data. Select a variable pair and click Refresh.")
+
+    points = rel_data["points"]
+    x_metric, y_metric = (pair or "price|sqm").split("|", 1)
+    x_label = next((m["label"] for m in _ANALYTICS_METRICS if m["value"] == x_metric), x_metric)
+    y_label = next((m["label"] for m in _ANALYTICS_METRICS if m["value"] == y_metric), y_metric)
+
+    df_rel = pd.DataFrame(points)
+    df_rel["x"] = pd.to_numeric(df_rel["x"], errors="coerce")
+    df_rel["y"] = pd.to_numeric(df_rel["y"], errors="coerce")
+    df_rel = df_rel.dropna(subset=["x", "y"])
+
+    color_col = "area_name" if "area_name" in df_rel.columns and df_rel["area_name"].notna().any() else None
+
+    try:
+        import statsmodels  # noqa: F401
+        _trendline = "ols" if len(df_rel) >= 10 else None
+    except ImportError:
+        _trendline = None
+
+    scatter_fig = px.scatter(
+        df_rel,
+        x="x", y="y",
+        color=color_col,
+        opacity=0.5,
+        color_discrete_sequence=px.colors.qualitative.Prism,
+        labels={"x": x_label, "y": y_label},
+        trendline=_trendline,
+        trendline_color_override="#1d7d8d",
+    )
+    scatter_fig.update_traces(marker=dict(size=4), selector=dict(mode="markers"))
+    scatter_fig.update_layout(
+        paper_bgcolor=CARD_BG, plot_bgcolor=CARD_BG,
+        font=dict(color="#1d1d1f"),
+        legend=dict(orientation="v", x=1.02, y=1),
+        margin=dict(l=40, r=10, t=30, b=40),
+        height=480,
+    )
+    return scatter_fig
+
+
 if __name__ == "__main__":
     app.run(debug=True)
