@@ -722,18 +722,28 @@ app.layout = dbc.Container(
                                     page_size=10,
                                     sort_action="native",
                                     markdown_options={"html": True, "link_target": "_blank"},
-                                    style_table={"overflowX": "auto"},
+                                    fixed_rows={"headers": True},
+                                    style_table={
+                                        "overflowX": "auto",
+                                        "overflowY": "auto",
+                                        "maxHeight": "480px",
+                                    },
                                     style_cell={
                                         "textAlign": "left",
                                         "fontSize": 14,
                                         "padding": "0.5rem",
                                         "backgroundColor": CARD_BG,
+                                        "maxWidth": "280px",
+                                        "overflow": "hidden",
+                                        "textOverflow": "ellipsis",
+                                        "whiteSpace": "nowrap",
                                     },
                                     style_header={
                                         "backgroundColor": ACCENT,
                                         "color": "white",
                                         "fontWeight": "600",
                                         "textTransform": "uppercase",
+                                        "whiteSpace": "nowrap",
                                     },
                                     style_data_conditional=[
                                         {
@@ -743,12 +753,23 @@ app.layout = dbc.Container(
                                         {
                                             "if": {"row_index": "odd"},
                                             "backgroundColor": "#f2f6fb",
-                                        }
+                                        },
+                                        {
+                                            "if": {"column_id": "description"},
+                                            "maxWidth": "320px",
+                                            "whiteSpace": "nowrap",
+                                            "overflow": "hidden",
+                                            "textOverflow": "ellipsis",
+                                        },
+                                        {
+                                            "if": {"column_id": "links"},
+                                            "maxWidth": "200px",
+                                        },
                                     ],
                                 ),
                             ]
                         ),
-                        className="shadow-sm h-100 border-0",
+                        className="shadow-sm border-0",
                         style={"background": CARD_BG},
                     ),
                     md=12,
@@ -1177,139 +1198,6 @@ def _analytics_empty(msg: str = "No data — select a metric and click Refresh."
 # Analytics layout — injected into main app.layout after existing content
 # ===========================================================================
 
-_analytics_tab = dbc.Tab(
-    label="Spitogatos Analytics",
-    tab_id="tab-analytics",
-    children=[
-        dbc.Card(
-            dbc.CardBody([
-                # Controls row
-                dbc.Row([
-                    dbc.Col([
-                        html.Small("Metric", className="d-block text-muted mb-1"),
-                        dcc.Dropdown(
-                            id="analytics-metric",
-                            options=_ANALYTICS_METRICS,
-                            value="price_per_sqm",
-                            clearable=False,
-                        ),
-                    ], md=4),
-                    dbc.Col([
-                        html.Small("Areas to highlight (distribution / trend)", className="d-block text-muted mb-1"),
-                        dcc.Dropdown(
-                            id="analytics-area-select",
-                            options=[],
-                            multi=True,
-                            placeholder="All areas shown — select to highlight",
-                        ),
-                    ], md=5),
-                    dbc.Col([
-                        html.Small("Trend granularity", className="d-block text-muted mb-1"),
-                        dcc.Dropdown(
-                            id="analytics-granularity",
-                            options=_ANALYTICS_GRANULARITY,
-                            value="month",
-                            clearable=False,
-                        ),
-                    ], md=2),
-                    dbc.Col([
-                        html.Br(),
-                        dbc.Button("Refresh", id="analytics-refresh-btn", color="primary",
-                                   className="w-100", n_clicks=0),
-                    ], md=1),
-                ], className="g-3 mb-3"),
-
-                # View tabs
-                dbc.Tabs(id="analytics-view-tabs", active_tab="view-dist", children=[
-                    dbc.Tab(label="Distribution & Table", tab_id="view-dist"),
-                    dbc.Tab(label="Time Trends", tab_id="view-trend"),
-                    dbc.Tab(label="Relationships", tab_id="view-rel"),
-                ], className="mb-3"),
-
-                dcc.Store(id="analytics-td-store"),   # TableDistribution payload
-                dcc.Store(id="analytics-trend-store"),
-                dcc.Store(id="analytics-rel-store"),
-                dcc.Store(id="analytics-area-options-store"),  # list of all area names
-
-                # Distribution view
-                html.Div(id="analytics-dist-view", children=[
-                    dbc.Row([
-                        dbc.Col([
-                            html.H6("Distribution (select areas to add/remove traces)",
-                                    className="mb-2 text-muted small"),
-                            dcc.Graph(id="analytics-dist-graph", figure=_analytics_empty(),
-                                      config={"displayModeBar": True, "displaylogo": False}),
-                        ], md=7),
-                        dbc.Col([
-                            html.H6("Box Plot (spread & outliers per area)",
-                                    className="mb-2 text-muted small"),
-                            dcc.Graph(id="analytics-box-graph", figure=_analytics_empty(),
-                                      config={"displayModeBar": True, "displaylogo": False}),
-                        ], md=5),
-                    ], className="g-3 mb-3"),
-                    dbc.Row([
-                        dbc.Col([
-                            html.H6("ECDF (empirical CDF comparison)",
-                                    className="mb-2 text-muted small"),
-                            dcc.Graph(id="analytics-ecdf-graph", figure=_analytics_empty(),
-                                      config={"displayModeBar": True, "displaylogo": False}),
-                        ], md=6),
-                        dbc.Col([
-                            html.H6("Summary statistics table",
-                                    className="mb-2 text-muted small"),
-                            html.Div(id="analytics-summary-table"),
-                        ], md=6),
-                    ], className="g-3"),
-                ]),
-
-                # Trend view
-                html.Div(id="analytics-trend-view", style={"display": "none"}, children=[
-                    dbc.Row([
-                        dbc.Col([
-                            html.H6("Median trend over time", className="mb-2 text-muted small"),
-                            dcc.Graph(id="analytics-trend-graph", figure=_analytics_empty(),
-                                      config={"displayModeBar": True, "displaylogo": False}),
-                        ], md=8),
-                        dbc.Col([
-                            html.H6("Percentile band (P25–P75)", className="mb-2 text-muted small"),
-                            dcc.Graph(id="analytics-band-graph", figure=_analytics_empty(),
-                                      config={"displayModeBar": True, "displaylogo": False}),
-                        ], md=4),
-                    ], className="g-3"),
-                ]),
-
-                # Relationship view
-                html.Div(id="analytics-rel-view", style={"display": "none"}, children=[
-                    dbc.Row([
-                        dbc.Col([
-                            html.Small("Variable pair", className="d-block text-muted mb-1"),
-                            dcc.Dropdown(
-                                id="analytics-rel-pair",
-                                options=_RELATIONSHIP_PAIRS,
-                                value="price|sqm",
-                                clearable=False,
-                            ),
-                        ], md=4),
-                    ], className="g-3 mb-3"),
-                    dbc.Row([
-                        dbc.Col([
-                            html.H6("Scatter plot", className="mb-2 text-muted small"),
-                            dcc.Graph(id="analytics-scatter-graph", figure=_analytics_empty(),
-                                      config={"displayModeBar": True, "displaylogo": False}),
-                        ], md=12),
-                    ], className="g-3"),
-                ]),
-            ]),
-            className="shadow-sm border-0",
-            style={"background": CARD_BG},
-        )
-    ],
-)
-
-
-# Inject the analytics tab into the existing layout — find the Tabs component
-# (there is one wrapping the existing panels) and append.
-# Since the layout is defined as a list we patch it by adding a new Tabs card below.
 _analytics_section = dbc.Card(
     dbc.CardBody([
         html.H4("Spitogatos Market Analytics", className="mb-3 fw-bold", style={"color": ACCENT}),
@@ -1318,7 +1206,122 @@ _analytics_section = dbc.Card(
             "grouped by Athens neighborhoods and Attica municipalities.",
             className="text-muted mb-3",
         ),
-        _analytics_tab,
+        # Controls row
+        dbc.Row([
+            dbc.Col([
+                html.Small("Metric", className="d-block text-muted mb-1"),
+                dcc.Dropdown(
+                    id="analytics-metric",
+                    options=_ANALYTICS_METRICS,
+                    value="price_per_sqm",
+                    clearable=False,
+                ),
+            ], md=4),
+            dbc.Col([
+                html.Small("Areas to highlight (distribution / trend)", className="d-block text-muted mb-1"),
+                dcc.Dropdown(
+                    id="analytics-area-select",
+                    options=[],
+                    multi=True,
+                    placeholder="All areas shown — select to highlight",
+                ),
+            ], md=5),
+            dbc.Col([
+                html.Small("Trend granularity", className="d-block text-muted mb-1"),
+                dcc.Dropdown(
+                    id="analytics-granularity",
+                    options=_ANALYTICS_GRANULARITY,
+                    value="month",
+                    clearable=False,
+                ),
+            ], md=2),
+            dbc.Col([
+                html.Br(),
+                dbc.Button("Refresh", id="analytics-refresh-btn", color="primary",
+                           className="w-100", n_clicks=0),
+            ], md=1),
+        ], className="g-3 mb-3"),
+
+        # View tabs
+        dbc.Tabs(id="analytics-view-tabs", active_tab="view-dist", children=[
+            dbc.Tab(label="Distribution & Table", tab_id="view-dist"),
+            dbc.Tab(label="Time Trends", tab_id="view-trend"),
+            dbc.Tab(label="Relationships", tab_id="view-rel"),
+        ], className="mb-3"),
+
+        dcc.Store(id="analytics-td-store"),
+        dcc.Store(id="analytics-trend-store"),
+        dcc.Store(id="analytics-rel-store"),
+        dcc.Store(id="analytics-area-options-store"),
+
+        # Distribution view
+        html.Div(id="analytics-dist-view", children=[
+            dbc.Row([
+                dbc.Col([
+                    html.H6("Distribution (select areas to add/remove traces)",
+                            className="mb-2 text-muted small"),
+                    dcc.Graph(id="analytics-dist-graph", figure=_analytics_empty(),
+                              config={"displayModeBar": True, "displaylogo": False}),
+                ], md=7),
+                dbc.Col([
+                    html.H6("Box Plot (spread & outliers per area)",
+                            className="mb-2 text-muted small"),
+                    dcc.Graph(id="analytics-box-graph", figure=_analytics_empty(),
+                              config={"displayModeBar": True, "displaylogo": False}),
+                ], md=5),
+            ], className="g-3 mb-3"),
+            dbc.Row([
+                dbc.Col([
+                    html.H6("ECDF (empirical CDF comparison)",
+                            className="mb-2 text-muted small"),
+                    dcc.Graph(id="analytics-ecdf-graph", figure=_analytics_empty(),
+                              config={"displayModeBar": True, "displaylogo": False}),
+                ], md=6),
+                dbc.Col([
+                    html.H6("Summary statistics table",
+                            className="mb-2 text-muted small"),
+                    html.Div(id="analytics-summary-table"),
+                ], md=6),
+            ], className="g-3"),
+        ]),
+
+        # Trend view
+        html.Div(id="analytics-trend-view", style={"display": "none"}, children=[
+            dbc.Row([
+                dbc.Col([
+                    html.H6("Median trend over time", className="mb-2 text-muted small"),
+                    dcc.Graph(id="analytics-trend-graph", figure=_analytics_empty(),
+                              config={"displayModeBar": True, "displaylogo": False}),
+                ], md=8),
+                dbc.Col([
+                    html.H6("Percentile band (P25–P75)", className="mb-2 text-muted small"),
+                    dcc.Graph(id="analytics-band-graph", figure=_analytics_empty(),
+                              config={"displayModeBar": True, "displaylogo": False}),
+                ], md=4),
+            ], className="g-3"),
+        ]),
+
+        # Relationship view
+        html.Div(id="analytics-rel-view", style={"display": "none"}, children=[
+            dbc.Row([
+                dbc.Col([
+                    html.Small("Variable pair", className="d-block text-muted mb-1"),
+                    dcc.Dropdown(
+                        id="analytics-rel-pair",
+                        options=_RELATIONSHIP_PAIRS,
+                        value="price|sqm",
+                        clearable=False,
+                    ),
+                ], md=4),
+            ], className="g-3 mb-3"),
+            dbc.Row([
+                dbc.Col([
+                    html.H6("Scatter plot", className="mb-2 text-muted small"),
+                    dcc.Graph(id="analytics-scatter-graph", figure=_analytics_empty(),
+                              config={"displayModeBar": True, "displaylogo": False}),
+                ], md=12),
+            ], className="g-3"),
+        ]),
     ]),
     className="shadow-sm border-0 mb-4",
     style={"background": CARD_BG},
@@ -1552,11 +1555,30 @@ def update_distribution_views(td_data, selected_areas, metric):
         sort_action="native",
         filter_action="native",
         page_size=15,
-        style_table={"overflowX": "auto"},
-        style_cell={"fontSize": 12, "fontFamily": "inherit", "padding": "4px 8px",
-                    "textAlign": "left"},
-        style_header={"backgroundColor": ACCENT, "color": "white", "fontWeight": "bold",
-                      "fontSize": 12},
+        fixed_rows={"headers": True},
+        style_table={
+            "overflowX": "auto",
+            "overflowY": "auto",
+            "maxHeight": "420px",
+        },
+        style_cell={
+            "fontSize": 12,
+            "fontFamily": "inherit",
+            "padding": "4px 8px",
+            "textAlign": "left",
+            "minWidth": "70px",
+            "maxWidth": "140px",
+            "whiteSpace": "nowrap",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+        },
+        style_header={
+            "backgroundColor": ACCENT,
+            "color": "white",
+            "fontWeight": "bold",
+            "fontSize": 12,
+            "whiteSpace": "nowrap",
+        },
         style_data_conditional=[
             {"if": {"row_index": "odd"}, "backgroundColor": "#f5f5f5"},
         ],

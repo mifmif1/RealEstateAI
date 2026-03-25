@@ -180,3 +180,5 @@ connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection re
 2026-03-04 14:04:31,870 [INFO] Not enough assets near by to compare with. id: 8361
 2026-03-04 14:04:31,886 [INFO] Fetched 100 assets from spitogatos_data within radius=100 m of point (lat=37.99435, lon=23.7237)
 2026-03-04 14:04:31,902 [INFO] Fetched 24 assets from spitogatos_data within radius=100 m of point (lat=37.97666449, lon=23.76793855)
+2026-03-25 15:59:02,730 [INFO] Database connection pool initialized
+2026-03-25 16:04:31,561 [INFO] Database connection pool initialized
