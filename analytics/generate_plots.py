@@ -82,6 +82,13 @@ TREND_GRANULARITY = "month"
 RELATIONSHIP_SAMPLE = 3000
 DPI = 150
 STYLE = "seaborn-v0_8-whitegrid"
+SQM_MIN = 30
+SQM_MAX = 200
+
+
+def _sqm_range_predicate(alias: str = "s") -> str:
+    # Shared filter for every query that sources listing rows.
+    return f"{alias}.sqm > {SQM_MIN} AND {alias}.sqm < {SQM_MAX}"
 
 
 # ---------------------------------------------------------------------------
@@ -102,6 +109,7 @@ def fetch_summary_df(db, metric: str) -> pd.DataFrame:
     (no correlated subqueries).  Returns a DataFrame with one row per area.
     """
     expr = METRIC_SQL[metric]
+    sqm_filter = _sqm_range_predicate("s")
     query = f"""
     WITH vals AS (
         SELECT
@@ -112,6 +120,7 @@ def fetch_summary_df(db, metric: str) -> pd.DataFrame:
         JOIN geography.athens_neighborhood n
           ON ST_Contains(n.geom, s.location::geometry)
         WHERE ({expr}) IS NOT NULL
+          AND {sqm_filter}
 
         UNION ALL
 
@@ -123,6 +132,7 @@ def fetch_summary_df(db, metric: str) -> pd.DataFrame:
         JOIN geography.attica_municipality m
           ON ST_Contains(m.geom, s.location::geometry)
         WHERE ({expr}) IS NOT NULL
+          AND {sqm_filter}
     )
     SELECT
         area_type,
@@ -166,6 +176,7 @@ def fetch_distribution(db, metric: str, n_buckets: int = N_BUCKETS):
     series = list of {area_type, area_name, buckets: [{bucket_index, count}]}
     """
     expr = METRIC_SQL[metric]
+    sqm_filter = _sqm_range_predicate("s")
 
     if metric == "new_development":
         # discrete 0/1 – skip bucketing
@@ -177,12 +188,14 @@ def fetch_distribution(db, metric: str, n_buckets: int = N_BUCKETS):
             JOIN geography.athens_neighborhood n
               ON ST_Contains(n.geom, s.location::geometry)
             WHERE ({expr}) IS NOT NULL
+              AND {sqm_filter}
             UNION ALL
             SELECT 'municipality'::text, m.name_en, ({expr})::int
             FROM spitogatos_data s
             JOIN geography.attica_municipality m
               ON ST_Contains(m.geom, s.location::geometry)
             WHERE ({expr}) IS NOT NULL
+              AND {sqm_filter}
         )
         SELECT area_type, area_name, bucket_index, COUNT(*) AS cnt
         FROM vals
@@ -200,6 +213,7 @@ def fetch_distribution(db, metric: str, n_buckets: int = N_BUCKETS):
                 SELECT ({expr}) AS v
                 FROM spitogatos_data s
                 WHERE ({expr}) IS NOT NULL
+                  AND {sqm_filter}
             ) t
         ),
         vals AS (
@@ -210,6 +224,7 @@ def fetch_distribution(db, metric: str, n_buckets: int = N_BUCKETS):
               ON ST_Contains(n.geom, s.location::geometry)
             CROSS JOIN global_range g
             WHERE ({expr}) IS NOT NULL
+              AND {sqm_filter}
             UNION ALL
             SELECT 'municipality'::text, m.name_en,
                    width_bucket(({expr}), g.lo, g.hi + 1, {n_buckets})
@@ -218,6 +233,7 @@ def fetch_distribution(db, metric: str, n_buckets: int = N_BUCKETS):
               ON ST_Contains(m.geom, s.location::geometry)
             CROSS JOIN global_range g
             WHERE ({expr}) IS NOT NULL
+              AND {sqm_filter}
         ),
         edges AS (
             SELECT
@@ -239,6 +255,7 @@ def fetch_distribution(db, metric: str, n_buckets: int = N_BUCKETS):
             SELECT ({expr}) AS v
             FROM spitogatos_data s
             WHERE ({expr}) IS NOT NULL
+              AND {sqm_filter}
         ) t,
         generate_series(0, {n_buckets}) AS gs(i)
         GROUP BY gs.i
@@ -271,6 +288,7 @@ def fetch_trend(db, metric: str, granularity: str = TREND_GRANULARITY):
     Returns list of {area_type, area_name, period, median, mean, p25, p75, n}.
     """
     expr = METRIC_SQL[metric]
+    sqm_filter = _sqm_range_predicate("s")
     query = f"""
     WITH vals AS (
         SELECT 'neighborhood'::text AS area_type, n.name_en AS area_name,
@@ -279,7 +297,9 @@ def fetch_trend(db, metric: str, granularity: str = TREND_GRANULARITY):
         FROM spitogatos_data s
         JOIN geography.athens_neighborhood n
           ON ST_Contains(n.geom, s.location::geometry)
-        WHERE ({expr}) IS NOT NULL AND s.website_uploaded IS NOT NULL
+        WHERE ({expr}) IS NOT NULL
+          AND s.website_uploaded IS NOT NULL
+          AND {sqm_filter}
         UNION ALL
         SELECT 'municipality'::text, m.name_en,
                date_trunc('{granularity}', s.website_uploaded),
@@ -287,7 +307,9 @@ def fetch_trend(db, metric: str, granularity: str = TREND_GRANULARITY):
         FROM spitogatos_data s
         JOIN geography.attica_municipality m
           ON ST_Contains(m.geom, s.location::geometry)
-        WHERE ({expr}) IS NOT NULL AND s.website_uploaded IS NOT NULL
+        WHERE ({expr}) IS NOT NULL
+          AND s.website_uploaded IS NOT NULL
+          AND {sqm_filter}
     )
     SELECT
         area_type, area_name,
@@ -325,6 +347,7 @@ def fetch_relationship(db, x_metric: str, y_metric: str, limit: int = RELATIONSH
     """
     x_expr = METRIC_SQL[x_metric]
     y_expr = METRIC_SQL[y_metric]
+    sqm_filter = _sqm_range_predicate("s")
     query = f"""
     SELECT
         n.name_en AS area_name,
@@ -336,6 +359,7 @@ def fetch_relationship(db, x_metric: str, y_metric: str, limit: int = RELATIONSH
       ON ST_Contains(n.geom, s.location::geometry)
     WHERE ({x_expr}) IS NOT NULL
       AND ({y_expr}) IS NOT NULL
+      AND {sqm_filter}
     ORDER BY RANDOM()
     LIMIT {limit}
     """
@@ -653,6 +677,7 @@ def main():
     import time as _time
 
     print("Connecting to database …")
+    print(f"Applying sqm filter: s.sqm > {SQM_MIN} AND s.sqm < {SQM_MAX}")
     db = get_db_connection()
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
