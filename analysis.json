@@ -1,0 +1,16 @@
+{
+  "rows": 329,
+  "cols": [
+    "source",
+    "Asset id",
+    "Type",
+    "Description",
+    "Έτος Κατασκευής",
+    "Area",
+    "Address",
+    "Price",
+    "Αποκλειστική ανάθεση",
+    "Comments",
+    "LINK"
+  ]
+}

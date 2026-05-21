@@ -1,0 +1,2 @@
+TOTAL_ROWS:329
+COLUMNS:['source', 'Asset id', 'Type', 'Description', 'Έτος Κατασκευής', 'Area', 'Address', 'Price', 'Αποκλειστική ανάθεση', 'Comments', 'LINK']

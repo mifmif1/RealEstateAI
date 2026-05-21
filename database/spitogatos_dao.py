@@ -312,6 +312,8 @@ class SpitogatosDAO:
         params = [
             circle.center_lon,
             circle.center_lat,
+            circle.center_lon,
+            circle.center_lat,
             circle.radius,
         ]
 

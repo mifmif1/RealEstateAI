@@ -1,0 +1,64 @@
+{
+  "total_rows": 329,
+  "total_cols": 11,
+  "columns": [
+    "source",
+    "Asset id",
+    "Type",
+    "Description",
+    "Έτος Κατασκευής",
+    "Area",
+    "Address",
+    "Price",
+    "Αποκλειστική ανάθεση",
+    "Comments",
+    "LINK"
+  ],
+  "samples": [
+    {
+      "source": "DVG",
+      "Asset id": "AL095398",
+      "Type": "Building",
+      "Description": "Building with a total area of ​​3,257 sq m, located at 128 Lavriou Avenue in Glyka Nera.The property includes:Basement C: Total area 770.93 sq mBasement B: Total area 857.80 sq mBasement A: Total area 642.25 sq m (main use 601.81 sq m & common areas 40.44 sq m)Ground floor: Total area 531.34 sq m. (",
+      "Έτος Κατασκευής": "1995",
+      "Area": "Athens - East",
+      "Address": "128 Lavriou Avenue",
+      "Price": "1580000",
+      "Αποκλειστική ανάθεση": "Yes",
+      "Comments": "Έτοιμο προς πώληση",
+      "LINK": "https://marketplace.altamiraproperties.gr/listings/1380"
+    },
+    {
+      "source": "DVG",
+      "Asset id": "120300",
+      "Type": "Apartments",
+      "Description": "12 apartments and 1 ground floor store and basement, in a total area of 1,434.1 sq.m. The 13 properties occupy 59% of the entire building.",
+      "Έτος Κατασκευής": "1988",
+      "Area": "Patra",
+      "Address": "Patra",
+      "Price": "690000",
+      "Αποκλειστική ανάθεση": "No",
+      "Comments": "Έτοιμο προς πώληση",
+      "LINK": "https://marketplace.altamiraproperties.gr/listings/6044"
+    },
+    {
+      "source": "DVG",
+      "Asset id": "RA592536",
+      "Type": "Apartment",
+      "Description": "Residential building 645sq.m. in Komotini. The property consists of a four-story elevated building with a basement. The structure comprises a basement level (Includes 2 apartments on the basement 33,70sq.m. & 28,00sq.m.), ground floor (Comprises three independent apartments 23,66sq.m. - 27,2sq.m. & ",
+      "Έτος Κατασκευής": "2001",
+      "Area": "Rodopi Prefecture",
+      "Address": "32 Agiou Georgiou Street",
+      "Price": "620000",
+      "Αποκλειστική ανάθεση": "No",
+      "Comments": "Σε διαδικασία ωρίμανσης",
+      "LINK": "https://marketplace.altamiraproperties.gr/listings/4648"
+    }
+  ],
+  "analysis": {
+    "records_with_addresses": 329,
+    "records_with_urls": 161,
+    "records_with_sqm_info": 34,
+    "has_lat_lon": false
+  }
+}
