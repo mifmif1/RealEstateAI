@@ -180,3 +180,9 @@ connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection re
 2026-03-04 14:04:31,870 [INFO] Not enough assets near by to compare with. id: 8361
 2026-03-04 14:04:31,886 [INFO] Fetched 100 assets from spitogatos_data within radius=100 m of point (lat=37.99435, lon=23.7237)
 2026-03-04 14:04:31,902 [INFO] Fetched 24 assets from spitogatos_data within radius=100 m of point (lat=37.97666449, lon=23.76793855)
+2026-06-25 22:16:37,045 [INFO] Database connection pool initialized
+2026-06-25 22:16:37,045 [INFO] Starting get_all_athens from offset=0 (page size=30, max_pages=None)
+2026-06-25 22:16:39,054 [INFO] Fetching Athens page at offset=0
+2026-06-25 22:16:40,192 [INFO] Successfully fetched.
+2026-06-25 22:16:40,344 [ERROR] Database transaction error: 'SpitogatosAsset' object has no attribute 'no_of_bathrooms'
+2026-06-25 22:16:40,344 [ERROR] Database connection error: 'SpitogatosAsset' object has no attribute 'no_of_bathrooms'

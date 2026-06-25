@@ -299,5 +299,5 @@ class SpitogatosFlow:
 if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.get_athens(offset=0)
-    s.get_all_athens(start_offset=44670)
+    s.get_all_athens(start_offset=0) # change this as you detected as bot
 
