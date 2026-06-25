@@ -847,4 +847,4 @@ if __name__ == '__main__':
     s = SpitogatosFlow()
     # s.get_athens(offset=0)
     # s.fetch_all_athens(start_offset=44670)
-    s.fetch_all_polygon_north(start_offset=4350)
+    s.fetch_all_polygon_north(start_offset=30150)
